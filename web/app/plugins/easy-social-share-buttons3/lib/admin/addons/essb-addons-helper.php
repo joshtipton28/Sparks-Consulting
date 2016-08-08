@@ -4,7 +4,7 @@ class ESSBAddonsHelper {
 	
 	private $cache_options_slug = "essb3_addons";
 	private $announced_addons_slug = "essb3_addons_announce";
-	private $update_addons_server = "http://localhost:8081/fb/addons/"; //"http://addons.appscreo.com";
+	private $update_addons_server = "http://extensions.appscreo.com"; //"http://addons.appscreo.com";
 	
 	private static $instance = null;
 	public static function get_instance() {
@@ -18,14 +18,8 @@ class ESSBAddonsHelper {
 	} // end get_instance;
 	
 	function __construct() {
-		//add_action('essb3_addons_remove_update', array($this, 'call_remove_addon_list_update'));
 	}
 	
-	public function schedule_update() {
-		if ( ! wp_next_scheduled( 'essb3_addon_update' ) ) {
-			wp_schedule_event( time(), 'daily',  'essb3_addon_update');
-		}
-	}	
 	
 	public function call_remove_addon_list_update() {
 		$url = $this->update_addons_server;
@@ -112,18 +106,22 @@ class ESSBAddonsHelper {
 	
 		return $list_of_new;
 	}
-	
-	public static function deactivate() {
-		wp_clear_scheduled_hook('essb3_addon_update');
-	}
-	
+		
 	public function dismiss_addon_notice($addon) {
 		$current_announced = get_option($this->announced_addons_slug);
 		if (!is_array($current_announced)) {
 			$current_announced = array();
 		}
 		
-		$current_announced[$addon] = "yes";
+		if (strpos($addon, ',') == false) {		
+			$current_announced[$addon] = "yes";
+		}
+		else {
+			$addon_list = explode(',', $addon);
+			foreach ($addon_list as $one) {
+				$current_announced[$one] = "yes";
+			}
+		}
 		
 		update_option($this->announced_addons_slug, $current_announced);
 	}

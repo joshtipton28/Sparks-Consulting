@@ -110,7 +110,9 @@ if (!function_exists('essb_available_social_networks')) {
 				'yummly' => array( 'name' => 'Yummly', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only'),
 				'sms' => array( 'name' => 'SMS', 'type' => 'buildin', 'supports' => 'mobile,retina templates only'),
 				'viber' => array( 'name' => 'Viber', 'type' => 'buildin', 'supports' => 'mobile,retina templates only'),
-				'telegram' => array( 'name' => 'Telegram', 'type' => 'buildin', 'supports' => 'mobile,retina templates only')
+				'telegram' => array( 'name' => 'Telegram', 'type' => 'buildin', 'supports' => 'mobile,retina templates only'),
+				'subscribe' => array( 'name' => 'Subscribe', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only')
+				
 		);
 		
 		return $essb_available_social_networks;
@@ -136,6 +138,20 @@ if (!function_exists('essb_avaliable_counter_positions')) {
 		$essb_avaliable_counter_positions ['bottom'] = "Bottom";
 		$essb_avaliable_counter_positions ['topn'] = "Top";
 		
+		return $essb_avaliable_counter_positions;
+	}
+}
+
+if (!function_exists('essb_avaliable_counter_positions_point')) {
+	function essb_avaliable_counter_positions_point() {
+		$essb_avaliable_counter_positions = array ();
+		$essb_avaliable_counter_positions ['inside'] = "Inside button instead of network name";
+		$essb_avaliable_counter_positions ['insidename'] = "Inside button after network name";
+		$essb_avaliable_counter_positions ['insidebeforename'] = "Inside button before network name";
+		$essb_avaliable_counter_positions ['topm'] = "Top Mini";
+		$essb_avaliable_counter_positions ['bottom'] = "Bottom";
+		$essb_avaliable_counter_positions ['topn'] = "Top";
+
 		return $essb_avaliable_counter_positions;
 	}
 }
@@ -262,6 +278,7 @@ if (!function_exists('essb_available_button_positions')) {
 		$essb_available_button_positions ['onmedia'] = array ("image" => "assets/images/display-positions-16.png", "label" => "On media" );
 		$essb_available_button_positions ['heroshare'] = array ("image" => "assets/images/display-positions-22.png", "label" => "Full screen hero share" );
 		$essb_available_button_positions ['postbar'] = array ("image" => "assets/images/display-positions-23.png", "label" => "Post share bar" );
+		$essb_available_button_positions ['point'] = array ("image" => "assets/images/display-positions-24.png", "label" => "Share Point (Advanced Version)" );
 		
 		return $essb_available_button_positions;
 	}
@@ -291,6 +308,7 @@ if (!function_exists('essb_available_button_positions_mobile')) {
 		$essb_available_button_positions_mobile ['sharebottom'] = array ("image" => "assets/images/display-positions-17.png", "label" => "Share buttons bar (Mobile Only Display Method)" );
 		$essb_available_button_positions_mobile ['sharebar'] = array ("image" => "assets/images/display-positions-18.png", "label" => "Share bar (Mobile Only Display Method)" );
 		$essb_available_button_positions_mobile ['sharepoint'] = array ("image" => "assets/images/display-positions-19.png", "label" => "Share point (Mobile Only Display Method)" );
+		$essb_available_button_positions_mobile ['point'] = array ("image" => "assets/images/display-positions-24.png", "label" => "Share Point (Advanced Version)" );
 		
 		return $essb_available_button_positions_mobile;
 	}
@@ -383,3 +401,44 @@ if (!function_exists('essb_available_animations')) {
 		return $animations;
 	}
 }
+
+if (! function_exists ( 'essb_cached_counters_update' )) {
+	function essb_cached_counters_update() {
+		$periods = array ();
+		$periods [1] = '1 Minute';
+		$periods [5] = '5 Minutes';
+		$periods [10] = '10 Minutes';
+		$periods [15] = '15 Minutes';
+		$periods [30] = '30 Minutes';
+		$periods [45] = '45 Minutes';
+		$periods [60] = '1 Hour';
+		$periods [120] = '2 Hours';
+		$periods [180] = '3 Hours';
+		$periods [240] = '4 Hours';
+		$periods [300] = '5 Hours';
+		$periods [360] = '6 Hours';
+		$periods [540] = '9 Hours';
+		$periods [720] = '12 Hours';
+		$periods [1080] = '18 Hours';
+		$periods [1440] = '1 Day';
+		$periods [4320] = '3 Days';
+		$periods [7200] = '5 Days';
+		$periods [10800] = '7 Days';
+		
+		return $periods;
+	}
+}
+
+if (! function_exists ( 'essb_optin_designs' )) {
+	function essb_optin_designs() {
+		$periods = array ();
+		$periods ['design1'] = 'Design #1';
+		$periods ['design2'] = 'Design #2';
+		$periods ['design3'] = 'Design #3';
+		$periods ['design4'] = 'Design #4';
+		
+		return $periods;
+	}
+}
+
+

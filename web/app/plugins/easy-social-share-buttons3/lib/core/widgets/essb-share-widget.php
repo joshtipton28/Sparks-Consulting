@@ -30,6 +30,7 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		
 		$essb_w_align = isset($instance['essb_w_align']) ? $instance['essb_w_align'] : 'left';
 		$title = isset($instance['title']) ? $instance['title'] : '';
+		$custom_list = isset($instance['custom_list']) ? $instance['custom_list'] : '';
 		
 		$options = array();//get_option ( EasySocialShareButtons::$plugin_settings_name );
 		$buttons = "";
@@ -50,6 +51,10 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 					$buttons .= $k;
 				}
 			}
+		}
+		
+		if ($custom_list != '') {
+			$buttons = $custom_list;
 		}
 
 		$native_state = "no";
@@ -134,7 +139,8 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		$instance['essb_w_nospace'] = $new_instance['essb_w_nospace'];
 		$instance['title'] = $new_instance['title'];
 		$instance['essb_w_native'] = $new_instance['essb_w_native'];
-
+		$instance['custom_list'] = $new_instance['custom_list'];
+		
 		$options = array();//get_option ( EasySocialShareButtons::$plugin_settings_name );
 		
 		if (is_array($essb_networks)) {
@@ -171,6 +177,7 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		$nospace = isset($instance['essb_w_nospace']) ? esc_attr($instance['essb_w_nospace']) : '';
 		$native_buttons = isset($instance['essb_w_native']) ? esc_attr($instance['essb_w_native']) : '';
 		$title = isset($instance['title']) ? $instance['title'] : '';
+		$custom_list = isset($instance['custom_list']) ? $instance['custom_list'] : '';
 		
 		?>
 		
@@ -180,6 +187,11 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
   <br /><small><?php _e( 'Fill that field if you wish your widget to have title' , ESSB3_TEXT_DOMAIN ) ?></small>
 </p>
 		
+				<p>
+  <label for="<?php echo $this->get_field_id( 'custom_list' ); ?>"><?php echo __( 'Custom network ordered list' , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <input type="text" name="<?php echo $this->get_field_name( 'custom_list' ); ?>" id="<?php echo $this->get_field_id( 'custom_list' ); ?>" class="widefat" value="<?php echo $custom_list ?>" />
+  <br /><small><?php _e( 'Fill social network keys to get custom order (no need to activate checks below). Example: facebook,twitter,pinterest' , ESSB3_TEXT_DOMAIN ) ?></small>
+</p>
 		
 		<?php 
 		

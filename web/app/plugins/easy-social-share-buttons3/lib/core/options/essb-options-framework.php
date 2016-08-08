@@ -137,6 +137,9 @@ class ESSBOptionsFramework {
 							if (!in_array('telegram|Telegram', $listOfValues)) {
 								$listOfValues[] = 'telegram|Telegram';
 							}
+							if (!in_array('subscribe|Subscribe', $listOfValues)) {
+								$listOfValues[] = 'subscribe|Subscribe';
+							}
 						}
 						$listOfValues = self::translate_key_array($listOfValues);
 					}
@@ -462,7 +465,7 @@ class ESSBOptionsFramework {
 		
 		//printf('<div id="wpeditor_%1$s"></div>', $field);
 		printf('<textarea id="essb_options_%1$s" name="%2$s[%1$s]" class="input-element stretched essb-hidden-element" rows="5">%3$s</textarea>', $field, $settings_group, $value);
-		$editor_options = array('textarea_name' => $settings_group.'['.$field.']');
+		$editor_options = array('textarea_name' => $settings_group.'['.$field.']', 'editor_height' => '200');
 		wp_editor($value, sprintf('wpeditor_%1$s', $field), $editor_options);
 	}
 	

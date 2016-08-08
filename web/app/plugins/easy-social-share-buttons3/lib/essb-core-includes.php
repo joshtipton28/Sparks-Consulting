@@ -16,13 +16,15 @@ if ($easymode_state) {
 // end: initialize plugin working options
 
 // include options helper functions
-include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-lightmode-helper.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/options/essb-options-helper.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-global-settings.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-url-helper.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/widgets/essb-share-widget.php');
+include_once (ESSB3_PLUGIN_ROOT . 'lib/core/widgets/essb-share-subscribe-widget.php');
+include_once (ESSB3_PLUGIN_ROOT . 'lib/core/widgets/essb-popular-posts-widget-shortcode.php');
 
 if (defined('ESSB3_LIGHTMODE')) {
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-lightmode-helper.php');
 	$essb_options = ESSBLightModeHelper::apply_global_options($essb_options);
 }
 
@@ -101,6 +103,11 @@ if (ESSBOptionValuesHelper::is_active_module('mycred')) {
 	ESSBMyCredIntegration::get_instance();
 }
 
+if (ESSBOptionValuesHelper::is_active_module('mycred_hook')) {
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/mycred/essb-mycred-custom-hook.php');
+	define('ESSB3_MYCRED_CUSTOM_ACTIVE', true);
+}
+
 if (ESSBOptionValuesHelper::is_active_module('aftershare')) {
 	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/after-share-close/essb-after-share-close.php');
 	define('ESSB3_AFTERSHARE_ACTIVE', true);
@@ -172,16 +179,19 @@ if (ESSBOptionValuesHelper::is_active_module('cachedcounters')) {
 		define('ESSB3_SHARED_COUNTER_RECOVERY', true);
 	}
 }
+
 // click to tweet module
 if (ESSBOptionValuesHelper::is_active_module('ctt')) {
 	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/click-to-tweet/essb-click-to-tweet.php');
 }
 
 // visual composer element bridge
-include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/visual-composer/essb-visual-composer-map.php');
+if (function_exists('vc_map')) {
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/visual-composer/essb-visual-composer-map.php');
+}
 
 
-include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-counters-helper.php');
+//include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-counters-helper.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-core-helper.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-button-helper.php');
 include_once (ESSB3_PLUGIN_ROOT . 'lib/essb-core.php');

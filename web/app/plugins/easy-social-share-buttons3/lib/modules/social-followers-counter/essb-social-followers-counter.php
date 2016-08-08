@@ -67,7 +67,7 @@ class ESSBSocialFollowersCounter {
 			}
 		}
 		
-		echo ESSBSocialFollowersCounterDraw::followers_number($total);
+		return ESSBSocialFollowersCounterDraw::followers_number($total);
 	}
 	
 	// -- social counters updater
@@ -455,7 +455,12 @@ class ESSBSocialFollowersCounter {
 				return 'http://instagram.com/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_username' );
 				break;
 			case 'youtube' :
-				return 'https://www.youtube.com/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_account_type' ) . '/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
+				$account_type = ESSBSocialFollowersCounterHelper::get_option ( $social . '_account_type' );
+				$channel_url_type = ESSBSocialFollowersCounterHelper::get_option ( $social . '_url_type' );
+				
+				if ($channel_url_type != '' && $account_type == 'channel') { $account_type = $channel_url_type; }
+				
+				return 'https://www.youtube.com/' . $account_type . '/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
 				break;
 			case 'envato' :
 				$ref = '';

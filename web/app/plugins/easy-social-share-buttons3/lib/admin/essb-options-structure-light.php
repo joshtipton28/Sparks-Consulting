@@ -173,13 +173,13 @@ ESSBOptionsStructureHelper::field_select('social', 'sharing-2', 'more_button_ico
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-4', 'heading1', __('Display Counters', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-4', 'show_counter', __('Display counter of sharing', ESSB3_TEXT_DOMAIN), __('Activate display of share counters.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 $counter_mode = array("" => "Real time share counters", "cached" => "Cached share counters");
-$counter_refresh_time = array("1" => "1 hour", "2" => "2 hours", "3" => "3 hours", "6" => "6 hours", "12" => "12 hours", "24" => "1 day");
 
 ESSBOptionsStructureHelper::field_section_start_panels('social', 'sharing-4', __('Counter mode', ESSB3_TEXT_DOMAIN), __('Choose how your counters will update. Cached counters will work faster than realtime because they update on predefined period. Please note that when you use cache plugin cached counters will update when cache is expired in cache plugin', ESSB3_TEXT_DOMAIN), '');
 
 ESSBOptionsStructureHelper::field_select_panel('social', 'sharing-4', 'counter_mode', __('Update mode', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), $counter_mode);
 
-ESSBOptionsStructureHelper::field_select_panel('social', 'sharing-4', 'cache_counter_refresh', __('Cached counters refresh interval', ESSB3_TEXT_DOMAIN), __('Choose interval of counter update when you use cached counters', ESSB3_TEXT_DOMAIN), $counter_refresh_time);
+ESSBOptionsStructureHelper::field_select_panel('social', 'sharing-4', 'cache_counter_refresh_new', __('Cached counters refresh interval', ESSB3_TEXT_DOMAIN), __('Choose interval of counter update when you use cached counters', ESSB3_TEXT_DOMAIN), essb_cached_counters_update());
+ESSBOptionsStructureHelper::field_switch_panel('social', 'sharing-4', 'cache_counter_refresh_cache', __('Activate cache plugin update mode', ESSB3_TEXT_DOMAIN), __('Activate this option if you use cache plugin and counters do not update often', ESSB3_TEXT_DOMAIN), 'yes', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_end_panels('social', 'sharing-4');
 
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-4', 'heading2', __('Button Counters', ESSB3_TEXT_DOMAIN));
@@ -315,6 +315,7 @@ ESSBOptionsStructureHelper::field_select('social', 'shorturl', 'shorturl_type', 
 ESSBOptionsStructureHelper::field_heading('social', 'shorturl', 'heading5', __('bit.ly Configuration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox('social', 'shorturl', 'shorturl_bitlyuser', __('bit.ly Username', ESSB3_TEXT_DOMAIN), __('Provide your bit.ly username', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('social', 'shorturl', 'shorturl_bitlyapi', __('bit.ly API key', ESSB3_TEXT_DOMAIN), __('Provide your bit.ly API key', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_select('social', 'shorturl', 'shorturl_bitlyapi_version', __('bit.ly API version', ESSB3_TEXT_DOMAIN), __('Choose version of bit.ly API you will use. We recommend to switch to new bit.ly API with access token'), array( "previous" => "Old API version with Username and Access Key", "new" => "New API with access token"));
 ESSBOptionsStructureHelper::field_heading('social', 'shorturl', 'heading5', __('goo.gl Configuration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('social', 'shorturl', 'shorturl_googlapi', __('goo.gl API key', ESSB3_TEXT_DOMAIN), __('Goo.gl short url service can work with or without API key. If you have a high traffic site it is recommended to use API key because when anonymous usage reach amount of request for time you will not get short urls. To generate such key you need to visit <a href="https://console.developers.google.com/project" target="_blank">Google Developer Console</a>', ESSB3_TEXT_DOMAIN));
 
@@ -569,6 +570,7 @@ $listOfOptions = array("1" => "1 Button", "2" => "2 Buttons", "3" => "3 Buttons"
 ESSBOptionsStructureHelper::field_select_panel('social', 'mobile-1', 'mobile_sharebuttonsbar_count', __('Number of buttons in share buttons bar', ESSB3_TEXT_DOMAIN), __('Provide number of buttons you wish to see in buttons bar. If the number of activated buttons is greater than selected here the last button will be more button which will open pop up with all active buttons.', ESSB3_TEXT_DOMAIN), $listOfOptions);
 ESSBOptionsStructureHelper::field_switch_panel('social', 'mobile-1', 'mobile_sharebuttonsbar_names', __('Display network names', ESSB3_TEXT_DOMAIN), __('Activate this option to display network names (default display is icons only).', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch_panel('social', 'mobile-1', 'mobile_sharebuttonsbar_fix', __('Fix problem with buttons not displayed in full width', ESSB3_TEXT_DOMAIN), __('Some themes may overwrite the default buttons style and in this case buttons do not take the full width of screen. Activate this option to fix the overwritten styles.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch_panel('social', 'mobile-1', 'mobile_sharebuttonsbar_total', __('Display total share counter', ESSB3_TEXT_DOMAIN), __('Activate this option to display total share counter as first button. If you activate it please keep in mind that you need to set number of columns to be with one more than buttons you except to see (total counter will act as single button)', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch_panel('social', 'mobile-1', 'mobile_sharebuttonsbar_hideend', __('Hide buttons bar before end of page', ESSB3_TEXT_DOMAIN), __('This option is made to hide buttons bar once you reach 90% of page content to allow the entire footer to be visible.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_panel('social', 'mobile-1', 'mobile_sharebuttonsbar_hideend_percent', __('% of content is viewed to hide buttons bar before end of page', ESSB3_TEXT_DOMAIN), __('Customize the default percent 90 when buttons bar will hide. Enter value in percents without the % mark.', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'mobile-1');
@@ -678,6 +680,7 @@ ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'd
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_sis', __('On Media Sharing (Social Image Share)', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_profiles', __('Social Profiles', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_sso', __('Social Share Optimization Meta Tags', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_aftershare', __('After Share Actions', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_end('advanced', 'deactivate');
 
 
@@ -1625,6 +1628,9 @@ function essb3_network_selection() {
 		}
 		if (!in_array('telegram', $network_order)) {
 			$network_order[] = 'telegram';
+		}
+		if (!in_array('subscribe', $network_order)) {
+			$network_order[] = 'subscribe';
 		}
 	}
 	

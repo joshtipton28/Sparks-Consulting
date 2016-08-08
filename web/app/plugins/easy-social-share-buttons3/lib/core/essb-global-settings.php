@@ -41,6 +41,15 @@ class ESSBGlobalSettings {
 	
 	public static $cache_runtime = false;
 	
+	public static $subscribe_function = "";
+	public static $subscribe_link = "";
+	public static $subscribe_content = "";
+	
+	public static $use_minified_css = false;
+	public static $use_minified_js = false;
+	
+	public static $cached_counters_cache_mode = false;
+	
 	/**
 	 * load
 	 * 
@@ -88,6 +97,19 @@ class ESSBGlobalSettings {
 			self::$mobile_networks_order_active = true;
 		}
 		
+		self::$subscribe_function = ESSBOptionValuesHelper::options_value ( $options, 'subscribe_function' );
+		self::$subscribe_link = ESSBOptionValuesHelper::options_value ( $options, 'subscribe_link' );
+		self::$subscribe_content = ESSBOptionValuesHelper::options_value ( $options, 'subscribe_content' );
+		
+		self::$use_minified_css = ESSBOptionValuesHelper::options_bool_value($options, 'use_minified_css');
+		self::$use_minified_js = ESSBOptionValuesHelper::options_bool_value($options, 'use_minified_js');
+		
+		// demo mode subscribe function
+		if (isset($_REQUEST['essb_subscribe']) && ESSB3_DEMO_MODE) {
+			self::$subscribe_function = $_REQUEST['essb_subscribe'];
+		}
+		
+		self::$cached_counters_cache_mode = ESSBOptionValuesHelper::options_bool_value($options, 'cache_counter_refresh_cache');
 	}
 	
 }

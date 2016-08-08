@@ -70,3 +70,32 @@ if (!function_exists('essb_is_mobile')) {
 		return essb_manager()->isMobile();
 	}
 }
+
+if (!function_exists('essb_is_tablet')) {
+	function essb_is_tablet() {
+		return essb_manager()->isTablet();
+	}
+}
+
+if (!function_exists('essb_is_plugin_activated_on')) {
+	function essb_is_plugin_activated_on() {
+		global $essb_options;
+		
+		if (is_admin()) {
+			return;
+		}
+		
+		//display_deactivate_on
+		$is_activated = false;
+		$display_include_on = ESSBOptionValuesHelper::options_value($essb_options, 'display_include_on');
+		if ($display_include_on != "") {
+			$excule_from = explode(',', $display_include_on);
+	
+			$excule_from = array_map('trim', $excule_from);
+			if (in_array(get_the_ID(), $excule_from, false)) {
+				$is_activated = true;
+			}
+		}
+		return $is_activated;
+	}
+}

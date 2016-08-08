@@ -19,7 +19,9 @@ $scg->activate($active_shortcode);
 			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-total-shares', 'admin.php?page=essb_redirect_shortcode&tab=shortcode' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-total-shares]<br/><span class="essb-shortcode-comment">Shortcode to display total shares</span></a>
 			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-profiles', 'admin.php?page=essb_redirect_shortcode&tab=shortcode' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-profiles]<br/><span class="essb-shortcode-comment">Display links to social profiles</span></a>
 			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-followers', 'admin.php?page=essb_redirect_shortcode&tab=shortcode' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-followers]<br/><span class="essb-shortcode-comment">Display followers counter</span></a>
-			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-total-followers', 'admin.php?page=essb_redirect_shortcode&tab=shortcode&cmd=generate' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-total-followers]<br/><span class="essb-shortcode-comment">Display total followers counter</span></a>
+			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-total-followers', 'admin.php?page=essb_redirect_shortcode&tab=shortcode' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-total-followers]<br/><span class="essb-shortcode-comment">Display total followers counter</span></a>
+			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-popular-posts', 'admin.php?page=essb_redirect_shortcode&tab=shortcode' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-popular-posts]<br/><span class="essb-shortcode-comment">Display popular posts</span></a>
+			<a href="<?php echo esc_url(add_query_arg ( 'code', 'easy-subscribe', 'admin.php?page=essb_redirect_shortcode&tab=shortcode' ));?>" class="essb-shortcode essb-shortcode-fixed">[easy-subscribe]<br/><span class="essb-shortcode-comment">Include subscribe form</span></a>
 			
 			<?php 
 			

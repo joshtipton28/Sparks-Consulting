@@ -348,6 +348,11 @@ class ESSBButtonHelper {
 		
 		global $essb_networks, $essb_options;		
 		
+		// @3.6.1 fix for missing counters directive
+		if (!isset($style['counters'])) {
+			$style['counters'] = false;
+		}
+		
 		$content = "";		
 		
 		$leading_width_mode_fullwidth = false;
@@ -465,6 +470,10 @@ class ESSBButtonHelper {
 				if ($single == "pinterest" && !ESSBGlobalSettings::$pinterest_sniff_disable) {
 					$single_share_address = "pinterest_picker";
 				}
+
+				if ($single == "pinterest" && $single_share_address == "pinterest_picker") {
+					if ($style['amp']) $single_share_address = "pinterest";
+				}
 				
 				if (!$style['is_mobile']) {
 					//if ($single == "facebook" && ESSBOptionValuesHelper::options_bool_value($essb_options, 'facebookadvanced')) {
@@ -494,7 +503,7 @@ class ESSBButtonHelper {
 				}
 				
 				// get single social network commands
-				$share_details = ESSBButtonHelper::get_share_address($single_share_address, $share, $salt);
+				$share_details = ESSBButtonHelper::get_share_address($single_share_address, $share, $salt, $style['amp']);
 				$url = $share_details['url'];
 				$api_command = $share_details['api_command'];
 
@@ -578,7 +587,7 @@ class ESSBButtonHelper {
 		return $content;
 	}
 	
-	public static function get_share_address($network, $share = array(), $salt = '') {
+	public static function get_share_address($network, $share = array(), $salt = '', $amp_endpoint = false) {
 		global $essb_networks, $essb_options;
 		
 		// TODO: add handle of user_image_url
@@ -649,44 +658,7 @@ class ESSBButtonHelper {
 				$share ['short_url_whatsapp'] = esc_attr ( $share ['url'] );
 			}
 			
-			/*if (ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'twitter_shareshort' ) || 
-					ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'shorturl_activate' ) || 
-					ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'whatsapp_shareshort' )) {
-				$global_provider = ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_type' );
-				if (ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'shorturl_activate' )) {
-					$share ['short_url'] = ESSBUrlHelper::short_url ( $share ['full_url'], $global_provider, get_the_ID (), ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_bitlyuser' ), ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_bitlyapi' ) );
-					
-					$share ['short_url_twitter'] = $share ['short_url'];
-					$share ['short_url_whatsapp'] = $share ['short_url'];
-				} else {
-					if (ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'twitter_shareshort' )) {
-						$provider = ESSBOptionValuesHelper::options_value ( $essb_options, 'twitter_shareshort_service' );
-						$share ['short_url_twitter'] = ESSBUrlHelper::short_url ( $share ['full_url'], $global_provider, get_the_ID (), ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_bitlyuser' ), ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_bitlyapi' ) );
-					}
-					
-					if (ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'whatsapp_shareshort' )) {
-						$provider = ESSBOptionValuesHelper::options_value ( $essb_options, 'whatsapp_shareshort_service' );
-						
-						if ($provider == ESSBOptionValuesHelper::options_value ( $essb_options, 'twitter_shareshort_service' ) && ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'twitter_shareshort' )) {
-							$share ['short_url_whatsapp'] = $share ['short_url_twitter'];
-						} else {
-							$share ['short_url_whatsapp'] = ESSBUrlHelper::short_url ( $share ['full_url'], $global_provider, get_the_ID (), ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_bitlyuser' ), ESSBOptionValuesHelper::options_value ( $essb_options, 'shorturl_bitlyapi' ) );
-						}
-					}
-					
-					if ($share ['short_url_twitter'] == '') {
-						$share ['short_url_twitter'] = $share ['url'];
-					}
-					if ($share ['short_url_whatsapp'] == '') {
-						$share ['short_url_whatsapp'] = $share ['url'];
-					}
-				}
-			} else {
-				$share ['twitter_tweet'] .= '%20' . $share ['url'];
-				$share ['short_url_twitter'] = esc_attr ( $share ['url'] );
-				$share ['short_url_whatsapp'] = esc_attr ( $share ['url'] );
-			}*/
-		
+			
 		}
 		
 		if (!isset($share['query'])) {
@@ -797,7 +769,11 @@ class ESSBButtonHelper {
 				if ($twitter_message_optimize) {
 					$twitter_message_optimize_method = ESSBOptionValuesHelper::options_value($essb_options, 'twitter_message_optimize_method');
 					
-					$optmized_tweet = ESSBButtonHelper::twitter_message_optimization($use_tweet, $share['short_url_twitter'], $share['twitter_user'], $share ['twitter_hashtags'], $twitter_message_optimize_method);
+					if (!class_exists('ESSBCoreExtenderTweetOptimization')) {
+						include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-tweet-optimization.php');
+						
+					}
+					$optmized_tweet = ESSBCoreExtenderTweetOptimization::twitter_message_optimization($use_tweet, $share['short_url_twitter'], $share['twitter_user'], $share ['twitter_hashtags'], $twitter_message_optimize_method);
 					$use_tweet = $optmized_tweet['tweet'];
 					$share['twitter_user'] = $optmized_tweet['user'];
 					$share['twitter_hashtags'] = $optmized_tweet['hashtags'];
@@ -891,7 +867,9 @@ class ESSBButtonHelper {
 				if (!$share['mail_body']) {
 					$share['mail_body'] = '';
 				}
-				$url = sprintf('mailto:?subject=%1$s&amp;body=%2$s', $share['mail_subject'], $share['mail_body']);
+				//$url = sprintf('mailto:?subject=%1$s&amp;body=%2$s', $share['mail_subject'], $share['mail_body']);
+				// correction made by Dane Morgan (Thank You :))
+				$url = sprintf('mailto:?subject=%1$s&body=%2$s', urlencode( str_replace('amp;', '', $share['mail_subject'] ) ), urlencode($share['mail_body']));
 				$api_command = "essb_tracking_only('', 'mail', '".$salt."', true);";
 				break;
 			case "mail_form" :
@@ -978,7 +956,11 @@ class ESSBButtonHelper {
 					$share ['short_url_whatsapp'] = $share ['url'];
 				}
 				
-				$url = sprintf ( 'sms:&body=%1$s%3$s%2$s', ESSBCoreHelper::urlencode ( $share ['title_plain'] ), rawurlencode ( $share ['short_url_whatsapp'] ), '%20' );
+				$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+				$joiner = (stripos($ua,'android') !== false) ? '?' : '&';
+				
+				$url = sprintf ( 'sms:%4$sbody=%1$s%3$s%2$s', ESSBCoreHelper::urlencode ( $share ['title_plain'] ), rawurlencode ( $share ['short_url_whatsapp'] ), '%20', $joiner );
+				
 				break;
 			case "viber" :
 				if ($share ['short_url_whatsapp'] == '') {
@@ -1005,6 +987,18 @@ class ESSBButtonHelper {
 					$api_command = "essb_tracking_only('', 'telegram', '".$salt."', true);";
 				
 					break;
+			case "subscribe":
+				
+				if (ESSBGlobalSettings::$subscribe_function == "link") {
+					$url = ESSBGlobalSettings::$subscribe_link;
+					$api_command = "essb_tracking_only('', 'subscribe', '".$salt."', true);";
+				}
+				else {
+					$url = "#";
+					$api_command = "essb_toggle_subscribe('".$salt."'); return false;";
+				}
+				
+				break;
 				
 			default:
 				// @since 3.0 - module parsing social buttons or custom social buttons
@@ -1026,7 +1020,8 @@ class ESSBButtonHelper {
 		if ($api_command == '') {
 			$api_command = sprintf('essb_window(&#39;%1$s&#39;,&#39;%2$s&#39;,&#39;%3$s&#39;); return false;', $url, $network, $salt);
 			
-			if ($network == "twitter") {
+			// @since 3.6 - commented to allow AMP work
+			if ($network == "twitter" && !$amp_endpoint) {
 				$url = "#";
 			}
 		}
@@ -1076,162 +1071,6 @@ class ESSBButtonHelper {
 	}
 	
 	
-	public static function twitter_message_optimization($tweet, $url, $user, $hashtags, $method = '1') {
-		global $essb_options;
-		$max_message_length = 140;
-		
-		$twitter_message_optimize_dots = ESSBOptionValuesHelper::options_bool_value($essb_options, 'twitter_message_optimize_dots');
-		
-		$current_message_length = ESSBButtonHelper::twitter_message_length($tweet, $url, $user, $hashtags);
-		
-		$result = array();
-		$result['tweet'] = $tweet;
-		$result['hashtags'] = $hashtags;
-		$result['user'] = $user;
-		
-		if ($current_message_length < $max_message_length) {
-			return $result;
-		} else {
-			switch ($method) {
-				case "1" :
-					$result ['hashtags'] = '';
-					$current_message_length = ESSBButtonHelper::twitter_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-					
-					if ($current_message_length > $max_message_length) {
-						$result ['user'] = '';
-						$current_message_length = ESSBButtonHelper::twitter_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-						
-						if ($current_message_length > $max_message_length) {
-							$length = ESSBButtonHelper::twitter_maximum_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-							if ($twitter_message_optimize_dots) {
-								$length -= 3;
-							}
-							$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
-							$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
-							if ($twitter_message_optimize_dots) {
-								$trimmed_text .= '...';
-							}
-							$result ['tweet'] = $trimmed_text;
-						}
-					}
-					break;
-				case "2" :
-					$result ['user'] = '';
-					$current_message_length = ESSBButtonHelper::twitter_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-					
-					if ($current_message_length > $max_message_length) {
-						$result ['hashtags'] = '';
-						$current_message_length = ESSBButtonHelper::twitter_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-						
-						if ($current_message_length > $max_message_length) {
-							$length = ESSBButtonHelper::twitter_maximum_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-							if ($twitter_message_optimize_dots) {
-								$length -= 3;
-							}
-							$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
-							$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
-							if ($twitter_message_optimize_dots) {
-								$trimmed_text .= '...';
-							}
-							$result ['tweet'] = $trimmed_text;
-						}
-					
-					}
-					break;
-				case "3" :
-					$result ['user'] = '';
-					$current_message_length = ESSBButtonHelper::twitter_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-					
-					if ($current_message_length > $max_message_length) {
-						
-						$length = ESSBButtonHelper::twitter_maximum_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-						if ($twitter_message_optimize_dots) {
-							$length -= 3;
-						}
-						$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
-						$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
-						if ($twitter_message_optimize_dots) {
-							$trimmed_text .= '...';
-						}
-						
-						$result ['tweet'] = $trimmed_text;
-					
-					}
-					break;
-				case "4" :
-					$result ['hashtags'] = '';
-					$current_message_length = ESSBButtonHelper::twitter_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-					
-					if ($current_message_length > $max_message_length) {
-						
-						$length = ESSBButtonHelper::twitter_maximum_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-						if ($twitter_message_optimize_dots) {
-							$length -= 3;
-						}
-						$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
-						$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
-						if ($twitter_message_optimize_dots) {
-							$trimmed_text .= '...';
-						}
-						
-						$result ['tweet'] = $trimmed_text;
-					
-					}
-					break;
-				case "5" :
-					$length = ESSBButtonHelper::twitter_maximum_message_length ( $result ['tweet'], $url, $result ['user'], $result ['hashtags'] );
-					if ($twitter_message_optimize_dots) {
-						$length -= 3;
-					}
-					$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
-					$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
-					if ($twitter_message_optimize_dots) {
-						$trimmed_text .= '...';
-					}
-					
-					$result ['tweet'] = $trimmed_text;
-					break;
-			}
-			
-			return $result;
-		}
-	}
-
-	public static function twitter_message_length($tweet, $url, $user, $hashtags) {
-		$current_message_length = strlen($tweet);
-		$current_message_length += strlen($url) + 1;
-		$current_message_length += strlen($hashtags);
-		if (!empty($hashtags)) {
-			$number_of_tags = substr_count($hashtags, ',');
-			$number_of_tags++;
-				
-			$current_message_length += ($number_of_tags) * 2;
-		}
-		
-		if (!empty($user)) {
-			$current_message_length += strlen($user) + 5;
-		}
-		
-		return $current_message_length;
-	}
-	
-	public static function twitter_maximum_message_length($tweet, $url, $user, $hashtags) {
-		$current_message_length = 0;
-		$current_message_length += strlen($url) + 1;
-		$current_message_length += strlen($hashtags);
-		if (!empty($hashtags)) {
-			$number_of_tags = substr_count($hashtags, ',');
-			$number_of_tags++;
-	
-			$current_message_length += ($number_of_tags) * 2;
-		}
-	
-		if (!empty($user)) {
-			$current_message_length += strlen($user) + 5;
-		}
-	
-		return 140 - $current_message_length;
-	}
 	
 	public static function draw_share_counter_code($position, $counter, $counter_hidden) {
 		

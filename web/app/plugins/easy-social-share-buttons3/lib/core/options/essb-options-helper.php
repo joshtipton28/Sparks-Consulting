@@ -41,6 +41,11 @@ class ESSBOptionValuesHelper {
 					$is_active = true;
 				}
 				break;
+			case "mycred_hook":
+				if (ESSBOptionValuesHelper::options_bool_value($essb_options, 'mycred_activate_custom')) {
+					$is_active = true;
+				}
+				break;
 			case "aftershare":
 				if (ESSBOptionValuesHelper::options_bool_value($essb_options, 'afterclose_active')) {
 					$is_active = true;
@@ -225,6 +230,70 @@ class ESSBOptionValuesHelper {
 		
 		if ($basic_style['button_style'] == 'recommended') {
 			$basic_style['button_style'] = 'icon';
+		}
+		
+		return $basic_style;
+	}
+	
+	public static function apply_point_position_style_settings($postion, $basic_style) {
+		global $essb_options;
+		
+		// point setup to select best display values
+		$point_display_style = ESSBOptionValuesHelper::options_value($essb_options, 'point_style', 'simple');
+		$is_demo_advanced = false;
+		if (ESSB3_DEMO_MODE) {
+			$demo_style = isset($_REQUEST['point_style']) ? $_REQUEST['point_style'] : '';
+			if ($demo_style != '') {
+				$point_display_style = $demo_style;
+				$is_demo_advanced = true;
+			}
+		}
+	
+		if (ESSBOptionValuesHelper::options_value($essb_options, $postion.'_template') != "") {
+			$basic_style['template'] = ESSBOptionValuesHelper::options_value($essb_options, $postion.'_template');
+		}
+	
+		$basic_style['nospace'] = ESSBOptionValuesHelper::options_value($essb_options, $postion.'_nospace');
+		$basic_style['show_counter'] = ESSBOptionValuesHelper::options_bool_value($essb_options, $postion.'_show_counter');
+		$basic_style['counter_pos'] = ESSBOptionValuesHelper::options_value($essb_options, $postion.'_counter_pos');
+		$basic_style['total_counter_pos'] = 'hidden';
+		$basic_style['button_style'] = ESSBOptionValuesHelper::options_value($essb_options, $postion.'_button_style');
+	
+		if ($basic_style['button_style'] == 'recommended') {
+			if ($point_display_style == 'simple') {
+				$basic_style['button_style'] = 'icon';
+			}
+			else {
+				$basic_style['button_style'] = 'button';
+			}
+		}
+		
+		$basic_style['button_width'] = "column";
+		$basic_style['button_width_columns'] = "1";
+		
+		// specific display styling
+		if ($point_display_style == 'simple') {
+			if ($basic_style['counter_pos'] == 'insidename' || $basic_style['counter_pos'] == 'insidebeforename') {
+				$basic_style['counter_pos'] = 'inside';
+			}
+			
+			$basic_style['button_width'] = 'fixed';
+			$basic_style['button_width_fixed_value'] = '30';
+			$basic_style['button_width_fixed_align'] = 'center';
+				
+			
+			if ($basic_style['show_counter'] && ($basic_style['counter_pos'] == 'inside' || $basic_style['counter_pos'] == 'bottom')) {
+				$basic_style['button_style'] = 'button';
+				
+				if ($basic_style['counter_pos'] == 'inside') {
+					$basic_style['button_width_fixed_value'] = '65';
+					$basic_style['button_width_fixed_align'] = 'right';
+				}
+			}
+		}
+	
+		if ($is_demo_advanced) {
+			$basic_style['counter_pos'] = 'insidename';
 		}
 		
 		return $basic_style;

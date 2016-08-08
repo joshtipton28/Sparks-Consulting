@@ -47,7 +47,7 @@ class ESSBAdminBarMenu3 {
 		$this->add_sub_menu ( "Need Help?", 'http://support.creoworx.com/', "essb", "essb_p6" );
 		
 		if (ESSB3_ADDONS_ACTIVE) {
-			$this->add_sub_menu ( '<span style="color:#f39c12;">Add-ons</span>', get_admin_url () . 'admin.php?page=essb_addons', "essb", "essb_p7" );
+			$this->add_sub_menu ( '<span style="color:#f39c12;">Extensions</span>', get_admin_url () . 'admin.php?page=essb_addons', "essb", "essb_p7" );
 				
 		}
 	}

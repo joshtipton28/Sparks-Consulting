@@ -20,10 +20,10 @@ class ESSBResourceBuilder {
 	private $js_delayed = false;
 	
 	// css code
-	private $css_head = array();
-	private $css_footer = array();
-	private $css_static = array();
-	private $css_static_footer = array();
+	public $css_head = array();
+	public $css_footer = array();
+	public $css_static = array();
+	public $css_static_footer = array();
 	
 	// javascript code
 	private $js_code_head = array();
@@ -296,6 +296,7 @@ class ESSBResourceBuilder {
 	 * Enqueue all front CSS and javascript files
 	 */
 	
+	
 	function enqueue_style_single_css($key, $file, $version) {
 		if (!defined('ESSB3_PRECOMPILED_RESOURCE')) {
 			wp_enqueue_style ( $key, $file, false, $this->resource_version, 'all' );
@@ -304,8 +305,7 @@ class ESSBResourceBuilder {
 			$this->precompiled_css_queue[$key] = $file;
 		}
 	}
-	
-	
+		
 	function register_front_assets() {
 		if ($this->is_plugin_deactivated_on()) {
 			return;
@@ -477,7 +477,7 @@ class ESSBResourceBuilder {
 			return;
 		}
 		
-		$cache_key = "essb-precompiled";
+		$cache_key = "essb-precompiled".(essb_is_mobile() ? "-mobile": "");
 		
 		$cached_data = ESSBPrecompiledResources::get_resource($cache_key, 'css');
 			
@@ -499,12 +499,6 @@ class ESSBResourceBuilder {
 			$styles[] = $css_code;
 		}
 		
-		if (count($this->css_footer) > 0) {
-			$css_code = implode(" ", $this->css_footer);
-			$css_code = trim(preg_replace('/\s+/', ' ', $css_code));
-			$styles[] = $css_code;
-		}
-		
 		// parsing inlinde enqueue styles
 		$current_site_url = get_site_url();
 		foreach ($this->precompiled_css_queue as $key => $file) {
@@ -515,7 +509,7 @@ class ESSBResourceBuilder {
 			if ($key == "essb-social-image-share") {
 				$css_code = str_replace('../', ESSB3_PLUGIN_URL . '/lib/modules/social-image-share/assets/', $css_code);
 			}
-			if ($key == "easy-social-share-buttons-profiles") {
+			if ($key == "easy-social-share-buttons-profiles" || $key == "easy-social-share-buttons-display-methods") {
 				$css_code = str_replace('../', ESSB3_PLUGIN_URL . '/assets/', $css_code);
 			}
 			if ($key == "essb-social-followers-counter") {
@@ -545,6 +539,12 @@ class ESSBResourceBuilder {
 			$styles[] = $css_code;
 				
 			$static_content[$key] = $file;
+		}
+
+		if (count($this->css_footer) > 0) {
+			$css_code = implode(" ", $this->css_footer);
+			$css_code = trim(preg_replace('/\s+/', ' ', $css_code));
+			$styles[] = $css_code;
 		}
 		
 		$toc = array();
@@ -595,7 +595,7 @@ class ESSBResourceBuilder {
 		}
 		
 		// loading in precompiled cache mode
-		$cache_key = "essb-precompiled";
+		$cache_key = "essb-precompiled".(essb_is_mobile() ? "-mobile": "");
 		
 		$cached_data = ESSBPrecompiledResources::get_resource($cache_key, 'js');
 			

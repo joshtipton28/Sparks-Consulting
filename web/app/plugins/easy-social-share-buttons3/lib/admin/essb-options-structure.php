@@ -63,6 +63,14 @@ ESSBOptionsStructureHelper::submenu_item('social', 'sharing-9', __('Affiliate & 
 //ESSBOptionsStructureHelper::submenu_item('social', 'sharing-10', __('AffiliateWP Integration', ESSB3_TEXT_DOMAIN), 'default', 'menu', 'true');
 //ESSBOptionsStructureHelper::submenu_item('social', 'sharing-17', __('Affiliates Integration', ESSB3_TEXT_DOMAIN), 'default', 'menu', 'true');
 
+ESSBOptionsStructureHelper::menu_item('social', 'optin', __('Easy Optin (Subscribe Forms)', ESSB3_TEXT_DOMAIN), 'envelope', 'activate_first', 'optin-1');
+ESSBOptionsStructureHelper::submenu_item('social', 'optin-1', __('Connectors', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::submenu_item('social', 'optin-2', __('Customize Design #1', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::submenu_item('social', 'optin-3', __('Customize Design #2', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::submenu_item('social', 'optin-4', __('Customize Design #3', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::submenu_item('social', 'optin-5', __('Customize Design #4', ESSB3_TEXT_DOMAIN));
+
+
 ESSBOptionsStructureHelper::menu_item('social', 'native', __('Like, Follow & Subscribe', ESSB3_TEXT_DOMAIN), 'default', 'activate_first', 'native-1');
 ESSBOptionsStructureHelper::submenu_item('social', 'native-1', __('Social Networks', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::submenu_item('social', 'native-2', __('Skinned buttons', ESSB3_TEXT_DOMAIN));
@@ -85,6 +93,8 @@ ESSBOptionsStructureHelper::submenu_item('social', 'after-share-4', __('Custom C
 
 ESSBOptionsStructureHelper::menu_item('social', 'social-metrics', __('Social Metrics Lite', ESSB3_TEXT_DOMAIN), 'default');
 ESSBOptionsStructureHelper::menu_item('social', 'shorturl', __('Short URL', ESSB3_TEXT_DOMAIN), 'default');
+
+
 
 //---- display
 ESSBOptionsStructureHelper::menu_item('display', 'settings', __('Where to display', ESSB3_TEXT_DOMAIN), 'default', 'activate_first', 'settings-1');
@@ -115,6 +125,7 @@ ESSBOptionsStructureHelper::submenu_item('display', 'positions-11', __('Fly in',
 ESSBOptionsStructureHelper::submenu_item('display', 'positions-12', __('On media', ESSB3_TEXT_DOMAIN),  'default', 'menu', 'true');
 ESSBOptionsStructureHelper::submenu_item('display', 'positions-13', __('Full screen hero share', ESSB3_TEXT_DOMAIN),  'default', 'menu', 'true');
 ESSBOptionsStructureHelper::submenu_item('display', 'positions-15', __('Post share bar', ESSB3_TEXT_DOMAIN),  'default', 'menu', 'true');
+ESSBOptionsStructureHelper::submenu_item('display', 'positions-16', __('Point', ESSB3_TEXT_DOMAIN),  'default', 'menu', 'true');
 ESSBOptionsStructureHelper::submenu_item('display', 'positions-14', __('Excerpt', ESSB3_TEXT_DOMAIN),  'default', 'menu', 'true');
 
 ESSBOptionsStructureHelper::menu_item('display', 'mobile', __('Mobile', ESSB3_TEXT_DOMAIN), 'default', 'activate_first', 'mobile-1');
@@ -146,6 +157,7 @@ if (ESSBOptionValuesHelper::options_bool_value($essb_options, 'advanced_custom_s
 ESSBOptionsStructureHelper::menu_item('style', 'buttons', __('Color Customization', ESSB3_TEXT_DOMAIN), 'default');
 ESSBOptionsStructureHelper::menu_item('style', 'fans', __('Followers Counter Color Customization', ESSB3_TEXT_DOMAIN), 'default');
 ESSBOptionsStructureHelper::menu_item('style', 'image', __('Image Share Color Customization', ESSB3_TEXT_DOMAIN), 'default');
+//ESSBOptionsStructureHelper::menu_item('style', 'subscribe', __('MailChimp Subscribe Form', ESSB3_TEXT_DOMAIN), 'default');
 ESSBOptionsStructureHelper::menu_item('style', 'css', __('Additional CSS', ESSB3_TEXT_DOMAIN), 'default');
 ESSBOptionsStructureHelper::menu_item('style', 'css2', __('Additional Footer CSS', ESSB3_TEXT_DOMAIN), 'default');
 //ESSBOptionsStructureHelper::menu_item('advanced', 'advancedpost', __('Display Settings by Post Type', ESSB3_TEXT_DOMAIN), 'default');
@@ -246,13 +258,23 @@ ESSBOptionsStructureHelper::field_section_end('social', 'sharing-3');
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-3', 'heading2', __('Pinterest', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-3', 'pinterest_sniff_disable', __('Disable Pinterest Pin any image:', ESSB3_TEXT_DOMAIN), __('If you disable Pinterest sniff for images plugin will use for share post featured image or custom share image you provide.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 
+ESSBOptionsStructureHelper::field_heading('social', 'sharing-3', 'heading2', __('Subscribe button', ESSB3_TEXT_DOMAIN));
+$listOfValues = array ("form" => "Open content box", "link" => "Open subscribe link", "mailchimp" => "Easy Optin Subscribe Form (Ready made forms with automatic service integrations)" );
+ESSBOptionsStructureHelper::field_select('social', 'sharing-3', 'subscribe_function', __('Specify subscribe button function', ESSB3_TEXT_DOMAIN), __('Specify if the subscribe button is opening a content box below the button or if the button is linked to the "subscribe url" below.', ESSB3_TEXT_DOMAIN), $listOfValues);
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'sharing-3', 'subscribe_link', __('Subscribe URL', ESSB3_TEXT_DOMAIN), __('Link the Subscribe button to this URL. This can be the url to your subscribe page, facebook fanpage, RSS feed etc. e.g. http://yoursite.com/subscribe', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_editor('social', 'sharing-3', 'subscribe_content', __('Subscribe content box', ESSB3_TEXT_DOMAIN), __('Define the content of the opening toggle subscribe window here. Use formulars, like button, links or any other text. Shortcodes are supported, e.g.: [contact-form-7]. Note that if you use subscribe button outside content display positions content will open as popup', ESSB3_TEXT_DOMAIN), 'htmlmixed');
+$listOfValues = essb_optin_designs();
+ESSBOptionsStructureHelper::field_select('social', 'sharing-3', 'subscribe_optin_design', __('Specify subscribe button Easy Optin design for content', ESSB3_TEXT_DOMAIN), __('Choose default design that you will use with Easy Optin for content display methods', ESSB3_TEXT_DOMAIN), $listOfValues);
+ESSBOptionsStructureHelper::field_select('social', 'sharing-3', 'subscribe_optin_design_popup', __('Specify subscribe button Easy Optin design for popup', ESSB3_TEXT_DOMAIN), __('Choose default design that you will use with Easy Optin for content display methods', ESSB3_TEXT_DOMAIN), $listOfValues);
+
+
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-3', 'heading2', __('Email', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_start('social', 'sharing-3', __('Email button send options', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '');
 $listOfValues = array ("form" => "Send mail using pop up form", "link" => "Send mail using mailto link and user mail client" );
 ESSBOptionsStructureHelper::field_select('social', 'sharing-3', 'mail_function', __('Send to mail button function', ESSB3_TEXT_DOMAIN), __('Choose how you wish mail button to operate. By default it uses the build in pop up window with sendmail option but you can change this to link option to force use of client mail program.', ESSB3_TEXT_DOMAIN), $listOfValues);
-
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-3', 'use_wpmandrill', __('Use wpMandrill for send mail', ESSB3_TEXT_DOMAIN), __('To be able to send messages with wpMandrill you need to have plugin installed.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('social', 'sharing-3', 'mail_copyaddress', __('Send copy of all messages to', ESSB3_TEXT_DOMAIN), __('Provide email address if you wish to get copy of each message that is sent via form', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'sharing-3', 'mail_inline_code', __('Append inline mail send code', ESSB3_TEXT_DOMAIN), __('Activate this option if you use Initite scroll plugin and mail button do not work', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_end('social', 'sharing-3');
 
 ESSBOptionsStructureHelper::field_section_start('social', 'sharing-3', __('Pop up mail form options', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '');
@@ -348,12 +370,13 @@ ESSBOptionsStructureHelper::field_textbox('social', 'sharing-14', 'total_counter
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-15', 'heading1', __('Counters update', ESSB3_TEXT_DOMAIN));
 
 $counter_mode = array("" => "Real time share counters", "cached" => "Cached share counters");
-$counter_refresh_time = array("1" => "1 hour", "2" => "2 hours", "3" => "3 hours", "6" => "6 hours", "12" => "12 hours", "24" => "1 day");
 
 ESSBOptionsStructureHelper::field_select('social', 'sharing-15', 'counter_mode', __('Counter update mode', ESSB3_TEXT_DOMAIN), __('Choose how your counters will update. Cached counters will work faster than realtime because they update on predefined period. Please note that when you use cache plugin cached counters will update when cache is expired in cache plugin', ESSB3_TEXT_DOMAIN), $counter_mode);
 
+
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-15', 'heading5', __('Cached share counters', ESSB3_TEXT_DOMAIN));
-ESSBOptionsStructureHelper::field_select('social', 'sharing-15', 'cache_counter_refresh', __('Cached counters refresh interval', ESSB3_TEXT_DOMAIN), __('Choose interval of counter update when you use cached counters', ESSB3_TEXT_DOMAIN), $counter_refresh_time);
+ESSBOptionsStructureHelper::field_select('social', 'sharing-15', 'cache_counter_refresh_new', __('Cached counters refresh interval', ESSB3_TEXT_DOMAIN), __('Choose interval of counter update when you use cached counters', ESSB3_TEXT_DOMAIN), essb_cached_counters_update());
+ESSBOptionsStructureHelper::field_switch('social', 'sharing-15', 'cache_counter_refresh_cache', __('Activate cache plugin update mode', ESSB3_TEXT_DOMAIN), __('Activate this option if you use cache plugin and counters do not update often', ESSB3_TEXT_DOMAIN), 'yes', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-15', 'heading5', __('Real time share counters', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_start('social', 'sharing-15', __('Counter update options for all networks that does not provide direct access to counter API or does not have share counter and uses internal counters', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '');
@@ -423,15 +446,23 @@ ESSBOptionsStructureHelper::field_textarea('social', 'sharing-8', 'customshare_d
 
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-9', 'heading4', __('myCred Integration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-9', 'heading5', __('Award users for clicking on share button', ESSB3_TEXT_DOMAIN));
-ESSBOptionsStructureHelper::field_switch('social', 'sharing-9', 'mycred_activate', __('Activate myCred integration for click', ESSB3_TEXT_DOMAIN), __('In order to work the myCred integration you need to have myCred Points for click on links hook activated (if you use custom points group you need to activated inside custom points group settings).', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
-ESSBOptionsStructureHelper::field_textbox('social', 'sharing-9', 'mycred_points', __('myCred reward points for share link click', ESSB3_TEXT_DOMAIN), __('Provide custom points to reward user when share link. If nothing is provided 1 point will be included.', ESSB3_TEXT_DOMAIN));
-ESSBOptionsStructureHelper::field_textbox('social', 'sharing-9', 'mycred_group', __('myCred custom point type', ESSB3_TEXT_DOMAIN), __('Provide custom meta key for the points that user will get to share link. To create your own please visit this tutorial: <a href="http://codex.mycred.me/get-started/multiple-point-types/" target="_blank">http://codex.mycred.me/get-started/multiple-point-types/</a>. Leave blank to use the default (mycred_default)', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_start_panels('social', 'sharing-9', __('Integration via points for click on links', ESSB3_TEXT_DOMAIN), __('Award users for click on share buttons using the build in hook for click on links inside myCred', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch_panel('social', 'sharing-9', 'mycred_activate', __('Activate myCred integration for click on links', ESSB3_TEXT_DOMAIN), __('In order to work the myCred integration you need to have myCred Points for click on links hook activated (if you use custom points group you need to activated inside custom points group settings).', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_panel('social', 'sharing-9', 'mycred_points', __('myCred reward points for share link click', ESSB3_TEXT_DOMAIN), __('Provide custom points to reward user when share link. If nothing is provided 1 point will be included.', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_panel('social', 'sharing-9', 'mycred_group', __('myCred custom point type', ESSB3_TEXT_DOMAIN), __('Provide custom meta key for the points that user will get to share link. To create your own please visit this tutorial: <a href="http://codex.mycred.me/get-started/multiple-point-types/" target="_blank">http://codex.mycred.me/get-started/multiple-point-types/</a>. Leave blank to use the default (mycred_default)', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_end_panels('social', 'sharing-9');
+ESSBOptionsStructureHelper::field_section_start_panels('social', 'sharing-9', __('Integration via Easy Social Share Buttons hook', ESSB3_TEXT_DOMAIN), __('Award users for click on share buttons using the custom hook for points for social sharing', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch_panel('social', 'sharing-9', 'mycred_activate_custom', __('Activate myCred integration for points for social sharing', ESSB3_TEXT_DOMAIN), __('Use Easy Social Share Buttons custom hook in myCred to award points for click on share buttons', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_end_panels('social', 'sharing-9');
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-9', 'heading5', __('Award users when someone uses their share link', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-9', 'mycred_referral_activate', __('Activate myCred Referral usage', ESSB3_TEXT_DOMAIN), __('That option requires you to have the Points for referrals hook enabled. That option is not compatible with share counters because adding referral id to url will reset social share counters to zero.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-9', 'heading4', __('AffiliateWP Integration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-9', 'affwp_active', __('Append Affiliate ID to shared address', ESSB3_TEXT_DOMAIN), __('Automatically appends an affiliate\'s ID to Easy Social Share Buttons sharing links that are generated. You need to have installed AffiliateWP plugin to use it: <a href="https://affiliatewp.com/" target="_blank">https://affiliatewp.com/</a>', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+$listOfOptions = array("id" => "User ID", "name" => "Username");
+ESSBOptionsStructureHelper::field_select('social', 'sharing-9', 'affwp_active_mode', __('ID Append Mode', ESSB3_TEXT_DOMAIN), __('Choose between usage of user id or username when you add affiliate id to outgoing shares.', ESSB3_TEXT_DOMAIN), $listOfOptions);
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-9', 'affwp_active_shortcode', __('Append Affiliate ID to custom shared address in shortcodes', ESSB3_TEXT_DOMAIN), __('Automatically appends an affiliate\'s ID to Easy Social Share Buttons sharing links that are generated when shortcode has a custom url parameter.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'sharing-9', 'affwp_active_pretty', __('Use pretty affiliate URLs', ESSB3_TEXT_DOMAIN), __('Activate this option if you already have make it active inside AffiliateWP to allow Easy Social Share Buttons generate pretty affiliate URLs.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 
 ESSBOptionsStructureHelper::field_heading('social', 'sharing-9', 'heading4', __('Affiliates Integration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch('social', 'sharing-9', 'affs_active', __('Append Affiliate ID to shared address', ESSB3_TEXT_DOMAIN), __('Automatically appends an affiliate\'s ID to Easy Social Share Buttons sharing links that are generated. You need to have installed Affiliates plugin to use it: <a href="https://wordpress.org/plugins/affiliates/" target="_blank">https://wordpress.org/plugins/affiliates/</a>', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
@@ -666,7 +697,8 @@ if (defined('ESSB3_SSU_VERSION')) {
 ESSBOptionsStructureHelper::field_select('social', 'shorturl', 'shorturl_type', __('Choose short url type', ESSB3_TEXT_DOMAIN), __('Please note that usage of bit.ly requires to fill additional fields below or short urls will not be generated. If you choose goo.gl as provider we also recommend to generate API key due to public quota limit provided by Google.'), $listOfOptions);
 ESSBOptionsStructureHelper::field_heading('social', 'shorturl', 'heading5', __('bit.ly Configuration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox('social', 'shorturl', 'shorturl_bitlyuser', __('bit.ly Username', ESSB3_TEXT_DOMAIN), __('Provide your bit.ly username', ESSB3_TEXT_DOMAIN));
-ESSBOptionsStructureHelper::field_textbox_stretched('social', 'shorturl', 'shorturl_bitlyapi', __('bit.ly API key', ESSB3_TEXT_DOMAIN), __('Provide your bit.ly API key', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'shorturl', 'shorturl_bitlyapi', __('bit.ly API key/Access token key', ESSB3_TEXT_DOMAIN), __('Provide your bit.ly API key', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_select('social', 'shorturl', 'shorturl_bitlyapi_version', __('bit.ly API version', ESSB3_TEXT_DOMAIN), __('Choose version of bit.ly API you will use. We recommend to switch to new bit.ly API with access token'), array( "previous" => "Old API version with Username and Access Key", "new" => "New API with access token"));
 ESSBOptionsStructureHelper::field_heading('social', 'shorturl', 'heading5', __('goo.gl Configuration', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('social', 'shorturl', 'shorturl_googlapi', __('goo.gl API key', ESSB3_TEXT_DOMAIN), __('Goo.gl short url service can work with or without API key. If you have a high traffic site it is recommended to use API key because when anonymous usage reach amount of request for time you will not get short urls. To generate such key you need to visit <a href="https://console.developers.google.com/project" target="_blank">Google Developer Console</a>', ESSB3_TEXT_DOMAIN));
 
@@ -1002,6 +1034,54 @@ ESSBOptionsStructureHelper::field_section_end('display', 'positions-15');
 
 essb_prepare_location_advanced_customization('display', 'positions-15', 'postbar');
 
+// Point
+ESSBOptionsStructureHelper::field_heading('display', 'positions-16', 'heading1', __('Display Position Settings: Point', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_start_panels('display', 'positions-16', __('Point display', ESSB3_TEXT_DOMAIN), __('Choose location of point and style', ESSB3_TEXT_DOMAIN));
+$point_positions = array("bottomright" => __('Bottom Right', 'essb'), 'bottomleft' => __('Bottom Left', 'essb'), 'topright' => __('Top Right', 'essb'), 'topleft' => __('Top Left', 'essb'));
+ESSBOptionsStructureHelper::field_select_panel('display', 'positions-16', 'point_position', __('Point will appear on', ESSB3_TEXT_DOMAIN), __('Choose where you wish sharing point to appear', 'essb'), $point_positions);
+ESSBOptionsStructureHelper::field_switch_panel('display', 'positions-16', 'point_total', __('Display total counter', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to activate display of total counter on point', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+//ESSBOptionsStructureHelper::field_switch_panel('display', 'positions-16', 'point_open_end', __('Automatic share point open at the end of content', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to automatic share point open at the end of post content', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+$point_open_triggers = array("no" => __("No", "essb"), "end" => __("At the end of content", "essb"), "middle" => __("After the middle of content", "essb"));
+ESSBOptionsStructureHelper::field_select_panel('display', 'positions-16', 'point_open_auto', __('Automatic share point open', ESSB3_TEXT_DOMAIN), __('Select your button display style.', ESSB3_TEXT_DOMAIN), $point_open_triggers);
+
+$point_display_style = array("simple" => __('Simple icons', 'essb'), 'advanced' => __('Advanced Panel', 'essb'));
+ESSBOptionsStructureHelper::field_select_panel('display', 'positions-16', 'point_style', __('Share buttons action type', ESSB3_TEXT_DOMAIN), __('Choose your share buttons action type. Simple buttons will just open share buttons when you click the point. Advanced panel allows you also to include custom texts before/after buttons into nice flyout panel', 'essb'), $point_display_style);
+$point_display_style = array("round" => __('Round', 'essb'), 'square' => __('Square', 'essb'), 'rounded' => __('Rounded edges square', 'essb'));
+ESSBOptionsStructureHelper::field_select_panel('display', 'positions-16', 'point_shape', __('Point button shape', ESSB3_TEXT_DOMAIN), __('Choose the shape of share point - default is round', 'essb'), $point_display_style);
+
+ESSBOptionsStructureHelper::field_section_end_panels('display', 'positions-16');
+
+ESSBOptionsStructureHelper::field_section_start_panels('display', 'positions-16', __('Customize colors', ESSB3_TEXT_DOMAIN), __('Customize default colors of core components', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color_panel('display', 'positions-16', 'point_bgcolor', __('Change default background color', ESSB3_TEXT_DOMAIN), __('Customize the default point background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color_panel('display', 'positions-16', 'point_color', __('Change default text color', ESSB3_TEXT_DOMAIN), __('Customize the default point text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color_panel('display', 'positions-16', 'point_accentcolor', __('Change default total background color', ESSB3_TEXT_DOMAIN), __('Customize the default total background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color_panel('display', 'positions-16', 'point_altcolor', __('Change default total text color', ESSB3_TEXT_DOMAIN), __('Customize the default total text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_end_panels('display', 'positions-16');
+
+
+
+
+ESSBOptionsStructureHelper::field_section_start('display', 'positions-16', __('Customize button style', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
+$tab_id = 'display';
+$menu_id = 'positions-16';
+$location = 'point';
+ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', ESSB3_TEXT_DOMAIN), __('Select your button display style.', ESSB3_TEXT_DOMAIN), essb_avaiable_button_style_with_recommend());
+ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', ESSB3_TEXT_DOMAIN), __('Select your template for that display location.', ESSB3_TEXT_DOMAIN), essb_available_tempaltes());
+ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', ESSB3_TEXT_DOMAIN), __('Activate this option to remove default space between share buttons.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', ESSB3_TEXT_DOMAIN), __('Activate display of share counters.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', ESSB3_TEXT_DOMAIN), __('Choose your default button counter position. Please note that if you use Simple icons mode all Inside positions will act like Inside - network names will not appear because of visual limitations', ESSB3_TEXT_DOMAIN), essb_avaliable_counter_positions_point());
+ESSBOptionsStructureHelper::field_section_end('display', 'positions-16');
+
+ESSBOptionsStructureHelper::field_section_start('display', 'positions-16', __('Custom button content for Advanced panel display', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_wpeditor('display', 'positions-16', 'point_top_content', __('Custom content above share buttons', ESSB3_TEXT_DOMAIN), __('Optional: Provide custom content that will appear above share buttons. You can use the variables to display post related content: %%title%%, %%url%%, %%image%%, %%permalink%%', 'essb'), 'htmlmixed');
+ESSBOptionsStructureHelper::field_wpeditor('display', 'positions-16', 'point_bottom_content', __('Custom content below share buttons', ESSB3_TEXT_DOMAIN), __('Optional: Provide custom content that will appear below share buttons. You can use the variables to display post related content: %%title%%, %%url%%, %%image%%, %%permalink%%', 'essb'), 'htmlmixed');
+ESSBOptionsStructureHelper::field_switch('display', 'positions-16', 'point_articles', __('Display prev/next article', ESSB3_TEXT_DOMAIN), __('Activate this option to display prev/next article from same category', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_end('display', 'positions-16');
+
+
+essb_prepare_location_advanced_customization('display', 'positions-16', 'point');
+
+
 $mobile_cache_plugin_detected = "";
 if (ESSBCacheDetector::is_cache_plugin_detected()) {
 	$mobile_cache_plugin_detected = __(' Cache plugin detected: ', ESSB3_TEXT_DOMAIN).'<b>'.ESSBCacheDetector::cache_plugin_name().'</b>';
@@ -1024,6 +1104,7 @@ $listOfOptions = array("1" => "1 Button", "2" => "2 Buttons", "3" => "3 Buttons"
 ESSBOptionsStructureHelper::field_select_panel('display', 'mobile-1', 'mobile_sharebuttonsbar_count', __('Number of buttons in share buttons bar', ESSB3_TEXT_DOMAIN), __('Provide number of buttons you wish to see in buttons bar. If the number of activated buttons is greater than selected here the last button will be more button which will open pop up with all active buttons.', ESSB3_TEXT_DOMAIN), $listOfOptions);
 ESSBOptionsStructureHelper::field_switch_panel('display', 'mobile-1', 'mobile_sharebuttonsbar_names', __('Display network names', ESSB3_TEXT_DOMAIN), __('Activate this option to display network names (default display is icons only).', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch_panel('display', 'mobile-1', 'mobile_sharebuttonsbar_fix', __('Fix problem with buttons not displayed in full width', ESSB3_TEXT_DOMAIN), __('Some themes may overwrite the default buttons style and in this case buttons do not take the full width of screen. Activate this option to fix the overwritten styles.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch_panel('display', 'mobile-1', 'mobile_sharebuttonsbar_total', __('Display total share counter', ESSB3_TEXT_DOMAIN), __('Activate this option to display total share counter as first button. If you activate it please keep in mind that you need to set number of columns to be with one more than buttons you except to see (total counter will act as single button)', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_switch_panel('display', 'mobile-1', 'mobile_sharebuttonsbar_hideend', __('Hide buttons bar before end of page', ESSB3_TEXT_DOMAIN), __('This option is made to hide buttons bar once you reach 90% of page content to allow the entire footer to be visible.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_panel('display', 'mobile-1', 'mobile_sharebuttonsbar_hideend_percent', __('% of content is viewed to hide buttons bar before end of page', ESSB3_TEXT_DOMAIN), __('Customize the default percent 90 when buttons bar will hide. Enter value in percents without the % mark.', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_end_full_panels('display', 'mobile-1');
@@ -1130,6 +1211,7 @@ ESSBOptionsStructureHelper::field_heading('advanced', 'administrative', 'heading
 $admin_style = array ("" => "Dark", "light" => "Light" );
 ESSBOptionsStructureHelper::field_select('advanced', 'administrative', 'admin_template', __('Plugin Settings Style', ESSB3_TEXT_DOMAIN), __('Change plugin default options style', ESSB3_TEXT_DOMAIN), $admin_style);
 
+ESSBOptionsStructureHelper::field_switch('advanced', 'administrative', 'deactivate_appscreo', __('Deactivate checks for news and extensions', ESSB3_TEXT_DOMAIN), __('Activate this option in case you see message for connection problem.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 
 ESSBOptionsStructureHelper::field_section_start('advanced', 'administrative', __('Advanced Display Options', ESSB3_TEXT_DOMAIN), __('Activate additional advanced options for customization and sharing', ESSB3_TEXT_DOMAIN));
 //ESSBOptionsStructureHelper::field_switch('advanced', 'administrative', 'advanced_by_post_category', __('Activate custom style settings for post category', ESSB3_TEXT_DOMAIN), __('Activation of this option will add additional menu settings for each post category that you have which will allow to change style of buttons.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
@@ -1165,6 +1247,7 @@ ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'd
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_sis', __('On Media Sharing (Social Image Share)', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_profiles', __('Social Profiles', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_sso', __('Social Share Optimization Meta Tags', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_aftershare', __('After Share Actions', ESSB3_TEXT_DOMAIN), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', ESSB3_TEXT_DOMAIN));
 ESSBOptionsStructureHelper::field_section_end('advanced', 'deactivate');
 
 ESSBOptionsStructureHelper::field_heading('advanced', 'twitter', 'heading1', __('Twitter Counter Setup', ESSB3_TEXT_DOMAIN));
@@ -1179,10 +1262,12 @@ else {
 	
 	$recover_type = array("unchanged" => "Unchanged", "default" => "Default", "dayname" => "Day and Name", "monthname" => "Month and Name", "numeric" => "Numeric", "postname" => "Post Name", "domain" => "Change domain name");
 	ESSBOptionsStructureHelper::field_select('advanced', 'counterrecovery', 'counter_recover_mode', __('Previous url format or domain', ESSB3_TEXT_DOMAIN), __('Choose how your site address is changed', ESSB3_TEXT_DOMAIN), $recover_type);
+	ESSBOptionsStructureHelper::field_switch('advanced', 'counterrecovery', 'counter_recover_slash', __('My previous url does not have trailing slash', ESSB3_TEXT_DOMAIN), __('Activate this option if your previous url does not contain trailing slash at the end.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 	
 	$recover_mode = array("unchanged" => "Unchanged", "http2https" => "Switch from http to https", "https2http" => "Switch from https to http");
 	ESSBOptionsStructureHelper::field_select('advanced', 'counterrecovery', 'counter_recover_protocol', __('Change of connection protocol', ESSB3_TEXT_DOMAIN), __('If you change your connection protocol then choose here the option that describes it.', ESSB3_TEXT_DOMAIN), $recover_mode);	
 	ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'counterrecovery', 'counter_recover_domain', __('Previous domain name', ESSB3_TEXT_DOMAIN), __('If you have changed your domain name please fill in this field previous domain name with protocol (example http://example.com) and choose recovery mode to be <b>Change domain name</b>', ESSB3_TEXT_DOMAIN));
+	ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'counterrecovery', 'counter_recover_newdomain', __('New domain name', ESSB3_TEXT_DOMAIN), __('If plugin is not able to detect your new domain fill here its name with protocol (example http://example.com)', ESSB3_TEXT_DOMAIN));
 	ESSBOptionsStructureHelper::field_textbox('advanced', 'counterrecovery', 'counter_recover_date', __('Date of change', ESSB3_TEXT_DOMAIN), __('Fill out date when change was made. Once you fill it share counter recovery will be made for all posts that are published before this date. Date shoud be filled in format <b>yyyy-mm-dd</b>.', ESSB3_TEXT_DOMAIN));
 }
 
@@ -1258,6 +1343,141 @@ ESSBOptionsStructureHelper::field_heading('style', 'image', 'heading1', __('Imag
 ESSBOptionsStructureHelper::field_switch('style', 'image', 'activate_imageshare_customizer', __('Activate color customizer', ESSB3_TEXT_DOMAIN), __('Color customizations will not be included unless you activate this option. You are able to activate customization on specific post/pages even if this option is not set to active.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 essb3_draw_imageshare_customization('style', 'image');
 
+// Easy Optin 
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-1', 'heading1', __('Connectors', ESSB3_TEXT_DOMAIN));
+$optin_connectors = array("mailchimp" => "MailChimp", "getresponse" => "GetResponse", "mymail" => "MyMail", "mailpoet" => "MailPoet");
+ESSBOptionsStructureHelper::field_select('social', 'optin-1', 'subscribe_connector', __('Choose your service', ESSB3_TEXT_DOMAIN), __('Select service that you wish to integrate with Easy Optin forms. Please note that for correct work you need to fill all required authorizations details for it below', ESSB3_TEXT_DOMAIN), $optin_connectors);
+ESSBOptionsStructureHelper::field_heading('social', 'optin-1', 'heading4', __('MailChimp', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-1', 'subscribe_mc_api', __('Mailchimp API key', ESSB3_TEXT_DOMAIN), __('<a href="http://kb.mailchimp.com/accounts/management/about-api-keys#Finding-or-generating-your-API-key" target="_blank">Find your API key</a>', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-1', 'subscribe_mc_list', __('Mailchimp List ID', ESSB3_TEXT_DOMAIN), __('<a href="http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id" target="_blank">Find your List ID</a>', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'optin-1');
+ESSBOptionsStructureHelper::field_switch_panel('social', 'optin-1', 'subscribe_mc_welcome', __('Send welcome message:', ESSB3_TEXT_DOMAIN), __('Allow Mailchimp send welcome mssage upon subscribe.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch_panel('social', 'optin-1', 'subscribe_mc_double', __('Use double opt in:', ESSB3_TEXT_DOMAIN), __('The MailChimp double opt-in process is a two-step process, where a subscriber fills out your signup form and receives an email with a link to confirm their subscription. MailChimp also includes some additional thank you and confirmation pages you can customize with your brand and messaging.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+//ESSBOptionsStructureHelper::field_switch_panel('social', 'optin-1', 'subscribe_mc_namefield', __('Display name field:', ESSB3_TEXT_DOMAIN), __('Activate this option to allow customers enter their name.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'optin-1');
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-1', 'heading4', __('GetResonse', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-1', 'subscribe_gr_api', __('GetReponse API key', ESSB3_TEXT_DOMAIN), __('<a href="http://support.getresponse.com/faq/where-i-find-api-key" target="_blank">Find your API key</a>', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-1', 'subscribe_gr_list', __('GetReponse Campaign Name', ESSB3_TEXT_DOMAIN), __('<a href="http://support.getresponse.com/faq/can-i-change-the-name-of-a-campaign" target="_blank">Find your campaign name</a>', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-1', 'heading4', __('MyMail', ESSB3_TEXT_DOMAIN));
+$listOfOptions = array();
+if (function_exists('mymail')) {
+	$lists = mymail('lists')->get();
+	foreach ($lists as $list) {
+		if (function_exists('mymail')) $id = $list->ID;
+		else $id = $list->term_id;
+		
+		$listOfOptions[$id] = $list->name;
+	}
+}
+ESSBOptionsStructureHelper::field_select('social', 'optin-1', 'subscribe_mm_list', __('MyMail List', ESSB3_TEXT_DOMAIN), __('Select your list. Please ensure that MyMail plugin is installed.', ESSB3_TEXT_DOMAIN), $listOfOptions);
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-1', 'heading4', __('MailPoet', ESSB3_TEXT_DOMAIN));
+$listOfOptions = array();
+if (class_exists('WYSIJA')) {
+	$model_list = WYSIJA::get('list', 'model');
+	$mailpoet_lists = $model_list->get(array('name', 'list_id'), array('is_enabled'=>1));
+	if (sizeof($mailpoet_lists) > 0) {
+		foreach ($mailpoet_lists as $list) {
+			$listOfOptions[$list['list_id']] = $list['name'];
+		}
+	}
+}
+ESSBOptionsStructureHelper::field_select('social', 'optin-1', 'subscribe_mp_list', __('MailPoet List', ESSB3_TEXT_DOMAIN), __('Select your list. Please ensure that MailPoet plugin is installed.', ESSB3_TEXT_DOMAIN), $listOfOptions);
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-2', 'heading1', __('Customize Design #1', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-2', 'subscribe_mc_namefield', __('Display name field:', ESSB3_TEXT_DOMAIN), __('Activate this option to allow customers enter their name.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_title', __('Title', ESSB3_TEXT_DOMAIN), __('Customize default title: Join our list', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_editor('social', 'optin-2', 'subscribe_mc_text', __('Text', ESSB3_TEXT_DOMAIN), __('Customize default text: Subscribe to our mailing list and get interesting stuff and updates to your email inbox.', ESSB3_TEXT_DOMAIN), 'htmlmixed');
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_name', __('Name placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default name placeholder text: Enter your name here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_email', __('Email placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default email placeholder text: Enter your email here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_button', __('Subscribe button text', ESSB3_TEXT_DOMAIN), __('Customize default button text: Sign Up Now', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_footer', __('Footer text', ESSB3_TEXT_DOMAIN), __('Customize default footer text: We respect your privacy and take protecting it seriously', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_success', __('Success messsage', ESSB3_TEXT_DOMAIN), __('Customize Success Message: Thank you for subscribing.', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-2', 'subscribe_mc_error', __('Error message', ESSB3_TEXT_DOMAIN), __('Customize Error Message: Something went wrong.', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-2', 'heading4', __('Style Customization', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-2', 'activate_mailchimp_customizer', __('Activate color customizer', ESSB3_TEXT_DOMAIN), __('Color customizations will not be included unless you activate this option.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-2', 'customizer_subscribe_bgcolor', __('Background color', ESSB3_TEXT_DOMAIN), __('Replace form background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-2', 'customizer_subscribe_textcolor', __('Text color', ESSB3_TEXT_DOMAIN), __('Replace form text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-2', 'customizer_subscribe_hovercolor', __('Accent color', ESSB3_TEXT_DOMAIN), __('Replace form accent color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-2', 'customizer_subscribe_hovertextcolor', __('Accent text color', ESSB3_TEXT_DOMAIN), __('Replace form accent text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-2', 'customizer_subscribe_emailcolor', __('Email field background color', ESSB3_TEXT_DOMAIN), __('Replace email field background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-2', 'customizer_subscribe_noborder', __('Remove top border of form', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to remove the tiny top border from the top of form.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-3', 'heading1', __('Customize Design #2', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-3', 'subscribe_mc_namefield2', __('Display name field:', ESSB3_TEXT_DOMAIN), __('Activate this option to allow customers enter their name.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_title2', __('Title', ESSB3_TEXT_DOMAIN), __('Customize default title: Join our list', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_editor('social', 'optin-3', 'subscribe_mc_text2', __('Text', ESSB3_TEXT_DOMAIN), __('Customize default text: Subscribe to our mailing list and get interesting stuff and updates to your email inbox.', ESSB3_TEXT_DOMAIN), 'htmlmixed');
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_name2', __('Name placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default name placeholder text: Enter your name here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_email2', __('Email placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default email placeholder text: Enter your email here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_button2', __('Subscribe button text', ESSB3_TEXT_DOMAIN), __('Customize default button text: Sign Up Now', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_footer2', __('Footer text', ESSB3_TEXT_DOMAIN), __('Customize default footer text: We respect your privacy and take protecting it seriously', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_success2', __('Success messsage', ESSB3_TEXT_DOMAIN), __('Customize Success Message: Thank you for subscribing.', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-3', 'subscribe_mc_error2', __('Error message', ESSB3_TEXT_DOMAIN), __('Customize Error Message: Something went wrong.', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-3', 'heading4', __('Style Customization', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-3', 'activate_mailchimp_customizer2', __('Activate color customizer', ESSB3_TEXT_DOMAIN), __('Color customizations will not be included unless you activate this option.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-3', 'customizer_subscribe_bgcolor2', __('Background color', ESSB3_TEXT_DOMAIN), __('Replace form background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-3', 'customizer_subscribe_textcolor2', __('Text color', ESSB3_TEXT_DOMAIN), __('Replace form text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-3', 'customizer_subscribe_hovercolor2', __('Accent color', ESSB3_TEXT_DOMAIN), __('Replace form accent color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-3', 'customizer_subscribe_hovertextcolor2', __('Accent text color', ESSB3_TEXT_DOMAIN), __('Replace form accent text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-3', 'customizer_subscribe_emailcolor2', __('Email field background color', ESSB3_TEXT_DOMAIN), __('Replace email field background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-3', 'customizer_subscribe_noborder2', __('Remove border of form', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to remove the tiny border from the form.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-4', 'heading1', __('Customize Design #3', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-4', 'subscribe_mc_namefield3', __('Display name field:', ESSB3_TEXT_DOMAIN), __('Activate this option to allow customers enter their name.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_file('social', 'optin-4', 'subscribe_mc_image3', __('Choose image', ESSB3_TEXT_DOMAIN), __('Image parameter is optional but if you choose such it will appear in the top part of form on the left or right side of content.', ESSB3_TEXT_DOMAIN));
+$optin_connectors = array("left" => "Left side", "right" => "Right side");
+ESSBOptionsStructureHelper::field_select('social', 'optin-4', 'subscribe_mc_imagealign3', __('Image will appear on:', ESSB3_TEXT_DOMAIN), __('Choose where image will appear according to your top content', ESSB3_TEXT_DOMAIN), $optin_connectors);
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_title3', __('Title', ESSB3_TEXT_DOMAIN), __('Customize default title: Join our list', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_editor('social', 'optin-4', 'subscribe_mc_text3', __('Text', ESSB3_TEXT_DOMAIN), __('Customize default text: Subscribe to our mailing list and get interesting stuff and updates to your email inbox.', ESSB3_TEXT_DOMAIN), 'htmlmixed');
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_name3', __('Name placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default name placeholder text: Enter your name here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_email3', __('Email placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default email placeholder text: Enter your email here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_button3', __('Subscribe button text', ESSB3_TEXT_DOMAIN), __('Customize default button text: Sign Up Now', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_footer3', __('Footer text', ESSB3_TEXT_DOMAIN), __('Customize default footer text: We respect your privacy and take protecting it seriously', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_success3', __('Success messsage', ESSB3_TEXT_DOMAIN), __('Customize Success Message: Thank you for subscribing.', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-4', 'subscribe_mc_error3', __('Error message', ESSB3_TEXT_DOMAIN), __('Customize Error Message: Something went wrong.', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-4', 'heading4', __('Style Customization', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-4', 'activate_mailchimp_customizer3', __('Activate color customizer', ESSB3_TEXT_DOMAIN), __('Color customizations will not be included unless you activate this option.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_bgcolor3', __('Background color top area', ESSB3_TEXT_DOMAIN), __('Replace form background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_textcolor3', __('Text color top area', ESSB3_TEXT_DOMAIN), __('Replace form text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_bgcolor3_bottom', __('Background color bottom area', ESSB3_TEXT_DOMAIN), __('Replace form background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_textcolor3_bottom', __('Text color bottom area', ESSB3_TEXT_DOMAIN), __('Replace form text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_hovercolor3', __('Accent color', ESSB3_TEXT_DOMAIN), __('Replace form accent color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_hovertextcolor3', __('Accent text color', ESSB3_TEXT_DOMAIN), __('Replace form accent text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-4', 'customizer_subscribe_emailcolor3', __('Email field background color', ESSB3_TEXT_DOMAIN), __('Replace email field background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-4', 'customizer_subscribe_noborder3', __('Remove border of form', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to remove the tiny border from the form.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-5', 'heading1', __('Customize Design #4', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-5', 'subscribe_mc_namefield4', __('Display name field:', ESSB3_TEXT_DOMAIN), __('Activate this option to allow customers enter their name.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_file('social', 'optin-5', 'subscribe_mc_image4', __('Choose image', ESSB3_TEXT_DOMAIN), __('Image parameter is optional but if you choose such it will appear in the top part of form on the left or right side of content.', ESSB3_TEXT_DOMAIN));
+$optin_connectors = array("left" => "Left side", "right" => "Right side");
+ESSBOptionsStructureHelper::field_select('social', 'optin-5', 'subscribe_mc_imagealign4', __('Image will appear on:', ESSB3_TEXT_DOMAIN), __('Choose where image will appear according to your top content', ESSB3_TEXT_DOMAIN), $optin_connectors);
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_title4', __('Title', ESSB3_TEXT_DOMAIN), __('Customize default title: Join our list', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_editor('social', 'optin-5', 'subscribe_mc_text4', __('Text', ESSB3_TEXT_DOMAIN), __('Customize default text: Subscribe to our mailing list and get interesting stuff and updates to your email inbox.', ESSB3_TEXT_DOMAIN), 'htmlmixed');
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_name4', __('Name placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default name placeholder text: Enter your name here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_email4', __('Email placeholder text', ESSB3_TEXT_DOMAIN), __('Customize default email placeholder text: Enter your email here', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_button4', __('Subscribe button text', ESSB3_TEXT_DOMAIN), __('Customize default button text: Sign Up Now', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_footer4', __('Footer text', ESSB3_TEXT_DOMAIN), __('Customize default footer text: We respect your privacy and take protecting it seriously', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_success4', __('Success messsage', ESSB3_TEXT_DOMAIN), __('Customize Success Message: Thank you for subscribing.', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_textbox_stretched('social', 'optin-5', 'subscribe_mc_error4', __('Error message', ESSB3_TEXT_DOMAIN), __('Customize Error Message: Something went wrong.', ESSB3_TEXT_DOMAIN));
+
+ESSBOptionsStructureHelper::field_heading('social', 'optin-5', 'heading4', __('Style Customization', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-5', 'activate_mailchimp_customizer4', __('Activate color customizer', ESSB3_TEXT_DOMAIN), __('Color customizations will not be included unless you activate this option.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_bgcolor4', __('Background color of content area', ESSB3_TEXT_DOMAIN), __('Replace form background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_textcolor4', __('Text color of content area', ESSB3_TEXT_DOMAIN), __('Replace form text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_bgcolor4_bottom', __('Background color subscribe area', ESSB3_TEXT_DOMAIN), __('Replace form background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_textcolor4_bottom', __('Text color subscribe area', ESSB3_TEXT_DOMAIN), __('Replace form text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_hovercolor4', __('Accent color', ESSB3_TEXT_DOMAIN), __('Replace form accent color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_hovertextcolor4', __('Accent text color', ESSB3_TEXT_DOMAIN), __('Replace form accent text color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_color('social', 'optin-5', 'customizer_subscribe_emailcolor4', __('Email field background color', ESSB3_TEXT_DOMAIN), __('Replace email field background color', ESSB3_TEXT_DOMAIN));
+ESSBOptionsStructureHelper::field_switch('social', 'optin-5', 'customizer_subscribe_noborder4', __('Remove border of form', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to remove the tiny border from the form.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 
 // settings by post type
 $positions_by_pt = ESSBOptionValuesHelper::options_bool_value($essb_options, 'positions_by_pt');
@@ -1561,8 +1781,9 @@ function essb_prepare_location_advanced_customization($tab_id, $menu_id, $locati
 		ESSBOptionsStructureHelper::field_section_start_full_panels($tab_id, $menu_id);
 		
 		ESSBOptionsStructureHelper::field_switch_panel($tab_id, $menu_id, $location.'_mobile_deactivate', __('Deactivate on mobile', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish that method to be hidden when site is browsed with mobile device.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+		ESSBOptionsStructureHelper::field_switch_panel($tab_id, $menu_id, $location.'_tablet_deactivate', __('Deactivate on tablet', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish that method to be hidden when site is browsed with tablet device.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 		
-		if ($location != 'postbar') {
+		if ($location != 'postbar' && $location != 'point') {
 			ESSBOptionsStructureHelper::field_switch_panel($tab_id, $menu_id, $location.'_native_deactivate', __('Deactivate native buttons', ESSB3_TEXT_DOMAIN), __('Activate this option if you wish to deactivate native buttons for that display method.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 			
 			if (!$post_type) {
@@ -1592,71 +1813,71 @@ function essb_prepare_location_advanced_customization($tab_id, $menu_id, $locati
 	}
 	
 	
-	if ($location != 'postbar') {
-	ESSBOptionsStructureHelper::field_heading($tab_id, $menu_id, 'heading4', __('Visual Changes', ESSB3_TEXT_DOMAIN));
+	if ($location != 'postbar' && $location != 'point') {
+		ESSBOptionsStructureHelper::field_heading($tab_id, $menu_id, 'heading4', __('Visual Changes', ESSB3_TEXT_DOMAIN));
+		
+		ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Set button style', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
+		
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', ESSB3_TEXT_DOMAIN), __('Select your button display style.', ESSB3_TEXT_DOMAIN), essb_avaiable_button_style());
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_pos', __('Buttons Align', ESSB3_TEXT_DOMAIN), __('Choose how buttons
+				to be aligned. Default position is left but you can also select
+				Right or Center', ESSB3_TEXT_DOMAIN), array("" => "Left", "center" => "Center", "right" => "Right"));
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', ESSB3_TEXT_DOMAIN), __('Select your template for that display location.', ESSB3_TEXT_DOMAIN), essb_available_tempaltes());
+		ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', ESSB3_TEXT_DOMAIN), __('Activate this option to remove default space between share buttons.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
 	
-	ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Set button style', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
-	
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', ESSB3_TEXT_DOMAIN), __('Select your button display style.', ESSB3_TEXT_DOMAIN), essb_avaiable_button_style());
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_pos', __('Buttons Align', ESSB3_TEXT_DOMAIN), __('Choose how buttons
-			to be aligned. Default position is left but you can also select
-			Right or Center', ESSB3_TEXT_DOMAIN), array("" => "Left", "center" => "Center", "right" => "Right"));
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', ESSB3_TEXT_DOMAIN), __('Select your template for that display location.', ESSB3_TEXT_DOMAIN), essb_available_tempaltes());
-	ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', ESSB3_TEXT_DOMAIN), __('Activate this option to remove default space between share buttons.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
-
-	$more_options = array ("plus" => "Plus icon", "dots" => "Dots icon" );
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_more_button_icon', __('More button icon', ESSB3_TEXT_DOMAIN), __('Select more button icon style. You can choose from default + symbol or dots symbol', ESSB3_TEXT_DOMAIN), $more_options);
-	
-	$more_options = array ("" => "Default function", "1" => "Display all active networks after more button", "2" => "Display all social networks as pop up", "3" => "Display only active social networks as pop up" );
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_more_button_func', __('More button function', ESSB3_TEXT_DOMAIN), __('Select networks that you wish to appear in your list. With drag and drop you can rearrange them.', ESSB3_TEXT_DOMAIN), $more_options);
-	
-	$animations_container = array ();
-	$animations_container[""] = "Default value from settings";
-	foreach (essb_available_animations() as $key => $text) {
-		if ($key != '') {
-			$animations_container[$key] = $text;
+		$more_options = array ("plus" => "Plus icon", "dots" => "Dots icon" );
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_more_button_icon', __('More button icon', ESSB3_TEXT_DOMAIN), __('Select more button icon style. You can choose from default + symbol or dots symbol', ESSB3_TEXT_DOMAIN), $more_options);
+		
+		$more_options = array ("" => "Default function", "1" => "Display all active networks after more button", "2" => "Display all social networks as pop up", "3" => "Display only active social networks as pop up" );
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_more_button_func', __('More button function', ESSB3_TEXT_DOMAIN), __('Select networks that you wish to appear in your list. With drag and drop you can rearrange them.', ESSB3_TEXT_DOMAIN), $more_options);
+		
+		$animations_container = array ();
+		$animations_container[""] = "Default value from settings";
+		foreach (essb_available_animations() as $key => $text) {
+			if ($key != '') {
+				$animations_container[$key] = $text;
+			}
+			else {
+				$animations_container['no'] = 'No amination';
+			}
 		}
-		else {
-			$animations_container['no'] = 'No amination';
-		}
-	}
+		
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_css_animations', __('Activate animations', ESSB3_TEXT_DOMAIN), __('Animations
+				are provided with CSS transitions and work on best with retina
+				templates.', ESSB3_TEXT_DOMAIN), $animations_container);
+		
+		
+		ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
+		
+		ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Counter settings', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
+		ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', ESSB3_TEXT_DOMAIN), __('Activate display of share counters.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', ESSB3_TEXT_DOMAIN), __('Choose your default button counter position', ESSB3_TEXT_DOMAIN), essb_avaliable_counter_positions());
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_total_counter_pos', __('Position of total counter', ESSB3_TEXT_DOMAIN), __('For vertical display methods left means before buttons (top) and right means after buttons (bottom).', ESSB3_TEXT_DOMAIN), essb_avaiable_total_counter_position());
+		ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
+		
+		ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Set button width', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_width', __('Width of buttons'), __('Choose between automatic width, pre defined width or display in columns.'), array(''=>'Automatic Width', 'fixed' => 'Fixed Width', 'full' => 'Full Width', "column" => "Display in columns"));
 	
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_css_animations', __('Activate animations', ESSB3_TEXT_DOMAIN), __('Animations
-			are provided with CSS transitions and work on best with retina
-			templates.', ESSB3_TEXT_DOMAIN), $animations_container);
-	
-	
-	ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
-	
-	ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Counter settings', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
-	ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', ESSB3_TEXT_DOMAIN), __('Activate display of share counters.', ESSB3_TEXT_DOMAIN), '', __('Yes', ESSB3_TEXT_DOMAIN), __('No', ESSB3_TEXT_DOMAIN));
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', ESSB3_TEXT_DOMAIN), __('Choose your default button counter position', ESSB3_TEXT_DOMAIN), essb_avaliable_counter_positions());
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_total_counter_pos', __('Position of total counter', ESSB3_TEXT_DOMAIN), __('For vertical display methods left means before buttons (top) and right means after buttons (bottom).', ESSB3_TEXT_DOMAIN), essb_avaiable_total_counter_position());
-	ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
-	
-	ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Set button width', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN));
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_width', __('Width of buttons'), __('Choose between automatic width, pre defined width or display in columns.'), array(''=>'Automatic Width', 'fixed' => 'Fixed Width', 'full' => 'Full Width', "column" => "Display in columns"));
-
-	ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Fixed width share buttons', ESSB3_TEXT_DOMAIN), __('Customize the fixed width options', ESSB3_TEXT_DOMAIN));
-	ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fixed_width_value', __('Custom buttons width', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fixed_width_align', __('Choose alignment of network name', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), array("" => "Center", "left" => "Left", "right" => "Right"));
-	ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
-	
-	ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Full width share buttons', ESSB3_TEXT_DOMAIN), __('Full width option will make buttons to take the width of your post content area.', ESSB3_TEXT_DOMAIN));
-	ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fullwidth_share_buttons_correction', __('Max width of button on desktop', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
-	ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fullwidth_share_buttons_correction_mobile', __('Max width of button on mobile', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
-	ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fullwidth_share_buttons_container', __('Max width of buttons container element', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fullwidth_align', __('Choose alignment of network name', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), array("left" => "Left", "center" => "Center", "right" => "Right"));
-	
-	ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
-	
-	ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Display in columns', ESSB3_TEXT_DOMAIN), '');
-	$listOfOptions = array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5");
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fullwidth_share_buttons_columns', __('Number of columns', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), $listOfOptions);
-	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fullwidth_share_buttons_columns_align', __('Choose alignment of network name', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), array("" => "Left", "center" => "Center", "right" => "Right"));
-	ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
-	
-	ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
+		ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Fixed width share buttons', ESSB3_TEXT_DOMAIN), __('Customize the fixed width options', ESSB3_TEXT_DOMAIN));
+		ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fixed_width_value', __('Custom buttons width', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fixed_width_align', __('Choose alignment of network name', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), array("" => "Center", "left" => "Left", "right" => "Right"));
+		ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
+		
+		ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Full width share buttons', ESSB3_TEXT_DOMAIN), __('Full width option will make buttons to take the width of your post content area.', ESSB3_TEXT_DOMAIN));
+		ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fullwidth_share_buttons_correction', __('Max width of button on desktop', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
+		ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fullwidth_share_buttons_correction_mobile', __('Max width of button on mobile', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
+		ESSBOptionsStructureHelper::field_textbox($tab_id, $menu_id, $location.'_fullwidth_share_buttons_container', __('Max width of buttons container element', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), '', 'input60', 'fa-arrows-h', 'right');
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fullwidth_align', __('Choose alignment of network name', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), array("left" => "Left", "center" => "Center", "right" => "Right"));
+		
+		ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
+		
+		ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Display in columns', ESSB3_TEXT_DOMAIN), '');
+		$listOfOptions = array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5");
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fullwidth_share_buttons_columns', __('Number of columns', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), $listOfOptions);
+		ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_fullwidth_share_buttons_columns_align', __('Choose alignment of network name', ESSB3_TEXT_DOMAIN), __('', ESSB3_TEXT_DOMAIN), array("" => "Left", "center" => "Center", "right" => "Right"));
+		ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
+		
+		ESSBOptionsStructureHelper::field_section_end($tab_id, $menu_id);
 	}
 	//ESSBOptionsStructureHelper::field_section_start($tab_id, $menu_id, __('Personalize social networks', ESSB3_TEXT_DOMAIN), '');
 	ESSBOptionsStructureHelper::field_heading($tab_id, $menu_id, 'heading4', __('Personalize social networks', ESSB3_TEXT_DOMAIN));
@@ -2261,6 +2482,9 @@ function essb3_network_selection() {
 		}
 		if (!in_array('telegram', $network_order)) {
 			$network_order[] = 'telegram';
+		}
+		if (!in_array('subscribe', $network_order)) {
+			$network_order[] = 'subscribe';
 		}
 	}
 	

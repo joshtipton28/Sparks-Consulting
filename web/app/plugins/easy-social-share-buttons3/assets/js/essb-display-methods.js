@@ -220,3 +220,57 @@ jQuery(document).ready(function($){
   });
 });
 
+/* ------------------------------------------------------------------------
+ * Share Point
+ * ------------------------------------------------------------------------
+ */
+
+(function( $ ) {
+	$(document).ready(function() {
+		
+		var essb_point_triggered = false;
+		var essb_point_trigger_mode = "";
+		
+		var essb_point_trigger_open_onscroll = function() {
+			var current_pos = $(window).scrollTop() + $(window).height() - 200;
+			
+			var top = $('.essb_break_scroll').offset().top - parseFloat($('.essb_break_scroll').css('marginTop').replace(/auto/, 0));
+			
+			if (essb_point_trigger_mode == 'end') {
+				if (current_pos >= top && !essb_point_triggered) {
+					if (!$('.essb-point-share-buttons').hasClass('essb-point-share-buttons-active')) {
+						$('.essb-point-share-buttons').addClass('essb-point-share-buttons-active');
+						if (essb_point_mode != 'simple') $('.essb-point').toggleClass('essb-point-open');
+						essb_point_triggered = true;
+					}
+				}
+			}
+			if (essb_point_trigger_mode == 'middle') {
+				var percentage = current_pos * 100 / top;
+				if (percentage > 49 && !essb_point_triggered) {
+					if (!$('.essb-point-share-buttons').hasClass('essb-point-share-buttons-active')) {
+						$('.essb-point-share-buttons').addClass('essb-point-share-buttons-active');
+						if (essb_point_mode != 'simple') $('.essb-point').toggleClass('essb-point-open');
+						essb_point_triggered = true;
+					}
+				}
+			}
+		}
+		
+		var essb_point_onscroll = $('.essb-point').attr('data-trigger-scroll') || "";
+		var essb_point_mode = $('.essb-point').attr('data-point-type') || "simple";
+		
+		if (essb_point_onscroll == 'end' || essb_point_onscroll == 'middle') {
+			essb_point_trigger_mode = essb_point_onscroll;
+			$(window).scroll(essb_point_trigger_open_onscroll);
+		}
+		
+		$(".essb-point").on('click', function(){
+
+			$('.essb-point-share-buttons').toggleClass('essb-point-share-buttons-active');
+			
+			if (essb_point_mode != 'simple') $('.essb-point').toggleClass('essb-point-open');
+        });
+	});
+
+})( jQuery );

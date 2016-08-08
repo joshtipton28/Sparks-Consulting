@@ -72,7 +72,12 @@ class ESSBUrlHelper {
 		return $url;
 	}
 	
-	public static function short_bitly($url, $user = '', $api = '', $post_id = '', $deactivate_cache = false) {
+	public static function short_bitly($url, $user = '', $api = '', $post_id = '', $deactivate_cache = false, $bitly_api_version = '') {
+		//print "calling short url for =".$url;
+		
+		// testing mode
+		//$url = "http://creoworx.com/fb/?utm_source={network}%26utm_medium=post%26utm_campaign=calvendo";
+		
 		if (!empty($post_id) && !$deactivate_cache) {
 			$exist_shorturl = get_post_meta($post_id, 'essb_shorturl_bitly', true);
 				
@@ -84,14 +89,26 @@ class ESSBUrlHelper {
 		//$encoded_url = urlencode($url);
 		$encoded_url = ($url);
 		
-		$params = http_build_query(
-				array(
-						'login' => $user,
-						'apiKey' => $api,
-						'longUrl' => $encoded_url,
-						'format' => 'json',
-				)
-		);
+		if ($bitly_api_version == 'new') {
+			$params = http_build_query(
+					array(							
+							'access_token' => $api,
+							'uri' => ($encoded_url),
+							'format' => 'json',
+					)
+			);
+				
+		}
+		else {
+			$params = http_build_query(
+					array(
+							'login' => $user,
+							'apiKey' => $api,
+							'longUrl' => $encoded_url,
+							'format' => 'json',
+					)
+			);
+		}
 	
 		/*if ($jmp == 'true') {
 			$params['domain'] = "j.mp";
@@ -100,14 +117,13 @@ class ESSBUrlHelper {
 		$result = $url;
 	
 		$rest_url = 'https://api-ssl.bitly.com/v3/shorten?' . $params;
-	
+					
 		$response = wp_remote_get( $rest_url );
-		//print_r($response);
 		// if we get a valid response, save the url as meta data for this post
 		if( !is_wp_error( $response ) ) {
 	
 			$json = json_decode( wp_remote_retrieve_body( $response ) );
-	
+			//print_r($json);
 			if( isset( $json->data->url ) ) {
 	
 				$result = $json->data->url;
@@ -149,23 +165,31 @@ class ESSBUrlHelper {
 		$deactivate_cache = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_shorturl_cache');
 		$shorturl_googlapi = ESSBOptionValuesHelper::options_value($essb_options, 'shorturl_googlapi');
 		
+		$bitly_api_version = ESSBOptionValuesHelper::options_value($essb_options, 'shorturl_bitlyapi_version');
+		
 		$short_url = "";
 		
 		if ($provider == "ssu") {
 			if (!defined('ESSB3_SSU_VERSION')) {
 				$provider = "wp";
 			}
-		}
+		}		
 		
 		switch ($provider) {
 			case "wp" :
-				$short_url = wp_get_shortlink();
+				$short_url = wp_get_shortlink($post_id);
+				
+				$url_parts = parse_url($url);
+				if (isset($url_parts['query'])) {
+					$short_url = self::attach_tracking_code($short_url, $url_parts['query']);
+				}
+				
 				break;			
 			case "goo.gl" :
 				$short_url = self::short_googl($url, $post_id, $deactivate_cache, $shorturl_googlapi);
 				break;
 			case "bit.ly" :
-				$short_url = self::short_bitly($url, $bitly_user, $bitly_api, $post_id, $deactivate_cache);
+				$short_url = self::short_bitly($url, $bitly_user, $bitly_api, $post_id, $deactivate_cache, $bitly_api_version);
 				break;
 			case "ssu":
 				$short_url = self::short_ssu($url, $post_id, $deactivate_cache);
@@ -182,7 +206,7 @@ class ESSBUrlHelper {
 		if ($affs_active) {
 			$short_url = do_shortcode('[affiliates_url]'.$short_url.'[/affiliates_url]');
 		}
-		
+				
 		return $short_url;
 	}
  	
@@ -211,11 +235,32 @@ class ESSBUrlHelper {
 	}
 	
 	public static function generate_affiliatewp_referral_link ($permalink) {
+		global $essb_options;
+		
 		if ( ! ( is_user_logged_in() && affwp_is_affiliate() ) ) {
 			return $permalink;
 		}
-		// append referral variable and affiliate ID to sharing links in Jetpack
-		$permalink = add_query_arg( affiliate_wp()->tracking->get_referral_var(), affwp_get_affiliate_id(), $permalink );
+		
+		$affwp_active_mode = ESSBOptionValuesHelper::options_value($essb_options, 'affwp_active_mode');
+		$affwp_active_pretty = ESSBOptionValuesHelper::options_bool_value($essb_options, 'affwp_active_pretty');
+		
+		// append referral variable and affiliate ID to sharing links in ESSB
+		if ($affwp_active_mode == 'name') {
+			if ($affwp_active_pretty) {
+				$permalink .= affiliate_wp()->tracking->get_referral_var().'/'.affwp_get_affiliate_username();
+			}
+			else {
+				$permalink = add_query_arg( affiliate_wp()->tracking->get_referral_var(), affwp_get_affiliate_username(), $permalink );
+			}
+		}
+		else {
+			if ($affwp_active_pretty) {
+				$permalink .= affiliate_wp()->tracking->get_referral_var().'/'.affwp_get_affiliate_id();
+			}
+			else {
+				$permalink = add_query_arg( affiliate_wp()->tracking->get_referral_var(), affwp_get_affiliate_id(), $permalink );
+			}
+		}
 		return $permalink;
 	}
 } 

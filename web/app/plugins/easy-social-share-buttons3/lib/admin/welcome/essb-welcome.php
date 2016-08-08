@@ -5,6 +5,9 @@ $active_tab = isset ( $_REQUEST ['tab'] ) ? $_REQUEST ['tab'] : "essb-welcome";
 $slug = "essb_about";
 
 if (ESSB3_ADDONS_ACTIVE) {
+	global $essb_options;
+	$deactivate_appscreo = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_appscreo');
+	if (!$deactivate_appscreo) {
 	if (class_exists('ESSBAddonsHelper')) {
 		$addons = ESSBAddonsHelper::get_instance();
 		$addons->call_remove_addon_list_update();
@@ -18,6 +21,7 @@ if (ESSB3_ADDONS_ACTIVE) {
 			$dismiss_addons_button = '<a href="'.$dismiss_url.'"  text="' . __ ( 'Add-ons', ESSB3_TEXT_DOMAIN ) . '" class="button button-orange float_right" style="margin-right: 5px;"><i class="fa fa-close"></i>&nbsp;' . __ ( 'Dismiss', ESSB3_TEXT_DOMAIN ) . '</a>';
 			printf ( '<div class="essb-information-box fade"><div class="icon orange"><i class="fa fa-cube"></i></div><div class="inner">New add-on for Easy Social Share Buttons for WordPress is available: <a href="%2$s" target="_blank"><b>%1$s</b></a> %4$s%3$s</div></div>', $data['title'], $data['url'], $all_addons_button, $dismiss_addons_button );
 		}
+	}
 	}
 }
 
@@ -98,14 +102,15 @@ if (ESSB3_ADDONS_ACTIVE) {
 				<img class="essb-featured-img"
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/focus-screenshot.png" />
 
-				<h3>New visual experience</h3>
-				<p>Along with all other optimziation we made a branch new set of visual customizations that will make you different:</p>
+				<h3>Hello Subscribers</h3>
+				<p>Brand new subscribe button come to Easy Social Share Buttons with cool new features:</p>
 				<ul>
-					<li style="list-style-type: disc;">4 new templates in social share buttons: Bold (Retina), Fancy Bold (Retina), Retro (Retina), Metro Bold (Retina)</li>
-					<li style="list-style-type: disc;">3 new click-to-tweet styles added</li>
-					<li style="list-style-type: disc;">14 eye catching icon animations</li>
-					<li style="list-style-type: disc;">14 eye catching button animations</li>
+					<li style="list-style-type: disc;">3 different types of work: link to subscribe page, custom code where you can design your form or use shortcodes from other plugins, Service integrated form</li>
+					<li style="list-style-type: disc;">works on any device and with any display method</li>
+					<li style="list-style-type: disc;">service integrated form with support for MailChimp, myMail, MailPoet and GetReponse</li>
+					<li style="list-style-type: disc;">4 different eye catching designs with customization options</li>
 				</ul>
+				<a href="http://fb.creoworx.com/essb/subscribe-button-demo/" target="_blank" class="button">Try the new subscribe button</a>
 				
 				</div>
 		</div>
@@ -114,23 +119,26 @@ if (ESSB3_ADDONS_ACTIVE) {
 			<div>
 				<img class="essb-img-center" title=""
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/welcome-features-01.png" />
-				<h4>New super social display method</h4>
+				<h4>New super cool social display method: Point</h4>
 
-				<p>Say hello to Post Share Bar display method. Super social share display position that allows to display share buttons along with additional post details and prev/next buttons.</p>
-			</div>
+				<p>New multi purpose share point display method is here with various placements and 2 build in styles: simple and advanced. </p>
+				<a href="http://fb.creoworx.com/essb/display-position-point-simple/" target="_blank" class="button">Try Simple Point</a>&nbsp;
+				<a href="http://fb.creoworx.com/essb/display-position-point-simple/?point_style=advanced" target="_blank" class="button">Try Advanced Point</a>
+				
+				</div>
 			<div>
 				<img class="essb-img-center" title=""
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/welcome-features-02.png" />
-				<h4>Faster and lighter</h4>
+				<h4>New free extensions</h4>
 
-				<p>We also think of speed. In the new version we made various load optimizations that makes plugin work on a new level.</p>
+				<p>We add two new free extensions to plugin: Facebook Comments and AMP Support. We also integrate extensions screen which you can use to see list of all extensions and easy download free or purchase premium.</p>
 			</div>
 			<div class="last-feature">
 				<img class="essb-img-center" title=""
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/welcome-features-03.png" />
-				<h4>Easy Mode</h4>
+				<h4>Cool new updates under the hood</h4>
 
-				<p>Less options - same functionality. Easy Mode is a great way to start work with plugin as it contains only the must needed options. You can turn it off easy mode at any time.</p>
+				<p>We made various changes in plugin for faster and smooth work. Read all of them in <a href="http://appscreo.com/whats-new-easy-social-share-buttons-version-3-6/" target="_blank">our blog</a> or in the <a href="http://fb.creoworx.com/essb/change-log/" target="_blank">changelog</a>.</p>
 			</div>
 		</div>
 

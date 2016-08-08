@@ -4,11 +4,15 @@
  * Generate predefined CSS and javascript code snippets based on settings
  *
  */
+
+define('ESSB_RESOURCE_BUILDER_FOLDER', ESSB3_PLUGIN_ROOT . 'lib/core/resource-snippets/');
+
 class ESSBResourceBuilderSnippets {
 	
 	public static $snippet = array();
 	
 	public static $snippet_builder;
+	
 	
 	/*
 	 * Code pattern snippet builder
@@ -81,41 +85,11 @@ class ESSBResourceBuilderSnippets {
 	}
 	
 	public static function css_build_postbar_customizations() {
-		global $essb_options;
-		
-		$postbar_bgcolor = ESSBOptionValuesHelper::options_value($essb_options, 'postbar_bgcolor');
-		$postbar_color = ESSBOptionValuesHelper::options_value($essb_options, 'postbar_color');
-		$postbar_accentcolor = ESSBOptionValuesHelper::options_value($essb_options, 'postbar_accentcolor');
-		$postbar_altcolor = ESSBOptionValuesHelper::options_value($essb_options, 'postbar_altcolor');
-		
-		self::snippet_start();
-		
-		if ($postbar_bgcolor != '') {
-			self::snippet_add('.essb-postbar .essb-postbar-container, .essb-postbar-prev-post .essb_prev_post, .essb-postbar-next-post .essb_next_post { background-color: '.$postbar_bgcolor.'!important;}');
+		if (!function_exists('essb_rs_css_build_postbar_customizations')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_postbar_customizations.php');
 		}
 		
-		if ($postbar_color != '') {
-			self::snippet_add('.essb-postbar, .essb-postbar a, .essb-postbar-prev-post .essb_prev_post { color: '.$postbar_color.'!important;}');
-			self::snippet_add('.essb-postbar-next-post .essb_next_post_info span.essb_title, .essb-postbar-prev-post .essb_prev_post_info span.essb_title {color: '.$postbar_color.'!important;} ');
-		}
-		
-		if ($postbar_accentcolor != '') {
-			self::snippet_add('.essb-postbar .essb-postbar-progress-bar{ background-color: '.$postbar_accentcolor.'!important;}');
-			self::snippet_add('.essb-postbar .essb-postbar-category a { background-color: '.$postbar_accentcolor.'!important;}');
-			self::snippet_add('.essb-postbar-next-post .essb_next_post_info span.essb_category, .essb-postbar-prev-post .essb_prev_post_info span.essb_category {background-color: '.$postbar_accentcolor.'!important; }');
-			self::snippet_add('.essb-postbar-close-postpopup  {background-color: '.$postbar_accentcolor.'!important; }');
-		}
-		
-		if ($postbar_altcolor != '') {
-			self::snippet_add('.essb-postbar .essb-postbar-category a { color: '.$postbar_altcolor.'!important;}');				
-			self::snippet_add('.essb-postbar-next-post .essb_next_post_info span.essb_category, .essb-postbar-prev-post .essb_prev_post_info span.essb_category {color: '.$postbar_altcolor.'!important; }');
-			self::snippet_add('.essb-postbar-close-postpopup  { color: '.$postbar_altcolor.'!important; }');
-		}
-		
-		// postbar related code to move body below it
-		self::snippet_add('body.single {margin-bottom: 46px !important;}');
-		
-		return self::snippet_end();
+		return essb_rs_css_build_postbar_customizations();
 	}
 	
 	public static function css_build_counter_style() {
@@ -149,55 +123,11 @@ class ESSBResourceBuilderSnippets {
 	}
 	
 	public static function css_build_morepopup_css() {
-		self::snippet_start();
+		if (!function_exists('essb_rs_css_build_morepopup_css')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_morepopup_css.php');
+		}
 		
-		self::snippet_add('.essb_morepopup_shadow {position:fixed;
-	_position:absolute; /* hack for IE 6*/
-	height:100%;
-	width:100%;
-	top:0;
-	left:0;
-	background: rgba(33, 33, 33, 0.85);
-	z-index:1100;
-	display: none; }');
-		
-		self::snippet_add('.essb_morepopup { 	background-color: #ffffff;
-	z-index: 1101;
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-	-ms-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-	-o-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-	display: none;
-	color: #111;
-	-webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;}');
-		
-		self::snippet_add('.essb_morepopup_content { padding: 15px;
-	margin: 0;
-	text-align: center;}');
-		
-		self::snippet_add('.essb_morepopup_content .essb_links a { text-align: left; }');
-		
-		self::snippet_add('.essb_morepopup_close { width:12px;
-    height:12px;
-    display:inline-block;
-    position:absolute;
-    top:10px;
-    right:10px;
-    -webkit-transition:all ease 0.50s;
-    transition:all ease 0.75s;
-	font-weight:bold;
-    text-decoration:none;
-    color:#111;
-    line-height:160%;
-	font-size:24px;
-	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNDEuNzU2cHgiIGhlaWdodD0iNDEuNzU2cHgiIHZpZXdCb3g9IjAgMCA0MS43NTYgNDEuNzU2IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MS43NTYgNDEuNzU2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PHBhdGggZD0iTTI3Ljk0OCwyMC44NzhMNDAuMjkxLDguNTM2YzEuOTUzLTEuOTUzLDEuOTUzLTUuMTE5LDAtNy4wNzFjLTEuOTUxLTEuOTUyLTUuMTE5LTEuOTUyLTcuMDcsMEwyMC44NzgsMTMuODA5TDguNTM1LDEuNDY1Yy0xLjk1MS0xLjk1Mi01LjExOS0xLjk1Mi03LjA3LDBjLTEuOTUzLDEuOTUzLTEuOTUzLDUuMTE5LDAsNy4wNzFsMTIuMzQyLDEyLjM0MkwxLjQ2NSwzMy4yMmMtMS45NTMsMS45NTMtMS45NTMsNS4xMTksMCw3LjA3MUMyLjQ0LDQxLjI2OCwzLjcyMSw0MS43NTUsNSw0MS43NTVjMS4yNzgsMCwyLjU2LTAuNDg3LDMuNTM1LTEuNDY0bDEyLjM0My0xMi4zNDJsMTIuMzQzLDEyLjM0M2MwLjk3NiwwLjk3NywyLjI1NiwxLjQ2NCwzLjUzNSwxLjQ2NHMyLjU2LTAuNDg3LDMuNTM1LTEuNDY0YzEuOTUzLTEuOTUzLDEuOTUzLTUuMTE5LDAtNy4wNzFMMjcuOTQ4LDIwLjg3OHoiLz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PC9zdmc+);
-	background-size: 12px;
-	z-index: 1001; }');
-		
-		return self::snippet_end();
+		return essb_rs_css_build_morepopup_css();
 	}
 	
 	public static function css_build_generate_column_width() {
@@ -217,6 +147,9 @@ border-radius: 5px;}');
 
 		self::snippet_add('.essb_width_columns_5 li { width: 19.5%; }');
 		self::snippet_add('.essb_width_columns_5 li a { width: 60%; }');
+
+		self::snippet_add('.essb_width_columns_6 li { width: 16%; }');
+		self::snippet_add('.essb_width_columns_6 li a { width: 55%; }');
 		
 		self::snippet_add('.essb_links li.essb_totalcount_item_before, .essb_width_columns_1 li.essb_totalcount_item_after { width: 100%; text-align: left; }');
 		
@@ -554,164 +487,28 @@ border-radius: 5px;}');
 			}
 		}
 	
+		self::snippet_start();
 		if ($is_active) {
-			self::snippet_start();
-			$global_bgcolor = isset ( $options ['customizer_bgcolor'] ) ? $options ['customizer_bgcolor'] : '';
-			$global_textcolor = isset ( $options ['customizer_textcolor'] ) ? $options ['customizer_textcolor'] : '';
-			$global_hovercolor = isset ( $options ['customizer_hovercolor'] ) ? $options ['customizer_hovercolor'] : '';
-			$global_hovertextcolor = isset ( $options ['customizer_hovertextcolor'] ) ? $options ['customizer_hovertextcolor'] : '';
-				
-			$global_remove_bg_effects = ESSBOptionValuesHelper::options_bool_value($options, 'customizer_remove_bg_hover_effects');
-			$css = '';
-				
-			// @since 2.0
-			$customizer_totalbgcolor = ESSBOptionValuesHelper::options_value($options, 'customizer_totalbgcolor');
-			$customizer_totalcolor = ESSBOptionValuesHelper::options_value($options, 'customizer_totalcolor');
-			$customizer_totalnobgcolor = ESSBOptionValuesHelper::options_value($options, 'customizer_totalnobgcolor');
-			$customizer_totalfontsize = ESSBOptionValuesHelper::options_value($options, 'customizer_totalfontsize');
-			$customizer_totalfontsize_after = ESSBOptionValuesHelper::options_value($options, 'customizer_totalfontsize_after');
-				
-			$customizer_totalfontsize_beforeafter = ESSBOptionValuesHelper::options_value($options, 'customizer_totalfontsize_beforeafter');
-				
-			if ($customizer_totalbgcolor != '') {
-				self::snippet_add('.essb_totalcount { background: '.$customizer_totalbgcolor.' !important;} ');
+			if (!function_exists('essb_rs_css_build_customizer')) {
+				include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_customizer.php');
 			}
-			if ($customizer_totalnobgcolor == 'true') {
-				self::snippet_add('.essb_totalcount { background: none !important;} ');
-			}
-			if ($customizer_totalcolor != '') {
-				self::snippet_add('.essb_totalcount, .essb_totalcount .essb_t_nb:after { color: '.$customizer_totalcolor.' !important;} ');
-			}
-			if ($customizer_totalfontsize != '') {
-				self::snippet_add('.essb_totalcount .essb_t_nb { font-size: '.$customizer_totalfontsize.'!important; line-height:'.$customizer_totalfontsize.'!important;}');
-			}
-			if ($customizer_totalfontsize_after != '') {
-				self::snippet_add('.essb_totalcount .essb_t_nb:after { font-size: '.$customizer_totalfontsize_after.'!important; }');
-			}
-	
-			if ($customizer_totalfontsize_beforeafter != '') {
-				self::snippet_add('.essb_totalcount_item_before .essb_t_before, .essb_totalcount_item_after .essb_t_before { font-size: '.$customizer_totalfontsize_beforeafter.'!important; }');
-			}
-	
-			if ($global_remove_bg_effects) {
-				self::snippet_add('.essb_links a:hover, .essb_links a:focus { background: none !important; }');
-			}
-				
+			
+			self::snippet_add(essb_rs_css_build_customizer());
+		}
 		
-	
-			$checkbox_list_networks = array();
-			foreach ($essb_networks as $key => $object) {
-				$checkbox_list_networks[$key] = $object['name'];
+		$is_active_subscribe = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_mailchimp_customizer');
+		$is_active_subscribe2 = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_mailchimp_customizer2');
+		$is_active_subscribe3 = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_mailchimp_customizer3');
+		$is_active_subscribe4 = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_mailchimp_customizer4');
+		if ($is_active_subscribe || $is_active_subscribe2 || $is_active_subscribe3 || $is_active_subscribe4) {
+			if (!function_exists('essb_rs_css_build_customizer_mailchimp')) {
+				include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_customizer_mailchimp.php');
 			}
 				
-			if ($global_bgcolor != '' || $global_textcolor != '' || $global_hovercolor != '' || $global_hovertextcolor != '') {
-				foreach ( $checkbox_list_networks as $k => $v ) {
-					if ($k != '') {
-						$singleCss = "";
-						if ($global_bgcolor != '' || $global_textcolor != '') {
-							$singleCss .= '.essb_links .essb_link_' . $k . ' a { ';
-							if ($global_bgcolor != '') {
-								$singleCss .= 'background-color:' . $global_bgcolor . '!important;';
-							}
-							if ($global_textcolor != '') {
-								$singleCss .= 'color:' . $global_bgcolor . '!important;';
-							}
-							$singleCss .= '}';
-						}
-						if ($global_hovercolor != '' || $global_hovertextcolor != '') {
-							$singleCss .= '.essb_links .essb_link_' . $k . ' a:hover, .essb_links .essb_link_' . $k . ' a:focus { ';
-							if ($global_hovercolor != '') {
-								$singleCss .= 'background-color:' . $global_hovercolor . '!important;';
-							}
-							if ($global_hovertextcolor != '') {
-								$singleCss .= 'color:' . $global_hovertextcolor . '!important;';
-							}
-							$singleCss .= '}';
-						}
-	
-						self::snippet_add($singleCss);
-					}
-	
-				}
-			}
-				
-			// single network color customization
-			foreach ( $essb_networks as $k => $v ) {
-				if ($k != '') {
-					$network_bgcolor = isset ( $options ['customizer_' . $k . '_bgcolor'] ) ? $options ['customizer_' . $k . '_bgcolor'] : '';
-					$network_textcolor = isset ( $options ['customizer_' . $k . '_textcolor'] ) ? $options ['customizer_' . $k . '_textcolor'] : '';
-					$network_hovercolor = isset ( $options ['customizer_' . $k . '_hovercolor'] ) ? $options ['customizer_' . $k . '_hovercolor'] : '';
-					$network_hovertextcolor = isset ( $options ['customizer_' . $k . '_hovertextcolor'] ) ? $options ['customizer_' . $k . '_hovertextcolor'] : '';
-						
-					$network_icon = isset ( $options ['customizer_' . $k . '_icon'] ) ? $options ['customizer_' . $k . '_icon'] : '';
-					$network_hovericon = isset ( $options ['customizer_' . $k . '_hovericon'] ) ? $options ['customizer_' . $k . '_hovericon'] : '';
-					$network_iconbgsize = isset ( $options ['customizer_' . $k . '_iconbgsize'] ) ? $options ['customizer_' . $k . '_iconbgsize'] : '';
-					$network_hovericonbgsize = isset ( $options ['customizer_' . $k . '_hovericonbgsize'] ) ? $options ['customizer_' . $k . '_hovericonbgsize'] : '';
-						
-					$sigleCss = "";
-						
-					if ($network_bgcolor != '' || $network_textcolor != '') {
-						$sigleCss .= '.essb_links .essb_link_' . $k . ' a { ';
-						if ($network_bgcolor != '') {
-							$sigleCss .= 'background-color:' . $network_bgcolor . '!important;';
-						}
-						if ($network_textcolor != '') {
-							$sigleCss .= 'color:' . $network_textcolor . '!important;';
-						}
-						$sigleCss .= '}';
-						
-						if ($k == "more") {
-							$sigleCss .= '.essb_links .essb_link_less a { ';
-							if ($network_bgcolor != '') {
-								$sigleCss .= 'background-color:' . $network_bgcolor . '!important;';
-							}
-							if ($network_textcolor != '') {
-								$sigleCss .= 'color:' . $network_textcolor . '!important;';
-							}
-							$sigleCss .= '}';
-						}
-					}
-					if ($network_hovercolor != '' || $network_hovertextcolor != '') {
-						$sigleCss .= '.essb_links .essb_link_' . $k . ' a:hover, .essb_links .essb_link_' . $k . ' a:focus { ';
-						if ($network_hovercolor != '') {
-							$sigleCss .= 'background-color:' . $network_hovercolor . '!important;';
-						}
-						if ($network_hovertextcolor != '') {
-							$sigleCss .= 'color:' . $network_hovertextcolor . '!important;';
-						}
-						$sigleCss .= '}';
-						
-						if ($k == "more") {
-							$sigleCss .= '.essb_links .essb_link_less a:hover, .essb_links .essb_link_less a:focus { ';
-							if ($network_hovercolor != '') {
-								$sigleCss .= 'background-color:' . $network_hovercolor . '!important;';
-							}
-							if ($network_hovertextcolor != '') {
-								$sigleCss .= 'color:' . $network_hovertextcolor . '!important;';
-							}
-							$sigleCss .= '}';
-						}
-					}
-						
-					if ($network_icon != '') {
-						$sigleCss .= '.essb_links .essb_link_' . $k . ' .essb_icon { background: url("' . $network_icon . '") !important; }';
-	
-						if ($network_iconbgsize != '') {
-							$sigleCss .= '.essb_links .essb_link_' . $k . ' .essb_icon { background-size: ' . $network_iconbgsize . '!important; }';
-						}
-					}
-					if ($network_hovericon != '') {
-						$sigleCss .= '.essb_links .essb_link_' . $k . ' a:hover .essb_icon { background: url("' . $network_hovericon . '") !important; }';
-	
-						if ($network_hovericonbgsize != '') {
-							$sigleCss .= '.essb_links .essb_link_' . $k . ' a:hover .essb_icon { background-size: ' . $network_hovericonbgsize . '!important; }';
-						}
-					}
-						
-					self::snippet_add($sigleCss);
-				}
-					
-			}
+			self::snippet_add(essb_rs_css_build_customizer_mailchimp(array("design1" => $is_active_subscribe, 
+					"design2" => $is_active_subscribe2,
+					"design3" => $is_active_subscribe3,
+					"design4" => $is_active_subscribe4)));
 		}
 	
 		$global_user_defined_css = isset ( $options ['customizer_css'] ) ? $options ['customizer_css'] : '';
@@ -727,50 +524,19 @@ border-radius: 5px;}');
 	}
 	
 	public static function css_build_followerscounter_customizer() {
-		global $essb_options;
-		
-		$is_active = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_fanscounter_customizer');
-		if (!$is_active) { return '';}
-		self::snippet_start();
-		$network_list = ESSBSocialFollowersCounterHelper::available_social_networks();
-		
-		
-		foreach ($network_list as $network => $title) {			
-			$color_isset = ESSBOptionValuesHelper::options_value($essb_options, 'fanscustomizer_'.$network);
-			if ($color_isset != '') {
-				self::snippet_add('.essbfc-template-color .essbfc-icon-'.$network.', .essbfc-template-grey .essbfc-icon-'.$network.' { color: '.$color_isset.' !important; }');
-				self::snippet_add('.essbfc-template-roundcolor .essbfc-icon-'.$network.', .essbfc-template-roundgrey .essbfc-icon-'.$network.' { background-color: '.$color_isset.' !important; } ');
-				self::snippet_add('.essbfc-template-outlinecolor .essbfc-icon-'.$network.', .essbfc-template-outlinegrey .essbfc-icon-'.$network.'  { color: '.$color_isset.' !important; border-color: '.$color_isset.' !important; }');
-				self::snippet_add('.essbfc-template-outlinecolor li:hover .essbfc-icon-'.$network.', .essbfc-template-outlinegrey li:hover .essbfc-icon-'.$network.' { background-color: '.$color_isset.' !important; }');
-				self::snippet_add('.essbfc-template-metro .essbfc-'.$network.' .essbfc-network { background-color: '.$color_isset.' !important; }');				
-				self::snippet_add('.essbfc-template-flat .essbfc-'.$network.' .essbfc-network { background-color: '.$color_isset.' !important; }');				
-				self::snippet_add('.essbfc-template-dark .essbfc-'.$network.' .essbfc-network { background-color: '.$color_isset.' !important; }');
-				self::snippet_add('.essbfc-template-modern .essbfc-'.$network.' .essbfc-network i { color: '.$color_isset.' !important; }');
-				self::snippet_add('.essbfc-template-modern .essbfc-'.$network.' .essbfc-network { border-bottom: 3px solid '.$color_isset.' !important }');				
-				self::snippet_add('.essbfc-template-modern .essbfc-'.$network.':hover .essbfc-network { background-color: '.$color_isset.' !important }');				
-			}
+		if (!function_exists('essb_rs_css_build_followerscounter_customizer')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_followerscounter_customizer.php');
 		}
-		return self::snippet_end();
+		
+		return essb_rs_css_build_followerscounter_customizer();
 	}
 	
 	public static function css_build_imageshare_customizer() {
-		global $essb_options;
-		
-		$is_active = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_imageshare_customizer');
-		if (!$is_active) {
-			return '';
+		if (!function_exists('essb_rs_css_build_imageshare_customizer')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_imageshare_customizer.php');
 		}
-		self::snippet_start();
-		$listOfNetworksAdvanced = array( "facebook" => "Facebook", "twitter" => "Twitter", "google" => "Google", "linkedin" => "LinkedIn", "pinterest" => "Pinterest", "tumblr" => "Tumblr", "reddit" => "Reddit", "digg" => "Digg", "delicious" => "Delicious", "vkontakte" => "VKontakte", "odnoklassniki" => "Odnoklassniki");
 		
-		foreach ($listOfNetworksAdvanced as $network => $title) {
-			$color_isset = ESSBOptionValuesHelper::options_value($essb_options, 'imagecustomizer_'.$network);
-			if ($color_isset != '') {
-				self::snippet_add('.essbis .essbis-'.$network.'-btn { background-color: '.$color_isset.' !important; }');
-				self::snippet_add('.essbis .essbis-'.$network.'-btn:hover { background-color: '.$color_isset.' !important; }');
-			}
-		}
-		return self::snippet_end();
+		return essb_rs_css_build_imageshare_customizer();
 	}
 	
 	public static function css_build_footer_css() {
@@ -789,49 +555,19 @@ border-radius: 5px;}');
 	}
 	
 	public static function css_build_mobile_compatibility() {
-		global $essb_options;
-		
-		$mobile_css_screensize = ESSBOptionValuesHelper::options_value($essb_options, 'mobile_css_screensize');
-		if (empty($mobile_css_screensize)) {
-			$mobile_css_screensize = "750";
-		}
-		$mobile_css_readblock = ESSBOptionValuesHelper::options_bool_value($essb_options, 'mobile_css_readblock');
-		$mobile_css_all = ESSBOptionValuesHelper::options_value($essb_options, 'mobile_css_all');
-		$mobile_css_optimized = ESSBOptionValuesHelper::options_bool_value($essb_options, 'mobile_css_optimized');
-
-		self::snippet_start();
-		
-		if ($mobile_css_readblock) {
-			self::snippet_add('@media screen and (max-width: '.$mobile_css_screensize.'px) { .essb_links.essb_displayed_sidebar, .essb_links.essb_displayed_sidebar_right, .essb_links.essb_displayed_postfloat { display: none; } }');
-		}
-		if ($mobile_css_all) {
-			self::snippet_add('@media screen and (max-width: '.$mobile_css_screensize.'px) { .essb_links { display: none; } }');				
+		if (!function_exists('essb_rs_css_build_mobile_compatibility')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_mobile_compatibility.php');
 		}
 		
-		if ($mobile_css_optimized) {
-			self::snippet_add('@media screen and (max-width: '.$mobile_css_screensize.'px) { .essb-mobile-sharebar, .essb-mobile-sharepoint, .essb-mobile-sharebottom, .essb-mobile-sharebottom .essb_links, .essb-mobile-sharebar-window .essb_links, .essb-mobile-sharepoint .essb_links { display: block; } }');
-			self::snippet_add('@media screen and (max-width: '.$mobile_css_screensize.'px) { .essb-mobile-sharebar .essb_native_buttons, .essb-mobile-sharepoint .essb_native_buttons, .essb-mobile-sharebottom .essb_native_buttons, .essb-mobile-sharebottom .essb_native_item, .essb-mobile-sharebar-window .essb_native_item, .essb-mobile-sharepoint .essb_native_item { display: none; } }');
-			self::snippet_add('@media screen and (min-width: '.$mobile_css_screensize.'px) { .essb-mobile-sharebar, .essb-mobile-sharepoint, .essb-mobile-sharebottom { display: none; } }');				
-		}
-		else {
-			self::snippet_add(' .essb-mobile-sharebar, .essb-mobile-sharepoint, .essb-mobile-sharebottom { display: none; } ');
-				
-		}
-		
-		return self::snippet_end();
+		return essb_rs_css_build_mobile_compatibility();
 	}
 	
 	public static function css_build_mobilesharebar_fix_code() {
-		self::snippet_start();
+		if (!function_exists('essb_rs_css_build_mobilesharebar_fix_code')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_css_build_mobilesharebar_fix_code.php');
+		}
 		
-		self::snippet_add('.essb-mobile-sharebottom .essb_links { margin: 0px !important; }');
-		self::snippet_add('.essb-mobile-sharebottom .essb_width_columns_2 li a { width: 100% !important; }');
-		self::snippet_add('.essb-mobile-sharebottom .essb_width_columns_3 li a { width: 100% !important; }');
-		self::snippet_add('.essb-mobile-sharebottom .essb_width_columns_4 li a { width: 100% !important; }');
-		self::snippet_add('.essb-mobile-sharebottom .essb_width_columns_5 li a { width: 100% !important; }');
-		self::snippet_add('.essb-mobile-sharebottom .essb_width_columns_6 li a { width: 100% !important; }');
-		
-		return self::snippet_end();
+		return essb_rs_css_build_mobilesharebar_fix_code();
 	}
 	
 	/*
@@ -884,6 +620,13 @@ border-radius: 5px;}');
 		self::snippet_start();
 		
 		self::snippet_add(sprintf('var essb_settings = %1$s;', json_encode($code_options)));
+		
+		if (defined('ESSB3_CACHED_COUNTERS')) {
+			if (ESSBGlobalSettings::$cached_counters_cache_mode) {
+				$update_url = ESSBUrlHelper::get_current_page_url();
+				self::snippet_add('var essb_buttons_exist = !!document.getElementsByClassName("essb_links"); if(essb_buttons_exist == true) { document.addEventListener("DOMContentLoaded", function(event) { var ESSB_CACHE_URL = "'.$update_url.'"; if(ESSB_CACHE_URL.indexOf("?") > -1) { ESSB_CACHE_URL += "&essb_counter_cache=rebuild"; } else { ESSB_CACHE_URL += "?essb_counter_cache=rebuild"; }; var xhr = new XMLHttpRequest(); xhr.open("GET",ESSB_CACHE_URL,true); xhr.send(); });}');
+			}
+		}
 		
 		return self::snippet_end();
 	}
@@ -1024,525 +767,62 @@ var essb_pinterest_picker = function(oInstance) {
 		return $script;
 	}
 	
+	
 	public static function js_build_generate_popup_mailform() {
-		global $essb_options;
-		$options = $essb_options;
-			
-		$salt = mt_rand ();
-		$mailform_id = 'essb_mail_from_'.$salt;
-	
-		$mail_salt_check = get_option(ESSB3_MAIL_SALT);
-		
-		$translate_mail_title = isset($options['translate_mail_title']) ? $options['translate_mail_title'] : '';
-		$translate_mail_email = isset($options['translate_mail_email']) ? $options['translate_mail_email'] : '';
-		$translate_mail_recipient = isset($options['translate_mail_recipient']) ? $options['translate_mail_recipient'] : '';
-		$translate_mail_subject = isset($options['translate_mail_subject']) ? $options['translate_mail_subject'] : '';
-		$translate_mail_message = isset($options['translate_mail_message']) ? $options['translate_mail_message'] : '';
-		$translate_mail_cancel = isset($options['translate_mail_cancel']) ? $options['translate_mail_cancel'] : '';
-		$translate_mail_send = isset($options['translate_mail_send']) ? $options['translate_mail_send'] : '';
-		
-		$mail_disable_editmessage = isset($options['mail_disable_editmessage']) ? $options['mail_disable_editmessage'] : 'false';
-		
-		$mail_edit_readonly = "";
-		if ($mail_disable_editmessage == "true") {
-			$mail_edit_readonly = ' readonly="readonly"';
+		if (!function_exists('essb_rs_js_build_generate_popup_mailform')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_popup_mailform.php');
 		}
-	
-		$mail_captcha = isset($options['mail_captcha']) ? $options['mail_captcha'] : '';
-		$mail_captcha_answer = isset($options['mail_captcha_answer']) ? $options['mail_captcha_answer'] : '';
-	
-		$captcha_html = '';
-		if ($mail_captcha != '' && $mail_captcha_answer != '') {
-			$captcha_html = '\'<div class="vex-custom-field-wrapper"><strong>'.$mail_captcha.'</strong></div><input name="captchacode" type="text" placeholder="Captcha Code" />\'+';
-		}
-	
-	
-		$siteurl = ESSB3_PLUGIN_URL. '/';
-	
-		$html = 'function essb_mailer(oTitle, oMessage, oSiteTitle, oUrl, oImage, oPermalink) {
-		vex.defaultOptions.className = \'vex-theme-os\';
-		vex.dialog.open({
-		message: \''.($translate_mail_title != '' ? $translate_mail_title : 'Share this with a friend').'\',
-		input: \'\' +
-		\'<div class="vex-custom-field-wrapper"><strong>'. ($translate_mail_email != '' ? $translate_mail_email : 'Your Email').'</strong></div>\'+
-		\'<input name="emailfrom" type="text" placeholder="'. ($translate_mail_email != '' ? $translate_mail_email : 'Your Email').'" required />\' +
-		\'<div class="vex-custom-field-wrapper"><strong>'.($translate_mail_recipient != '' ? $translate_mail_recipient : 'Recipient Email'). '</strong></div>\'+
-		\'<input name="emailto" type="text" placeholder="'.($translate_mail_recipient != '' ? $translate_mail_recipient : 'Recipient Email'). '" required />\' +
-		\'<div class="vex-custom-field-wrapper" style="border-bottom: 1px solid #aaa !important; margin-top: 10px;"><h3></h3></div>\'+
-		\'<div class="vex-custom-field-wrapper" style="margin-top: 10px;"><strong>'.($translate_mail_subject != '' ? $translate_mail_subject : 'Subject').'</strong></div>\'+
-		\'<input name="emailsubject" type="text" placeholder="Subject" required value="\'+oTitle+\'" />\' +
-		\'<div class="vex-custom-field-wrapper" style="margin-top: 10px;"><strong>'.($translate_mail_message != '' ? $translate_mail_message : 'Message').'</strong></div>\'+
-		\'<textarea name="emailmessage" placeholder="Message" required" rows="6" '.$mail_edit_readonly.'>\'+oMessage+\'</textarea>\' +
-		'.$captcha_html. '
-		\'\',
-		buttons: [
-		jQuery.extend({}, vex.dialog.buttons.YES, { text: \''.($translate_mail_send != '' ? $translate_mail_send : 'Send').'\' }),
-		jQuery.extend({}, vex.dialog.buttons.NO, { text: \''.($translate_mail_cancel != '' ? $translate_mail_cancel : 'Cancel').'\' })
-		],
-		callback: function (data) {
-		if (data.emailfrom && typeof(data.emailfrom) != "undefined") {
-		var c = typeof(data.captchacode) != "undefined" ? data.captchacode : "";
-		essb_sendmail_ajax'.$salt.'(data.emailfrom, data.emailto, data.emailsubject, data.emailmessage, c, oSiteTitle, oUrl, oImage, oPermalink);
-	}
-	}
-	
-	});
-	};
-	function essb_sendmail_ajax'.$salt.'(emailfrom, emailto, emailsub, emailmessage, c, oSiteTitle, oUrl, oImage, oPermalink) {
-	jQuery.post(\'' . ESSB3_PLUGIN_URL . '/public/essb-mail.php\', {
-			\'from\': emailfrom,
-			\'to\': emailto,
-			\'sub\': emailsub,
-			\'message\': emailmessage,
-			\'t\': oSiteTitle,
-			\'u\': oUrl,
-			\'img\': oImage,
-			\'p\': oPermalink,
-			\'c\': c,
-			\'salt\': \''.$mail_salt_check.'\'
-		}, function (data) { 
-		console.log(data);
-		if (data) {
-			alert(data.message);
-		}},\'json\');
-	};
-	';
-
-		return $html;
+		
+		return essb_rs_js_build_generate_popup_mailform();
 	}
 	
 	public static function js_build_generate_more_button_inline() {
-		$output = "";
+		if (!function_exists('essb_rs_js_build_generate_more_button_inline')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_more_button_inline.php');
+		}
 		
-		$output .= 'jQuery(document).ready(function($){
-			jQuery.fn.essb_toggle_more = function(){
-				return this.each(function(){
-					$single = $(this);
-						
-					$single.removeClass(\'essb_after_more\');
-					$single.addClass(\'essb_before_less\');
-				});
-			};
-			jQuery.fn.essb_toggle_less = function(){
-				return this.each(function(){
-					$single = $(this);
-						
-					$single.addClass(\'essb_after_more\');
-					$single.removeClass(\'essb_before_less\');
-				});
-			};
-		});
-		function essb_toggle_more(unique_id) {
-			jQuery(\'.essb_\'+unique_id+\' .essb_after_more\').essb_toggle_more();
-			$more_button = jQuery(\'.essb_\'+unique_id).find(\'.essb_link_more\');
-			if (typeof($more_button) != "undefined") {
-				$more_button.hide();
-				$more_button.addClass(\'essb_hide_more_sidebar\');
-			}
-			$more_button = jQuery(\'.essb_\'+unique_id).find(\'.essb_link_more_dots\');
-			if (typeof($more_button) != "undefined") {
-				$more_button.hide();
-				$more_button.addClass(\'essb_hide_more_sidebar\');
-			}
-		};
-		
-		function essb_toggle_less(unique_id) {
-			jQuery(\'.essb_\'+unique_id+\' .essb_before_less\').essb_toggle_less();
-			$more_button = jQuery(\'.essb_\'+unique_id).find(\'.essb_link_more\');
-			if (typeof($more_button) != "undefined") {
-				$more_button.show();
-				$more_button.removeClass(\'essb_hide_more_sidebar\');
-			};
-			$more_button = jQuery(\'.essb_\'+unique_id).find(\'.essb_link_more_dots\');
-			if (typeof($more_button) != "undefined") {
-				$more_button.show();
-				$more_button.removeClass(\'essb_hide_more_sidebar\');
-			};
-		};';
-		
-		return $output;
+		return essb_rs_js_build_generate_more_button_inline();
 	}
 	
 	public static function js_build_generate_more_button_popup() {
-		$output = 'var essb_morepopup_opened = false;';
+		if (!function_exists('essb_rs_js_build_generate_more_button_popup')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_more_button_popup.php');
+		}
 		
-		$output .= 'function essb_toggle_more_popup(unique_id) {
-	jQuery.fn.extend({
-        center: function () {
-            return this.each(function() {
-                var top = (jQuery(window).height() - jQuery(this).outerHeight()) / 2;
-                var left = (jQuery(window).width() - jQuery(this).outerWidth()) / 2;
-                jQuery(this).css({position:\'fixed\', margin:0, top: (top > 0 ? top : 0)+\'px\', left: (left > 0 ? left : 0)+\'px\'});
-            });
-        }
-    }); 
-	
-    if (essb_morepopup_opened) {
-      essb_toggle_less_popup(unique_id);
-      return;
-    }
-    
-    var is_from_mobilebutton = false;
-    var height_of_mobile_bar = 0;
-    if (jQuery(".essb-mobile-sharebottom").length) {
-    	is_from_mobilebutton = true;
-    	height_of_mobile_bar = jQuery(".essb-mobile-sharebottom").outerHeight();
-    }
-    
-	var win_width = jQuery( window ).width();
-	var win_height = jQuery(window).height();
-	var doc_height = jQuery(\'document\').height();
-	
-	var base_width = 550;
-	if (!is_from_mobilebutton) {
-		base_width = 660;
-	}
-	
-	if (win_width < base_width) { base_width = win_width - 30; }
-
-	var instance_mobile = false;
-
-	var element_class = ".essb_morepopup_"+unique_id;
-	var element_class_shadow = ".essb_morepopup_shadow_"+unique_id;
-	
-	jQuery(element_class).css( { width: base_width+\'px\'});
-		
-	jQuery(element_class).fadeIn(400);
-	jQuery(element_class).center();
-	if (is_from_mobilebutton) {
-		jQuery(element_class).css( { top: \'5px\'});
-		jQuery(element_class).css( { height: (win_height - height_of_mobile_bar - 10)+\'px\'});
-		var element_content_class = ".essb_morepopup_content_"+unique_id;
-		
-		jQuery(element_content_class).css( { height: (win_height - height_of_mobile_bar - 40)+\'px\', "overflowY" :"auto"});
-		jQuery(element_class_shadow).css( { height: (win_height - height_of_mobile_bar)+\'px\'});
-	}
-	jQuery(element_class_shadow).fadeIn(200);
-	essb_morepopup_opened = true;
-};
-
-function essb_toggle_less_popup(unique_id) {
-	var element_class = ".essb_morepopup_"+unique_id;
-	var element_class_shadow = ".essb_morepopup_shadow_"+unique_id;
-	jQuery(element_class).fadeOut(200);
-	jQuery(element_class_shadow).fadeOut(200);
-	essb_morepopup_opened = false;
-};';
-		
-		return $output;
+		return essb_rs_js_build_generate_more_button_popup();
 	}
 	
 	public static function js_build_generate_sidebar_reveal_code() {
-		global $essb_options;
-		
-		$appear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'sidebar_leftright_percent');
-		$disappear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'sidebar_leftright_percent_hide');
-		
-		if (empty($appear_pos)) {
-			$appear_pos = "0";			
-		}
-		if (empty($disappear_pos)) {
-			$disappear_pos = "0";
+		if (!function_exists('essb_rs_js_build_generate_sidebar_reveal_code')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_sidebar_reveal_code.php');
 		}
 		
-		$output = '';
-
-		//$appear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'sidebar_leftright_percent');
-		
-		if (ESSBOptionValuesHelper::options_bool_value($essb_options, 'sidebar_leftright_close')) {
-			$output .= '
-			jQuery(document).ready(function($){
-			
-				$(".essb_link_sidebar-close a").each(function() {
-				
-					$(this).click(function(event) {
-						event.preventDefault();
-						var links_list = $(this).parent().parent().get(0);
-						
-						if (!$(links_list).length) { return; }
-						
-						$(links_list).find(".essb_item").each(function(){
-							if (!$(this).hasClass("essb_link_sidebar-close")) {
-								$(this).toggleClass("essb-sidebar-closed-item");
-							}
-							else {
-								$(this).toggleClass("essb-sidebar-closed-clicked");
-							}
-						});
-						
-					});
-				
-				});
-			});
-			
-			';
-		}
-		
-		if ($appear_pos != '' || $disappear_pos != '') {
-		$output .= '
-		jQuery(document).ready(function($){
-		
-			$(window).scroll(essb_sidebar_onscroll);
-		
-			function essb_sidebar_onscroll() {
-				var current_pos = $(window).scrollTop();
-				var height = $(document).height()-$(window).height();
-				var percentage = current_pos/height*100;
-
-				var value_disappear = "'.$disappear_pos.'";
-				var value_appear = "'.$appear_pos.'";
-				
-				var element;
-				if ($(".essb_displayed_sidebar").length) {
-					element = $(".essb_displayed_sidebar");
-				}
-				if ($(".essb_displayed_sidebar_right").length) {
-					element = $(".essb_displayed_sidebar_right");
-				}
-				
-				if (!element || typeof(element) == "undefined") { return; }
-				
-				value_disappear = parseInt(value_disappear);
-				value_appear = parseInt(value_appear);
-				
-				if (value_appear > 0 && value_disappear == 0) {
-					if (percentage >= value_appear && !element.hasClass("active-sidebar")) {
-						element.fadeIn(100);
-						element.addClass("active-sidebar");
-						return;
-					}
-					
-					if (percentage < value_appear && element.hasClass("active-sidebar")) {
-						element.fadeOut(100);
-						element.removeClass("active-sidebar");
-						return;
-					}
-				}
-				
-				if (value_disappear > 0 && value_appear == 0) {
-					if (percentage >= value_disappear && !element.hasClass("hidden-sidebar")) {
-						element.fadeOut(100);
-						element.addClass("hidden-sidebar");
-						return;
-					}
-					
-					if (percentage < value_disappear && element.hasClass("hidden-sidebar")) {
-						element.fadeIn(100);
-						element.removeClass("hidden-sidebar");
-						return;
-					}
-				}
-				
-				if (value_appear > 0 && value_disappear > 0) {
-					if (percentage >= value_appear && percentage < value_disappear && !element.hasClass("active-sidebar")) {
-						element.fadeIn(100);
-						element.addClass("active-sidebar");
-						return;
-					}
-					
-					if ((percentage < value_appear || percentage >= value_disappear) && element.hasClass("active-sidebar")) {
-						element.fadeOut(100);
-						element.removeClass("active-sidebar");
-						return;
-					}
-				}
-			}
-		});		
-		';
-		}
-		return $output;
+		return essb_rs_js_build_generate_sidebar_reveal_code();
 	}
 
 	public static function js_build_generate_postfloat_reveal_code() {
-		global $essb_options;
-	
-	
-		$output = '';
-	
-		$appear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'postfloat_percent');
-		if (empty($appear_pos)) {
-			$appear_pos = "0";
+		if (!function_exists('essb_rs_js_build_generate_postfloat_reveal_code')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_postfloat_reveal_code.php');
 		}
-	
-	
-		if ($appear_pos != '') {
-			$output .= '
-		jQuery(document).ready(function($){
-	
-			$(window).scroll(essb_postfloat_onscroll);
-	
-			function essb_postfloat_onscroll() {
-				var current_pos = $(window).scrollTop();
-				var height = $(document).height()-$(window).height();
-				var percentage = current_pos/height*100;
-	
-				var value_appear = "'.$appear_pos.'";
-	
-				var element;
-				if ($(".essb_displayed_postfloat").length) {
-					element = $(".essb_displayed_postfloat");
-				}
-	
-				if (!element || typeof(element) == "undefined") { return; }
-	
-	
-				value_appear = parseInt(value_appear);
-	
-				if (value_appear > 0 ) {
-					if (percentage >= value_appear && !element.hasClass("essb_active_postfloat")) {
-						
-						
-						element.addClass("essb_active_postfloat");
-						return;
-					}
-			
-					if (percentage < value_appear && element.hasClass("essb_active_postfloat")) {
-						
-						element.removeClass("essb_active_postfloat");
-						return;
-					}
-				}
-	
-			}
-		});
-		';
-		}
-		return $output;
+		
+		return essb_rs_js_build_generate_postfloat_reveal_code();
 	}
 	
 
 	public static function js_build_generate_topbar_reveal_code() {
-		global $essb_options;
-	
-	
-		$output = '';
-	
-		$appear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'topbar_top_onscroll');
-		$topbar_hide = ESSBOptionValuesHelper::options_value($essb_options, 'topbar_hide');
-	
-	
-		if ($appear_pos != '' || $topbar_hide != '') {
-			$output .= '
-		jQuery(document).ready(function($){
-	
-			$(window).scroll(essb_topbar_onscroll);
-	
-			function essb_topbar_onscroll() {
-				var current_pos = $(window).scrollTop();
-				var height = $(document).height()-$(window).height();
-				var percentage = current_pos/height*100;
-	
-				var value_appear = "'.$appear_pos.'";
-				var value_disappear = "'.$topbar_hide.'";
-	
-				var element;
-				if ($(".essb_topbar").length) {
-					element = $(".essb_topbar");
-				}
-	
-				if (!element || typeof(element) == "undefined") { return; }
-	
-	
-				value_appear = parseInt(value_appear);
-				value_disappear = parseInt(value_disappear);
-	
-				if (value_appear > 0 ) {
-					if (percentage >= value_appear && !element.hasClass("essb_active_topbar")) {
-						
-						
-						element.addClass("essb_active_topbar");
-						return;
-					}
-			
-					if (percentage < value_appear && element.hasClass("essb_active_topbar")) {
-						
-						element.removeClass("essb_active_topbar");
-						return;
-					}
-				}
-				
-				if (value_disappear > 0) {
-					if (percentage >= value_disappear && !element.hasClass("hidden-float")) {
-						element.addClass("hidden-float");
-						element.css( {"opacity": "0"});
-						return;
-					}
-					if (percentage < value_disappear && element.hasClass("hidden-float")) {
-						element.removeClass("hidden-float");
-						element.css( {"opacity": "1"});
-						return;
-					}
-				}
-	
-			}
-		});
-		';
+		if (!function_exists('essb_rs_js_build_generate_topbar_reveal_code')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_topbar_reveal_code.php');
 		}
-		return $output;
+		
+		return essb_rs_js_build_generate_topbar_reveal_code();
 	}
 	
 	public static function js_build_generate_bottombar_reveal_code() {
-		global $essb_options;
-	
-	
-		$output = '';
-	
-		$appear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'bottombar_top_onscroll');
-		$bottombar_hide = ESSBOptionValuesHelper::options_value($essb_options, 'bottombar_hide');
+		if (!function_exists('essb_rs_js_build_generate_bottombar_reveal_code')) {
+			include_once (ESSB_RESOURCE_BUILDER_FOLDER . 'essb_rs_js_build_generate_bottombar_reveal_code.php');
+		}
 		
-	
-		if ($appear_pos != '' || $bottombar_hide != '') {
-			$output .= '
-			jQuery(document).ready(function($){
-	
-			$(window).scroll(essb_bottombar_onscroll);
-	
-			function essb_bottombar_onscroll() {
-			var current_pos = $(window).scrollTop();
-			var height = $(document).height()-$(window).height();
-			var percentage = current_pos/height*100;
-	
-			var value_appear = "'.$appear_pos.'";
-			var value_disappear = "'.$bottombar_hide.'";
-			var element;
-			if ($(".essb_bottombar").length) {
-			element = $(".essb_bottombar");
-		}
-	
-		if (!element || typeof(element) == "undefined") { return; }
-	
-	
-		value_appear = parseInt(value_appear);
-		value_disappear = parseInt(value_disappear);
-		if (value_appear > 0 ) {
-			if (percentage >= value_appear && !element.hasClass("essb_active_bottombar")) {
-				element.addClass("essb_active_bottombar");
-				return;
-			}
-			
-			if (percentage < value_appear && element.hasClass("essb_active_bottombar")) {
-	
-				element.removeClass("essb_active_bottombar");
-				return;
-			}
-		}
-		if (value_disappear > 0) {
-					if (percentage >= value_disappear && !element.hasClass("hidden-float")) {
-						element.addClass("hidden-float");
-						element.css( {"opacity": "0"});
-						return;
-					}
-					if (percentage < value_disappear && element.hasClass("hidden-float")) {
-						element.removeClass("hidden-float");
-						element.css( {"opacity": "1"});
-						return;
-					}
-				}
-		}
-		});
-		';
-		}
-		return $output;
+		return essb_rs_js_build_generate_bottombar_reveal_code();
 	}	
 }
 

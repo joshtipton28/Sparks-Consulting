@@ -31,7 +31,7 @@ class ESSBAfterCloseShare3 {
 		if ($this->single_display_cookie_length == 0) { $this->single_display_cookie_length = 7; }
 		
 		$afterclose_deactive_sharedisable = ESSBOptionValuesHelper::options_bool_value($this->options, 'afterclose_deactive_sharedisable');
-		if ($afterclose_deactive_sharedisable && $is_active) {
+		if ($is_active) {
 			add_action ( 'wp_enqueue_scripts', array ($this, 'check_after_postload_settings' ), 1 );
 		}
 		
@@ -85,6 +85,9 @@ class ESSBAfterCloseShare3 {
 			}
 		}
 		
+		if ( ESSBCoreHelper::is_module_deactivate_on('aftershare')) {
+			$is_user_deactivated = true;
+		}
 		
 		// check post meta for turned off
 		$essb_off = get_post_meta(get_the_ID(),'essb_off',true);

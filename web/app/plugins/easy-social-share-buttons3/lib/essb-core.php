@@ -68,6 +68,9 @@ class ESSBCore {
 		add_shortcode ( 'easy-social-share-popup', array($this, 'essb_shortcode_share_popup'));
 		add_shortcode ( 'easy-social-share-flyin', array($this, 'essb_shortcode_share_flyin'));
 		
+		add_shortcode ( 'easy-subscribe', array($this, 'essb_shortcode_subscribe'));
+		add_shortcode ( 'easy-popular-posts', array($this, 'essb_shortcode_popular_posts'));
+		
 		// @since 3.3 myEventOn fix for display buttons in widgets
 		if (class_exists( 'EventON' )) {
 			add_action('eventon_cal_variable_action', array($this, 'eventon_deactiate_content_filters'));
@@ -90,6 +93,15 @@ class ESSBCore {
 		if ($this->is_plugin_deactivated_on() || ESSBCoreHelper::is_module_deactivate_on('share')) {
 			$this->deactivate_stored_filter_and_actions();
 			return;
+		}
+		
+		if (!defined('ESSB3_CACHED_COUNTERS')) {
+			if (defined('ESSB_DEMO_CACHED_COUNTERS_HOME')) {
+				if (is_home() || is_front_page()) {
+					define('ESSB3_CACHED_COUNTERS', true);
+					include_once(ESSB3_PLUGIN_ROOT . 'lib/core/share-counters/essb-cached-counters.php');
+				}
+			}
 		}
 		
 		$this->register_locations();
@@ -166,6 +178,7 @@ class ESSBCore {
 			$this->activated_resources['animations'] = 'true';
 			//essb_resource_builder()->add_css(ESSBResourceBuilderSnippets::css_build_animation_code($css_animations), 'essb-css-animations');
 		}
+	
 		essb_resource_builder()->add_css(ESSBResourceBuilderSnippets::css_build_counter_style(), 'essb-counter-style');
 		essb_resource_builder()->add_css(ESSBResourceBuilderSnippets::css_build_generate_column_width(), 'essb-column-width-style');
 		essb_resource_builder()->add_css(ESSBResourceBuilderSnippets::css_build_sidebar_options(), 'essb-sidebar-style');
@@ -282,7 +295,8 @@ class ESSBCore {
 		}
 
 		// @since 3.5
-		if (in_array('postbar', $this->general_options['button_position'])) {
+		// changed in 3.6 to add share point
+		if (in_array('postbar', $this->general_options['button_position']) || in_array('point', $this->general_options['button_position'])) {
 			//$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-postbar'.$use_minifed_css.'.css';
 			//essb_resource_builder()->add_static_resource($style_url, 'easy-social-share-buttons-postbar', 'css');
 		
@@ -393,6 +407,7 @@ class ESSBCore {
 			}
 		}
 		 
+		$this->network_options['mail_inline_code'] = ESSBOptionValuesHelper::options_bool_value($this->options, 'mail_inline_code');
 		$this->network_options['mail_function_mobile'] = ESSBOptionValuesHelper::options_value($this->options, 'mail_function_mobile');
 		$this->network_options['use_wpmandrill'] = ESSBOptionValuesHelper::options_bool_value($this->options, 'use_wpmandrill');
 		$this->network_options['mail_copyaddress'] = ESSBOptionValuesHelper::options_value($this->options, 'mail_copyaddress');
@@ -623,7 +638,7 @@ class ESSBCore {
 							$this->list_of_activated_locations[] = array("type" => "filter", "hook" => "comment_post_redirect", "function" => 'after_comment_trigger', "priority" => "", 'position' => 'button_position');
 						}
 						
-						if ($position == 'postbar') {
+						if ($position == 'postbar' || $position == "point") {
 							add_filter('the_content', array($this, 'trigger_postbar_readbar'));
 							$this->list_of_activated_locations[] = array("type" => "filter", "hook" => "the_content", "function" => 'trigger_postbar_readbar', "priority" => "", 'position' => 'button_position');
 						}
@@ -781,125 +796,22 @@ class ESSBCore {
 	}
 	
 	function remove_buttons_excerpts($text) {
-		global $essb_networks;
-		
-		foreach ($essb_networks as $k => $data) {
-			$network_name = $data['name'];
-			
-			if ($network_name != '-') {
-				$text = str_replace($network_name, '', $text);
-			}
-			$text = str_replace($k, '', $text);
-			
-			$position_top_name = ESSBOptionValuesHelper::options_value($this->options, 'top_'.$k.'_name');
-			$position_float_name = ESSBOptionValuesHelper::options_value($this->options, 'float_'.$k.'_name');
-			$position_postfloat_name = ESSBOptionValuesHelper::options_value($this->options, 'postfloat_'.$k.'_name');
-			
-			$default_name = $this->network_options['default_names'][$k];
-			
-			if (!empty($position_top_name)) {
-				if ($position_top_name != '-') {
-					$text = str_replace($position_top_name, '', $text);
-				}
-			}
-			if (!empty($position_float_name)) {
-				if ($position_float_name != '-') {
-					$text = str_replace($position_float_name, '', $text);
-				}
-			}
-			if (!empty($position_postfloat_name)) {
-				if ($position_postfloat_name != '-') {
-					$text = str_replace($position_postfloat_name, '', $text);
-				}
-			}
-			if (!empty($default_name)) {
-				if ($default_name != '-') {
-					$text = str_replace($default_name, '', $text);
-				}
-			}
+		if (!function_exists('essb_excerpt_clean_method1')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-excerpt-clean-method1.php');				
 		}
 		
-		if (defined('ESSB3_NATIVE_ACTIVE')) {
-			$skin_native = ESSBOptionValuesHelper::options_bool_value($this->options, 'skin_native');
-			if (ESSB3_NATIVE_ACTIVE && $skin_native) {
-				$native_buttons = ESSBNativeButtonsHelper::active_native_buttons();
-
-				foreach ($native_buttons as $network) {
-					$skinned_text = ESSBOptionValuesHelper::options_value($this->options, $network.'_text');
-					if (!empty($skinned_text)) {
-						$text = str_replace($skinned_text, '', $text);
-					}
-				}
-			}
-		}
+		return essb_excerpt_clean_method1($text, $this->options, $this->network_options['networks'], $this->network_options['default_names']);
 		
-		return $text;
 	}
 	
 	function remove_buttons_excerpts_method3($text) {
-		global $essb_networks;
-	
 		
-		//print_r($this->network_options['networks']);
-		foreach ($essb_networks as $k => $data) {
-			$network_name = $data['name'];
-				
-			if ($network_name != '-') {
-				$text = str_replace($network_name, '', $text);
-			}
-			
-			if (!in_array($k, $this->network_options['networks'])) { continue;}
-							
-			$position_top_name = ESSBOptionValuesHelper::options_value($this->options, 'top_'.$k.'_name');
-			$position_float_name = ESSBOptionValuesHelper::options_value($this->options, 'float_'.$k.'_name');
-			$position_postfloat_name = ESSBOptionValuesHelper::options_value($this->options, 'postfloat_'.$k.'_name');
-				
-			$default_name = $this->network_options['default_names'][$k];
-				
-			if (!empty($position_top_name)) {
-				if ($position_top_name != '-') {
-					$text = str_replace($position_top_name, '', $text);
-				}
-			}
-			if (!empty($position_float_name)) {
-				if ($position_float_name != '-') {
-					$text = str_replace($position_float_name, '', $text);
-				}
-			}
-			if (!empty($position_postfloat_name)) {
-				if ($position_postfloat_name != '-') {
-					$text = str_replace($position_postfloat_name, '', $text);
-				}
-			}
-			if (!empty($default_name)) {
-				if ($default_name != '-') {
-					$text = str_replace($default_name, '', $text);
-				}
-			}
+		if (!function_exists('essb_excerpt_clean_method3')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-excerpt-clean-method3.php');				
 		}
 		
-		$message_before_buttons = ESSBOptionValuesHelper::options_value($this->options, 'message_share_before_buttons');
-		$message_before_buttons = trim($message_before_buttons);
+		return essb_excerpt_clean_method3($text, $this->options, $this->network_options['networks'], $this->network_options['default_names']);
 		
-		if (!empty($message_before_buttons)) {
-			$text = str_replace($message_before_buttons, '', $text);
-		}
-	
-		if (defined('ESSB3_NATIVE_ACTIVE')) {
-			$skin_native = ESSBOptionValuesHelper::options_bool_value($this->options, 'skin_native');
-			if (ESSB3_NATIVE_ACTIVE && $skin_native) {
-				$native_buttons = ESSBNativeButtonsHelper::active_native_buttons();
-	
-				foreach ($native_buttons as $network) {
-					$skinned_text = ESSBOptionValuesHelper::options_value($this->options, $network.'_text');
-					if (!empty($skinned_text)) {
-						$text = str_replace($skinned_text, '', $text);
-					}
-				}
-			}
-		}
-	
-		return $text;
 	}
 	
 	function is_plugin_deactivated_on() {		
@@ -921,12 +833,6 @@ class ESSBCore {
 				$is_deactivated = true;
 			}
 		}
-		
-		/*if ($this->general_options['deactivate_lists']) {
-			if (is_archive() || is_search() || is_tag() || is_post_type_archive()) {
-				$is_deactivated = true;
-			}
-		}*/
 		
 		return $is_deactivated;
 	}
@@ -1159,109 +1065,14 @@ class ESSBCore {
 		}
 	}
 	
-	/*function deactivate_content_filters () {
-		if (is_admin()) {
-			return;
-		}
-		
-		if ($this->general_options['reset_postdata']) {
-			wp_reset_postdata();
-		}
-		
-		$current_post_content_locations = $this->general_options['content_position'];
-		$current_post_button_position = $this->general_options['button_position'];
-		
-		// user is activated the visual metabox editor
-		if ($this->general_options['metabox_visual']) {
-			// integrate post meta change options
-		}
-		
-		if ($current_post_content_locations != '' && $current_post_content_locations != 'content_manual') {
-			remove_filter('the_content', array($this, 'display_inline'), $this->general_options['priority_of_buttons']);
-		}
-		
-		if (is_array($current_post_button_position)) {
-			foreach ($current_post_button_position as $position) {
-				if (method_exists($this, 'display_'.$position)) {
-					if ($position == "postfloat") {
-						remove_filter('the_content', array($this, 'display_postfloat'));
-						remove_filter( 'the_content', array( $this, 'trigger_bottom_mark' ), 9999 );
-					}
-					else if ($position == "onmedia") {
-						remove_filter( 'the_content', array( $this, 'display_onmedia' ), 9999 );
-					}
-					else {		
-						remove_filter( 'the_content', array( $this, 'trigger_bottom_mark' ), 9999 );
-					}
-				}
-			}
-		}
-		
-		if ($this->general_options['display_excerpt']) {
-			remove_filter('the_excerpt', array($this, 'display_excerpt'), $this->general_options['priority_of_buttons']);
-		}
-	}*/		
 	
 	function check_applicability_module ($location = '') {
-		$is_singular = true;
-		$is_lists_authorized = true;
 		
-		// @since 3.4.2 - check to ensure buttons will not appear in feed or search
-		if (is_feed()) { return false; }
-		
-		if ($this->general_options['display_exclude_from'] != "") {
-			$excule_from = explode(',', $this->general_options['display_exclude_from']);
-				
-			$excule_from = array_map('trim', $excule_from);
-				
-			if (in_array(get_the_ID(), $excule_from, false)) {
-				$is_singular = false;
-				$is_lists_authorized = false;
-			}
+		if (!function_exists('essb_check_applicability_module')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-check-applicability-module.php');
 		}
 		
-		if (ESSBCoreHelper::is_module_deactivate_on('share')) {
-			$is_singular = false;
-			$is_lists_authorized = false;
-		}
-		
-		// additional plugin hacks
-		$request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-		if ($request_uri != '') {
-			$exist_ai1ec_export = strpos($request_uri, 'ai1ec_exporter_controller');
-			if ($exist_ai1ec_export !== false) {
-				$is_singular = false; $is_lists_authorized = false;
-			}
-		
-			$exist_tribe_cal = strpos($request_uri, 'ical=');
-			if ($exist_tribe_cal !== false) {
-				$is_singular = false; $is_lists_authorized = false;
-			}
-		}
-		
-		// check post meta for turned off
-		$essb_off = get_post_meta(get_the_ID(),'essb_off',true);
-		
-		if ($essb_off == "true") {
-			$is_lists_authorized = false;
-			$is_singular = false;
-		}
-		
-		// deactivate on mobile devices if selected
-		if (essb_is_mobile()) {
-			if (ESSBOptionValuesHelper::options_value($this->options, $location.'_mobile_deactivate')) {
-				$is_singular = false;
-				$is_lists_authorized = false;
-			}
-		}
-		
-		// check current location settings
-		if ($is_singular || $is_lists_authorized) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return essb_check_applicability_module($location, $this->options, $this->general_options['display_exclude_from']);
 	}
 	
 	function check_applicability($post_types = array(), $location = '') {
@@ -1324,12 +1135,6 @@ class ESSBCore {
 			}
 		}
 		
-		/*if ($this->general_options['deactivate_lists']) {
-			if (is_archive() || is_search() || is_tag() || is_post_type_archive()) {
-				$is_lists_authorized = false;
-				$is_singular = false;
-			}
-		}*/
 		
 		if ($this->general_options['display_exclude_from'] != "") {
 			$excule_from = explode(',', $this->general_options['display_exclude_from']);
@@ -1372,6 +1177,13 @@ class ESSBCore {
 		// deactivate on mobile devices if selected
 		if (essb_is_mobile()) {
 			if (ESSBOptionValuesHelper::options_value($this->options, $location.'_mobile_deactivate')) {
+				$is_singular = false;
+				$is_lists_authorized = false;
+			}
+		}
+		
+		if (essb_is_tablet()) {
+			if (ESSBOptionValuesHelper::options_value($this->options, $location.'_tablet_deactivate')) {
 				$is_singular = false;
 				$is_lists_authorized = false;
 			}
@@ -1391,131 +1203,12 @@ class ESSBCore {
 	}
 	
 	function check_applicability_excerpt($post_types = array(), $location = '') {
-		global $post;
-	
-		// @since 3.4.2 - check to ensure buttons will not appear in feed or search
-		if (is_search() || is_feed()) {
-			return false;
+		
+		if (!function_exists('essb_check_applicability_excerpt')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-check-applicability-excerpt.php');
 		}
 		
-		$current_active_post_type = "";
-		if ($this->general_options['reset_posttype'] && isset($post)) {
-			$current_active_post_type = isset($post->post_type) ? $post->post_type : "";
-		}
-	
-		if ($this->general_options['reset_postdata']) {
-			wp_reset_postdata();
-		}
-	
-		// @since 3.0
-		// another check to avoid buttons appear on unwanted post types
-	
-		$is_exclusive_active = false;
-		if (isset($post)) {
-			$is_exclusive_active = $this->is_plugin_activated_on();
-		}
-	
-		if ($this->general_options['reset_posttype'] && !empty($current_active_post_type)) {
-			if (!in_array($current_active_post_type, $post_types)) {
-				if (!$is_exclusive_active) {
-					return false;
-				}
-			}
-		}
-	
-	
-		//if (isset($post)) {
-		//	print " parsing post type=".$post->post_type;
-		//}
-	
-		$is_all_lists = in_array('all_lists', $post_types);
-		$is_set_list = count($post_types) > 0 ?  true: false;
-	
-		unset($post_types['all_lists']);
-		$is_lists_authorized = (is_archive() || is_front_page() || is_search() || is_tag() || is_post_type_archive() || is_home());
-		$is_singular = is_singular($post_types);
-		if ($is_singular && !$is_set_list) {
-			$is_singular = false;
-		}
-		
-		if (isset($post)) {
-			if (!in_array($post->post_type, $post_types, false)) {
-				$is_lists_authorized = false;
-				$is_singular = false;
-			}
-		}
-	
-		if ($this->general_options['deactivate_homepage']) {
-			if (is_home() || is_front_page()) {
-				$is_lists_authorized = false;
-				$is_singular = false;
-			}
-		}
-		
-		/*if ($this->general_options['deactivate_lists']) {
-			if (is_archive() || is_search() || is_tag() || is_post_type_archive()) {
-				$is_lists_authorized = false;
-				$is_singular = false;
-			}
-		}*/
-	
-		if ($this->general_options['display_exclude_from'] != "") {
-			$excule_from = explode(',', $this->general_options['display_exclude_from']);
-				
-			$excule_from = array_map('trim', $excule_from);
-				
-			if (in_array(get_the_ID(), $excule_from, false)) {
-				$is_singular = false;
-				$is_lists_authorized = false;
-			}
-		}
-		
-		if (ESSBCoreHelper::is_module_deactivate_on('share')) {
-			$is_singular = false;
-			$is_lists_authorized = false;
-		}
-	
-		// additional plugin hacks
-		$request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-		if ($request_uri != '') {
-			$exist_ai1ec_export = strpos($request_uri, 'ai1ec_exporter_controller');
-			if ($exist_ai1ec_export !== false) {
-				$is_singular = false; $is_lists_authorized = false;
-			}
-	
-			$exist_tribe_cal = strpos($request_uri, 'ical=');
-			if ($exist_tribe_cal !== false) {
-				$is_singular = false; $is_lists_authorized = false;
-			}
-		}
-	
-		// check post meta for turned off
-		$essb_off = get_post_meta(get_the_ID(),'essb_off',true);
-	
-		if ($essb_off == "true") {
-			$is_lists_authorized = false;
-			$is_singular = false;
-		}
-	
-		// deactivate on mobile devices if selected
-		if (essb_is_mobile()) {
-			if (ESSBOptionValuesHelper::options_value($this->options, $location.'_mobile_deactivate')) {
-				$is_singular = false;
-				$is_lists_authorized = false;
-			}
-		}
-	
-		if ($is_exclusive_active) {
-			$is_singular = true;
-		}
-	
-		// check current location settings
-		if ($is_singular || $is_lists_authorized) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return essb_check_applicability_excerpt($post_types, $location, $this->options, $this->general_options);
 	}
 	
 	// -- additional plugin special integration hooks
@@ -1602,6 +1295,68 @@ class ESSBCore {
 	}	
 	
 	/**
+	 * display_point
+	 * 
+	 * Generate share point code
+	 * 
+	 * @param unknown_type $is_shortcode
+	 * @param unknown_type $shortcode_options
+	 * @param unknown_type $share_options
+	 */
+	function display_point($is_shortcode = true, $shortcode_options = array(), $share_options = array()) {
+		global $post;
+		
+		$post_types = $this->general_options['display_in_types'];
+		
+		$is_valid = false;
+		if ($is_shortcode) {
+			$is_valid = true;
+		}
+		else {
+			$is_valid = $this->check_applicability($post_types, 'point');
+		
+			// post share bar cannot work on list of posts
+			if (!is_single () && !is_page ()) {
+				$is_valid = false;
+			}
+		}
+		
+		
+		$output = '';
+		
+		if ($is_valid) {
+		
+			if (!class_exists('ESSBDisplayMethodPoint')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-point.php');
+			}
+				
+			$post_details = $this->get_post_share_details('point');
+			
+			$share_buttons = '';
+			$total_shares_code = $this->essb_shortcode_total_shares(array('inline' => 'yes', 'url' => $post_details['url']));
+				
+			if (!$is_shortcode) {
+				$share_buttons = $this->generate_share_buttons('point', 'share', array("only_share" => true));
+			}
+			else {
+				$share_buttons = $this->generate_share_buttons('point', 'share', $share_options, true, $shortcode_options);
+			}
+				
+			// Helper class to generate post share bar
+			$output = ESSBDisplayMethodPoint::generate_point_code($this->options, $share_buttons, $total_shares_code, $is_shortcode, $shortcode_options);
+				
+			// when it is not a shortcode we output the generated markup
+			if (!$is_shortcode) {
+				print $output;
+			}
+		}
+		
+		if ($is_shortcode) {
+			return $output;
+		}
+	}
+	
+	/**
 	 * display_postbar
 	 * 
 	 * Generate social post bar display method
@@ -1635,8 +1390,8 @@ class ESSBCore {
 		if ($is_valid) {
 
 
-			if (!class_exists('ESSBCoreExtenderPostBar')) {
-				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-postbar.php');				
+			if (!class_exists('ESSBDisplayMethodPostBar')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-postbar.php');				
 			}
 			
 			$share_buttons = '';
@@ -1650,7 +1405,7 @@ class ESSBCore {
 			}
 			
 			// Helper class to generate post share bar
-			$output = ESSBCoreExtenderPostBar::generate_postbar_code($this->options, $share_buttons, $total_shares_code);
+			$output = ESSBDisplayMethodPostBar::generate_postbar_code($this->options, $share_buttons, $total_shares_code);
 			
 			// when it is not a shortcode we output the generated markup
 			if (!$is_shortcode) {
@@ -1715,29 +1470,20 @@ class ESSBCore {
 		
 		$output = "";
 		if ($is_valid) {
-			$mobile_sharebar_text = ESSBOptionValuesHelper::options_value($this->options, 'mobile_sharebar_text');
-			if ($mobile_sharebar_text == "") { $mobile_sharebar_text = "Share this"; }
 			
-			$output = "";
-			
-			$output .= '<div class="essb-mobile-sharebar" onclick="essb_mobile_sharebar_open();">';
-			$output .= sprintf ('<div class="essb-mobile-sharebar-icon"></div><div class="essb-mobile-sharebar-text">%1$s</div>', $mobile_sharebar_text);
-			$output .= '</div>';
-			
-			$output .= '<div class="essb-mobile-sharebar-window">';
-			$output .= '<div class="essb-mobile-sharebar-window-close-title" onclick="essb_mobile_sharebar_close(); return false;">';
-			$output .= '<a href="#" class="essb-mobile-sharebar-window-close" ></a>';
-			$output .= '</div>';
-			$output .= '<div class="essb-mobile-sharebar-window-content">';
+			if (!class_exists('ESSBDisplayMethodMobile')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-mobile.php');
+			}
+
+			$share_buttons = '';
 			if (!$is_shortcode) {
-				$output .= $this->generate_share_buttons('sharebar');
+				$share_buttons = $this->generate_share_buttons('sharebar');
 			}
 			else {
-				$output .= $this->generate_share_buttons('sharebar', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('sharebar', 'share', $share_options, true, $shortcode_options);
 			}
-			$output .= '</div>';
-			$output .= '</div>';
-			$output .= '<div class="essb-mobile-sharebar-window-shadow"></div>';
+			
+			$output = ESSBDisplayMethodMobile::generate_sharebar_code($this->options, $share_buttons, $is_shortcode, $shortcode_options);
 			
 			if (!$is_shortcode) {
 				echo $output;
@@ -1769,24 +1515,18 @@ class ESSBCore {
 		
 		if ($is_valid) {
 				
-			$output .= '<div class="essb-mobile-sharepoint" onclick="essb_mobile_sharebar_open();">';
-			$output .= '<div class="essb-mobile-sharepoint-icon"></div>';
-			$output .= '</div>';
-				
-			$output .= '<div class="essb-mobile-sharebar-window">';
-			$output .= '<div class="essb-mobile-sharebar-window-close-title" onclick="essb_mobile_sharebar_close(); return false;">';
-			$output .= '<a href="#" class="essb-mobile-sharebar-window-close" ></a>';
-			$output .= '</div>';
-			$output .= '<div class="essb-mobile-sharebar-window-content">';
+			if (!class_exists('ESSBDisplayMethodMobile')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-mobile.php');
+			}
+			
+			$share_buttons = '';
 			if (!$is_shortcode) {
-				$output .= $this->generate_share_buttons('sharepoint');
+				$share_buttons = $this->generate_share_buttons('sharepoint');
 			}
 			else {
-				$output .= $this->generate_share_buttons('sharepoint', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('sharepoint', 'share', $share_options, true, $shortcode_options);
 			}
-			$output .= '</div>';
-			$output .= '</div>';
-			$output .= '<div class="essb-mobile-sharebar-window-shadow"></div>';
+			$output = ESSBDisplayMethodMobile::generate_sharepoint_code($this->options, $share_buttons, $is_shortcode, $shortcode_options);
 			
 			if (!$is_shortcode) {
 				echo $output;
@@ -1813,72 +1553,20 @@ class ESSBCore {
 		$output = "";
 		
 		if ($is_valid) {
-			$topbar_content_area = ESSBOptionValuesHelper::options_bool_value($this->options, 'topbar_contentarea');
-			$topbar_content_area_pos = ESSBOptionValuesHelper::options_value($this->options, 'topbar_contentarea_pos');
-			$topbar_buttons_align = ESSBOptionValuesHelper::options_value($this->options, 'topbar_buttons_align', 'left');
-			$topbar_usercontent = ESSBOptionValuesHelper::options_value($this->options, 'topbar_usercontent');
-				
-			if ($is_shortcode) {
-				if (!empty($shortcode_options['topbar_contentarea'])){
-					$topbar_content_area = ESSBOptionValuesHelper::unified_true($shortcode_options['topbar_contentarea']);
-				}
-				if (!empty($shortcode_options['topbar_contentarea_pos'])) {
-					$topbar_contentarea_pos = $shortcode_options['topbar_contentarea_pos'];
-				}
-				if (!empty($shortcode_options['topbar_buttons_align'])) {
-					$topbar_buttons_align = $shortcode_options['topbar_buttons_align'];
-				}
-				if (!empty($shortcode_options['topbar_usercontent'])) {
-					$topbar_usercontent = $shortcode_options['topbar_usercontent'];
-				}
+			
+			if (!class_exists('ESSBDisplayMethodTopBar')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-topbar.php');
 			}
 			
-			$topbar_usercontent = stripslashes($topbar_usercontent);
-			$topbar_usercontent = do_shortcode($topbar_usercontent);
-				
-			if ($topbar_usercontent != '') {
-				$topbar_usercontent = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#'), array(get_the_title(), get_site_url(), get_permalink()), $topbar_usercontent);
-
-				$topbar_usercontent = ESSBCoreHelper::post_details_to_content($topbar_usercontent);
-			}
-			
+			$share_buttons = '';
 			if (!$is_shortcode) {
-				$ssbuttons = $this->generate_share_buttons('topbar');
+				$share_buttons = $this->generate_share_buttons('topbar');
 			}
 			else {
-				$ssbuttons = $this->generate_share_buttons('topbar', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('topbar', 'share', $share_options, true, $shortcode_options);
 			}
 			
-			$output = '';
-			
-			$output .= '<div class="essb_topbar">';
-			$output .= '<div class="essb_topbar_inner">';
-			
-			if (!$topbar_content_area) {
-				$output .= sprintf('<div class="essb_topbar_inner_buttons essb_bar_withoutcontent essb_topbar_align_%1$s">', $topbar_buttons_align);
-				$output .= $ssbuttons; 
-				$output .= '</div>';
-			}
-			else {
-				if ($topbar_content_area_pos == "left") {
-					$output .= '<div class="essb_topbar_inner_content">';
-					$output .= stripslashes($topbar_usercontent);
-					$output .= '</div>';
-					$output .= sprintf('<div class="essb_topbar_inner_buttons essb_topbar_align_%1$s">', $topbar_buttons_align);
-					$output .= $ssbuttons;
-					$output .= '</div>';
-				}
-				else {
-					$output .= sprintf('<div class="essb_topbar_inner_buttons essb_topbar_align_%1$s">', $topbar_buttons_align);
-					$output .= $ssbuttons;
-					$output .= '</div>';
-					$output .= '<div class="essb_topbar_inner_content">';
-					$output .= stripslashes($topbar_usercontent);
-					$output .= '</div>';
-				}
-			}
-			$output .= '</div>';
-			$output .= '</div>';
+			$output = ESSBDisplayMethodTopBar::generate_topbar_code($this->options, $share_buttons, $is_shortcode, $shortcode_options);
 			
 			if (!$is_shortcode) {
 				echo $output;
@@ -1906,70 +1594,20 @@ class ESSBCore {
 		$output = '';
 		
 		if ($is_valid) {
-			$bottombar_content_area = ESSBOptionValuesHelper::options_bool_value($this->options, 'bottombar_contentarea');
-			$bottombar_content_area_pos = ESSBOptionValuesHelper::options_value($this->options, 'bottombar_contentarea_pos');
-			$bottombar_usercontent = ESSBOptionValuesHelper::options_value($this->options, 'bottombar_usercontent');
-			$bottombar_buttons_align = ESSBOptionValuesHelper::options_value($this->options, 'bottombar_buttons_align', 'left');
 			
-			if ($is_shortcode) {
-				if (!empty($shortcode_options['bottombar_contentarea'])){
-					$bottombar_contentarea = ESSBOptionValuesHelper::unified_true($shortcode_options['bottombar_contentarea']);
-				}
-				if (!empty($shortcode_options['bottombar_contentarea_pos'])) {
-					$bottombar_contentarea_pos = $shortcode_options['bottombar_contentarea_pos'];
-				}
-				if (!empty($shortcode_options['bottombar_buttons_align'])) {
-					$bottombar_buttons_align = $shortcode_options['bottombar_buttons_align'];
-				}
-				if (!empty($shortcode_options['bottombar_usercontent'])) {
-					$bottombar_usercontent = $shortcode_options['bottombar_usercontent'];
-				}
+			if (!class_exists('ESSBDisplayMethodBottomBar')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-bottombar.php');
 			}
 			
-			$bottombar_usercontent = stripslashes($bottombar_usercontent);
-			$bottombar_usercontent = do_shortcode($bottombar_usercontent);
-				
-			if ($bottombar_usercontent != '') {
-				$bottombar_usercontent = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#'), array(get_the_title(), get_site_url(), get_permalink()), $bottombar_usercontent);
-				
-				$bottombar_usercontent = ESSBCoreHelper::post_details_to_content($bottombar_usercontent);
-			}
-
+			$share_buttons = '';
 			if (!$is_shortcode) {
-				$ssbuttons = $this->generate_share_buttons('bottombar');
+				$share_buttons = $this->generate_share_buttons('bottombar');
 			}
 			else {
-				$ssbuttons = $this->generate_share_buttons('bottombar', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('bottombar', 'share', $share_options, true, $shortcode_options);
 			}
 				
-			$output .= '<div class="essb_bottombar">';
-			$output .= '<div class="essb_bottombar_inner">';
-				
-			if (!$bottombar_content_area) {
-				$output .= sprintf('<div class="essb_bottombar_inner_buttons essb_bar_withoutcontent essb_bottombar_align_%1$s">', $bottombar_buttons_align);
-				$output .= $ssbuttons;
-				$output .= '</div>';
-			}
-			else {
-				if ($bottombar_content_area_pos == "left") {
-					$output .= '<div class="essb_bottombar_inner_content">';
-					$output .= stripslashes($bottombar_usercontent);
-					$output .= '</div>';
-					$output .= sprintf('<div class="essb_bottombar_inner_buttons essb_bottombar_align_%1$s">', $bottombar_buttons_align);
-					$output .= $ssbuttons;
-					$output .= '</div>';
-				}
-				else {
-					$output .= sprintf('<div class="essb_bottombar_inner_buttons essb_bottombar_align_%1$s">', $bottombar_buttons_align);
-					$output .= $ssbuttons;
-					$output .= '</div>';
-					$output .= '<div class="essb_bottombar_inner_content">';
-					$output .= stripslashes($bottombar_usercontent);
-					$output .= '</div>';
-				}
-			}
-			$output .= '</div>';
-			$output .= '</div>';
+			$output = ESSBDisplayMethodBottomBar::generate_bottombar_code($this->options, $share_buttons, $is_shortcode, $shortcode_options);
 				
 			if (!$is_shortcode) {
 				echo $output;
@@ -2040,15 +1678,11 @@ class ESSBCore {
 		}
 		
 		if ($is_valid) {
-			// loading popup display settings
-			$popup_window_title = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_window_title');
-			$popup_user_message = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_user_message');
-
-			$popup_second_title = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_second_title');
-			$popup_second_type = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_second_type');
-			$popup_second_fans = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_second_fans');
-			$popup_second_html = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_second_message');
 			
+			if (!class_exists('ESSBDisplayMethodHeroShare')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-heroshare.php');
+			}
+						
 			if (ESSB3_DEMO_MODE) {
 				$is_active_option = isset($_REQUEST['heroshare']) ? $_REQUEST['heroshare'] : '';
 				if (!empty($is_active_option)) {
@@ -2061,125 +1695,19 @@ class ESSBCore {
 				}
 			}
 			
-			// display settings
-			$popup_user_width = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_user_width');
-			$popup_window_popafter = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_window_popafter');				
-			$popup_user_percent = ESSBOptionValuesHelper::options_value($this->options, 'heroshare_user_percent');
-			$popup_display_end = ESSBOptionValuesHelper::options_bool_value($this->options, 'heroshare_display_end');
-			$popup_user_manual_show = ESSBOptionValuesHelper::options_bool_value($this->options, 'heroshare_user_manual_show');
-			$popup_user_notshow_onclose = ESSBOptionValuesHelper::options_bool_value($this->options, 'heroshare_user_notshow_onclose');
-			$popup_user_notshow_onclose_all = ESSBOptionValuesHelper::options_bool_value($this->options, 'heroshare_user_notshow_onclose_all');
-				
-			// new @3.3
-			$popup_display_exit = ESSBOptionValuesHelper::options_bool_value($this->options, 'heroshare_display_exit');
-				
-			if ($is_shortcode) {
-		
-				$shortcode_window_title = isset($shortcode_options['heroshare_title']) ? $shortcode_options['heroshare_title'] : '';
-				$shortcode_window_message = isset($shortcode_options['heroshare_message']) ? $shortcode_options['heroshare_message'] : '';
-				$shortcode_pop_on_percent = isset($shortcode_options['heroshare_percent']) ? $shortcode_options['heroshare_percent'] : '';
-				$shortcode_pop_end = isset($shortcode_options['heroshare_end']) ? $shortcode_options['heroshare_end'] : '';
-		
-				if (!empty($shortcode_window_title)) {
-					$popup_window_title = $shortcode_window_title;
-				}
-				if (!empty($shortcode_window_message)) {
-					$popup_user_message = $shortcode_window_message;
-				}
-				if (!empty($shortcode_pop_on_percent)) {
-					$popup_user_percent = $shortcode_pop_on_percent;
-				}
-				if (!empty($shortcode_pop_end)) {
-					$popup_display_end = ESSBOptionValuesHelper::unified_true($shortcode_pop_end);
-				}
-			}
-				
-			if (!empty($popup_user_message)) {
-				$popup_user_message = ESSBCoreHelper::post_details_to_content($popup_user_message);
-			}
-			if (!empty($popup_window_title)) {
-				$popup_window_title = ESSBCoreHelper::post_details_to_content($popup_window_title);
-			}
-				
-			$popup_trigger_oncomment = "";
-			$output = "";
-			$output .= sprintf('<div class="essb-heroshare%8$s" data-width="%1$s" data-load-percent="%2$s" data-load-end="%3$s" data-load-manual="%4$s" data-close-hide="%5$s" data-close-hide-all="%6$s" data-postid="%7$s" data-exit-intent="%9$s" data-load-timer="%10s">',
-					$popup_user_width, $popup_user_percent, $popup_display_end, $popup_user_manual_show, $popup_user_notshow_onclose, 
-					$popup_user_notshow_onclose_all, get_the_ID(), $popup_trigger_oncomment, $popup_display_exit, $popup_window_popafter);
-			$output .= '<a href="#" class="essb-heroshare-close" onclick="essb_heroshare_close(); return false;"></a>';
-			$output .= '<div class="essb-heroshare-content">';
-				
-			if ($popup_window_title != '') {
-				$output .= sprintf('<h3>%1$s</h3>', stripslashes($popup_window_title));
-			}
-			if ($popup_user_message != '') {
-				$output .= sprintf('<div class="essb-heroshare-content-message">%1$s</div>', stripslashes($popup_user_message));
-			}
 			
 			$post_details = $this->get_post_share_details('heroshare');
 			
-			$output .= '<div class="essb-heroshare-post">';
-
-			$output .= '<div class="essb-heroshare-post-image">';
-			$output .= '<img src="'.$post_details['image'].'" height="250" class="essb-heroshare-post-image-src"/>';
-			$output .= '</div>';
-			
-			$output .= '<div class="essb-heroshare-post-content">';
-			$output .= '<h2>'.$post_details['title_plain'].'</h2>';
-			$output .= '<div class="essb-heroshare-post-excerpt">'.$post_details['description'].'</div>';
-			$output .= '</div>';
-			$output .= '</div>';
-				
+			$share_buttons = "";				
 			if (!$is_shortcode) {
-				$output .= $this->generate_share_buttons('heroshare');
+				$share_buttons = $this->generate_share_buttons('heroshare');
 			}
 			else {
-				$output .= $this->generate_share_buttons('heroshare', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('heroshare', 'share', $share_options, true, $shortcode_options);
 			}
 			
-			if (!empty($popup_second_title)) {
-				$popup_second_title = stripslashes($popup_second_title);
-				$popup_second_title = do_shortcode($popup_second_title);
-				$output .= sprintf('<h3 class="essb-heroshare-second-title">%1$s</h3>', $popup_second_title);
-			}
+			$output = ESSBDisplayMethodHeroShare::generate_heroshare_code($this->options, $share_buttons, $is_shortcode, $shortcode_options, $post_details);
 			
-			if ($popup_second_type == "fans") {
-				if (!empty($popup_second_fans)) {
-					$popup_second_fans = stripslashes($popup_second_fans);
-					$popup_second_fans = do_shortcode($popup_second_fans);
-					
-					$output .= '<div class="essb-heroshare-second-fans">'.$popup_second_fans.'</div>';
-				}
-			}
-
-			if ($popup_second_type == "html") {
-				if (!empty($popup_second_html)) {
-					$popup_second_html = stripslashes($popup_second_html);
-					$popup_second_html = do_shortcode($popup_second_html);
-						
-					$output .= '<div class="essb-heroshare-second-html">'.$popup_second_html.'</div>';
-				}
-			}
-			
-			if ($popup_second_type == "top") {
-				$leading_posts = ESSBCoreHelper::leading_posts_from_analytics_for7days();
-				
-				$output .= '<div class="essb-heroshare-second-leading">';
-				$output .= ESSBCoreHelper::prepare_leadingposts_html($leading_posts);
-				$output .= '</div>';
-			}
-				
-			$output .= '</div>';
-
-			if ($popup_window_popafter != '') {
-				$output .= '<div style="display: none;" id="essb_settings_heroafter_counter"></div>';
-			}
-				
-				
-			$output .= '</div>';
-			$output .= "</div>";
-			$output .= '<div class="essb-heroshare-shadow" onclick="essb_heroshare_close(); return false;"></div>';
-								
 			if (!$is_shortcode) {
 				echo $output;
 			}
@@ -2212,91 +1740,21 @@ class ESSBCore {
 		$output = '';
 		
 		if ($is_valid) {
-			// loading popup display settings
-			$popup_window_title = ESSBOptionValuesHelper::options_value($this->options, 'popup_window_title');
-			$popup_user_message = ESSBOptionValuesHelper::options_value($this->options, 'popup_user_message');
-			$popup_user_autoclose = ESSBOptionValuesHelper::options_value($this->options, 'popup_user_autoclose');
 			
-			// display settings
-			$popup_user_width = ESSBOptionValuesHelper::options_value($this->options, 'popup_user_width');
-			$popup_window_popafter = ESSBOptionValuesHelper::options_value($this->options, 'popup_window_popafter');
-			$popup_user_percent = ESSBOptionValuesHelper::options_value($this->options, 'popup_user_percent');
-			$popup_display_end = ESSBOptionValuesHelper::options_bool_value($this->options, 'popup_display_end');
-			$popup_user_manual_show = ESSBOptionValuesHelper::options_bool_value($this->options, 'popup_user_manual_show');
-			$popup_window_close_after = ESSBOptionValuesHelper::options_value($this->options, 'popup_window_close_after');
-			$popup_user_notshow_onclose = ESSBOptionValuesHelper::options_bool_value($this->options, 'popup_user_notshow_onclose');
-			$popup_user_notshow_onclose_all = ESSBOptionValuesHelper::options_bool_value($this->options, 'popup_user_notshow_onclose_all');
-			
-			// new @3.3
-			$popup_display_exit = ESSBOptionValuesHelper::options_bool_value($this->options, 'popup_display_exit');
-			
-			if ($is_shortcode) {
-				if (!empty($shortcode_popafter)) {
-					$popup_window_popafter = $shortcode_popafter;
-				}
-				
-				$shortcode_window_title = isset($shortcode_options['popup_title']) ? $shortcode_options['popup_title'] : '';
-				$shortcode_window_message = isset($shortcode_options['popup_message']) ? $shortcode_options['popup_message'] : '';
-				$shortcode_pop_on_percent = isset($shortcode_options['popup_percent']) ? $shortcode_options['popup_percent'] : '';
-				$shortcode_pop_end = isset($shortcode_options['popup_end']) ? $shortcode_options['popup_end'] : '';
-				
-				if (!empty($shortcode_window_title)) {
-					$popup_window_title = $shortcode_window_title;
-				}
-				if (!empty($shortcode_window_message)) {
-					$popup_user_message = $shortcode_window_message;
-				}
-				if (!empty($shortcode_pop_on_percent)) {
-					$popup_user_percent = $shortcode_pop_on_percent;
-				}
-				if (!empty($shortcode_pop_end)) {
-					$popup_display_end = ESSBOptionValuesHelper::unified_true($shortcode_pop_end);
-				}
+			if (!class_exists('ESSBDisplayMethodPopup')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-popup.php');
 			}
 			
-			if (!empty($popup_user_message)) {
-				$popup_user_message = ESSBCoreHelper::post_details_to_content($popup_user_message);
-			}
-			if (!empty($popup_window_title)) {
-				$popup_window_title = ESSBCoreHelper::post_details_to_content($popup_window_title);
-			}
-			
-			$popup_trigger_oncomment = ESSBOptionValuesHelper::options_bool_value($this->options, 'popup_display_comment') ? " essb-popup-oncomment" : "";
-			
-			$output .= sprintf('<div class="essb-popup%10$s" data-width="%1$s" data-load-percent="%2$s" data-load-end="%3$s" data-load-manual="%4$s" data-load-time="%5$s" data-close-after="%6$s" data-close-hide="%7$s" data-close-hide-all="%8$s" data-postid="%9$s" data-exit-intent="%11$s">', 
-					$popup_user_width, $popup_user_percent, $popup_display_end, $popup_user_manual_show, $popup_window_popafter,
-					$popup_window_close_after, $popup_user_notshow_onclose, $popup_user_notshow_onclose_all, get_the_ID(), $popup_trigger_oncomment, $popup_display_exit);
-			$output .= '<a href="#" class="essb-popup-close" onclick="essb_popup_close(); return false;"></a>';
-			$output .= '<div class="essb-popup-content">';	
-			
-			if ($popup_window_title != '') {
-				$output .= sprintf('<h3>%1$s</h3>', stripslashes($popup_window_title));
-			}
-			if ($popup_user_message != '') {
-				$output .= sprintf('<div class="essb-popup-content-message">%1$s</div>', stripslashes($popup_user_message));
-			}
+			$share_buttons = "";
 			
 			if (!$is_shortcode) {
-				$output .= $this->generate_share_buttons('popup');
+				$share_buttons = $this->generate_share_buttons('popup');
 			}
 			else {
-				$output .= $this->generate_share_buttons('popup', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('popup', 'share', $share_options, true, $shortcode_options);
 			}
 			
-			if ($popup_window_close_after != '') {
-				$output .= '<div class="essb_popup_counter_text"></div>';
-			}
-			
-			$output .= '</div>';
-			$output .= "</div>";
-			$output .= '<div class="essb-popup-shadow" onclick="essb_popup_close(); return false;"></div>';
-			
-			if ($popup_window_popafter != '') {
-				$output .= '<div style="display: none;" id="essb_settings_popafter_counter"></div>';
-			}
-			if ($popup_user_autoclose != '') {
-				$output .= sprintf('<div id="essb_settings_popup_user_autoclose" style="display: none;">%1$s</div>', $popup_user_autoclose);
-			}
+			$output = ESSBDisplayMethodPopup::generate_popup_code($this->options, $share_buttons, $is_shortcode, $shortcode_options);
 			
 			if (!$is_shortcode) {
 				echo $output;
@@ -2322,87 +1780,24 @@ class ESSBCore {
 		$output = '';
 	
 		if ($is_valid) {
-			// loading flyin display settings
-			$flyin_window_title = ESSBOptionValuesHelper::options_value($this->options, 'flyin_window_title');
-			$flyin_user_message = ESSBOptionValuesHelper::options_value($this->options, 'flyin_user_message');
-			$flyin_user_autoclose = ESSBOptionValuesHelper::options_value($this->options, 'flyin_user_autoclose');
-			$flyin_position = ESSBOptionValuesHelper::options_value($this->options, 'flyin_position');	
-			// display settings
-			$flyin_user_width = ESSBOptionValuesHelper::options_value($this->options, 'flyin_user_width');
-			$flyin_window_popafter = ESSBOptionValuesHelper::options_value($this->options, 'flyin_window_popafter');
-			$flyin_user_percent = ESSBOptionValuesHelper::options_value($this->options, 'flyin_user_percent');
-			$flyin_display_end = ESSBOptionValuesHelper::options_bool_value($this->options, 'flyin_display_end');
-			$flyin_user_manual_show = ESSBOptionValuesHelper::options_bool_value($this->options, 'flyin_user_manual_show');
-			$flyin_window_close_after = ESSBOptionValuesHelper::options_value($this->options, 'flyin_window_close_after');
-			$flyin_user_notshow_onclose = ESSBOptionValuesHelper::options_bool_value($this->options, 'flyin_user_notshow_onclose');
-			$flyin_user_notshow_onclose_all = ESSBOptionValuesHelper::options_bool_value($this->options, 'flyin_user_notshow_onclose_all');
-				
-			$flyin_trigger_oncomment = ESSBOptionValuesHelper::options_bool_value($this->options, 'flyin_display_comment') ? " essb-flyin-oncomment" : "";
-				
 			
-			if ($is_shortcode) {
-				$shortcode_window_title = isset($shortcode_options['flyin_title']) ? $shortcode_options['flyin_title'] : '';
-				$shortcode_window_message = isset($shortcode_options['flyin_message']) ? $shortcode_options['flyin_message'] : '';
-				$shortcode_pop_on_percent = isset($shortcode_options['flyin_percent']) ? $shortcode_options['flyin_percent'] : '';
-				$shortcode_pop_end = isset($shortcode_options['flyin_end']) ? $shortcode_options['flyin_end'] : '';
-				
-				if (!empty($shortcode_window_title)) {
-					$flyin_window_title = $shortcode_window_title;
-				}
-				if (!empty($shortcode_window_message)) {
-					$flyin_user_message = $shortcode_window_message;
-				}
-				if (!empty($shortcode_pop_on_percent)) {
-					$flyin_user_percent = $shortcode_pop_on_percent;
-				}
-				if (!empty($shortcode_pop_end)) {
-					$flyin_display_end = ESSBOptionValuesHelper::unified_true($shortcode_pop_end);
-				}
+			if (!class_exists('ESSBDisplayMethodFlyin')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/core/display-methods/essb-display-method-flyin.php');
 			}
+
+			$share_buttons = '';
 			
-			if (!empty($flyin_user_message)) {
-				$flyin_user_message = ESSBCoreHelper::post_details_to_content($flyin_user_message);
-			}
-			if (!empty($flyin_window_title)) {
-				$flyin_window_title = ESSBCoreHelper::post_details_to_content($flyin_window_title);
-			}
-			
-			$output .= sprintf('<div class="essb-flyin%10$s essb-flyin-%11$s" data-width="%1$s" data-load-percent="%2$s" data-load-end="%3$s" data-load-manual="%4$s" data-load-time="%5$s" data-close-after="%6$s" data-close-hide="%7$s" data-close-hide-all="%8$s" data-postid="%9$s">',
-					$flyin_user_width, $flyin_user_percent, $flyin_display_end, $flyin_user_manual_show, $flyin_window_popafter,
-					$flyin_window_close_after, $flyin_user_notshow_onclose, $flyin_user_notshow_onclose_all, get_the_ID(), $flyin_trigger_oncomment, $flyin_position);
-			$output .= '<a href="#" class="essb-flyin-close" onclick="essb_flyin_close(); return false;"></a>';
-			$output .= '<div class="essb-flyin-content">';
-				
-			if ($flyin_window_title != '') {
-				$output .= sprintf('<h3>%1$s</h3>', stripslashes($flyin_window_title));
-			}
-			if ($flyin_user_message != '') {
-				$output .= sprintf('<div class="essb-flyin-content-message">%1$s</div>', stripslashes($flyin_user_message));
-			}
-				
 			if (!$is_shortcode) {
 				$flyin_noshare = ESSBOptionValuesHelper::options_bool_value($this->options, 'flyin_noshare');
 				if (!$flyin_noshare) {
-					$output .= $this->generate_share_buttons('flyin');
+					$share_buttons = $this->generate_share_buttons('flyin');
 				}
 			}
 			else {
-				$output .= $this->generate_share_buttons('flyin', 'share', $share_options, true, $shortcode_options);
+				$share_buttons = $this->generate_share_buttons('flyin', 'share', $share_options, true, $shortcode_options);
 			}
 				
-			if ($flyin_window_close_after != '') {
-				$output .= '<div class="essb_flyin_counter_text"></div>';
-			}
-				
-			$output .= '</div>';
-			$output .= "</div>";
-				
-			if ($flyin_window_popafter != '') {
-				$output .= '<div style="display: none;" id="essb_settings_flyafter_counter"></div>';
-			}
-			if ($flyin_user_autoclose != '') {
-				$output .= sprintf('<div id="essb_settings_flyin_user_autoclose" style="display: none;">%1$s</div>', $flyin_user_autoclose);
-			}
+			$output = ESSBDisplayMethodFlyin::generate_flyin_code($this->options, $share_buttons, $is_shortcode, $shortcode_options);
 			
 			if (!$is_shortcode) {
 				echo $output;
@@ -2481,7 +1876,6 @@ class ESSBCore {
 				
 		$post_types = $this->general_options['display_in_types'];
 		$content_position = $this->general_options['content_position'];
-		
 		$check_location_options_top = "";
 		$check_location_options_bottom = "";
 		if ($content_position == "content_top" || $content_position == "content_both" || $content_position == "content_sharenative") {			
@@ -2603,6 +1997,9 @@ class ESSBCore {
 		
 		$only_share = ESSBOptionValuesHelper::options_bool_value($share_options, 'only_share');
 		$post_type = ESSBOptionValuesHelper::options_value($share_options, 'post_type');
+		
+		// @since 3.6 AMP support 
+		$amp_sharing = ESSBOptionValuesHelper::options_bool_value($share_options, 'amp');
 
 		if ($this->general_options['reset_postdata']) {
 			wp_reset_postdata();
@@ -2679,6 +2076,20 @@ class ESSBCore {
 			if (isset($shortcode_options['query'])) {
 				$post_share_details['query'] = $shortcode_options['query'];
 			}
+			
+			if (isset($shortcode_options['utm'])) {
+				if ($shortcode_options['utm'] == 'yes') {
+					$ga_campaign_tracking = $this->general_options['activate_ga_campaign_tracking'];
+					$post_ga_campaign_tracking = get_post_meta(get_the_ID(), 'essb_activate_ga_campaign_tracking', true);
+					if ($post_ga_campaign_tracking != '') {
+						$ga_campaign_tracking = $post_ga_campaign_tracking;
+					}
+					
+					if ($ga_campaign_tracking != '') {
+						$post_share_details['url'] = ESSBUrlHelper::attach_tracking_code($post_share_details['url'], $ga_campaign_tracking);
+					}
+				}
+			}
 		}
 		else {
 			// activate short url and custom campaign tracking codes
@@ -2742,7 +2153,6 @@ class ESSBCore {
 			// generating short urls only for selected networks
 			if ($this->network_options ['twitter_shareshort']) {
 				$generated_shorturl = ESSBUrlHelper::short_url ( $post_share_details ['url'], $global_provider, get_the_ID (), $this->general_options ['shorturl_bitlyuser'], $this->general_options ['shorturl_bitlyapi'] );
-				
 				$post_share_details ['short_url_twitter'] = $generated_shorturl;
 				$post_share_details ['short_url_whatsapp'] = $generated_shorturl;
 			}
@@ -2774,6 +2184,8 @@ class ESSBCore {
 		
 		// -- main button design
 		$button_style = $this->get_buttons_visual_options($position);
+		// @since 3.6 AMP support
+		$button_style['amp'] = $amp_sharing;
 				
 		$social_networks = $this->network_options['networks'];
 		$social_networks_order = $this->network_options['networks_order'];
@@ -2819,6 +2231,22 @@ class ESSBCore {
 					$use_minifed_css = ($this->general_options['use_minified_css']) ? ".min" : "";
 					$template_url = ESSB3_PLUGIN_URL.'/assets/css/'.$instance_template_slug.'/easy-social-share-buttons'.$use_minifed_css.'.css';
 						
+					essb_resource_builder()->add_static_footer_css($template_url, 'easy-social-share-buttons-'.$instance_template_slug);
+				}
+			}
+			
+			if ($position == 'point') {
+				$button_style = ESSBOptionValuesHelper::apply_point_position_style_settings('point', $button_style);
+				//print_r($button_style);
+				
+				$instance_template = $button_style['template'];
+				$instance_template_slug = ESSBCoreHelper::template_folder($instance_template);
+				
+				// @since 3.4.2 - add check to avoid load of blank templates
+				if ($instance_template_slug != $this->design_options['template_slug'] && !empty($instance_template_slug)) {
+					$use_minifed_css = ($this->general_options['use_minified_css']) ? ".min" : "";
+					$template_url = ESSB3_PLUGIN_URL.'/assets/css/'.$instance_template_slug.'/easy-social-share-buttons'.$use_minifed_css.'.css';
+				
 					essb_resource_builder()->add_static_footer_css($template_url, 'easy-social-share-buttons-'.$instance_template_slug);
 				}
 			}
@@ -2929,6 +2357,15 @@ class ESSBCore {
 				$button_style['nospace'] = true;
 				$button_style['button_width'] = "column";
 				
+				// @since 3.6
+				// allow total counter to appear
+				$button_count_correction_when_total = 0;
+				if (ESSBOptionValuesHelper::options_bool_value($this->options, 'mobile_sharebuttonsbar_total')) {
+					$button_style['show_counter'] = true;
+					$button_style['total_counter_pos'] = 'leftbig';
+					$button_style['counter_pos'] = 'hidden';
+					$button_count_correction_when_total = 1;
+				}
 				
 				$available_networks_count = ESSBOptionValuesHelper::options_value($this->options, 'mobile_sharebuttonsbar_count');
 				$mobile_sharebuttonsbar_names = ESSBOptionValuesHelper::options_bool_value($this->options, 'mobile_sharebuttonsbar_names');
@@ -2939,15 +2376,16 @@ class ESSBCore {
 				if (intval($available_networks_count) == 0) {
 					$available_networks_count = 4;
 				}
-				if (count($social_networks) > intval($available_networks_count)) {
+				if (count($social_networks) > (intval($available_networks_count) - $button_count_correction_when_total)) {
 					$share_bottom_networks = $social_networks;
-					array_splice($social_networks, intval($available_networks_count) - 1);
+					array_splice($social_networks, intval($available_networks_count) - 1 - $button_count_correction_when_total);
 					$social_networks[] = "more";
 					//$button_style['more_button_icon'] = "dots";
 				}
 				
 				$button_style['button_width_columns'] = intval($available_networks_count);
 
+				
 			}
 		}
 		
@@ -3135,9 +2573,18 @@ class ESSBCore {
 			//	$post_share_details['mail_body'] = '';
 			//}
 			essb_resource_builder()->add_js(ESSBResourceBuilderSnippets::js_build_generate_popup_mailform(), true, 'essb-mailform');
-			essb_resource_builder()->add_js(ESSBButtonHelper::print_mailer_code($post_share_details['mail_subject'], $post_share_details['mail_body'], 
-					$salt, $post_share_details["post_id"], $position), true, 'essb-mailform-'.$salt);
 			
+			if ($this->network_options['mail_inline_code']) {
+				echo '<script type="text/javascript">';
+				echo ESSBButtonHelper::print_mailer_code($post_share_details['mail_subject'], $post_share_details['mail_body'],
+						$salt, $post_share_details["post_id"], $position);
+				echo '</script>';
+				
+			}
+			else {
+				essb_resource_builder()->add_js(ESSBButtonHelper::print_mailer_code($post_share_details['mail_subject'], $post_share_details['mail_body'], 
+						$salt, $post_share_details["post_id"], $position), true, 'essb-mailform-'.$salt);
+			}
 		}
 		
 		$button_style['included_button_count'] = count($social_networks);
@@ -3189,6 +2636,9 @@ class ESSBCore {
 		
 		// @since 3.0.3 fix for the mail function
 		$button_style['mail_function'] = $this->network_options['mail_function'];
+		
+		// @since 3.6
+		if ($amp_sharing) $button_style['mail_function'] = 'link';
 		
 		// @since 3.2 - passing mobile state to button style to allow deactivate advaned share on mobile (does not work);
 		$button_style['is_mobile'] = essb_is_mobile();
@@ -3259,6 +2709,12 @@ class ESSBCore {
 
 				$more_social_networks_order = ESSBCoreHelper::generate_network_list();
 				
+				// fix for missing print code
+				if (in_array('print', $more_social_networks) && !$this->activated_resources['print']) {
+					essb_resource_builder()->add_js(ESSBResourceBuilderSnippets::js_build_window_print_code(), true, 'essb-printing-code');
+					$this->activated_resources['print'] = 'true';
+				}
+				
 				if ($position == "sharebottom") {
 					$more_social_networks = $share_bottom_networks;
 					$more_social_networks_order = $social_networks_order;
@@ -3312,6 +2768,15 @@ class ESSBCore {
 				
 				essb_resource_builder()->add_css(ESSBResourceBuilderSnippets::css_build_morepopup_css(), 'essb-morepopup-css', 'footer');
 			}			
+		}
+		
+		// @since 3.6 Invoke code for subscribe button if network is active in list
+		if (in_array("subscribe", $social_networks) && ESSBGlobalSettings::$subscribe_function != "link") {
+			if (!class_exists('ESSBNetworks_Subscribe')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe.php');				
+			}
+			
+			$ssbuttons .= ESSBNetworks_Subscribe::draw_subscribe_form($position, $salt);
 		}
 		
 		// apply clean of new lines
@@ -3679,6 +3144,10 @@ class ESSBCore {
 		$current_value = intval($current_value) + 1;
 		update_post_meta ( $post_id, 'essb_pc_'.$service_id, $current_value );
 		
+		// @since 3.6
+		// addint custom hook to execute when click on share buttons
+		do_action('essb_after_sharebutton_click');
+		
 		die(json_encode(array(" post_id ".$post_id.", service = ".$service_id.", current_value = ".$current_value)));
 	}
 	
@@ -3707,6 +3176,10 @@ class ESSBCore {
 		$output['post'] = $post;
 		$output['network'] = $networks;
 
+		if (!class_exists('ESSBCounterHelper')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-counters-helper.php');
+		}
+		
 		foreach ($list as $nw) {
 			$transient_key = 'essb_'.$nw.'_'.$url;
 			$exist_in_cache = false;
@@ -3758,498 +3231,19 @@ class ESSBCore {
 	/*** shortcode functions ***/
 	function essb_shortcode_profiles($atts) {
 		
-		$sc_networks = isset($atts['networks']) ? $atts['networks'] : '';
-		$sc_button_type = isset($atts['type']) ? $atts['type'] : 'square';
-		$sc_button_size = isset($atts['size']) ? $atts['size'] : 'small';
-		$sc_button_fill = isset($atts['style']) ? $atts['style'] : 'fill';
-		$sc_nospace = isset($atts['nospace']) ? $atts['nospace'] : 'false';
-		
-		$sc_usetexts = isset($atts['allowtext']) ? $atts['allowtext'] : 'false';
-		$sc_width = isset($atts['width']) ? $atts['width'] : '';
-		
-		$sc_nospace = ESSBOptionValuesHelper::unified_true($sc_nospace);
-		$sc_usetexts = ESSBOptionValuesHelper::unified_true($sc_usetexts);
-		
-		$profile_networks = array();
-		if ($sc_networks != '') {
-			$profile_networks = explode(',', $sc_networks);
-		}
-		else {
-			$profile_networks = ESSBOptionValuesHelper::advanced_array_to_simple_array(essb_available_social_profiles());
+		if (!class_exists('ESSBCoreExtenderShortcodeProfiles')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-shortcode-profiles.php');				
 		}
 		
-		
-		// prepare network values
-		$sc_network_address = array();
-		foreach ($profile_networks as $network) {
-			$value = isset($atts[$network]) ? $atts[$network] : '';
-			
-			if (empty($value)) {
-				$value = isset($atts['profile_'.$network]) ? $atts['profile_'.$network] : '';
-			}
-			
-			if (empty($value)) {
-				$value = ESSBOptionValuesHelper::options_value($this->options, 'profile_'.$network);
-			}
-			
-			if (!empty($value)) {
-				$sc_network_address[$network] = $value;
-			}
-		}
-		
-		$sc_network_texts = array();
-		if ($sc_usetexts) {
-			foreach ($profile_networks as $network) {
-				$value = isset($atts[$network]) ? $atts[$network] : '';
-					
-				if (empty($value)) {
-					$value = isset($atts['profile_text_'.$network]) ? $atts['profile_text_'.$network] : '';
-				}
-					
-				if (empty($value)) {
-					$value = ESSBOptionValuesHelper::options_value($this->options, 'profile_text_'.$network);
-				}
-					
-				if (!empty($value)) {
-					$sc_network_texts[$network] = $value;
-				}
-			}
-		}
-		
-		// check if module is not activated yet
-		if (!defined('ESSB3_SOCIALPROFILES_ACTIVE')) {
-			include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles.php');
-			define('ESSB3_SOCIALPROFILES_ACTIVE', 'true');
-			$template_url = ESSB3_PLUGIN_URL.'/assets/css/essb-profiles.css';
-			essb_resource_builder()->add_static_footer_css($template_url, 'easy-social-share-buttons-profiles');
-		}
-		
-		
-		return ESSBSocialProfiles::generate_social_profile_icons($sc_network_address, $sc_button_type, $sc_button_size, $sc_button_fill, 
-				$sc_nospace, '', $sc_usetexts, $sc_network_texts, $sc_width);
+		return ESSBCoreExtenderShortcodeProfiles::parse_shortcode($atts, $this->options);
 	}
 	
 	function essb_shortcode_native($atts) {
-		global $post;
-		
-		$atts = shortcode_atts ( array (
-				'facebook' => 'false',
-				'facebook_url' => '', 
-				'facebook_width' => '',
-				'facebook_skinned_text' => '', 
-				'facebook_skinned_width' => '',
-				'facebook_follow' => 'false', 
-				'facebook_follow_url' => '',
-				'facebook_follow_width' => '', 
-				'facebook_follow_skinned_text' => '',
-				'facebook_follow_skinned_width' => '', 
-				'twitter_follow' => 'false', 
-				'twitter_follow_user' => '', 
-				'twitter_follow_skinned_text' => '', 
-				'twitter_follow_skinned_width' => '', 
-				'twitter_tweet' => 'false', 
-				'twitter_tweet_message' => '', 
-				'twitter_tweet_skinned_text' => '', 
-				'twitter_tweet_skinned_width' => '', 
-				'google' => 'false', 
-				'google_url' => '',
-				'google_skinned_text' => '', 
-				'google_skinned_width' => '', 
-				'google_follow' => 'false', 
-				'google_follow_url' => '', 
-				'google_follow_skinned_text' => '', 
-				'google_follow_skinned_width' => '', 
-				'vk' => 'false', 
-				'vk_skinned_text' => '', 
-				'vk_skinned_width' => '', 
-				'youtube' => 'false', 
-				'youtube_chanel' => '', 
-				'youtube_skinned_text' => '', 
-				'youtube_skinned_width' => '', 
-				'linkedin' => 'false', 
-				'linkedin_company' => '', 
-				'linkedin_skinned_text' => '', 
-				'linkedin_skinned_width' => '', 
-				'pinterest_pin' => 'false', 
-				'pinterest_pin_skinned_text' => '', 
-				'pinterest_pin_skinned_width' => '', 
-				'pinterest_follow' => 'false', 
-				'pinterest_follow_display' => '', 
-				'pinterest_follow_url' => '', 
-				'pinterest_follow_skinned_text' => '',
-				'pinterest_follow_skinned_width' => '', 
-				'skinned' => 'false', 
-				'skin' => 'flat', 
-				'message' => '', 
-				'align' => '', 
-				'counters' => 'false', 
-				'hide_mobile' => 'false', 
-				'order' => '' 
-				), $atts );
-		
-		$hide_mobile = isset ( $atts ['hide_mobile'] ) ? $atts ['hide_mobile'] : '';
-		$hide_mobile_state = ESSBOptionValuesHelper::unified_true($hide_mobile);
-		
-		if ($hide_mobile_state && essb_is_mobile()) {
-			return "";
+		if (!class_exists('ESSBCoreExtenderShortcodeNative')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-shortcode-native.php');
 		}
 		
-		$order = isset ( $atts ['order'] ) ? $atts ['order'] : '';
-		
-		// @ since 2.0 order of buttons
-		if ($order == '') {
-			$order = 'facebook,facebook_follow,twitter_follow,twitter_tweet,google,google_follow,vk,youtube,linkedin,pinterest_pin,pinterest_follow';
-		}		
-		
-		$align = isset ( $atts ['align'] ) ? $atts ['align'] : '';
-		$facebook = isset ( $atts ['facebook'] ) ? $atts ['facebook'] : '';
-		$facebook_url = isset ( $atts ['facebook_url'] ) ? $atts ['facebook_url'] : '';
-		$facebook_width = isset ( $atts ['facebook_width'] ) ? $atts ['facebook_width'] : '';
-		$facebook_skinned_text = isset ( $atts ['facebook_skinned_text'] ) ? $atts ['facebook_skinned_text'] : '';
-		$facebook_skinned_width = isset ( $atts ['facebook_skinned_width'] ) ? $atts ['facebook_skinned_width'] : '';
-		
-		$facebook_follow = isset ( $atts ['facebook_follow'] ) ? $atts ['facebook_follow'] : '';
-		$facebook_follow_url = isset ( $atts ['facebook_follow_url'] ) ? $atts ['facebook_follow_url'] : '';
-		$facebook_follow_width = isset ( $atts ['facebook_follow_width'] ) ? $atts ['facebook_follow_width'] : '';
-		$facebook_follow_skinned_text = isset ( $atts ['facebook_follow_skinned_text'] ) ? $atts ['facebook_follow_skinned_text'] : '';
-		$facebook_follow_skinned_width = isset ( $atts ['facebook_follow_skinned_width'] ) ? $atts ['facebook_follow_skinned_width'] : '';
-		
-		$twitter_follow = isset ( $atts ['twitter_follow'] ) ? $atts ['twitter_follow'] : '';
-		$twitter_follow_user = isset ( $atts ['twitter_follow_user'] ) ? $atts ['twitter_follow_user'] : '';
-		$twitter_follow_skinned_text = isset ( $atts ['twitter_follow_skinned_text'] ) ? $atts ['twitter_follow_skinned_text'] : '';
-		$twitter_follow_skinned_width = isset ( $atts ['twitter_follow_skinned_width'] ) ? $atts ['twitter_follow_skinned_width'] : '';
-		
-		$twitter_tweet = isset ( $atts ['twitter_tweet'] ) ? $atts ['twitter_tweet'] : '';
-		$twitter_tweet_message = isset ( $atts ['twitter_tweet_message'] ) ? $atts ['twitter_tweet_message'] : '';
-		$twitter_tweet_skinned_text = isset ( $atts ['twitter_tweet_skinned_text'] ) ? $atts ['twitter_tweet_skinned_text'] : '';
-		$twitter_tweet_skinned_width = isset ( $atts ['twitter_tweet_skinned_width'] ) ? $atts ['twitter_tweet_skinned_width'] : '';
-		
-		$google = isset ( $atts ['google'] ) ? $atts ['google'] : '';
-		$google_url = isset ( $atts ['google_url'] ) ? $atts ['google_url'] : '';
-		$google_skinned_text = isset ( $atts ['google_skinned_text'] ) ? $atts ['google_skinned_text'] : '';
-		$google_skinned_width = isset ( $atts ['google_skinned_width'] ) ? $atts ['google_skinned_width'] : '';
-		
-		$google_follow = isset ( $atts ['google_follow'] ) ? $atts ['google_follow'] : '';
-		$google_follow_url = isset ( $atts ['google_follow_url'] ) ? $atts ['google_follow_url'] : '';
-		$google_follow_skinned_text = isset ( $atts ['google_follow_skinned_text'] ) ? $atts ['google_follow_skinned_text'] : '';
-		$google_follow_skinned_width = isset ( $atts ['google_follow_skinned_width'] ) ? $atts ['google_follow_skinned_width'] : '';
-		
-		$vk = isset ( $atts ['vk'] ) ? $atts ['vk'] : '';
-		$vk_skinned_text = isset ( $atts ['vk_skinned_text'] ) ? $atts ['vk_skinned_text'] : '';
-		$vk_skinned_width = isset ( $atts ['vk_skinned_width'] ) ? $atts ['vk_skinned_width'] : '';
-		
-		$youtube = isset ( $atts ['youtube'] ) ? $atts ['youtube'] : '';
-		$youtube_chanel = isset ( $atts ['youtube_chanel'] ) ? $atts ['youtube_chanel'] : '';
-		$youtube_skinned_text = isset ( $atts ['youtube_skinned_text'] ) ? $atts ['youtube_skinned_text'] : '';
-		$youtube_skinned_width = isset ( $atts ['youtube_skinned_width'] ) ? $atts ['youtube_skinned_width'] : '';
-		
-		$linkedin = isset ( $atts ['linkedin'] ) ? $atts ['linkedin'] : '';
-		$linkedin_comapny = isset ( $atts ['linkedin_company'] ) ? $atts ['linkedin_company'] : '';
-		$linkedin_skinned_text = isset ( $atts ['linkedin_skinned_text'] ) ? $atts ['linkedin_skinned_text'] : '';
-		$linkedin_skinned_width = isset ( $atts ['linkedin_skinned_width'] ) ? $atts ['linkedin_skinned_width'] : '';
-		
-		$pinterest_pin = isset ( $atts ['pinterest_pin'] ) ? $atts ['pinterest_pin'] : '';
-		$pinterest_pin_skinned_text = isset ( $atts ['pinterest_pin_skinned_text'] ) ? $atts ['pinterest_pin_skinned_text'] : '';
-		$pinterest_pin_skinned_width = isset ( $atts ['pinterest_pin_skinned_width'] ) ? $atts ['pinterest_pin_skinned_width'] : '';
-		
-		$pinterest_follow = isset ( $atts ['pinterest_follow'] ) ? $atts ['pinterest_follow'] : '';
-		$pinterest_follow_display = isset ( $atts ['pinterest_follow_display'] ) ? $atts ['pinterest_follow_display'] : '';
-		$pinterest_follow_url = isset ( $atts ['pinterest_follow_url'] ) ? $atts ['pinterest_follow_url'] : '';
-		$pinterest_follow_skinned_text = isset ( $atts ['pinterest_follow_skinned_text'] ) ? $atts ['pinterest_follow_skinned_text'] : '';
-		$pinterest_follow_skinned_width = isset ( $atts ['pinterest_follow_skinned_width'] ) ? $atts ['pinterest_follow_skinned_width'] : '';
-		
-		$skinned = isset ( $atts ['skinned'] ) ? $atts ['skinned'] : 'false';
-		$skin = isset ( $atts ['skin'] ) ? $atts ['skin'] : '';
-		$message = isset ( $atts ['message'] ) ? $atts ['message'] : '';
-		$counters = isset ( $atts ['counters'] ) ? $atts ['counters'] : 'false';
-		
-		// init global options
-		$options = $this->options;
-		$native_lang = isset ( $options ['native_social_language'] ) ? $options ['native_social_language'] : "en";
-		
-		$css_class_align = "";
-		$css_class_noskin = ($skinned != 'true') ? ' essb-noskin' : '';
-		
-		// register like buttons CSS
-		essb_resource_builder()->add_static_resource_footer( ESSB3_PLUGIN_URL . '/assets/css/essb-social-like-buttons.css', 'essb-social-like-shortcode-css', 'css');
-		
-		if (!defined('ESSB3_NATIVE_ACTIVE')) {
-			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/native-buttons/essb-skinned-native-button.php');
-			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/native-buttons/essb-social-privacy.php');
-			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/native-buttons/essb-native-buttons-helper.php');
-			define('ESSB3_NATIVE_ACTIVE', true);
-		
-			$essb_spb = ESSBSocialPrivacyNativeButtons::get_instance();
-			ESSBNativeButtonsHelper::$essb_spb = $essb_spb;
-			foreach ($essb_spb->resource_files as $key => $object) {
-				essb_resource_builder()->add_static_resource_footer($object["file"], $object["key"], $object["type"]);
-			}
-			foreach (ESSBSkinnedNativeButtons::get_assets() as $key => $object) {
-				essb_resource_builder()->add_static_resource_footer($object["file"], $object["key"], $object["type"]);
-			}
-			essb_resource_builder()->add_css(ESSBSkinnedNativeButtons::generate_skinned_custom_css(), 'essb-skinned-native-buttons', 'footer');
-				
-			// asign instance of native buttons privacy class to helper
-				
-			// register active social network apis
-			foreach (ESSBNativeButtonsHelper::get_list_of_social_apis() as $key => $code) {
-				essb_resource_builder()->add_social_api($key);
-			}
-		}
-		
-		
-		$counters_bool = ESSBOptionValuesHelper::unified_true($counters);
-		$skinned_buttons = ESSBOptionValuesHelper::unified_true($skinned);
-		
-		
-		$text = esc_attr ( urlencode ( $post->post_title ) );
-		$url = $post ? get_permalink () : ESSBUrlHelper::get_current_url ( 'raw' );
-		
-		if ($align == "right" || $align == "center") {
-			$css_class_align = $align;
-		}
-				
-		$output = "";
-		$output .= '<div class="essb-like ' . $css_class_align . '">';
-		
-		if ($message != '') {
-			$output .= '<div class="essb-message">' . $message . '</div>';
-		}
-		
-		$networks = preg_split ( '#[\s+,\s+]#', $order );
-		
-		$required_apis = array();
-		
-		foreach ( $networks as $network ) {
-			
-			if ($network == "facebook") {
-				if (ESSBOptionValuesHelper::unified_true ( $facebook )) {
-					if ($facebook_url == "") {
-						$facebook_url = $url;
-					}
-					
-					$native_button_options = array();
-					$native_button_options['facebook_type'] = 'like';
-					$native_button_options['facebook_url'] = $facebook_url;
-					$native_button_options['facebook_width'] = $facebook_skinned_width;
-					$native_button_options['facebook_text'] = $facebook_skinned_text;	
-					$native_button_options['skin'] = $skin;				
-					
-					$output .= '<div class="essb-like-facebook essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('facebook', $native_button_options, $counters_bool, $skinned_buttons);
-					$output .= '</div>';
-					
-					if (ESSBNativeButtonsHelper::is_active_network('facebook')) {
-						$required_apis['facebook'] = 'facebook';
-					}
-				}
-			}
-			
-			if ($network == "facebook_follow") {
-				if (ESSBOptionValuesHelper::unified_true ( $facebook_follow )) {
-					
-					$native_button_options = array();
-					$native_button_options['facebook_type'] = 'follow';
-					$native_button_options['facebook_url'] = $facebook_follow_url;
-					$native_button_options['facebook_width'] = $facebook_follow_skinned_width;
-					$native_button_options['facebook_text'] = $facebook_follow_skinned_text;
-					$native_button_options['skin'] = $skin;
-					$output .= '<div class="essb-like-facebook essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('facebook', $native_button_options, $counters_bool, $skinned_buttons);
-					$output .= '</div>';
-					if (ESSBNativeButtonsHelper::is_active_network('facebook')) {
-						$required_apis['facebook'] = 'facebook';
-					}
-						
-				}
-			}
-			
-			if ($network == "twitter_tweet") {
-				if (ESSBOptionValuesHelper::unified_true ( $twitter_tweet )) {
-					
-					$native_button_options = array();
-					$native_button_options['twitter_type'] = 'tweet';
-					$native_button_options['twitter_user'] = $twitter_follow_user;
-					$native_button_options['twitter_tweet'] = $twitter_tweet_message;
-					$native_button_options['url'] = $url;
-					$native_button_options['twitter_width'] = $twitter_tweet_skinned_width;
-					$native_button_options['twitter_text'] = $twitter_tweet_skinned_text;
-					$native_button_options['skin'] = $skin;
-					
-					$output .= '<div class="essb-like-twitter essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('twitter', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_twitter_tweet_button ( $twitter_follow_user, $counters, $native_lang, $twitter_tweet_message, $twitter_tweet_skinned_text, $twitter_tweet_skinned_width );
-					$output .= '</div>';
-					if (ESSBNativeButtonsHelper::is_active_network('twitter')) {
-						$required_apis['twitter'] = 'twitter';
-					}
-						
-				}
-			}
-			
-			if ($network == "twitter_follow") {
-				if (ESSBOptionValuesHelper::unified_true ( $twitter_follow )) {
-					$native_button_options = array();
-					$native_button_options['twitter_type'] = 'follow';
-					$native_button_options['twitter_user'] = $twitter_follow_user;
-					$native_button_options['twitter_tweet'] = $twitter_tweet_message;
-					$native_button_options['url'] = $url;
-					$native_button_options['twitter_width'] = $twitter_follow_skinned_width;
-					$native_button_options['twitter_text'] = $twitter_follow_skinned_text;
-					$native_button_options['skin'] = $skin;
-					
-					$output .= '<div class="essb-like-twitter-follow essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('twitter', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_twitter_follow_button ( $twitter_follow_user, $counters, $native_lang, $twitter_follow_skinned_text, $twitter_follow_skinned_width );
-					$output .= '</div>';
-					if (ESSBNativeButtonsHelper::is_active_network('twitter')) {
-						$required_apis['twitter'] = 'twitter';
-					}
-				}
-			}
-			
-			if ($network == "google") {
-				if (ESSBOptionValuesHelper::unified_true ( $google )) {
-					if ($google_url == "") {
-						$google_url = $url;
-					}
-					
-					$native_button_options = array();
-					$native_button_options['google_type'] = 'plus';
-					$native_button_options['google_url'] = $google_url;
-					$native_button_options['google_width'] = $google_skinned_width;
-					$native_button_options['google_text'] = $google_skinned_text;
-					$native_button_options['skin'] = $skin;
-					$output .= '<div class="essb-like-google essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('google', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_plusone_button ( $google_url, $counters, $native_lang, $google_skinned_text, $google_skinned_width );
-					$output .= '</div>';
-					if (ESSBNativeButtonsHelper::is_active_network('google')) {
-						$required_apis['google'] = 'google';
-					}
-				}
-			}
-			
-			if ($network == "google_follow") {
-				if (ESSBOptionValuesHelper::unified_true ( $google_follow )) {
-					$native_button_options = array();
-					$native_button_options['google_type'] = 'follow';
-					$native_button_options['google_url'] = $google_follow_url;
-					$native_button_options['google_width'] = $google_follow_skinned_width;
-					$native_button_options['google_text'] = $google_follow_skinned_text;
-					$native_button_options['skin'] = $skin;
-					$output .= '<div class="essb-like-google essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('google', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_plusfollow_button ( $google_follow_url, $counters, $native_lang, $google_follow_skinned_text, $google_follow_skinned_width );
-					$output .= '</div>';
-					if (ESSBNativeButtonsHelper::is_active_network('google')) {
-						$required_apis['google'] = 'google';
-					}
-				}
-			}
-			
-			if ($network == "vk") {
-				if (ESSBOptionValuesHelper::unified_true ( $vk )) {
-					$native_button_options = array();
-					$native_button_options['vk_width'] = $google_follow_skinned_width;
-					$native_button_options['vk_text'] = $google_follow_skinned_text;
-					$native_button_options['skin'] = $skin;
-					
-					$output .= '<div class="essb-like-vk essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('vk', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_vklike_button ( $url, $counters, $vk_skinned_text, $vk_skinned_width );
-					$output .= '</div>';
-					
-					if (ESSBNativeButtonsHelper::is_active_network('vk')) {
-						$required_apis['vk'] = 'vk';
-					}
-				}
-			}
-			
-			if ($network == "youtube") {
-				if (ESSBOptionValuesHelper::unified_true ( $youtube )) {
-					$native_button_options = array();
-					$native_button_options['youtube_channel'] = $youtube_chanel;
-					$native_button_options['youtube_width'] = $youtube_skinned_width;
-					$native_button_options['youtube_text'] = $youtube_skinned_text;
-					$native_button_options['skin'] = $skin;
-					$output .= '<div class="essb-like-youtube essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('youtube', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_youtube_button ( $youtube_chanel, $counters, $youtube_skinned_text, $youtube_skinned_width );
-					$output .= '</div>';
-					if (ESSBNativeButtonsHelper::is_active_network('google')) {
-						$required_apis['google'] = 'google';
-					}
-				}
-			}
-			
-			if ($network == "pinterest_pin") {
-				if (ESSBOptionValuesHelper::unified_true ( $pinterest_pin )) {
-					$native_button_options = array();
-					$native_button_options['pinterest_type'] = 'pin';
-					$native_button_options['pinterest_url'] = $pinterest_follow_url;
-					$native_button_options['pinterest_text'] = $pinterest_follow_display;
-					$native_button_options['pinterest_width'] = $pinterest_pin_skinned_width;
-					$native_button_options['pinterest_text'] = $pinterest_pin_skinned_text;
-					$native_button_options['skin'] = $skin;
-					
-					$output .= '<div class="essb-like-pin essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('pinterest', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_pinterest_follow ( $pinterest_follow_display, $pinterest_follow_url, 'pin', $pinterest_pin_skinned_text, $pinterest_pin_skinned_width );
-					$output .= '</div>';
-					
-					if (ESSBNativeButtonsHelper::is_active_network('pinterest')) {
-						$required_apis['pinterest'] = 'pinterest';
-					}
-				}
-			}
-			
-			if ($network == "pinterest_follow") {
-				if (ESSBOptionValuesHelper::unified_true ( $pinterest_follow )) {
-					$native_button_options = array();
-					$native_button_options['pinterest_type'] = 'follow';
-					$native_button_options['pinterest_url'] = $pinterest_follow_url;
-					$native_button_options['pinterest_display'] = $pinterest_follow_display;
-					$native_button_options['pinterest_width'] = $pinterest_follow_skinned_width;
-					$native_button_options['pinterest_text'] = $pinterest_follow_skinned_text;
-					$native_button_options['skin'] = $skin;
-					$output .= '<div class="essb-like-pin-follow essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('pinterest', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_pinterest_follow ( $pinterest_follow_display, $pinterest_follow_url, 'follow', $pinterest_follow_skinned_text, $pinterest_follow_skinned_width );
-					$output .= '</div>';
-					
-					if (ESSBNativeButtonsHelper::is_active_network('pinterest')) {
-						$required_apis['pinterest'] = 'pinterest';
-					}
-				}
-			}
-			
-			if ($network == "linkedin") {
-				if (ESSBOptionValuesHelper::unified_true ( $linkedin )) {
-					$native_button_options = array();
-					$native_button_options['linkedin_company'] = $linkedin_comapny;
-					$native_button_options['linkedin_width'] = $linkedin_skinned_width;
-					$native_button_options['linkedin_text'] = $linkedin_skinned_text;
-					$native_button_options['skin'] = $skin;
-						
-					$output .= '<div class="essb-like-linkedin essb-block' . $css_class_noskin . '">';
-					$output .= ESSBNativeButtonsHelper::draw_single_native_button('linkedin', $native_button_options, $counters_bool, $skinned_buttons);
-					//$output .= $this->print_linkedin_button($linkedin_comapny, $counters, $linkedin_skinned_text, $linkedin_skinned_width);
-					$output .= '</div>';
-					
-					if (ESSBNativeButtonsHelper::is_active_network('linkedin')) {
-						$required_apis['linkedin'] = 'linkedin';
-					}
-				}
-			}
-		}
-		
-		foreach ($required_apis as $key => $code) {
-			essb_resource_builder()->add_social_api($key);
-		}
-		$output .= '</div>';
-		
-		return $output;
+		return ESSBCoreExtenderShortcodeNative::parse_shortcode($atts, $this->options);
 	}
 	
 	function essb_shortcode_share_vk($atts) {
@@ -4361,7 +3355,10 @@ class ESSBCore {
 				'mobilepoint' => 'bool',
 				'heroshare' => 'bool',
 				'animation' => 'string',
-				'postviews' => 'string'
+				'postviews' => 'string',
+				'utm' => 'string',
+				'point' => 'bool',
+				'point_type' => 'string'
 				); 
 		$shortcode_options = array(
 				'buttons' => '',
@@ -4420,7 +3417,10 @@ class ESSBCore {
 				'mobilepoint' => 'no',
 				'heroshare' => 'no',
 				'animation' => '',
-				'postviews' => ''
+				'postviews' => '',
+				'utm' => 'no',
+				'point' => 'no',
+				'point_type' => 'simple'
 		);
 		
 		$atts = shortcode_atts($shortcode_options, $atts);
@@ -4583,12 +3583,7 @@ class ESSBCore {
 		if ($shortcode_parameters['sidebar']) {
 			$display_as_key = "sidebar";
 			
-			/*if (!isset($this->activated_resources['sidebar'])) {
-				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-sidebar'.$use_minifed_css.'.css';
-				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-sidebar', 'css');
-				
-				$this->activated_resources['sidebar'] = 'true';
-			}*/
+			
 			if (!isset($this->activated_resources['display_positions_style'])) {
 				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-display-methods'.$use_minifed_css.'.css';
 				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-display-methods', 'css');
@@ -4605,8 +3600,6 @@ class ESSBCore {
 			}
 			
 			if (!isset($this->activated_resources['popup'])) {
-				//$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-popup'.$use_minifed_css.'.css';
-				//essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-popup', 'css');
 					
 				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-popup'.$use_minifed_js.'.js';
 				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-popup', 'js', true);
@@ -4624,8 +3617,6 @@ class ESSBCore {
 			}
 			
 			if (!isset($this->activated_resources['heroshare'])) {
-				//$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-heroshare'.$use_minifed_css.'.css';
-				//essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-heroshare', 'css');
 					
 				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-heroshare'.$use_minifed_js.'.js';
 				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-heroshare', 'js', true);
@@ -4643,8 +3634,6 @@ class ESSBCore {
 			}
 			
 			if (!isset($this->activated_resources['display_positions_style'])) {
-				//$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-display-methods'.$use_minifed_css.'.css';
-				//essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-display-methods', 'css');
 					
 				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-flyin'.$use_minifed_js.'.js';
 				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-flyin', 'js');
@@ -4663,19 +3652,28 @@ class ESSBCore {
 				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-display-methods'.$use_minifed_js.'.js';
 				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-display-methods', 'js');
 				$this->activated_resources['display_positions_script'] = 'true';
-				//$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-sidebar'.$use_minifed_css.'.css';
-				//essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-sidebar', 'css');
 				
 			}
 		}
+		if ($shortcode_parameters['point']) {
+			$display_as_key = "point";
+				
+			if (!isset($this->activated_resources['display_positions_style'])) {
+				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-display-methods'.$use_minifed_css.'.css';
+				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-display-methods', 'css');
+				$this->activated_resources['display_positions_style'] = 'true';
+			}
+			if (!isset($this->activated_resources['display_positions_script'])) {
+				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-display-methods'.$use_minifed_js.'.js';
+				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-display-methods', 'js');
+				$this->activated_resources['display_positions_script'] = 'true';
+		
+			}
+		}
+		
 		if ($shortcode_parameters['float']) {
 			$display_as_key = "float";
 			
-			/*if (!isset($this->activated_resources['float'])) {
-				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-float'.$use_minifed_js.'.js';
-				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-float', 'js');
-				$this->activated_resources['float'] = 'true';
-			}*/
 			if (!isset($this->activated_resources['display_positions_script'])) {
 				$script_url = ESSB3_PLUGIN_URL .'/assets/js/essb-display-methods'.$use_minifed_js.'.js';
 				essb_resource_builder()->add_static_resource_footer($script_url, 'essb-display-methods', 'js');
@@ -4685,11 +3683,6 @@ class ESSBCore {
 		if ($shortcode_parameters['topbar']) {
 			$display_as_key = "topbar";
 			
-			/*if (!isset($this->activated_resources['topbottombar'])) {				
-				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-topbottom-bar'.$use_minifed_css.'.css';
-				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-topbottom-bar', 'css');
-				$this->activated_resources['topbottombar'] = 'true';
-			}*/
 			if (!isset($this->activated_resources['display_positions_style'])) {
 				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-display-methods'.$use_minifed_css.'.css';
 				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-display-methods', 'css');
@@ -4697,11 +3690,6 @@ class ESSBCore {
 		}
 		if ($shortcode_parameters['bottombar']) {
 			$display_as_key = "bottombar";
-			/*if (!isset($this->activated_resources['topbottombar'])) {				
-				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-topbottom-bar'.$use_minifed_css.'.css';
-				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-topbottom-bar', 'css');
-				$this->activated_resources['topbottombar'] = 'true';
-			}*/
 			if (!isset($this->activated_resources['display_positions_style'])) {
 				$style_url = ESSB3_PLUGIN_URL .'/assets/css/essb-display-methods'.$use_minifed_css.'.css';
 				essb_resource_builder()->add_static_resource_footer($style_url, 'easy-social-share-buttons-display-methods', 'css');
@@ -4785,131 +3773,22 @@ class ESSBCore {
 		else if ($display_as_key == "sharepoint") {
 			return $this->display_sharepoint(true, $shortcode_parameters, $special_shortcode_options);
 		}
+		else if ($display_as_key == "point") {
+			return $this->display_point(true, $shortcode_parameters, $special_shortcode_options);
+		}
 		else {
 			return $this->generate_share_buttons($display_as_key, 'share', $special_shortcode_options, true, $shortcode_parameters);
 		}
 	}
 	
 	function essb_shortcode_total_shares($atts) {
-		global $post;
 		
-		$atts = shortcode_atts(array(
-				'message' => '',
-				'align' => '',
-				'url' => '',
-				'share_text' => '',
-				'fullnumber' => 'no',
-				'networks' => '',
-				'inline' => 'no'
-		), $atts);
-		
-		$align = isset($atts['align']) ? $atts['align'] : '';
-		$message = isset($atts['message']) ? $atts['message'] : '';
-		$url = isset($atts['url']) ? $atts['url'] : '';
-		$share_text = isset($atts['share_text']) ? $atts['share_text'] : '';
-		$fullnumber = isset($atts['fullnumber']) ? $atts['fullnumber'] : 'no';
-		$networks = isset($atts['networks']) ? $atts['networks'] : 'no';
-		$inline = isset($atts['inline']) ? $atts['inline'] : 'no';
-		
-		$data_full_number = "false";
-		if ($fullnumber == 'yes') {
-			$data_full_number = "true";
+		$network_list = $this->network_options['networks'];
+		if (!class_exists('ESSBCoreExtenderShortcodeTotalShares')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/extenders/essb-core-extender-shortcode-totalshares.php');
 		}
 		
-		// init global options
-		$options = $this->options;
-		
-		
-		if ($networks != '') {
-			$buttons = $networks;
-		}
-		else {
-			$buttons = implode(',', $this->network_options['networks']);
-		}
-				
-		
-		$css_class_align = "";
-		
-		$data_url = $post ? get_permalink() : ESSBUrlHelper::get_current_url( 'raw' );
-		
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'avoid_nextpage')) {
-			$data_url = $post ? get_permalink(get_the_ID()) : ESSBUrlHelper::get_current_url( 'raw' );
-		}
-		
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'force_wp_fullurl')) {
-			$data_url = ESSBUrlHelper::get_current_page_url();
-		}
-		
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'always_use_http')) {
-			$data_url = str_replace("https://", "http://", $data_url);
-		}
-				
-		if ($url != '' ) {
-			$data_url = $url;
-		}		
-		
-		$data_post_id = "";
-		if (isset($post)) {
-			$data_post_id = $post->ID;
-		}
-		
-		if ($align == "right" || $align == "center") {
-			$css_class_align = $align;
-		}
-		
-		$total_counter_hidden = $this->general_options['total_counter_hidden_till'];
-		
-		// @since 3.3 support for cached counters
-		$cached_counters = array();
-		$cached_counters_active = false;
-		$cached_total_counter = '';
-		if (defined('ESSB3_CACHED_COUNTERS')) {
-			$share_options = array('url' => $data_url, 'full_url' => $data_url);
-			$cached_counter_networks = ESSBCachedCounters::prepare_list_of_networks_with_counter(explode(',', $buttons), explode(',', $buttons));
-			$cached_counters = ESSBCachedCounters::get_counters($data_post_id, $share_options, $cached_counter_networks);
-			$cached_counters_active = true;
-		}
-		else {
-			$use_minifed_js = ($this->general_options['use_minified_js']) ? ".min" : "";		
-			$script_url = ESSB3_PLUGIN_URL .'/assets/js/easy-social-share-buttons-total'.$use_minifed_js.'.js';
-			essb_resource_builder()->add_static_resource_footer($script_url, 'easy-social-share-buttons-total', 'js');
-		}
-		$css_hide_total_counter = "";
-		if ($total_counter_hidden != '') {
-			$css_hide_total_counter = ' style="display: none !important;" data-essb-hide-till="' . $total_counter_hidden . '"';
-		}
-		
-		if ($cached_counters_active) {
-			$cached_total_counter = isset($cached_counters['total']) ? $cached_counters['total'] : '0';
-				
-			if ($total_counter_hidden != '') {
-				if (intval($cached_total_counter) > intval($total_counter_hidden)) {
-					$css_hide_total_counter = "";
-				}
-			}
-			$cached_total_counter = ESSBButtonHelper::kilomega($cached_total_counter);
-		}
-				
-		$output = "";
-		
-		$tag = ($inline == 'yes') ? 'span' : 'div';
-		
-		$output .= '<'.$tag.' class="essb-total '.$css_class_align.'" data-network-list="'.$buttons.'" data-url="'.$data_url.'" data-full-number="'.$data_full_number.'" data-post="'.$data_post_id.'" '.$css_hide_total_counter.'>';
-		
-		if ($message != '') {
-			$output .= '<'.$tag.' class="essb-message essb-block">'.$message.'</'.$tag.'>';
-		}
-		
-		$output .= '<'.$tag.' class="essb-total-value essb-block">'.$cached_total_counter.'</'.$tag.'>';
-		if ($share_text != '') {
-			$output .= '<'.$tag.' class="essb-total-text essb-block">'.$share_text.'</'.$tag.'>';
-		}
-		
-		$output .= '</'.$tag.'>';
-		
-		
-		return $output;
-		
+		return ESSBCoreExtenderShortcodeTotalShares::parse_shortcode($atts, $this->options, $network_list);		
 	}
 	
 	function essb_shortcode_share_flyin($atts) {
@@ -4964,15 +3843,49 @@ class ESSBCore {
 		return $this->essb_shortcode_share($shortcode_options);
 	}
 	
+	
+	function essb_shortcode_subscribe($atts, $content = '') {
+		$mode = '';
+		$design = '';
+		$twostep = 'false';
+		$twostep_inline = 'false';
+		
+		if (is_array($atts)) {
+			$mode = ESSBOptionValuesHelper::options_value($atts, 'mode');
+			$design = ESSBOptionValuesHelper::options_value($atts, 'design');
+			$twostep = ESSBOptionValuesHelper::options_value($atts, 'twostep');
+			$twostep_inline = ESSBOptionValuesHelper::options_value($atts, 'twostep_inline');
+			$twostep_text = ESSBOptionValuesHelper::options_value($atts, 'twostep_text');
+			
+			if ($content == '' && $twostep_text != '') {
+				$content = $twostep_text;
+			}
+		}
+		
+		if (!class_exists('ESSBNetworks_Subscribe')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe.php');
+		}
+			
+		if ($twostep == 'true') {
+			return ESSBNetworks_Subscribe::draw_inline_subscribe_form_twostep($mode, $design, $content, $twostep_inline);
+		}
+		else {
+			return ESSBNetworks_Subscribe::draw_inline_subscribe_form($mode, $design);
+		}		
+	}
+	
+	function essb_shortcode_popular_posts($atts) {
+		return essb_popular_posts($atts, false);
+	}
 }
 
 if (!function_exists ('str_replace_first')) {
-function str_replace_first($search, $replace, $subject) {
-	$pos = strpos($subject, $search);
-	if ($pos !== false) {
-		$subject = substr_replace($subject, $replace, $pos, strlen($search));
+	function str_replace_first($search, $replace, $subject) {
+		$pos = strpos($subject, $search);
+		if ($pos !== false) {
+			$subject = substr_replace($subject, $replace, $pos, strlen($search));
+		}
+		return $subject;
 	}
-	return $subject;
-}
 }
 ?>

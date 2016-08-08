@@ -574,11 +574,45 @@ jQuery(document).ready(function(){
 		if ($shortcode == 'easy-total-fans' || $shortcode == 'easy-total-followers') {
 			$this->includeOptionsForTotalFollowers();
 		}
+		
+		if ($shortcode == 'easy-popular-posts') {
+			$this->includePopularPosts();
+		}
+		if ($shortcode == 'easy-subscribe') {
+			$this->includeSubscribe();
+		}
+	}
+	
+	private function includeSubscribe() {
+		$this->shortcode = 'easy-subscribe';
+		$this->shortcodeTitle = '[easy-subscribe] Shortcode';
+	
+		$listOfTypes = array("" => "Subscribe form with service integration (MailChimp, GetReponse, myMail, MailPoet)", "form" => "Custom code subscribe form");
+		$this->register("mode", array("type" => "dropdown", "text" => "Form type", "comment" => "Choose form generation type", "sourceOptions" => $listOfTypes));
+		$listOfTypes = array("design1" => "Design #1", "design2" => "Design #2", "design3" => "Design #3", "design4" => "Design #4");
+		$this->register("design", array("type" => "dropdown", "text" => "Design", "comment" => "Choose your form design style", "sourceOptions" => $listOfTypes));
+		$this->register("twostep", array("type" => "checkbox", "text" => "Two step optin form", "comment" => "Two step optin forms will open form when you click on link (text or image)", "value" => "true"));
+		$this->register("twostep_text", array("type" => "textbox", "text" => "Two step link content", "comment" => "Put here your two step content open link", "value" => "", "fullwidth" => "true"));
+		$this->register("twostep_inline", array("type" => "checkbox", "text" => "Two step form open inline", "comment" => "Open your two step form inline - default mode is as popup", "value" => "true"));
+	}
+	
+	private function includePopularPosts() {
+		$this->shortcode = 'easy-popular-posts';
+		$this->shortcodeTitle = '[easy-popular-posts] Shortcode';
+		
+		$this->register("title", array("type" => "textbox", "text" => "Title of widget", "comment" => "", "value" => "", "fullwidth" => "true"));
+		$this->register("number", array("type" => "textbox", "text" => "Number of posts to display", "comment" => "", "value" => "", "fullwidth" => "false"));
+		$this->register("show_num", array("type" => "checkbox", "text" => "Show value number for selected source", "comment" => "Display numeric value representic selected source (shares, loves, views)", "value" => "yes"));
+		$this->register("show_num_text", array("type" => "textbox", "text" => "Text after numeric value", "comment" => "Enter text that you wish to appear after numeric value (shares, loves, views, reads)", "value" => "", "fullwidth" => "false"));
+		$listOfTypes = array("shares" => "Total shares (require cache counters to be active)", "loves" => "Post loves (require Love this button to be active)", "views" => "Require Post Views Add-on to be active");
+		$this->register("source", array("type" => "dropdown", "text" => "Display value from", "comment" => "Choose source of your values. Each value has requirements that should be met to view correctly number and posts", "sourceOptions" => $listOfTypes));
+		$this->register("same_cat", array("type" => "checkbox", "text" => "Display posts from same category only", "comment" => "Choose this if you wish to see post from same category only. This option is not suitable if you plan to use shortcode on list of posts, archive pages or homepage", "value" => "yes"));
 	}
 	
 	private function includeOptionsForTotalFollowers() {
 		$this->shortcode = 'easy-total-followers';
 		$this->shortcodeTitle = '[easy-total-followers] Shortcode - shortcode does not have additional options';
+		
 		
 	}
 	
@@ -788,6 +822,9 @@ jQuery(document).ready(function(){
 		$this->register("mobilebar", array("type" => "checkbox", "text" => "Display social buttons as mobile bottom bar:", "comment" => "", "value" => "yes"));
 		$this->register("mobilebuttons", array("type" => "checkbox", "text" => "Display social buttons as mobile buttons bar:", "comment" => "", "value" => "yes"));
 		$this->register("mobilepoint", array("type" => "checkbox", "text" => "Display social buttons as mobile point:", "comment" => "", "value" => "yes"));
+		
+		$this->register("point", array("type" => "checkbox", "text" => "Display social buttons as point:", "comment" => "", "value" => "yes"));
+		$this->register("point_type", array("type" => "dropdown", "text"=> "Choose point style", "comment" => "", "sourceOptions" => array("simple"=>"Simple buttons", "advanced" => "Advanced Content")));
 		
 		$this->register('section6', array("type" => "section", "text" => "Social Share Button Texts"));
 		$this->register('network_names', array("type" => "network_names", "text" => "Social Network Names:", "comment" => "Provide custom network names instead of default. For example instead of Facebook you can use Share on Facebook"));

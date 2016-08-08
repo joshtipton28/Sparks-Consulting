@@ -14,6 +14,8 @@ class ESSBAdminControler {
 	} // end get_instance;
 	
 	function __construct() {
+		global $essb_options;
+		$deactivate_appscreo = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_appscreo');
 		
 		//add_action ('init',array ($this, 'essb_settings_redirect' )  );
 		add_action ( 'admin_menu', 	array ($this, 'register_menu' ) );
@@ -28,6 +30,8 @@ class ESSBAdminControler {
 		// admin meta boxes
 		add_action('add_meta_boxes', array ($this, 'handle_essb_metabox' ) );
 		add_action('save_post',  array ($this, 'handle_essb_save_metabox'));
+		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ) );
+		
 		
 		$dismiss_import = isset($_REQUEST['dismiss_import']) ? $_REQUEST['dismiss_import'] : '';
 		if ($dismiss_import == 'true') {
@@ -46,26 +50,28 @@ class ESSBAdminControler {
 			add_action ( 'admin_notices', array ($this, 'add_notice_essb2_running' ) );
 		}
 		
-		if (ESSB3_ADDONS_ACTIVE) {
-			include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/addons/essb-addons-helper.php');
-			ESSBAddonsHelper::get_instance();
+		if (!$deactivate_appscreo) {
+			if (ESSB3_ADDONS_ACTIVE) {
+				include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/addons/essb-addons-helper.php');
+				ESSBAddonsHelper::get_instance();
+			}
+			
+			if (ESSB3_ADDONS_ACTIVE && class_exists('ESSBAddonsHelper')) {
+				
+				$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+				
+				if (strpos($page, 'essb_') === false) {
+					
+					$addons = ESSBAddonsHelper::get_instance();
+					$new_addons = $addons->get_new_addons_count();
+				
+					if ($new_addons > 0) {
+						add_action ( 'admin_notices', array ($this, 'add_notice_new_addon' ) );
+					}
+				}
+	 		}
 		}
 		
-		if (ESSB3_ADDONS_ACTIVE && class_exists('ESSBAddonsHelper')) {
-			
-			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-			
-			if (strpos($page, 'essb_') === false) {
-				
-				$addons = ESSBAddonsHelper::get_instance();
-				$new_addons = $addons->get_new_addons_count();
-			
-				if ($new_addons > 0) {
-					add_action ( 'admin_notices', array ($this, 'add_notice_new_addon' ) );
-				}
-			}
- 		}
- 		
  		$easymode = isset($_REQUEST['easymode']) ? $_REQUEST['easymode'] : '';
  		if (!empty($easymode)) {
  			if ($easymode == "activate") {
@@ -79,19 +85,116 @@ class ESSBAdminControler {
  		}
 	}
 	
+	/**
+	 * Add news dashboard widget
+	 * 
+	 * @since 3.6
+	 */
+	public function add_dashboard_widget() {
+		// Create the widget
+		wp_add_dashboard_widget( 'appscreo_news', apply_filters( 'appscreo_dashboard_widget_title', __( 'AppsCreo News', 'essb' ) ), array( $this, 'display_news_dashboard_widget' ) );
+		
+		// Make sure our widget is on top off all others
+		global $wp_meta_boxes;
+		
+		// Get the regular dashboard widgets array
+		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+		
+		// Backup and delete our new dashboard widget from the end of the array
+		$avada_widget_backup = array( 'appscreo_news' => $normal_dashboard['appscreo_news'] );
+		unset( $normal_dashboard['appscreo_news'] );
+		
+		// Merge the two arrays together so our widget is at the beginning
+		$sorted_dashboard = array_merge( $avada_widget_backup, $normal_dashboard );
+		
+		// Save the sorted array back into the original metaboxes
+		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+	}
+	
+	public function display_news_dashboard_widget() {
+		global $essb_options;
+		$deactivate_appscreo = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_appscreo');
+		
+		if (!$deactivate_appscreo) {
+			// Create two feeds, the first being just a leading article with data and summary, the second being a normal news feed
+			$feeds = array(
+					'first' => array(
+							'link'         => 'http://appscreo.com/',
+							'url'          => 'http://appscreo.com/feed/',
+							'title'        => __( 'AppsCreo News', 'essb' ),
+							'items'        => 1,
+							'show_summary' => 1,
+							'show_author'  => 0,
+							'show_date'    => 1,
+					),
+					'news' => array(
+							'link'         => 'http://appscreo.com/',
+							'url'          => 'http://appscreo.com/feed/',
+							'title'        => __( 'AppsCreo News', 'essb' ),
+							'items'        => 4,
+							'show_summary' => 0,
+							'show_author'  => 0,
+							'show_date'    => 0,
+					),
+			);
+			
+			wp_dashboard_primary_output( 'appscreo_news', $feeds );
+		}
+		else {
+			print '<div class="essb-admin-widget">';
+			print '<h4><strong>AppsCreo News</strong></h4>';
+			print '<a href="http://appscreo.com/" target="_blank">Read latest news, tips and tricks in our blog at http://appscreo.com</a>';
+			print '</div>';
+		}
+		
+		print '<div class="essb-admin-widget">';
+		print '<h4><strong>Subscribe to our mailing list and get interesting stuff and updates to your email inbox.</strong></h4>';
+		print '<form action="//appscreo.us13.list-manage.com/subscribe/post?u=a1d01670c240536f6a70e7778&amp;id=c896311986" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>';
+		print '<div class="input-text-wrap" id="title-wrap">';
+		//print '<label class="screen-reader-text prompt" for="mce-EMAIL" id="title-prompt-text">Enter your email</label>';
+		print '<input type="email" name="EMAIL" id="mce-EMAIL" autocomplete="off" placeholder="Enter your email" />';
+		print '</div>';		
+		print '<p><input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button button-primary" value="Subscribe"></p>';
+		print '</form>';
+		print '</div>';
+		
+	}
+	
 	public function add_notice_new_addon() {
 		if (ESSB3_ADDONS_ACTIVE && class_exists('ESSBAddonsHelper')) {
 			$addons = ESSBAddonsHelper::get_instance();
 			$new_addons = $addons->get_new_addons();
 		
+			$dismiss_keys = "";
+			$new_addons_list = "";
+			$cnt = 0;
 			foreach ($new_addons as $key => $data) {
-				$all_addons_button = '<a href="'.admin_url ("admin.php?page=essb_addons").'"  text="' . __ ( 'Add-ons', ESSB3_TEXT_DOMAIN ) . '" class="button" style="margin-right: 5px; float: right; margin-top: -5px;"><span class="dashicons dashicons-admin-plugins" style="margin-top: 3px;"></span>&nbsp;' . __ ( 'View list of all add-ons', ESSB3_TEXT_DOMAIN ) . '</a>';
+				/*$all_addons_button = '<a href="'.admin_url ("admin.php?page=essb_addons").'"  text="' . __ ( 'Extensions', ESSB3_TEXT_DOMAIN ) . '" class="button" style="margin-right: 5px; float: right; margin-top: -5px;"><span class="dashicons dashicons-admin-plugins" style="margin-top: 3px;"></span>&nbsp;' . __ ( 'View list of all extensions', ESSB3_TEXT_DOMAIN ) . '</a>';
 		
 				$dismiss_url = esc_url_raw(add_query_arg(array('dismiss' => 'true', 'addon' => $key), admin_url ("admin.php?page=essb_options")));
 		
-				$dismiss_addons_button = '<a href="'.$dismiss_url.'"  text="' . __ ( 'Add-ons', ESSB3_TEXT_DOMAIN ) . '" class="button" style="float: right; margin-top:-5px;"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span>' . __ ( 'Close & hide this message', ESSB3_TEXT_DOMAIN ) . '</a>';
-				printf ( '<div class="updated fade"><p style="padding-top: 5px; padding-bottom: 5px;">New add-on for <b>Easy Social Share Buttons for WordPress</b> is available: <a href="%2$s" target="_blank"><b>%1$s</b></a> %4$s%3$s</p></div>', $data['title'], $data['url'], $all_addons_button, $dismiss_addons_button );
+				$dismiss_addons_button = '<a href="'.$dismiss_url.'"  text="' . __ ( 'Extensions', ESSB3_TEXT_DOMAIN ) . '" class="button" style="float: right; margin-top:-5px;"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span>' . __ ( 'Close & hide this message', ESSB3_TEXT_DOMAIN ) . '</a>';
+				printf ( '<div class="updated fade"><p style="padding-top: 5px; padding-bottom: 5px;">New add-on for <b>Easy Social Share Buttons for WordPress</b> is available: <a href="%2$s" target="_blank"><b>%1$s</b></a> %4$s%3$s</p></div>', $data['title'], $data['url'], $all_addons_button, $dismiss_addons_button );*/
+				
+				if ($dismiss_keys != "") { $dismiss_keys .= ','; }
+				$dismiss_keys .= $key;
+			
+				$cnt++;
+				
+				if ($new_addons_list != '') {
+					$new_addons_list .= ', ';
+				}
+				//$new_addons_list .= sprintf('<a href="%2$s" target="_blank"><b>%1$s</b></a>', $data['title'], $data['url']); 
+				$new_addons_list .= sprintf('<a href="%2$s"><b>%1$s</b></a>', $data['title'], admin_url ("admin.php?page=essb_addons"));
 			}
+			
+			$single_text = __('New extension for <b>Easy Social Share Buttons for WordPress</b>: ', 'essb');
+			$plural_text = __('New extensions for <b>Easy Social Share Buttons for WordPress</b>: ', 'essb');
+			
+			$display_text = ($cnt > 1) ? $plural_text : $single_text;
+			$dismiss_url = esc_url_raw(add_query_arg(array('dismiss' => 'true', 'addon' => $dismiss_keys), admin_url ("admin.php?page=essb_options")));
+			$dismiss_addons_button = '<a href="'.$dismiss_url.'"  text="' . __ ( 'Hide notice', 'essb' ) . '" class="button"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span></a>';
+			printf ( '<div class="updated fade"><div><div style="padding-top: 10px; padding-bottom: 10px; display: inline-block; width:%4$s;">%1$s%2$s</div><div style="display: inline-block; width:%5$s; text-align: right; vertical-align: top; margin-top:5px;">%3$s</div></div></div>', $display_text, $new_addons_list, $dismiss_addons_button, '95%', '5%' );
 		}
 		
 	}
@@ -326,7 +429,7 @@ class ESSBAdminControler {
 			
 			add_submenu_page( 'essb_options', __('About', ESSB3_TEXT_DOMAIN), __('About', ESSB3_TEXT_DOMAIN), $essb_access, 'essb_about', array ($this, 'essb_settings_redirect_about' ));
 			if (ESSB3_ADDONS_ACTIVE) {
-				add_submenu_page( 'essb_options', __('Add-ons', ESSB3_TEXT_DOMAIN), '<span style="color:#f39c12;">'.__('Add-ons', ESSB3_TEXT_DOMAIN).'</span>', $essb_access, 'essb_addons', array ($this, 'essb_settings_redirect_addons' ));
+				add_submenu_page( 'essb_options', __('Extensions', ESSB3_TEXT_DOMAIN), '<span style="color:#f39c12;">'.__('Extensions', ESSB3_TEXT_DOMAIN).'</span>', $essb_access, 'essb_addons', array ($this, 'essb_settings_redirect_addons' ));
 			}
 		}
 	}

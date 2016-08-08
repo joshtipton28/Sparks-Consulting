@@ -80,6 +80,7 @@ jQuery(document).ready(function($){
 					case "mwp":
 					case "xing":
 					case "pocket":
+					case "linkedin":
 						if (counter_admin) {
 							nonapi_internal_count_networks.push(basic_networks[i]);							
 						}
@@ -130,14 +131,14 @@ jQuery(document).ready(function($){
 				
 				switch (network) {
 				case "facebook":
-					var facebook_url	= "https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%22"+url+"%22";
+					var facebook_url = "https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls="+url;
 					$.getJSON(facebook_url)
 					.done(function(data){
 						if (fb_value) {
-							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data.data[0].total_count);
+							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data[0].total_count);
 						}
 						else {
-							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data.data[0].share_count);	
+							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data[0].share_count);	
 						}
 					});
 					break;
@@ -158,6 +159,7 @@ jQuery(document).ready(function($){
 					
 				case "linkedin":
 					var linkedin_url	= "https://www.linkedin.com/countserv/count/share?format=jsonp&url=" + url + "&callback=?";
+					console.log(linkedin_url);
 					$.getJSON(linkedin_url)
 					.done(function(data){
 						counter_display(counter_pos, operating_elements['linkedin'+instance_id], operating_elements['linkedin_inside'+instance_id], data.count);						

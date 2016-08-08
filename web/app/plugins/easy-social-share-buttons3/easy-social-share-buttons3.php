@@ -4,7 +4,7 @@
 * Plugin Name: Easy Social Share Buttons for WordPress
 * Description: Easy Social Share Buttons automatically adds share bar to your post or pages with support of Facebook, Twitter, Google+, LinkedIn, Pinterest, Digg, StumbleUpon, VKontakte, Tumblr, Reddit, Print, E-mail and other 30 social networks. Easy Social Share Buttons for WordPress is compatible with WooCommerce, bbPress and BuddyPress
 * Plugin URI: http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo
-* Version: 3.5
+* Version: 3.7.1
 * Author: CreoApps
 * Author URI: http://codecanyon.net/user/appscreo/portfolio?ref=appscreo
 */
@@ -17,7 +17,7 @@ if (! defined ( 'WPINC' ))
 
 define ( 'ESSB3_SELF_ENABLED', false );
 
-define ( 'ESSB3_VERSION', '3.5' );
+define ( 'ESSB3_VERSION', '3.7.1' );
 define ( 'ESSB3_PLUGIN_ROOT', dirname ( __FILE__ ) . '/' );
 define ( 'ESSB3_PLUGIN_URL', plugins_url () . '/' . basename ( dirname ( __FILE__ ) ) );
 define ( 'ESSB3_PLUGIN_BASE_NAME', plugin_basename ( __FILE__ ) );
@@ -31,7 +31,7 @@ define ( 'ESSB3_TRACKER_TABLE', 'essb3_click_stats');
 define ( 'ESSB3_MAIL_SALT', 'easy-social-share-buttons-mailsecurity');
 
 define ( 'ESSB3_DEMO_MODE', true);
-define ( 'ESSB3_ADDONS_ACTIVE', false);
+define ( 'ESSB3_ADDONS_ACTIVE', true);
 define ( 'ESSB3_EASYMODE_ASKED', 'easy3-easymode-asked');
 
 /**
@@ -116,6 +116,9 @@ class ESSB_Manager {
 				add_action( 'init', 'essb_page_welcome_redirect' );
 			}
 		}
+		
+		add_action ( 'template_redirect', array ($this, 'essb_process_additional_ajax_requests' ), 1 );
+		
 	}
 	
 	/**
@@ -155,6 +158,8 @@ class ESSB_Manager {
 	 */
 	public function init() {		
 		// activate plugin and resource builder		
+		
+		
 		$this->resourceBuilder();		
 		$this->essb();
 		
@@ -234,6 +239,36 @@ class ESSB_Manager {
 		
 		if (is_admin()) {
 			$this->asAdmin();
+		}
+		
+	}
+	
+	public function essb_process_additional_ajax_requests() {
+		global $essb_options;
+		
+		$subscribe_action = isset($_REQUEST['essb-malchimp-signup']) ? $_REQUEST['essb-malchimp-signup']: '';
+
+		if ($subscribe_action == '1') {
+			if (!class_exists('ESSBNetworks_SubscribeActions')) {
+				include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe-actions.php');				
+			}
+			
+			ESSBNetworks_SubscribeActions::process_subscribe();
+			
+			die();
+		}
+		
+		if (defined('ESSB3_CACHED_COUNTERS')) {
+			if (ESSBGlobalSettings::$cached_counters_cache_mode) {
+				if (isset($_REQUEST['essb_counter_cache']) && $_REQUEST['essb_counter_cache'] == 'rebuild') {
+					$share_details = essb_core()->get_post_share_details('');
+					$share_details['full_url'] = $share_details['url'];
+					$networks = ESSBOptionValuesHelper::options_value($essb_options, 'networks');
+					$result = ESSBCachedCounters::get_counters(get_the_ID(), $share_details, $networks);
+					echo json_encode($result);
+					die();
+				}		
+			}
 		}
 	}
 	
@@ -399,6 +434,22 @@ class ESSB_Manager {
 		}
 		else {
 			return $this->is_mobile;
+		}
+	}
+	
+	public function isTablet() {
+		if (!$this->mobile_checked) {
+			$this->mobile_checked = true;
+			$mobile_detect = new ESSB_Mobile_Detect();
+				
+			$this->is_mobile = $mobile_detect->isMobile();
+			$this->is_tablet = $mobile_detect->isTablet();
+				
+				
+			return $this->is_tablet;
+		}
+		else {
+			return $this->is_tablet;
 		}
 	}
 	

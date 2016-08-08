@@ -44,42 +44,65 @@ class ESSBCachedCounters {
 		return $count_networks;
 	}
 	
-	/**
-	 * Check post if cache requires to be updated
-	 * 
-	 * @param $post_id
-	 * @return boolean
-	 */
 	public static function is_fresh_cache($post_id) {
-		global $essb_options;		
+		global $essb_options;
 		
 		$is_fresh = true;
 		
-		if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])) {
+		if (isset ( $_SERVER ['HTTP_USER_AGENT'] ) && preg_match ( '/bot|crawl|slurp|spider/i', $_SERVER ['HTTP_USER_AGENT'] )) {
 			$is_fresh = true;
 		}
 		else {
-			$hours = ESSBOptionValuesHelper::options_value($essb_options, 'cache_counter_refresh');
-			if (empty($hours)) {
-				$hours = "12";
-			}
-
-			$hours = intval($hours);
+			$expire_time = get_post_meta ( $post_id, 'essb_cache_expire', true );
+			$now = time ();
 			
-			$lastChecked = get_post_meta($post_id, 'essb_cache_timestamp', true);
+			$is_alive = ($expire_time > $now);
 			
-			$time = floor(((date('U')/60)/60));
-			
-			if (($lastChecked > ($time - $hours) && $lastChecked > 390000) || !is_singular()) {
+			if (true == $is_alive) {
 				$is_fresh = true;
 			}
 			else {
 				$is_fresh = false;
 			}
 		}
+				
+		return $is_fresh;
+	}
+	
+	/**
+	 * Check post if cache requires to be updated
+	 *
+	 * @param $post_id
+	 * @return boolean
+	 */
+	public static function is_fresh_cache_deprecated($post_id) {
+		global $essb_options;
+		
+		$is_fresh = true;
+		
+		if (isset ( $_SERVER ['HTTP_USER_AGENT'] ) && preg_match ( '/bot|crawl|slurp|spider/i', $_SERVER ['HTTP_USER_AGENT'] )) {
+			$is_fresh = true;
+		} else {
+			$hours = ESSBOptionValuesHelper::options_value ( $essb_options, 'cache_counter_refresh' );
+			if (empty ( $hours )) {
+				$hours = "12";
+			}
+			
+			$hours = intval ( $hours );
+			
+			$lastChecked = get_post_meta ( $post_id, 'essb_cache_timestamp', true );
+			
+			$time = floor ( ((date ( 'U' ) / 60) / 60) );
+			
+			if (($lastChecked > ($time - $hours) && $lastChecked > 390000) || ! is_singular ()) {
+				$is_fresh = true;
+			} else {
+				$is_fresh = false;
+			}
+		}
 		
 		// check for manual counter refresh with url parameter
-		$user_call_refresh = isset($_REQUEST['essb_counter_update']) ? $_REQUEST['essb_counter_update'] : '';
+		$user_call_refresh = isset ( $_REQUEST ['essb_counter_update'] ) ? $_REQUEST ['essb_counter_update'] : '';
 		if ($user_call_refresh == 'true') {
 			$is_fresh = false;
 		}
@@ -111,20 +134,31 @@ class ESSBCachedCounters {
 					// get post meta recovery value
 					// essb_activate_sharerecovery - post meta recovery address
 					$post_essb_activate_sharerecovery = get_post_meta($post_id, 'essb_activate_sharerecovery', true);
-					
 					if (!empty($post_essb_activate_sharerecovery)) {
 						$current_url = $post_essb_activate_sharerecovery;
 					}
 					else {
 						$current_url = ESSBCachedCounters::get_alternate_permalink($current_url, $post_id);
-					}
+					}					
+					
 					$recovery_counters = ESSBCachedCounters::update_counters($post_id, $current_url, $current_url, $networks, true);
+					
 					
 					$cached_counters = ESSBCachedCounters::consolidate_results($cached_counters, $recovery_counters, $networks);
 				}
 			}
 			
+			$total_saved = false;
 			foreach ($networks as $k) {
+				
+				if ($k == 'total') $total_saved = true;
+				
+				$single = isset($cached_counters[$k]) ? $cached_counters[$k] : '0';
+				update_post_meta($post_id, 'essb_c_'.$k, $single);
+			}
+			
+			if (!$total_saved) {
+				$k = 'total';
 				$single = isset($cached_counters[$k]) ? $cached_counters[$k] : '0';
 				update_post_meta($post_id, 'essb_c_'.$k, $single);
 			}
@@ -136,7 +170,6 @@ class ESSBCachedCounters {
 			}
 		}		
 		
-		//print_r($cached_counters);
 		
 		return $cached_counters;
 	}
@@ -153,6 +186,10 @@ class ESSBCachedCounters {
 		$cached_counters = array();
 		$cached_counters['total'] = 0;
 		
+		
+		if (!class_exists('ESSBCounterHelper')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-counters-helper.php');
+		}
 		
 		foreach ( $networks as $k ) {
 			switch ($k) {
@@ -240,12 +277,15 @@ class ESSBCachedCounters {
 				
 			}
 			
-			$cached_counters ['total'] += intval ( $cached_counters [$k] );
+			$cached_counters ['total'] += intval ( isset($cached_counters [$k]) ? $cached_counters [$k] : 0 );
 		}
 		
 		if (!$recover_mode) {
-			$time = floor(((date('U')/60)/60));
-			update_post_meta($post_id, 'essb_cache_timestamp', $time);
+			//$time = floor(((date('U')/60)/60));
+			//update_post_meta($post_id, 'essb_cache_timestamp', $time);
+			$expire_time = ESSBOptionValuesHelper::options_value($essb_options, 'cache_counter_refresh_new');
+			if ($expire_time == '') { $expire_time = 60; }
+			update_post_meta ( $post_id, 'essb_cache_expire', (time () + ($expire_time * 60)) );
 		}
 		
 		return $cached_counters;
@@ -365,13 +405,19 @@ class ESSBCachedCounters {
 	
 	public static function get_alternate_permalink($url, $id) {
 
-		global $essb_options;
+		global $essb_options;		
 		
 		$new_url = $url;
 		
-		$recover_mode = ESSBOptionValuesHelper::options_bool_value($essb_options, 'counter_recover_mode');
-		$recover_protocol = ESSBOptionValuesHelper::options_bool_value($essb_options, 'counter_recover_protocol');
-		$recover_from_other_domain = ESSBOptionValuesHelper::options_bool_value($essb_options, 'counter_recover_domain');
+		$recover_mode = ESSBOptionValuesHelper::options_value($essb_options, 'counter_recover_mode');
+		$recover_protocol = ESSBOptionValuesHelper::options_value($essb_options, 'counter_recover_protocol');
+		$recover_from_other_domain = ESSBOptionValuesHelper::options_value($essb_options, 'counter_recover_domain');
+		$recover_from_new_domain = ESSBOptionValuesHelper::options_value($essb_options, 'counter_recover_newdomain');
+		$counter_recover_slash = ESSBOptionValuesHelper::options_bool_value($essb_options, 'counter_recover_slash');
+		
+		if (empty($recover_from_new_domain) && $recover_mode == "domain") {
+			$recover_from_new_domain = get_site_url();
+		}
 		
 		// Setup the Default Permalink Structure
 		if($recover_mode == 'default') {
@@ -408,6 +454,9 @@ class ESSBCachedCounters {
 		
 		if ($recover_mode == "domain" && !empty($recover_from_other_domain)) {
 			$current_site_url = get_site_url();
+			if (!empty($recover_from_new_domain)) {
+				$current_site_url = $recover_from_new_domain;
+			}
 			$new_url = str_replace($current_site_url, $recover_from_other_domain, $url);
 		}
 		
@@ -418,6 +467,10 @@ class ESSBCachedCounters {
 		
 		if ($recover_protocol == "https2http") {
 			$new_url = str_replace('http://','https://',$new_url);
+		}
+		
+		if ($counter_recover_slash) {
+			$new_url = rtrim($new_url,"/");
 		}
 		
 		return $new_url;

@@ -127,6 +127,14 @@
 		return $shares[ 1 ];
 	}
 	
+	function get_linkedin($url) {
+		$json_string = parse ( "https://www.linkedin.com/countserv/count/share?url=$url&format=json" );
+		$json = json_decode ( $json_string, true );
+		$result = isset ( $json ['count'] ) ? intval ( $json ['count'] ) : 0;
+		return $result;
+	}
+	
+	
 	
 	function parse( $encUrl ) {
 
@@ -239,6 +247,9 @@
 		}
 		elseif ($network == "pocket") {
 			$json['count'] = getPocketCount($url);
+		}
+		elseif ($network == "linkedin") {
+			$json['count'] = get_linkedin($url);
 		}
 	}
 	echo str_replace('\\/','/',json_encode($json));
