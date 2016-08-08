@@ -1,0 +1,36 @@
+//Default Page Styles
+.page-default{
+  margin-top:20px;
+  border-radius:10px;
+  border: 1px solid #222;
+  box-shadow: 10px 10px 20px 0px $charc;
+  height: 80vh;
+  overflow:auto;
+  background: $oblack;
+
+  h1, h2{
+    font-weight: normal;
+    letter-spacing: -0.08em;
+    text-shadow:$tshadow;
+
+    .strong{
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+  }
+
+  h2{
+    font-size:rem-calc(36);
+    line-height: rem-calc(40);
+  }
+  h3{
+    font-size:rem-calc(21);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    margin-bottom: 15px;
+  }
+
+  .light{
+    font-weight: 300;
+  }
+}

@@ -1,0 +1,63 @@
+.jumbotron{
+  margin:75px 0px 40px 0px;
+
+  @include breakpoint(medium) {
+    margin:75px 0px 40px 8px;
+  }
+
+  h1{
+  	font-size:rem-calc(40);
+    line-height: rem-calc(40);
+  	font-weight: 600;
+  	letter-spacing: -0.05em;
+  	text-shadow:-1px 1px 0px $black;
+    text-align: center;
+
+    @include breakpoint(medium) {
+      font-size:rem-calc(80);
+      line-height: rem-calc(80);
+      letter-spacing: rem-calc(-6);
+      margin-left:28px;
+      text-align: left;
+    }
+
+  	small{
+  		font-size:rem-calc(24);
+  		line-height: rem-calc(24);
+  		display: block;
+  		font-weight: 300;
+  		color:$white;
+  		margin-top:10px;
+  		letter-spacing: rem-calc(-.8);
+      text-shadow:-1px 1px 0px $black;
+      padding:0 30px;
+
+      @include breakpoint(medium) {
+        font-size:rem-calc(34);
+        line-height: rem-calc(34);
+        padding:0;
+      }
+  	}
+  }
+}
+
+
+.home-blurb{
+	background: $charc;
+	font-size:rem-calc(16);
+	font-weight: 300;
+	line-height: rem-calc(23);
+	padding: 15px 20px;
+  text-shadow: 1px 1px 0px $black;
+  border-radius: 10px;
+
+	p{
+		margin-bottom:0;
+	}
+
+  @include breakpoint(medium) {
+    font-size:rem-calc(18);
+    line-height: rem-calc(27);
+    margin-left:38px;
+  }
+}

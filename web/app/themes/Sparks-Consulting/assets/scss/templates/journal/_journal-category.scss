@@ -1,0 +1,196 @@
+.journal-archive{
+	margin-top:150px;
+}
+
+.featured-journal-post{
+	position: relative;
+
+	h1{
+		position: absolute;
+		top:15%;
+		text-align: center;
+		padding:rem-calc(0 20);
+		font-weight: bold;
+		text-shadow:$tshadow;
+		letter-spacing: -0.05em;
+		font-size:rem-calc(26);
+
+		@include breakpoint(medium){
+			width: 100%;
+			top:30%;
+			font-size:rem-calc(44);
+			padding:0;
+		}
+	}
+
+	a{
+		color:$white;
+		transition: all ease 0.3s;
+
+		&:hover{
+			color:$jyellow;
+		}
+	}
+
+	p{
+		position: absolute;
+		top:42%;
+		left:0;
+		right:0;
+		margin:0 auto;
+		max-width: 850px;
+		font-weight: normal;
+		font-size:rem-calc(18);
+		line-height: rem-calc(24);
+		text-align: center;
+		font-family: $booker;
+		padding:rem-calc(20);
+		margin:rem-calc(20);
+		background: $owhite;
+		border-radius: 8px;
+		color:$jnavy;
+
+		@include breakpoint(medium){
+			color: $white;
+			padding:0;
+			margin:0 auto;
+			background: transparent;
+			border-radius: 0;
+			text-shadow: $tshadow;
+			font-size:rem-calc(24);
+			line-height: rem-calc(30);
+		}
+	}
+
+
+	img{
+		width:100%;
+		height:80vh;
+		object-fit:cover;
+
+		@include breakpoint(medium){
+			height:475px;
+			margin-top:100px;
+		}
+	}
+
+}
+
+.journal-category{
+	background: $snow;
+	border-radius: 5px;
+	margin:40px 0;
+	padding: 55px 40px;
+
+	h6{
+		font-weight: bold;
+		font-size:rem-calc(22);
+		line-height: rem-calc(25);
+		letter-spacing: -0.05em;
+		margin: 10px 0;
+	}
+
+	a{
+		color:$jhomeblue;
+	}
+
+	img{
+		height: 208px;
+		width: 343px;
+		object-fit:cover;
+	}
+
+	p{
+		color: $jnavy;
+		font-family: $booker;
+		line-height: rem-calc(28);
+	}
+
+	.journal-archive-article{
+		margin-bottom:30px;
+
+		&:last-child:not(:first-child), .columns:last-child:not(:first-child){
+			float: left !important;
+		}
+	}
+
+	//Excerpt More Styling
+	.journal-more{
+		color:$jyellow;
+		transition: all ease 0.3s;
+
+		&:hover{
+			color:$jlblue;
+		}
+	}
+}
+.journal-cat-title{
+	margin-bottom:55px;
+
+	h2{
+		color:$jlblue;
+		font-family: $booker;
+		font-size:rem-calc(24);
+		font-weight: bold;
+		text-shadow: 0 0 0;
+		padding: rem-calc(6px 15px);
+		text-align: center;
+		background: $jyellow;
+		border-radius: 5px;
+		max-width: 335px;
+		margin:0 auto;
+	}
+}
+
+.journal-cat-thumb{
+	background: $black;
+
+	img{
+		transition: all ease 0.5s;
+		&:hover{
+			opacity: .5;
+		}
+	}
+}
+
+//Pagination Styles
+.pagination-centered{
+	clear: both;
+	text-align: center;
+
+	.pagination{
+		display: inline-block;
+		background:$jyellow;
+		padding: 5px 20px;
+		border-radius: 5px;
+		margin-top:20px;
+
+		li{
+			font-weight: bold;
+			color:$jdblue;
+		}
+
+		.current{
+			background: $jyellow;
+			padding:0;
+			a{
+				color:$white;
+			}
+		}
+
+		.dots{
+			color:$jdblue;
+		}
+	}
+
+	.current{
+		background: $jyellow;
+		color:$white;
+	}
+	a{
+		&:hover{
+			background: inherit;
+			color:$white;
+		}
+	}
+}

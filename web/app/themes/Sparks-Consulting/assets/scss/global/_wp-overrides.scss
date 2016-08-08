@@ -1,0 +1,22 @@
+.wp-caption{
+  padding:rem-calc(4);
+  display: block;
+  min-width: 100%;
+}
+
+.wp-caption img{
+  max-width:100%;
+  margin:0 auto;
+}
+
+p.wp-caption-text{
+  font-size:90%;
+  color: $white;
+  padding:rem-calc(10) 0;
+  font-style: italic;
+}
+
+.admin-bar .header-container{
+	top:32px;
+}
+

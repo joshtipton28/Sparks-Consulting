@@ -1,0 +1,95 @@
+//Journal Home - Recent Articles below fold content
+
+.journal-recent{
+	padding-top:55px;
+	color:$jnavy;
+}
+.journal-home-article{
+	background:$snow;
+	position: relative;
+	padding:rem-calc(0);
+	border-radius: 5px;
+	margin-bottom:50px;
+
+	@include breakpoint(medium){
+		padding:rem-calc(25);
+	}
+
+	.recent-title{
+		margin:30px 0;
+		text-align: center;
+
+		@include breakpoint(medium){
+			margin:40px 20px 10px 20px;
+			text-align: left;
+		}
+		 a{
+			text-shadow: 0 0 0;
+			font-weight: bold;
+			font-size:rem-calc(20);
+			line-height: rem-calc(20);
+			letter-spacing: -0.05em;
+			margin:0 20px;
+
+			@include breakpoint(medium){
+				font-size:rem-calc(30);
+				line-height: rem-calc(30);
+				margin:0;
+			}
+		}
+	}
+	a{
+		color: $jhomeblue;
+		transition: all ease 0.3s;
+
+		&:hover{
+			color:$jyellow;
+		}
+	}
+	p{
+		color:$jnavy;
+		font-family: $booker;
+		line-height: rem-calc(20);
+		font-size:rem-calc(16);
+		font-weight: normal;
+		letter-spacing: -0.02em;
+
+		@include breakpoint(medium){
+			text-align: justify;
+			line-height: rem-calc(30);
+			font-size: rem-calc(17);
+		}
+	}
+	.feat-journal-img img{
+		@include breakpoint(small only){
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
+		}
+	}
+	.journal-read-more{
+		display: inline-block;
+		padding:5px 20px;
+		background: $jyellow;
+		border-radius: 5px;
+		color: $jnavy;
+		margin:rem-calc(14 35);
+		font-family: $booker;
+		font-weight: bold;
+		&:hover{
+			color: $jnavy;
+			background: scale-color($jyellow, $lightness: 10%);
+		}
+	}
+}
+
+	//Category Flag on Image of Recent Articles
+	.category-tag{
+		position: absolute;
+		left:0;
+		top:40px;
+		background: $jlblue;
+		color:$white;
+		padding:rem-calc(6 35);
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}

@@ -1,0 +1,104 @@
+.journal-container{
+	background:$white;
+}
+.journal-hero{
+	position: relative;
+	//Opening Heading
+	h1{
+		font-weight: 300;
+		line-height: 1;
+		text-shadow:$tshadow;
+		text-align: center;
+		font-size:rem-calc(30);
+		@include breakpoint(medium){
+			margin-left: 40px;
+			text-align: left;
+		}
+
+
+		span{
+			font-weight: bold;
+			letter-spacing: -0.05em;
+			display: block;
+			font-size:rem-calc(40);
+
+			@include breakpoint(medium){
+				font-size: rem-calc(60);
+			}
+		}
+	}
+
+	//Background Image for Journal Home
+	.journal-hero-img{
+		img{
+			min-width: 100%;
+			height:100vh;
+			object-fit:cover;
+		}
+	}
+
+	//Content Box positioning on Journal Home
+	.journal-hero-content{
+		position: absolute;
+		top:65px;
+		left:0;
+		right:0;
+
+		@include breakpoint(medium){
+			top:200px;
+		}
+	}
+
+	//Content Box Styles
+	.journal-blurb{
+		background: $owhite;
+		padding:28px 22px;
+		border-radius: 5px;
+		margin:0 auto;
+		margin-top:30px;
+
+		@include breakpoint(small only){
+			float: none !important;
+		}
+
+		@include breakpoint(medium){
+			margin-top:40px;
+			margin-left:43px;
+
+		}
+
+		p{
+			color:$jlblue;
+			font-size:rem-calc(20);
+			text-align: center;
+			font-weight: normal;
+			letter-spacing: -0.05em;
+			span{
+				font-weight: bold;
+			}
+		}
+
+		//Chevron down arrow in content box
+		.hero-more{
+			background: url(../images/chevron.png) no-repeat;
+			display: block;
+			height: 24px;
+			width:49px;
+			margin:0 auto;
+			background-size: cover;
+
+			@include breakpoint(medium){
+				height: 37px;
+				width:74px;
+			}
+
+			&:hover{
+				background-position: 0 -24px;
+
+				@include breakpoint(medium){
+					background-position: 0 -37px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,132 @@
+/* Tablet and desktop menu */
+.top-bar {
+  padding:30px;
+
+  .menu a {
+    line-height: 20px;
+    color: $white;
+    background:$dgrey;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: rem-calc(14);
+    border-radius: 5px;
+    font-weight:300;
+    margin:rem-calc(0 2.5);
+    text-shadow: -1px -1px 0px black;
+
+    &:hover:not(.button) {
+      background-color: $oblue;
+    }
+  }
+
+  .menu li.active a{
+    background-color:$blue;
+
+    &:hover{
+      background-color:$oblue;
+    }
+  }
+
+  .dropdown.menu .submenu {
+    background-color: $charc;
+    color: $white;
+    border: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-top:10px;
+    padding-bottom:10px;
+
+    a{
+      border-radius: 0;
+      background: transparent;
+      padding: 7px;
+      &:hover{
+        background: $oblue;
+      }
+    }
+  }
+
+  .is-dropdown-submenu-parent.is-down-arrow a{padding-right:rem-calc(32)!important;}
+  .is-dropdown-submenu-parent.is-down-arrow > a::after{
+    top:15px;
+    right:13px;
+  }
+  .dropdown.menu .has-submenu.is-down-arrow a { padding-right: 1rem; }
+  .dropdown.menu .has-submenu.is-down-arrow>a::after { border: 0; }
+
+  .top-bar-right{
+    margin-right:55px;
+  }
+}
+
+//New Styles
+
+.header-container{
+  width:100%;
+  z-index: 10;
+  position: fixed;
+  box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  top:0;
+}
+
+.main-header{
+  background: $charc;
+}
+
+.logo{
+  width:122px;
+  height:42px;
+  margin-top:-2px;
+  margin-left: 12px;
+  transition: all ease 0.5s;
+  &:hover{
+    opacity: 0.6;
+  }
+}
+
+/* Navigation breakpoints */
+
+.main-navigation {
+  @include show-for(medium);
+}
+
+.title-bar {
+  @include hide-for(medium);
+}
+
+/* Mobile menu */
+.off-canvas {
+  padding:25px 0;
+  a{
+    color:$white;
+    letter-spacing: -0.05em;
+
+     &:hover{
+      background: $white;
+      color: $black;
+      &:after{
+        border-color: $black transparent transparent;
+      }
+    }
+
+    &:after{
+      border-color:$white transparent transparent;
+      right:43%;
+      top:55%;
+    }
+  }
+}
+
+.title-bar-title {
+  a {
+    font-size: rem-calc(14);
+    color: #B9B9B9;
+    font-family: $days;
+    text-transform: uppercase;
+    font-weight: normal;
+
+    span{
+      font-family: $sans;
+    }
+  }
+}

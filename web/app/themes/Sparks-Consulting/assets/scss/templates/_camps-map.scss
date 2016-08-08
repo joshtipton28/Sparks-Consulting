@@ -1,0 +1,166 @@
+//Map Dimensions
+.map-wrap{
+	width: 75rem;
+}
+.map-page{
+	@include breakpoint(small only){
+		overflow-y: scroll;
+	}
+}
+.camp-map{
+	position: relative;
+	margin-top:10px;
+
+	img{
+		width:100%;
+	}
+}
+
+//Base map styles
+.map-camp{
+	position: absolute;
+
+	a.tooltip-link{
+		font-family: $days;
+		color:$white;
+		font-size:rem-calc(13.5);
+		text-shadow:$tshadow;
+	}
+
+	i{
+		height:rem-calc(11.5);
+		width:rem-calc(11.5);
+		border-radius: 100%;
+		display: inline-block;
+		margin-right:5px;
+	}
+}
+
+
+//Pin Orientations
+.pin-right{
+	i{
+		float: right;
+		margin-top:rem-calc(4.5);
+		margin-left:5px;
+	}
+}
+.pin-top{
+	i{
+		display: block;
+		margin:0 auto;
+	}
+}
+
+//Camp Pin Positions
+.seattle-camp{
+	top:38%;
+	left:10%;
+}
+
+.middletown-camp{
+	top:40%;
+	left:27.5%;
+}
+
+.pa-camp{
+	top:42%;
+	left:26%;
+}
+
+.ok-camp{
+	top:43%;
+	left:16%;
+}
+
+.fl-camp{
+	top:48%;
+	left:26%;
+}
+.nz-camp{
+	top:81.5%;
+	left:83.5%;
+}
+.holland-camp{
+	top:35%;
+	left:48%;
+}
+.sandiego-camp{
+	top:42%;
+	left:9.25%;
+}
+.austin-camp{
+	top:47%;
+	left:22%;
+}
+//Camp Colors
+.summer-camp{
+	.dropdown-pane{
+		background: $oorange;
+	}
+	i{
+		background: $orange;
+	}
+}
+.winter-camp{
+	.dropdown-pane{
+		background: $oblue;
+	}
+	i{
+		background: $blue;
+	}
+}
+.summer-camp, .winter-camp{
+	.dropdown-pane{}
+	a{
+		color:$white;
+		display: block;
+		font-size:rem-calc(14);
+		text-shadow:$tshadow;
+		margin:3px 0;
+	}
+	.camp-link{
+		transition:all ease 0.3s;
+		&:hover{
+			opacity:.6;
+		}
+	}
+}
+
+//Map Legend
+.map-title, .map-key{
+	background: rgba(0,0,0,0.45);
+	border-radius: 5px;
+
+	h1, h4{
+		font-family: $days;
+		text-transform: uppercase;
+		text-align: center;
+	}
+}
+.map-title{
+	top:82%;
+	left:38%;
+	padding:10px 30px;
+	max-width: 354px;
+
+	h1{
+		font-size:rem-calc(18);
+		margin-bottom:0;
+	}
+}
+.map-key{
+	top:74%;
+	left:9%;
+	padding:20px;
+
+
+	h4{
+		font-size:rem-calc(15.5);
+		margin-bottom:5px;
+	}
+	h6{
+		margin-bottom: 3px;
+		font-size:rem-calc(15);
+	}
+}

@@ -1,47 +1,38 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# Application
+web/app/plugins/*
+!web/app/plugins/.gitkeep
+!web/app/plugins/advanced-custom-fields-pro
+!web/app/plugins/easy-social-share-buttons3
+!web/app/plugins/gravityforms
+!web/app/plugins/gravityformspolls
+!web/app/plugins/gravityformssignature
+!web/app/plugins/gravityformssurvey
+!web/app/plugins/gravityformszapier
+web/app/mu-plugins/*/
+web/app/upgrade
+web/app/uploads/*
+!web/app/uploads/.gitkeep
 
-# Folder config file
-Desktop.ini
+# WordPress
+web/wp
+web/.htaccess
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# WP-CLI
+db-sync
+sql-dump-*.sql
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# Dotenv
+.env
+.env.*
+!.env.example
 
-# Windows shortcuts
-*.lnk
+# Vendor (e.g. Composer)
+vendor/*
+!vendor/.gitkeep
 
-# =========================
-# Operating System Files
-# =========================
+# Node Package Manager
+node_modules
 
-# OSX
-# =========================
-
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# Vagrant
+bin
+.vagrant

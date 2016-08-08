@@ -1,0 +1,49 @@
+.featured-title{
+	background:$jyellow;
+	border-radius: $global-radius;
+	max-width: 305px;
+	margin: 0 auto;
+
+	h4{
+		color:$jdblue;
+		text-align: center;
+		font-weight: 600;
+		padding:6px 0 6px 0;
+		font-family: $booker;
+		text-shadow: 0 0 0;
+		font-size:rem-calc(20);
+		margin-bottom:35px;
+	}
+
+}
+
+.featured-article{
+
+	.featured-article-media{
+		background: $black;
+		width:300px;
+		margin:0 auto;
+	}
+
+	img{
+		transition: all ease 0.5s;
+
+		&:hover{
+			opacity: .5;
+		}
+	}
+	h4{
+		margin:rem-calc(16 34 35 34);
+		font-size:rem-calc(20);
+		letter-spacing: -0.05em;
+		color:$jlblue;
+		font-weight: bold;
+		text-shadow: 0 0 0;
+		line-height: rem-calc(22);
+		transition: all ease 0.3s;
+
+		&:hover{
+			color:$jyellow;
+		}
+	}
+}

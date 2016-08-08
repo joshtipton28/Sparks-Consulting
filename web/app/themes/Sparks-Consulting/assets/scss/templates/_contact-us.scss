@@ -1,0 +1,63 @@
+.contact-us{
+	@include breakpoint(small only) {
+		margin-top:65px;
+  		height: 78vh;
+	}
+
+	h3{
+		font-size:rem-calc(21);
+		line-height: rem-calc(30);
+		font-weight: 600;
+		letter-spacing: -0.05em;
+	}
+
+	.contact-icon{
+		height:48px;
+		width:48px;
+		display: block;
+		margin: 20px auto;
+
+		@include breakpoint(medium) {
+			margin:0;
+			display: inline-block;
+			float: left;
+		}
+	}
+
+	.contact-block{
+		display: block;
+
+		@include breakpoint(medium) {
+			display: inline-block;
+			margin-left: 20px;
+		}
+
+		h6{
+			font-size: rem-calc(14);
+			line-height: rem-calc(20);
+			font-weight: bold;
+			margin-bottom: 0;
+			text-align: center;
+
+			@include breakpoint(medium) {
+				text-align: left;
+			}
+		}
+		p{
+			font-weight: 300;
+			font-size:rem-calc(16);
+			line-height: rem-calc(24);
+			display: block;
+			margin-bottom: 0;
+
+			@include breakpoint(small only){
+				margin-top:10px;
+			}
+		}
+	}
+
+	.contact-goals{
+		display: block;
+	}
+}
+

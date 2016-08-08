@@ -1,0 +1,53 @@
+.journal-footer{
+	background:$wpgrey;
+	font-size:rem-calc(12);
+	padding:10px 0;
+	p{
+		margin:0 8px 0 0;
+		text-align: center;
+
+		@include breakpoint(medium){
+			text-align: left;
+		}
+	}
+	ul{
+		@include breakpoint(small only){
+			display: none;
+		}
+		li{
+			border-left: 1px solid rgba(255, 255, 255, 0.8);
+		}
+	}
+	a{
+		padding:0 8px !important;
+		line-height: rem-calc(8) !important;
+		color:$white;
+
+		&:hover{
+			color:$jyellow;
+		}
+	}
+
+	.footer-widget{
+		display: block;
+
+		@include breakpoint(medium){
+			display: inline-block;
+		}
+	}
+}
+
+//Modal Styles
+
+.reveal{
+	min-height: 500px;
+
+	li, p{
+		color:$white;
+		font-weight: normal;
+	}
+	a{
+		font-weight: normal;
+		color: $blue;
+	}
+}

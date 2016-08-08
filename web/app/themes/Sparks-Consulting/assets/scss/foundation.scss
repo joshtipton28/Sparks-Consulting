@@ -1,0 +1,99 @@
+/*
+  Foundation for Sites components:
+  Import the building blocks you need for your project.
+  Reducing the number of imported components will optimize page speed.
+  ---------------------------------------------------------------------
+  The Foundation framework is built by Zurb
+  Licensed under MIT Open Source
+*/
+
+//  Settings
+@import "global/settings"; // Foundation settings file.
+
+// Foundation mixins & browser resets
+@import '../components/foundation-sites/scss/foundation';
+
+// WP overrides
+@import "global/wp-admin"; // Fix issues with wp-admin bar positioning
+@import "global/wp-overrides"; // Override the default WordPress styling for some elements
+
+// Third-party libraries
+@import 'font-awesome';
+@import 'motion-ui';
+@import 'components/nanoscroller.scss';
+
+// Foundation global styles
+@include foundation-global-styles;
+
+// Individual foundation components
+@include foundation-grid;
+@include foundation-typography;
+@include foundation-button;
+@include foundation-forms;
+@include foundation-visibility-classes;
+@include foundation-float-classes;
+@include foundation-accordion;
+@include foundation-accordion-menu;
+@include foundation-badge;
+@include foundation-breadcrumbs;
+@include foundation-button-group;
+@include foundation-callout;
+@include foundation-close-button;
+@include foundation-drilldown-menu;
+@include foundation-dropdown;
+@include foundation-dropdown-menu;
+@include foundation-flex-video;
+@include foundation-label;
+@include foundation-media-object;
+@include foundation-menu;
+@include foundation-off-canvas;
+@include foundation-orbit;
+@include foundation-pagination;
+@include foundation-progress-bar;
+@include foundation-slider;
+@include foundation-sticky;
+@include foundation-reveal;
+@include foundation-switch;
+@include foundation-table;
+@include foundation-tabs;
+@include foundation-thumbnail;
+@include foundation-title-bar;
+@include foundation-tooltip;
+@include foundation-top-bar;
+
+// Motion UI
+@include motion-ui-transitions;
+@include motion-ui-animations;
+
+/*
+  My custom styles:
+  Add your scss files below to structure your project styles
+*/
+
+// Modules
+@import "modules/navigation";
+@import "modules/footer";
+@import "modules/sidebar";
+
+// Components
+@import "components/buttons";
+@import "components/featured-image";
+@import "components/dividers";
+@import "components/links";
+
+// Templates
+@import "global/global-styles"; //Site Wide Styles
+@import "templates/home-page";
+@import "templates/rowing-camps";
+@import "templates/tab-pages";
+@import "templates/contact-us";
+@import "templates/camps-map";
+@import "templates/rff";
+@import "templates/journal/journal-nav";
+@import "templates/journal/journal-home-hero";
+@import "templates/journal/_journal-home-recent-articles";
+@import "templates/journal/_journal-footer";
+@import "templates/journal/journal-single";
+@import "templates/journal/journal-category";
+@import "templates/journal/journal-sidebar";
+@import "templates/default-template";

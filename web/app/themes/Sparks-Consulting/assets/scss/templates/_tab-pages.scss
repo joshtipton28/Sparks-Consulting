@@ -1,0 +1,238 @@
+/* Styles for Foundation Tabs used in:
+  - About Us
+  - Working With Us
+  - Contact Us
+*/
+.tabs-wrap{
+  margin-top:20px;
+
+  h3{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size:rem-calc(16);
+    line-height: rem-calc(18);
+    margin:0;
+    margin-left:-15px;
+    display: inline-block;
+    position: relative;
+
+    @include breakpoint(medium) {
+      margin:12px 0 6px 28px;
+      display: block;
+    }
+  }
+  h3.dark{
+    color:#444;
+    text-shadow: 0 1px 1px $white;
+  }
+  ul.tabs{
+    max-width: 300px;
+    margin-right:53px;
+  }
+}
+
+.tab-block{
+  h3{
+    font-size:rem-calc(21);
+    line-height: rem-calc(30);
+    margin:25px 0;
+  }
+  h5{
+    font-weight: bold;
+    text-shadow: $tshadow;
+    font-size: rem-calc(16);
+    text-align: center;
+
+    @include breakpoint(medium) {
+      text-align: left;
+    }
+    span{
+      font-weight: 300;
+    }
+  }
+  p{
+    line-height: rem-calc(24);
+    font-weight: 300;
+  }
+  img{
+    margin:20px auto;
+    display: block;
+    padding:6px;
+    background-color: $white;
+
+    @include breakpoint(medium) {
+      float: right;
+      margin:20px 0 20px 20px;
+      display: inline-block;
+    }
+  }
+
+}
+
+.tabs-panel{
+  padding:0;
+
+  @include breakpoint(medium) {
+    padding:1rem;
+  }
+  h1, h2{
+    font-size:rem-calc(38.5);
+    line-height: rem-calc(40);
+    text-shadow:$tshadow;
+
+    em{
+      display: block;
+      font-weight: 300;
+      font-size:rem-calc(18);
+      letter-spacing: -0.05em;
+      opacity: 0.5;
+      font-style: normal;
+
+      @include breakpoint(medium) {
+        font-size:rem-calc(24);
+      }
+    }
+  }
+  h3{
+    font-size:rem-calc(21);
+    line-height: rem-calc(30);
+    margin:25px 0;
+    font-weight: 600;
+    text-align: center;
+
+    @include breakpoint(medium) {
+      text-align: left;
+    }
+  }
+}
+
+//Tab Menu Styles
+li.tabs-title{
+  margin:0 auto;
+  margin-bottom:3px;
+  max-width:280px;
+  transition: max-width 0.3s;
+  display: inline-block;
+  float: none;
+
+  &:hover{
+    max-width:300px;
+    font-weight: bold;
+    text-shadow: $tshadow;
+  }
+  a{
+    background:$charc;
+    color:$white;
+    font-weight: 300;
+    border-radius: 5px;
+    transition:0s;
+
+    i{
+      float: right;
+      margin-top:2px;
+      opacity: 0.5;
+      font-size:rem-calc(12);
+    }
+  }
+}
+.tabs .is-active{
+  max-width: 300px;
+
+  a{
+    font-weight: bold;
+    text-shadow: $tshadow;
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.75);
+    i{
+      opacity: 100;
+    }
+  }
+}
+.tabs-content{
+  border-radius:10px;
+  border: 1px solid #222;
+  box-shadow: 10px 10px 20px 0px $charc;
+  height: 67vh;
+  overflow:auto;
+  position: relative;
+
+  @include breakpoint(large) {
+    height: 77vh;
+  }
+
+  @media screen and (min-height:600px) and (max-height:670px) {
+    height: 67vh;
+  }
+
+  h1, h2{
+    font-size:rem-calc(22);
+    line-height: rem-calc(24);
+    text-shadow: $tshadow;
+    font-weight: bold;
+    margin-bottom:0;
+    text-align: center;
+
+    @include breakpoint(medium) {
+      font-size:rem-calc(38.5);
+      line-height: rem-calc(40);
+      margin-top:20px;
+      text-align: left;
+    }
+
+    @media screen and (min-height:600px) and (max-height:800px) {
+    margin-top:0;
+    }
+  }
+}
+
+.tabs{
+
+  display: block;
+  margin:0 auto;
+  margin-top:20px;
+
+  .horizontal {
+    text-align: center;
+    a{
+    margin:0px 2px;
+    }
+  }
+
+  @media screen and (min-height:600px) and (max-height:800px) {
+    margin-top:0;
+  }
+}
+
+//Mobile Tab Accordion
+.tab-accordion{
+  padding-top:50px;
+
+  .tabs{
+    margin:0 auto;
+    margin-right:0 !important;
+  }
+
+  .accordion{
+    margin-bottom:0;
+
+    .accordion-title{
+      background: $blue;
+      box-shadow:0px 1px 1px 0px rgba(0, 0, 0, 0.75);
+      border-radius: 8px;
+      color:$white;
+      text-align: center;
+      padding:12px;
+      max-width: 300px;
+      margin: 0 auto;
+
+      i{
+        margin-left:10px;
+        position: absolute;
+      }
+    }
+    .accordion-content{
+      max-width: 300px;
+      margin:0 auto;
+      margin-top:rem-calc(1.49);
+    }
+  }
+}

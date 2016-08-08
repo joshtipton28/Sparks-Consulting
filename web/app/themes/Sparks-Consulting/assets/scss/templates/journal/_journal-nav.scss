@@ -1,0 +1,54 @@
+/** Styles for Journal Nav Bar
+* Extends /scss/modules/navigation.scss
+*
+**/
+
+.journal-header{
+  background:$jlblue;
+
+  .top-bar{
+  	padding:25px 0;
+  }
+}
+.journal-logo{
+  width:234px;
+  height:27px;
+  margin-top:10px;
+  margin-left: 12px;
+  transition: all ease 0.5s;
+  &:hover{
+    opacity: 0.6;
+  }
+}
+.journal-nav{
+	> ul{
+		display: inline-block;
+		padding-top:4px;
+	}
+	li a{
+		&:hover{
+			background: $dgrey !important;
+		}
+	}
+	.active a{
+		background-color: $dgrey !important;
+		font-weight: bold;
+	}
+}
+//Modal Styles
+.journal-learn-more{
+	display: inline-block;
+	float: right;
+	background: $blue;
+	padding: rem-calc(9 15);
+	margin-left: 3px;
+	border-radius: 5px;
+	color: $white;
+	font-size:rem-calc(14);
+	margin-top:4px;
+}
+
+//Modal fix
+body.is-reveal-open{
+overflow-y: scroll;
+}
