@@ -25,16 +25,57 @@ get_header(); ?>
 				<div class="camp-map large-12 columns">
 					<img src="<?php echo get_stylesheet_directory_uri();?>/assets/images/map-of-rowing-camps.png" alt="Map of Rowing Camp Locations and Dates">
 
-					<?php include(locate_template('templates/camp-maps/seattle.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/middletown.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/pennsylvania.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/oklahoma.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/florida.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/new_zealand.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/holland.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/sandiego.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/austin.php' )); ?>
-					<?php include(locate_template('templates/camp-maps/map-legend.php' )); ?>
+					<?php if( have_rows('rowing_camp_locations') ): ?>
+
+					    <?php while ( have_rows('rowing_camp_locations') ) : the_row(); ?>
+
+					    	<?php //Variables for Camps Map
+
+					    		$location = get_sub_field('camp_location');
+					    		$season = get_sub_field('camp_season');
+					    		$pinPositionX = get_sub_field('pin_position_x');
+					    		$pinPositionY = get_sub_field('pin_position_y');
+					    		$pinOrientation = get_sub_field('pin_orientation');
+
+					    	?>
+
+					        
+					        <div class="map-camp <?php echo $season; ?>-camp pin-<?php echo $pinOrientation; ?> clearfix" style="top:<?php echo $pinPositionY; ?>%; left:<?php echo $pinPositionX; ?>%;">
+
+								<a class="tooltip-link" data-toggle="<?php echo $location;?>-tip"><i class="map-pin"></i><?php echo $location;?></a>
+
+								<div class="dropdown-pane" id="<?php echo $location;?>-tip" data-dropdown data-hover="true" data-hover-pane="true">
+									<?php if ( have_rows('camp_details') ) : ?>
+									 	<?php while ( have_rows('camp_details') ) : the_row();?>
+
+									 		<a class="camp-link" href="<?php the_sub_field('camp_url');?>" target="_blank">
+										        
+										        <strong><?php the_sub_field('camp_title');?></strong>
+										        <?php the_sub_field('camp_date');?>
+
+									        </a>
+
+										<?php endwhile;?>
+									<?php endif; ?>
+								</div>
+
+							</div>
+					        
+					    <?php endwhile; ?>
+
+					<?php else : ?>
+
+					<?php endif; ?>
+
+					<div class="map-title map-camp">
+						<h1><?php the_title();?></h1>
+					</div>
+
+					<div class="map-key map-camp">
+					<h4>Map Key</h4>
+						<h6 class="summer-camp"><i class="map-pin"></i>Summer Camps</h6>
+						<h6 class="winter-camp"><i class="map-pin"></i>Winter Camps</h6>
+					</div>
 				</div>
 			</div>
 			<div class="row">
