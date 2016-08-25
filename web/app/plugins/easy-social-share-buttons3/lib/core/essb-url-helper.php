@@ -28,11 +28,22 @@ class ESSBUrlHelper {
 			$pageURL .= "s";
 		}
 		$pageURL .= "://";
-		if ($_SERVER["SERVER_PORT"] != "80") {
-			$pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+		
+		$current_request_uri = $_SERVER['REQUEST_URI'];
+		$current_request_uri = str_replace('&u=', '&u0=', $current_request_uri);
+		$current_request_uri = str_replace('&t=', '&t0=', $current_request_uri);
+		$current_request_uri = str_replace('&title=', '&title0=', $current_request_uri);
+		$current_request_uri = str_replace('&url=', '&url0=', $current_request_uri);
+		
+		
+		if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
+			$pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $current_request_uri;
 		} else {
-			$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+			$pageURL .= $_SERVER["SERVER_NAME"] . $current_request_uri;
 		}
+		
+		
+		
 		return $pageURL;
 	}
 	

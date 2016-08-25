@@ -131,14 +131,14 @@ jQuery(document).ready(function($){
 				
 				switch (network) {
 				case "facebook":
-					var facebook_url = "https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls="+url;
+					var facebook_url = "https://graph.facebook.com/?id="+url;
 					$.getJSON(facebook_url)
 					.done(function(data){
 						if (fb_value) {
-							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data[0].total_count);
+							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data['share'].share_count);
 						}
 						else {
-							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data[0].share_count);	
+							counter_display(counter_pos, operating_elements['facebook'+instance_id], operating_elements['facebook_inside'+instance_id], data['share'].share_count);	
 						}
 					});
 					break;

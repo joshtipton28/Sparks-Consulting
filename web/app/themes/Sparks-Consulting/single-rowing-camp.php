@@ -18,6 +18,18 @@ get_header(); ?>
 <div class="page-wrap">
 	<div class="row">
 
+	<?php // Enabling Password Protection for Camps
+	   if ( post_password_required() ) { ?>
+
+	   		<div class="camps-tab tabs-content nano has-scrollbar large-8 columns end" data-tabs-content="rowing-camp-tabs">
+        		<div class="nano-content">
+	          		<?php echo get_the_password_form(); ?>
+	          	</div>
+	        </div>
+	<?php }
+	   else {
+	?>
+
 		<?php include(locate_template('parts/rowing-camps-menu.php' )); ?>
 
 		<?php do_action( 'foundationpress_before_content' ); ?>
@@ -35,6 +47,10 @@ get_header(); ?>
 					<?php include(locate_template('templates/rowing-camps/camp-forms.php' )); ?>
 
 		<?php endwhile;?>
+
+	<?php //End password Protection
+       }
+	?>
 
 		<?php do_action( 'foundationpress_after_content' ); ?>
 			</div><!--end nano-content-->

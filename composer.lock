@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "98de2f104d004260efc8782f1daf4f7b",
-    "content-hash": "e4a52641dad3856e9bca54590c3e6085",
+    "hash": "39f9c2f3cdb9f9903d8bfb617243d993",
+    "content-hash": "962509d9482394f5576f40ed724891ad",
     "packages": [
         {
             "name": "composer/installers",
@@ -109,16 +109,16 @@
         },
         {
             "name": "johnpbloch/wordpress",
-            "version": "4.5.3",
+            "version": "4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "f5c6f4dd899e6365ddf2752d2705ed1de7e10715"
+                "reference": "1fb4b67e331d82f9061eaf3fcbc94163db85c135"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/f5c6f4dd899e6365ddf2752d2705ed1de7e10715",
-                "reference": "f5c6f4dd899e6365ddf2752d2705ed1de7e10715",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/1fb4b67e331d82f9061eaf3fcbc94163db85c135",
+                "reference": "1fb4b67e331d82f9061eaf3fcbc94163db85c135",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 "blog",
                 "cms"
             ],
-            "time": "2016-06-21 16:31:21"
+            "time": "2016-08-16 18:32:04"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -363,15 +363,15 @@
         },
         {
             "name": "wpackagist-plugin/all-in-one-seo-pack",
-            "version": "2.3.8",
+            "version": "2.3.9.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/all-in-one-seo-pack/",
-                "reference": "tags/2.3.8"
+                "reference": "tags/2.3.9.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/all-in-one-seo-pack.2.3.8.zip",
+                "url": "https://downloads.wordpress.org/plugin/all-in-one-seo-pack.2.3.9.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -403,15 +403,15 @@
         },
         {
             "name": "wpackagist-plugin/custom-post-type-ui",
-            "version": "1.3.5",
+            "version": "1.4.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/custom-post-type-ui/",
-                "reference": "tags/1.3.5"
+                "reference": "tags/1.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.3.5.zip",
+                "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.4.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -423,15 +423,15 @@
         },
         {
             "name": "wpackagist-plugin/google-sitemap-plugin",
-            "version": "3.0.5",
+            "version": "3.0.6",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/google-sitemap-plugin/",
-                "reference": "tags/3.0.5"
+                "reference": "tags/3.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/google-sitemap-plugin.3.0.5.zip",
+                "url": "https://downloads.wordpress.org/plugin/google-sitemap-plugin.3.0.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -523,15 +523,15 @@
         },
         {
             "name": "wpackagist-plugin/wordfence",
-            "version": "6.1.12",
+            "version": "6.1.14",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordfence/",
-                "reference": "tags/6.1.12"
+                "reference": "tags/6.1.14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordfence.6.1.12.zip",
+                "url": "https://downloads.wordpress.org/plugin/wordfence.6.1.14.zip",
                 "reference": null,
                 "shasum": null
             },

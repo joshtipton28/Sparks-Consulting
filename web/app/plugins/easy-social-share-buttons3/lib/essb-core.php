@@ -2029,6 +2029,7 @@ class ESSBCore {
 		
 		// apply shortcode options
 		if ($is_shortcode) {
+			//print_r($shortcode_options);
 			if ($shortcode_options['forceurl']) {
 				$post_share_details['url'] = ESSBUrlHelper::get_current_page_url();
 			}
