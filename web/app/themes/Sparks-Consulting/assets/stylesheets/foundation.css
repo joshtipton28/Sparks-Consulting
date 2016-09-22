@@ -5793,7 +5793,8 @@ table.hover tr:nth-of-type(even):hover {
     .top-bar .dropdown.menu .submenu a {
       border-radius: 0;
       background: transparent;
-      padding: 7px; }
+      padding: 7px;
+      font-size: 0.75rem; }
       .top-bar .dropdown.menu .submenu a:hover {
         background: rgba(23, 112, 202, 0.65); }
   .top-bar .is-dropdown-submenu-parent.is-down-arrow a {
@@ -5849,7 +5850,6 @@ table.hover tr:nth-of-type(even):hover {
         border-color: #0a0a0a transparent transparent; }
     .off-canvas a:after {
       border-color: #ffffff transparent transparent;
-      right: 43%;
       top: 55%; }
 
 .title-bar-title a {
@@ -6672,42 +6672,6 @@ li.tabs-title {
   display: block;
   margin: 0 auto; }
 
-.seattle-camp {
-  top: 38%;
-  left: 10%; }
-
-.middletown-camp {
-  top: 40%;
-  left: 27.5%; }
-
-.pa-camp {
-  top: 42%;
-  left: 26%; }
-
-.ok-camp {
-  top: 43%;
-  left: 16%; }
-
-.fl-camp {
-  top: 48%;
-  left: 26%; }
-
-.nz-camp {
-  top: 81.5%;
-  left: 83.5%; }
-
-.holland-camp {
-  top: 35%;
-  left: 48%; }
-
-.sandiego-camp {
-  top: 42%;
-  left: 9.25%; }
-
-.austin-camp {
-  top: 47%;
-  left: 22%; }
-
 .summer-camp .dropdown-pane {
   background: rgba(255, 102, 0, 0.65); }
 
@@ -7296,7 +7260,6 @@ body.is-reveal-open {
     color: #e3a600; }
 
 .page-default {
-  margin-top: 20px;
   border-radius: 10px;
   border: 1px solid #222;
   box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.5);

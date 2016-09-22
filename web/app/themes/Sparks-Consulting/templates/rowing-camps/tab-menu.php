@@ -51,18 +51,25 @@ jQuery(document).ready(function() {
                     </a>
                 </li>
                 <li class="horizontal tabs-title"><a href="#camp-details">Details</a></li>
-                <li class="horizontal tabs-title">
-                    <a class="register-button" href="#camp-registration">
-                        <?php if ($programType == 'program')
-                            echo 'Apply';
-                            else echo 'Registration'; ?>
-                    </a>
-                </li>
+
+                <?php /**Conditional for Registration Tab**/
+                if (get_field('display_registration_tab') == 1 ) : ?>
+                    <li class="horizontal tabs-title">
+                        <a class="register-button" href="#camp-registration">
+                            <?php if ($programType == 'program')
+                                echo 'Apply';
+                                else echo 'Registration'; ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <?php /**Conditional for Camp Type**/
                 if ($programType == 'camp') : ?>
-                    <li class="horizontal tabs-title"><a href="#camp-schedule">Schedule</a></li>
-                <?php endif ?>
+                    <?php /**Conditional for Schedule Tab **/
+                    if (get_field('show_camp_schedule') == 1 ) : ?>
+                        <li class="horizontal tabs-title"><a href="#camp-schedule">Schedule</a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
 
                 <?php /**Conditional for Camp Forms**/
                 if (get_field('display_forms_tab') == 1 ) : ?>

@@ -26,6 +26,7 @@
  			$output .= "\n$indent<ul class=\"vertical nested menu\">\n";
  	}
  }
+
  endif;
 
 endif;

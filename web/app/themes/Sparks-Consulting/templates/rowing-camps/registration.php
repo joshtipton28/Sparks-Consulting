@@ -2,6 +2,8 @@
 /**
  * Template part for Rowing Camps Custom Post Type
  **/
+
+	$weekCount = get_field('week_two_registration_links');
 ?>
 <div class="registration tabs-panel" id="camp-registration">
 	<h2><?php echo $campTitle . '<em> ' . $campLocation . ' ';?>Registration</em></h2>
@@ -29,7 +31,7 @@ jQuery(document).ready(function() {
 	if( have_rows('registration_headings') ): ?>
 	 	<thead>
 		 	<tr>
-		 		<?php if ($programType == 'camp') echo '<th>'; //adding Blank TH for Camps only ?>
+		 		<?php if ( !empty($weekCount) AND ($programType == 'camp' )) echo '<th>'; //adding Blank TH for Camps only ?>
 
 			    <?php while( have_rows('registration_headings') ): the_row(); ?>
 
@@ -47,7 +49,7 @@ jQuery(document).ready(function() {
 	<?php /*Week One Registration Links*/
 	if( have_rows('week_one_registration_links') ): ?>
 		<tr>
-			<?php if ($programType == 'camp') echo '<th>Week 1</th>'; //adding Week 1 TH for Camps only ?>
+			<?php if ( have_rows('week_two_registration_links') and ($programType == 'camp' )) echo '<th>Week 1</th>'; //adding Week 1 TH for Camps only ?>
 
 		    <?php while( have_rows('week_one_registration_links') ): the_row(); ?>
 
@@ -56,6 +58,7 @@ jQuery(document).ready(function() {
 			        $registrationID = get_sub_field('regatta_registration_id');
 			        $registrationStatus = get_sub_field('registration_status');
 			        $customURL = get_sub_field ('custom_url');
+			        $gravityShortcode = get_sub_field ( 'gravity_shortcode' );
 		        ?>
 
 		        <td>

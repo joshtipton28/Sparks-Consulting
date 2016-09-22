@@ -2,7 +2,7 @@
 /*
 Template Name: Rowing Camps - Development Program
 */
-get_header(); ?>	
+get_header(); ?>
 
 <?php while ( have_posts() ) : the_post(); ?>
 
@@ -22,6 +22,15 @@ get_header(); ?>
 	        <div class="nano-content tab-block">
 	        	<h2><?php the_title(); ?></h2>
 	        		<hr>
+	        	<?php
+
+					$image = get_field('featured_image');
+
+					if( !empty($image) ): ?>
+						<div class="featured-media">
+							<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" />
+						</div>
+				<?php endif; ?>
 	        	<?php the_content(); ?>
 
 	        </div>
