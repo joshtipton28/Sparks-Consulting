@@ -19,6 +19,47 @@
             "endpoint": 0
         },
         {
+            "key": "7161",
+            "label": "",
+            "name": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "7162",
+            "label": "",
+            "name": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_56b534f130e33",
+            "min": "",
+            "max": "",
+            "layout": "table",
+            "button_label": "Add Testimonial",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_5719580b52954",
             "label": "Working With Us Overview",
             "name": "wwu_overview",
@@ -785,5 +826,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1473102608
+    "modified": 1474927520
 }

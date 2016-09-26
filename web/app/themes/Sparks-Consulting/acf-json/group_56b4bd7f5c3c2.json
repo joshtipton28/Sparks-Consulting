@@ -3,45 +3,6 @@
     "title": "Rowing Camps",
     "fields": [
         {
-            "key": "7019",
-            "label": "",
-            "name": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_56b4c5ec92547",
-                        "operator": "==",
-                        "value": "Three"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_56b4c5ec92547",
-                        "operator": "==",
-                        "value": "Four"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "field_56b4c93a92552",
-            "min": "",
-            "max": "",
-            "layout": "row",
-            "button_label": "Add Row",
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_56b6421e8d29a",
             "label": "Basic Info",
             "name": "",
@@ -63,7 +24,7 @@
             "name": "camp_title",
             "type": "text",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -74,7 +35,9 @@
             "placeholder": "2016 Middletown Overview",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
         },
         {
             "key": "field_56b4b035fa84d",
@@ -164,7 +127,7 @@
             "name": "featured_media",
             "type": "radio",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -175,11 +138,11 @@
                 "image": "Image",
                 "video": "Video"
             },
-            "allow_null": 0,
             "other_choice": 0,
             "save_other_choice": 0,
             "default_value": "",
             "layout": "horizontal",
+            "allow_null": 0,
             "return_format": "value"
         },
         {
@@ -250,7 +213,7 @@
             "name": "overview_content",
             "type": "wysiwyg",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -258,9 +221,9 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "all",
             "toolbar": "full",
-            "media_upload": 1
+            "media_upload": 1,
+            "tabs": "all"
         },
         {
             "key": "field_56b4ca5892557",
@@ -327,7 +290,7 @@
             "name": "camp_details",
             "type": "repeater",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -430,7 +393,7 @@
             "name": "camp_dates",
             "type": "text",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -441,7 +404,9 @@
             "placeholder": "July 19-23 and 26-30, 20XX",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
         },
         {
             "key": "field_56d06951ae4e2",
@@ -541,7 +506,7 @@
             "name": "how_many_weeks",
             "type": "radio",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -554,11 +519,11 @@
                 "Three": "Three",
                 "Four": "Four"
             },
-            "allow_null": 0,
             "other_choice": 0,
             "save_other_choice": 0,
             "default_value": "One",
             "layout": "horizontal",
+            "allow_null": 0,
             "return_format": "value"
         },
         {
@@ -595,7 +560,8 @@
                     },
                     "choices": {
                         "1": "Regatta",
-                        "2": "Custom URL"
+                        "2": "Custom URL",
+                        "3": "Gravity Shortcode"
                     },
                     "other_choice": 0,
                     "save_other_choice": 0,
@@ -693,6 +659,32 @@
                     "maxlength": "",
                     "readonly": 0,
                     "disabled": 0
+                },
+                {
+                    "key": "field_57dc593b438ac",
+                    "label": "Gravity Shortcode",
+                    "name": "gravity_shortcode",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_572fe204ae468",
+                                "operator": "==",
+                                "value": "3"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1
                 }
             ]
         },
@@ -702,7 +694,7 @@
             "name": "week_two_registration_links",
             "type": "repeater",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -859,7 +851,7 @@
             "name": "week_three_registration_links",
             "type": "repeater",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -1009,7 +1001,7 @@
             "name": "week_four_registration_links",
             "type": "repeater",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -1258,10 +1250,10 @@
             "return_format": "value"
         },
         {
-            "key": "field_56f41fb62744a",
-            "label": "Schedule Table Headings",
-            "name": "schedule_headings",
-            "type": "repeater",
+            "key": "field_57e99bd076650",
+            "label": "Select Schedule",
+            "name": "select_schedule",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -1270,174 +1262,15 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "field_56f41fcb2744b",
+            "post_type": [
+                "camp_schedule"
+            ],
+            "taxonomy": [],
+            "filters": "",
+            "elements": "",
             "min": "",
             "max": "",
-            "layout": "table",
-            "button_label": "Add Row",
-            "sub_fields": [
-                {
-                    "key": "field_56f41fcb2744b",
-                    "label": "Table Heading",
-                    "name": "schedule_th",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": "",
-                    "readonly": 0,
-                    "disabled": 0
-                }
-            ]
-        },
-        {
-            "key": "field_56f4413612dfb",
-            "label": "Table Content",
-            "name": "schedule_content",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": "",
-            "max": "",
-            "layout": "table",
-            "button_label": "Add Row",
-            "sub_fields": [
-                {
-                    "key": "field_56f4418212dfc",
-                    "label": "Table Column",
-                    "name": "schedule_column",
-                    "type": "repeater",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "collapsed": "field_56f441b812dfd",
-                    "min": "",
-                    "max": "",
-                    "layout": "table",
-                    "button_label": "Add Column",
-                    "sub_fields": [
-                        {
-                            "key": "field_56f441b812dfd",
-                            "label": "Content",
-                            "name": "table_content",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": "",
-                            "readonly": 0,
-                            "disabled": 0
-                        },
-                        {
-                            "key": "field_56f441e112dfe",
-                            "label": "Rowspan",
-                            "name": "rowspan",
-                            "type": "radio",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "1": "1",
-                                "2": "2",
-                                "3": "3",
-                                "4": "4",
-                                "5": "5"
-                            },
-                            "other_choice": 0,
-                            "save_other_choice": 0,
-                            "default_value": 1,
-                            "layout": "horizontal",
-                            "allow_null": 0,
-                            "return_format": "value"
-                        },
-                        {
-                            "key": "field_56f441ff12dff",
-                            "label": "Display Dropdown?",
-                            "name": "display_dropdown",
-                            "type": "radio",
-                            "instructions": "Do you want this column to have a dropdown?",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "yes": "Yes",
-                                "no": "No"
-                            },
-                            "other_choice": 0,
-                            "save_other_choice": 0,
-                            "default_value": "no",
-                            "layout": "vertical",
-                            "allow_null": 0,
-                            "return_format": "value"
-                        },
-                        {
-                            "key": "field_56f4422612e00",
-                            "label": "Dropdown Content",
-                            "name": "dropdown_content",
-                            "type": "wysiwyg",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_56f441ff12dff",
-                                        "operator": "==",
-                                        "value": "yes"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "tabs": "all",
-                            "toolbar": "basic",
-                            "media_upload": 0
-                        }
-                    ]
-                }
-            ]
+            "return_format": "object"
         },
         {
             "key": "field_5738b0b8f28d5",
@@ -1678,5 +1511,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1473102577
+    "modified": 1474928272
 }

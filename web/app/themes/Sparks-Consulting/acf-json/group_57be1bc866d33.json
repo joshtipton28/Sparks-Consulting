@@ -1,0 +1,851 @@
+{
+    "key": "group_57be1bc866d33",
+    "title": "Single School",
+    "fields": [
+        {
+            "key": "field_57bf56158bb35",
+            "label": "School Website URL",
+            "name": "school_website_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf57f48bb36",
+            "label": "City",
+            "name": "school_city",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_57bf58488bb38",
+            "label": "State",
+            "name": "school_state",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Alabama": "Alabama",
+                "Alaska": "Alaska",
+                "Arizona": "Arizona",
+                "Arkansas": "Arkansas",
+                "California": "California",
+                "Colorado": "Colorado",
+                "Connecticut": "Connecticut",
+                "Delaware": "Delaware",
+                "District of Columbia": "District of Columbia",
+                "Florida": "Florida",
+                "Georgia": "Georgia",
+                "Hawaii": "Hawaii",
+                "Idaho": "Idaho",
+                "Illinois": "Illinois",
+                "Indiana": "Indiana",
+                "Iowa": "Iowa",
+                "Kansas": "Kansas",
+                "Kentucky": "Kentucky",
+                "Louisiana": "Louisiana",
+                "Maine": "Maine",
+                "Maryland": "Maryland",
+                "Massachusetts": "Massachusetts",
+                "Michigan": "Michigan",
+                "Minnesota": "Minnesota",
+                "Mississippi": "Mississippi",
+                "Missouri": "Missouri",
+                "Montana": "Montana",
+                "Nebraska": "Nebraska",
+                "Nevada": "Nevada",
+                "New Hampshire": "New Hampshire",
+                "New Jersey": "New Jersey",
+                "New Mexico": "New Mexico",
+                "New York": "New York",
+                "North Carolina": "North Carolina",
+                "North Dakota": "North Dakota",
+                "Ohio": "Ohio",
+                "Oklahoma": "Oklahoma",
+                "Oregon": "Oregon",
+                "Pennsylvania": "Pennsylvania",
+                "Rhode Island": "Rhode Island",
+                "South Carolina": "South Carolina",
+                "South Dakota": "South Dakota",
+                "Tennessee": "Tennessee",
+                "Texas": "Texas",
+                "Utah": "Utah",
+                "Vermont": "Vermont",
+                "Virginia": "Virginia",
+                "Washington": "Washington",
+                "West Virginia": "West Virginia",
+                "Wisconsin": "Wisconsin",
+                "Wyoming": "Wyoming"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf58a28bb39",
+            "label": "Zip Code",
+            "name": "school_zip",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_57e031c32a659",
+            "label": "Programs Available",
+            "name": "programs_available",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Men's": "Men's",
+                "Women's": "Women's"
+            },
+            "default_value": [],
+            "layout": "horizontal",
+            "toggle": 0,
+            "return_format": "value"
+        },
+        {
+            "key": "field_57bf59b9f6250",
+            "label": "Women's Programs",
+            "name": "womens_programs",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57e031c32a659",
+                        "operator": "==",
+                        "value": "Women's"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "womens-division",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5a0af6251",
+            "label": "Women's Program URL",
+            "name": "womens_program_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57e031c32a659",
+                        "operator": "==",
+                        "value": "Women's"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5a1df6252",
+            "label": "Womens Team Performance",
+            "name": "womens_team_performance",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57e031c32a659",
+                        "operator": "==",
+                        "value": "Women's"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "Top 10%",
+                "2": "Top 25%"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57e03184a06b5",
+            "label": "Men's Programs",
+            "name": "mens_programs",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57e031c32a659",
+                        "operator": "==",
+                        "value": "Men's"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "mens-division",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5a70f6253",
+            "label": "Men's Program URL",
+            "name": "mens_program_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57e031c32a659",
+                        "operator": "==",
+                        "value": "Men's"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5a8af6254",
+            "label": "Mens Team Performance",
+            "name": "mens_team_performance",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57e031c32a659",
+                        "operator": "==",
+                        "value": "Men's"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "Top 10%",
+                "2": "Top 25%"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57e03d7216153",
+            "label": "Tuition",
+            "name": "tuition",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_57e03d9a16154",
+            "label": "In-State Tuition",
+            "name": "instate_tuition",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_57bf5b2c4e84b",
+            "label": "Enrollment Count",
+            "name": "enrollment_count",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_57bf5b474e84c",
+            "label": "Financial Aid Score",
+            "name": "financial_aid_score",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_57bf5b614e84d",
+            "label": "Student To Teacher Ratio",
+            "name": "st_ratio",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "10": "10",
+                "11": "11",
+                "12": "12",
+                "13": "13",
+                "14": "14",
+                "15": "15",
+                "16": "16",
+                "17": "17",
+                "18": "18",
+                "19": "19",
+                "20": "20",
+                "21": "21",
+                "22": "22",
+                "23": "23",
+                "24": "24",
+                "25": "25",
+                "26": "26",
+                "27": "27",
+                "28": "28",
+                "29": "29",
+                "30": "30",
+                "31": "31",
+                "32": "32",
+                "33": "33",
+                "34": "34",
+                "35": "35"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5bcf4e84e",
+            "label": "Academic Intensity",
+            "name": "academic_intensity",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "10": "10",
+                "11": "11",
+                "12": "12",
+                "13": "13",
+                "14": "14",
+                "15": "15",
+                "16": "16",
+                "17": "17",
+                "18": "18",
+                "19": "19",
+                "20": "20",
+                "21": "21",
+                "22": "22",
+                "23": "23",
+                "24": "24",
+                "25": "25",
+                "26": "26",
+                "27": "27",
+                "28": "28",
+                "29": "29",
+                "30": "30",
+                "31": "31",
+                "32": "32",
+                "33": "33",
+                "34": "34",
+                "35": "35",
+                "36": "36",
+                "37": "37",
+                "38": "38",
+                "39": "39",
+                "40": "40",
+                "41": "41",
+                "42": "42",
+                "43": "43",
+                "44": "44",
+                "45": "45",
+                "46": "46",
+                "47": "47",
+                "48": "48",
+                "49": "49",
+                "50": "50",
+                "51": "51",
+                "52": "52",
+                "53": "53",
+                "54": "54",
+                "55": "55",
+                "56": "56",
+                "57": "57",
+                "58": "58",
+                "59": "59",
+                "60": "60",
+                "61": "61",
+                "62": "62",
+                "63": "63",
+                "64": "64",
+                "65": "65",
+                "66": "66",
+                "67": "67",
+                "68": "68",
+                "69": "69",
+                "70": "70",
+                "71": "71",
+                "72": "72",
+                "73": "73",
+                "74": "74",
+                "75": "75",
+                "76": "76",
+                "77": "77",
+                "78": "78",
+                "79": "79",
+                "80": "80",
+                "81": "81",
+                "82": "82",
+                "83": "83",
+                "84": "84",
+                "85": "85",
+                "86": "86",
+                "87": "87",
+                "88": "88",
+                "89": "89",
+                "90": "90",
+                "91": "91",
+                "92": "92",
+                "93": "93",
+                "94": "94",
+                "95": "95",
+                "96": "96",
+                "97": "97",
+                "98": "98",
+                "99": "99",
+                "100": "100"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5c58d3a1d",
+            "label": "Selectivity",
+            "name": "selectivity",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "selectivity",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5c7bd3a1e",
+            "label": "Public \/ Private School",
+            "name": "school_privacy",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "Public",
+                "2": "Private"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5cafd3a1f",
+            "label": "Environment",
+            "name": "environment",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "environment",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5cc8d3a20",
+            "label": "Religious Affiliation",
+            "name": "religion",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "religion",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5d0ad3a23",
+            "label": "Housing Types",
+            "name": "housing_types",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "housing-type",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5d3ad3a24",
+            "label": "Housing, Sub-Types",
+            "name": "housing_sub_types",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "housing-sub-type",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5d5cd3a25",
+            "label": "Housing, Alcohol",
+            "name": "housing_alcohol",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "Allowed",
+                "2": "Not Allowed"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5d85d3a26",
+            "label": "Food Services",
+            "name": "food_services",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "food",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_57bf5f1ba107d",
+            "label": "Row2k Entry URL",
+            "name": "row2k_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5f3ba107e",
+            "label": "Sparks Report URL",
+            "name": "sparks_report_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_57bf5f60a1080",
+            "label": "Majors",
+            "name": "school_majors",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "major",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "school"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content",
+        "custom_fields"
+    ],
+    "active": 1,
+    "description": "",
+    "local": "php",
+    "modified": 1474588979
+}

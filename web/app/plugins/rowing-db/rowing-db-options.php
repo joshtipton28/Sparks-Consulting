@@ -18,31 +18,31 @@ function myplguin_admin_page(){
 	<div class="wrap">
 		<h2>Welcome To My Plugin</h2>
 
-		<a href="/wp-admin/edit-tags.php?taxonomy=mens-division&post_type=school">View/Add Men's Divisions
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=mens-division&post_type=school">View/Add Men's Divisions
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=womens-division&post_type=school">View/Add Women's Divisions
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=womens-division&post_type=school">View/Add Women's Divisions
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=environment&post_type=school">View/Add Environments
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=environment&post_type=school">View/Add Environments
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=selectivity&post_type=school">View/Add Selectivities
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=selectivity&post_type=school">View/Add Selectivities
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=religion&post_type=school">View/Add Religious Affiliations
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=religion&post_type=school">View/Add Religious Affiliations
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=major&post_type=school">View/Add Majors
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=major&post_type=school">View/Add Majors
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=food&post_type=school">View/Add Food Services
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=food&post_type=school">View/Add Food Services
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=housing-type&post_type=school">View/Add Housing Types
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=housing-type&post_type=school">View/Add Housing Types
 		</a>
 		<br>
-		<a href="/wp-admin/edit-tags.php?taxonomy=housing-sub-type&post_type=school">View/Add Housing Sub-Types
+		<a href="/wp/wp-admin/edit-tags.php?taxonomy=housing-sub-type&post_type=school">View/Add Housing Sub-Types
 		</a>
 	</div>
 	<?php
