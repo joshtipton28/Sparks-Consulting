@@ -4,8 +4,24 @@ Template Name: Rowing DB
 */
 get_header(); ?>
 
+<style>
+body, th{
+	color: #000;
+}
+.rowing-db{
+	background: #fff;
+	margin-top:200px;
+}
+h1, h2, h3, h4, h5, h6{
+	color:#000;
+}
+table{
+	border:1px solid #000;
+}
+</style>
 
-<div class="row">
+
+<div class="rowing-db row">
 	<div id="app">
 		<router-view></router-view>
 	</div>
