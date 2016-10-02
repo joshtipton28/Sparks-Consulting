@@ -15,16 +15,11 @@ class ESSBCoreExtenderShortcodeProfiles {
 	public static function parse_shortcode($atts, $options) {
 		
 		$sc_networks = isset($atts['networks']) ? $atts['networks'] : '';
-		$sc_button_type = isset($atts['type']) ? $atts['type'] : 'square';
-		$sc_button_size = isset($atts['size']) ? $atts['size'] : 'small';
-		$sc_button_fill = isset($atts['style']) ? $atts['style'] : 'fill';
+		$sc_template = isset($atts['template']) ? $atts['template'] : 'flat';
+		$sc_animation = isset($atts['animation']) ? $atts['animation'] : '';
 		$sc_nospace = isset($atts['nospace']) ? $atts['nospace'] : 'false';
-		
-		$sc_usetexts = isset($atts['allowtext']) ? $atts['allowtext'] : 'false';
-		$sc_width = isset($atts['width']) ? $atts['width'] : '';
-		
-		$sc_nospace = ESSBOptionValuesHelper::unified_true($sc_nospace);
-		$sc_usetexts = ESSBOptionValuesHelper::unified_true($sc_usetexts);
+				
+		$sc_nospace = ESSBOptionValuesHelper::unified_true($sc_nospace);		
 		
 		$profile_networks = array();
 		if ($sc_networks != '') {
@@ -53,36 +48,27 @@ class ESSBCoreExtenderShortcodeProfiles {
 			}
 		}
 		
-		$sc_network_texts = array();
-		if ($sc_usetexts) {
-			foreach ($profile_networks as $network) {
-				$value = isset($atts[$network]) ? $atts[$network] : '';
-					
-				if (empty($value)) {
-					$value = isset($atts['profile_text_'.$network]) ? $atts['profile_text_'.$network] : '';
-				}
-					
-				if (empty($value)) {
-					$value = ESSBOptionValuesHelper::options_value($options, 'profile_text_'.$network);
-				}
-					
-				if (!empty($value)) {
-					$sc_network_texts[$network] = $value;
-				}
-			}
-		}
 		
-		// check if module is not activated yet
 		if (!defined('ESSB3_SOCIALPROFILES_ACTIVE')) {
 			include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles.php');
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles-helper.php');
 			define('ESSB3_SOCIALPROFILES_ACTIVE', 'true');
-			$template_url = ESSB3_PLUGIN_URL.'/assets/css/essb-profiles.css';
-			essb_resource_builder()->add_static_footer_css($template_url, 'easy-social-share-buttons-profiles');
+			$template_url = ESSB3_PLUGIN_URL . '/lib/modules/social-followers-counter/assets/css/essb-followers-counter.min.css';
+			essb_resource_builder()->add_static_footer_css($template_url, 'essb-social-followers-counter');
 		}
 		
+		$options = array(
+				'position' => '',
+				'template' => $sc_template,
+				'animation' => $sc_animation,
+				'nospace' => $sc_nospace,
+				'networks' => $sc_network_address
+		);
 		
-		return ESSBSocialProfiles::generate_social_profile_icons($sc_network_address, $sc_button_type, $sc_button_size, $sc_button_fill,
-				$sc_nospace, '', $sc_usetexts, $sc_network_texts, $sc_width);
+		return ESSBSocialProfiles::draw_social_profiles($options);
+		
+		//return ESSBSocialProfiles::generate_social_profile_icons($sc_network_address, $sc_button_type, $sc_button_size, $sc_button_fill,
+		//		$sc_nospace, '', $sc_usetexts, $sc_network_texts, $sc_width);
 	}
 	
 }

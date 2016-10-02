@@ -25,17 +25,25 @@ if (ESSB3_ADDONS_ACTIVE) {
 
 
 <div class="wrap">
-	<div class="essb-title-panel">
-	<?php echo '<a href="http://support.creoworx.com" target="_blank" text="' . __ ( 'Need Help? Click here to visit our support center', ESSB3_TEXT_DOMAIN ) . '" class="button float_right">' . __ ( 'Support Center', ESSB3_TEXT_DOMAIN ) . '</a>'; ?>
-	
-	<h3>Easy Social Metrics Lite</h3>
-		<p>
-			Easy Social Share Buttons for WordPress Version <strong><?php echo ESSB3_VERSION;?></strong>.
-			&nbsp;<strong><a href="http://fb.creoworx.com/essb/change-log/"
-				target="_blank">See what's new in this version</a></strong>&nbsp;&nbsp;&nbsp;<strong><a
-				href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo"
-				target="_blank">Easy Social Share Buttons plugin homepage</a></strong>
-		</p>
+<div class="essb-tabs" style="margin-bottom: 20px;">
+		<div class="essb-tabs-title" style="padding-top: 15px; padding-bottom: 20px;">
+			<div class="essb-tabs-version">
+				<div class="essb-logo essb-logo32"></div>
+				<div class="essb-text-afterlogo">
+					<h3>Social Metrics Lite for Easy Social Share Buttons for WordPress</h3>
+					<p>
+						Version <strong><?php echo ESSB3_VERSION;?></strong>. &nbsp;<strong><a
+							href="http://socialsharingplugin.com/version-changes/" target="_blank">See
+								what's new in this version</a></strong>&nbsp;&nbsp;&nbsp;<strong><a
+							href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo"
+							target="_blank">Easy Social Share Buttons plugin homepage</a></strong>
+					</p>
+					
+				</div>
+			</div>
+		</div>
+		
+
 	</div>
 
 	<div class="essb-clear"></div>

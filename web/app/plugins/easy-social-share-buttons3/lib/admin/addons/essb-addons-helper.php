@@ -4,7 +4,7 @@ class ESSBAddonsHelper {
 	
 	private $cache_options_slug = "essb3_addons";
 	private $announced_addons_slug = "essb3_addons_announce";
-	private $update_addons_server = "http://extensions.appscreo.com"; //"http://addons.appscreo.com";
+	private $update_addons_server = "http://extensions.appscreo.com"; //"http://addons.appscreo.com";		
 	
 	private static $instance = null;
 	public static function get_instance() {

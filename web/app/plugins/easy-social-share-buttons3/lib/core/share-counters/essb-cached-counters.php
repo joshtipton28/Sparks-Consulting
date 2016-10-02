@@ -65,12 +65,12 @@ class ESSBCachedCounters {
 				$is_fresh = false;
 			}
 		}
-		
+
 		$user_call_refresh = isset ( $_REQUEST ['essb_counter_update'] ) ? $_REQUEST ['essb_counter_update'] : '';
 		if ($user_call_refresh == 'true') {
 			$is_fresh = false;
-		}		
-				
+		}
+		
 		return $is_fresh;
 	}
 	
@@ -119,7 +119,7 @@ class ESSBCachedCounters {
 		global $essb_options;
 		
 		$cached_counters = array();
-		$cached_counters['total'] = 0;		
+		$cached_counters['total'] = 0;
 		
 		if (!ESSBCachedCounters::is_fresh_cache($post_id)) {
 			$cached_counters = ESSBCachedCounters::update_counters($post_id, $share['url'], $share['full_url'], $networks);
@@ -159,13 +159,23 @@ class ESSBCachedCounters {
 				if ($k == 'total') $total_saved = true;
 				
 				$single = isset($cached_counters[$k]) ? $cached_counters[$k] : '0';
-				update_post_meta($post_id, 'essb_c_'.$k, $single);
+				if (intval($single) > 0) {
+					update_post_meta($post_id, 'essb_c_'.$k, $single);
+				}
+				else {
+					$cached_counters[$k] =  intval(get_post_meta($post_id, 'essb_c_'.$k, true));
+				}
 			}
 			
 			if (!$total_saved) {
 				$k = 'total';
 				$single = isset($cached_counters[$k]) ? $cached_counters[$k] : '0';
-				update_post_meta($post_id, 'essb_c_'.$k, $single);
+				if (intval($single) > 0) {
+					update_post_meta($post_id, 'essb_c_'.$k, $single);
+				}
+				else {
+					$cached_counters[$k] =  intval(get_post_meta($post_id, 'essb_c_'.$k, true));
+				}
 			}
 		}		
 		else {
@@ -175,6 +185,10 @@ class ESSBCachedCounters {
 			}
 		}		
 		
+		
+		if (has_filter('essb4_get_cached_counters')) {
+			$cached_counters = apply_filters('essb4_get_cached_counters', $cached_counters);
+		}
 		
 		return $cached_counters;
 	}
@@ -195,7 +209,6 @@ class ESSBCachedCounters {
 		if (!class_exists('ESSBCounterHelper')) {
 			include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-counters-helper.php');
 		}
-		
 		
 		foreach ( $networks as $k ) {
 			switch ($k) {
@@ -289,7 +302,8 @@ class ESSBCachedCounters {
 		if (!$recover_mode) {
 			//$time = floor(((date('U')/60)/60));
 			//update_post_meta($post_id, 'essb_cache_timestamp', $time);
-			$expire_time = ESSBOptionValuesHelper::options_value($essb_options, 'cache_counter_refresh_new');
+			// changed to cache_counter_refresh_new counter_mode
+			$expire_time = ESSBOptionValuesHelper::options_value($essb_options, 'counter_mode');
 			if ($expire_time == '') { $expire_time = 60; }
 			update_post_meta ( $post_id, 'essb_cache_expire', (time () + ($expire_time * 60)) );
 		}

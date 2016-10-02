@@ -16,38 +16,7 @@ class ESSBShortcodeGenerator3 {
 		
 		$this->shortcodeOptions = array();
 		
-		$this->templates = array();
-		$this->templates[''] = "Default template from settings";
-		$this->templates['default'] = "Default";
-		$this->templates['metro'] = "Metro";
-		$this->templates['modern'] = "Modern";
-		$this->templates['round'] = "Round";
-		$this->templates['big'] = "Big";
-		$this->templates['metro-retina'] = "Metro (Retina)";
-		$this->templates['big-retina'] = "Big (Retina)";
-		$this->templates['light-retina'] = "Light (Retina)";
-		$this->templates['flat-retina'] = "Flat (Retina)";
-		$this->templates['tiny-retina'] = "Tiny (Retina)";
-		$this->templates['round-retina'] = "Round (Retina)";
-		$this->templates['modern-retina'] = "Modern (Retina)";
-		$this->templates['circles-retina'] = "Circles (Retina)";
-		$this->templates['blocks-retina'] = "Blocks (Retina)";
-		$this->templates['dark-retina'] = "Dark (Retina)";
-		$this->templates['grey-circles-retina'] = "Grey Circles (Retina)";
-		$this->templates['grey-blocks-retina'] = "Grey Blocks (Retina)";
-		$this->templates['clear-retina'] = "Clear (Retina)";
-		$this->templates['dimmed-retina'] = "Dimmed (Retina)";
-		$this->templates['grey-retina'] = "Grey (Retina)";
-		$this->templates['default-retina'] = "Default 3.0 (Retina)";
-		$this->templates['jumbo-retina'] = "Jumbo (Retina)";
-		$this->templates['jumbo-round-retina'] = "Jumbo Rounded (Retina)";
-		$this->templates['fancy-retina'] = "Fancy (Retina)";
-		$this->templates['deluxe-retina'] = "Deluxe (Retina)";
-		$this->templates['modern-slim-retina'] = "Modern Slim (Retina)";
-		$this->templates['bold-retina'] = "Bold (Retina)";
-		$this->templates['fancy-bold-retina'] = "Fancy Bold (Retina)";
-		$this->templates['retro-retina'] = "Retro (Retina)";
-		$this->templates['metro-bold-retina'] = "Metro Bold (Retina)";
+		$this->templates = essb_available_tempaltes4(true);
 		
 		
 		$this->counterPositions = array();
@@ -98,6 +67,15 @@ class ESSBShortcodeGenerator3 {
 		$this->shortcodeOptions[$param] = $options;
 	}
 	
+	function getTitleNavigation() {
+		if ($this->shortcodeTitle != '') {
+			return ': '.$this->shortcodeTitle;
+		}
+		else {
+			return  '';
+		}
+	}
+	
 	function renderNavigation() {
 		echo '<li id="essb-menu-1" class="essb-menu-item"><a href="#"
 						onclick="return false;">'.$this->shortcodeTitle.'</a></li>';
@@ -124,9 +102,9 @@ class ESSBShortcodeGenerator3 {
 						<col width="25%" />
 						<col width="75%" />';
 		
-		echo '<tr class="table-border-bottom">';
-		echo '<td colspan="2" class="sub">'.$this->shortcodeTitle.'</td>';
-		echo '</tr>';
+		//echo '<tr class="table-border-bottom">';
+		//echo '<td colspan="2" class="sub">'.$this->shortcodeTitle.'</td>';
+		//echo '</tr>';
 		
 		$cnt = 0;
 		$sectionCount = 1;
@@ -176,7 +154,7 @@ class ESSBShortcodeGenerator3 {
 		
 		echo '<tr class="table-border-bottom">';
 		
-		echo '<td class="sub2" colspan="2" id="essb-submenu-'.$cnt.'">'.$text.'</td>';
+		echo '<td class="sub4" colspan="2" id="essb-submenu-'.$cnt.'"><div>'.$text.'</div></td>';
 		
 		echo '</tr>';
 	}
@@ -186,7 +164,7 @@ class ESSBShortcodeGenerator3 {
 	
 		echo '<tr class="table-border-bottom">';
 	
-		echo '<td class="sub3" colspan="2">'.$text.'</td>';
+		echo '<td class="sub5" colspan="2"><div>'.$text.'</div></td>';
 	
 		echo '</tr>';
 	}
@@ -315,7 +293,7 @@ class ESSBShortcodeGenerator3 {
 				echo '<li><p style="margin: .2em 5% .2em 0;">
 				<input id="network_selection_' . $k . '" value="' . $k . '" name="'.$this->optionsGroup.'['.$param.'][]" type="checkbox"
 				' . $is_checked . ' /><input name="'.$this->optionsGroup.'[sort][]" value="' . $k . '" type="checkbox" checked="checked" style="display: none; " />
-				<label for="network_selection_' . $k . '"><span class="essb_icon essb-icon-' . $k . '"></span>' . $network_name . '</label>
+				<label for="network_selection_' . $k . '"><span class="essb_icon essb_icon_' . $k . '"></span>' . $network_name . '</label>
 				</p></li>';
 			}
 		
@@ -566,9 +544,6 @@ jQuery(document).ready(function(){
 			$this->includeOptionsForEasyFans();
 		}
 		
-		if ($shortcode == 'easy-multifans') {
-			$this->includeOptionsForEasyMultiFans();
-		}
 		
 		// @since 3.4
 		if ($shortcode == 'easy-total-fans' || $shortcode == 'easy-total-followers') {
@@ -589,7 +564,7 @@ jQuery(document).ready(function(){
 	
 		$listOfTypes = array("" => "Subscribe form with service integration (MailChimp, GetReponse, myMail, MailPoet)", "form" => "Custom code subscribe form");
 		$this->register("mode", array("type" => "dropdown", "text" => "Form type", "comment" => "Choose form generation type", "sourceOptions" => $listOfTypes));
-		$listOfTypes = array("design1" => "Design #1", "design2" => "Design #2", "design3" => "Design #3", "design4" => "Design #4");
+		$listOfTypes = array("" => "Default subscribe button design", "design1" => "Design #1", "design2" => "Design #2", "design3" => "Design #3", "design4" => "Design #4", "design5" => "Design #5", "design6" => "Design #6", "design7" => "Design #7");
 		$this->register("design", array("type" => "dropdown", "text" => "Design", "comment" => "Choose your form design style", "sourceOptions" => $listOfTypes));
 		$this->register("twostep", array("type" => "checkbox", "text" => "Two step optin form", "comment" => "Two step optin forms will open form when you click on link (text or image)", "value" => "true"));
 		$this->register("twostep_text", array("type" => "textbox", "text" => "Two step link content", "comment" => "Put here your two step content open link", "value" => "", "fullwidth" => "true"));
@@ -663,73 +638,21 @@ jQuery(document).ready(function(){
 		
 	}
 	
-	private function includeOptionsForEasyMultiFans() {
-		$this->shortcode = 'easy-multifans';
-		$this->shortcodeTitle = '[easy-multifans] Shortcode';
-	
-		$this->register('section1', array("type" => "section", "text" => "Visual Settings"));
-		
-		$this->register("title", array("type" => "textbox", "text" => "Title of widget", "comment" => "", "value" => "", "fullwidth" => "true"));
-		$this->register("hide_title", array("type" => "checkbox", "text" => "Hide title:", "comment" => "Activate this option to remove the title element of followers counter widget", "value" => "1"));
-		
-		$this->register('subsection2', array("type" => "subsection", "text" => "Total counter settings"));
-		$this->register("show_total", array("type" => "checkbox", "text" => "Hide number of total fans:", "comment" => "Hide total fans as text or box (based on general design settings). Default shortcode option is to show values", "value" => "0"));
-
-		$listOfTypes = array("button" => "Display as button", "text" => "Display as text");		
-		$this->register("total_type", array("type" => "dropdown", "text" => "Total fans type", "comment" => "Choose your total fans display type (button or text)", "sourceOptions" => $listOfTypes));
-		
-		$listOfTypes = array("full" => "Automatic width", "button" => "Equal to width of single button");
-		$this->register("total_width", array("type" => "dropdown", "text" => "Total counter as button width", "comment" => "Choose width of total button (when display as button is selected)", "sourceOptions" => $listOfTypes));
-		
-		$listOfTypes = array("bottom" => "After all networks", "top" => "Before all networks");
-		$this->register("total_text_pos", array("type" => "dropdown", "text" => "Total counter as text position", "comment" => "Choose position of total fans text (when display as text is selected)", "sourceOptions" => $listOfTypes));
-		
-		$this->register('subsection3', array("type" => "subsection", "text" => "Visual settings"));
-	
-		$listOfCols = array("1" => "1 Column", "2" => "2 Columns", "3" => "3 Columns", "4" => "4 Columns", "5" => "5 Columns", "6" => "6 Columns", "7" => "7 Columns", "8" => "8 Columns", "9" => "9 Columns", "10" => "10 Columns", "11" => "11 Columns", "12" => "12 Columns");
-		$listOfTemplates = array("color" => "Color icons", "roundcolor" => "Round color icons", "grey" => "Grey icons", "roundgrey" => "Round grey icons", "metro" => "Metro", "flat" => "Flat", "dark" => "Dark", "lite" => "Lite icons on transparent background", "grey-transparent" => "Grey icons on transparent background", "color-transparent" => "Color icons on transparent background", "tinycolor" => "Tiny Color", "tinylight" => "Tiny Light", "tinygrey" => "Tiny Grey");
-	
-		$listOfEffects = array("essbfc-no-effect" => "No", "essbfc-view-first" => "Design 1", "essbfc-view-two" => "Design 2", "essbfc-view-three" => "Design 3");
-	
-		$this->register("columns", array("type" => "dropdown", "text" => "Number of columns:", "comment" => "Choose number of columns you wish buttons to appear", "sourceOptions" => $listOfCols));
-		$this->register("template", array("type" => "dropdown", "text" => "Template:", "comment" => "Choose button template", "sourceOptions" => $listOfTemplates));
-		$this->register("effects", array("type" => "dropdown", "text" => "Display follow text on hover:", "comment" => "", "sourceOptions" => $listOfEffects));
-
-		$this->register("no_space", array("type" => "checkbox", "text" => "Remove space between buttons", "comment" => "Activate this option to remove space between buttons", "value" => "1"));
-
-		$this->register('section2', array("type" => "section", "text" => "Customize networks"));
-		$this->register('subsection4', array("type" => "subsection", "text" => "Customize displayed networks"));
-		$this->register('networks', array("type" => "networks_sfce", "text" => "Select Social Networks:", "comment" => "Select networks that you wish to appear in this shortcode or leave blank to use the default list activated in plugin settings"));
-		
-		$this->register('section3', array("type" => "section", "text" => "Cover box"));
-		$this->register('subsection5', array("type" => "subsection", "text" => "Cover box"));
-		$this->register("cover", array("type" => "checkbox", "text" => "Display cover above followers counter", "comment" => "Activate this option to display cover box above followers counter", "value" => "1"));
-		$this->register("cover_bgcolor", array("type" => "textbox", "text" => "Customize background color of cover", "comment" => "Provide custom background color (example: #454545 or rgba(255,255,255,1)", "value" => "", "fullwidth" => "false"));
-		$this->register("cover_bgimage", array("type" => "textbox", "text" => "Customize background image of cover", "comment" => "Provide url address to image that you wish to use as background image", "value" => "", "fullwidth" => "true"));
-		$this->register("cover_image", array("type" => "textbox", "text" => "Display cover profile image", "comment" => "Provide url address to image that you wish to use as profile image", "value" => "", "fullwidth" => "true"));
-
-		$listOfTypes = array("round" => "Round", "square" => "Square", "round-edge" => "Rounded Edges");
-		$this->register("cover_image_style", array("type" => "dropdown", "text" => "Profile image display style", "comment" => "Choose one of the following image styles that fits best with your profile image", "sourceOptions" => $listOfTypes));	
-		$this->register("cover_title", array("type" => "textbox", "text" => "Display following title text", "comment" => "Provide text that you wish to use as title in your cover. Leave blank if you do not wish to have such. You can use text {TOTAL} inside that field which will be replaced with total number of fans.", "value" => "", "fullwidth" => "true"));
-		$this->register("cover_text", array("type" => "textbox", "text" => "Display following additional text", "comment" => "Provide additional text that you wish to display below title in your cover. Leave blank if you do not wish to have such. You can use text {TOTAL} inside that field which will be replaced with total number of fans.", "value" => "", "fullwidth" => "true"));
-		
-		$listOfTypes = array("light" => "Light", "light-left" => "Light - left aligned", "dark" => "Dark", "dark-left" => "Dark - left aligned");
-		$this->register("cover_style", array("type" => "dropdown", "text" => "Choose your cover colors style", "comment" => "Choose one of the following predefined color schemes based on cover background color or image. If you use dark image or color select light style. If your image or color is light select dark style.", "sourceOptions" => $listOfTypes));
-		
-	}
 	
 	private function includeOptionsForEasyProfiles() {
 		$this->shortcode = 'easy-profiles';
 		$this->shortcodeTitle = '[easy-profiles] Shortcode';
 		
-		$listOfType = array("square" => "Square buttons", "round" => "Round buttons", "edge" => "Round edges");
-		$listOfFill = array("fill" => "White icons on colored background", "colored" => "Colored icons");
+		//$listOfType = array("square" => "Square buttons", "round" => "Round buttons", "edge" => "Round edges");
+		//$listOfFill = array("fill" => "White icons on colored background", "colored" => "Colored icons");
 		
-		$listOfSize = array("small" => "Small", "medium" => "Medium", "large" => "Large");
-
-		$this->register("type", array("type" => "dropdown", "text" => "Button style:", "comment" => "", "sourceOptions" => $listOfType));
-		$this->register("size", array("type" => "dropdown", "text" => "Button size:", "comment" => "", "sourceOptions" => $listOfSize));
-		$this->register("style", array("type" => "dropdown", "text" => "Button color fill:", "comment" => "", "sourceOptions" => $listOfFill));
+		//$listOfSize = array("small" => "Small", "medium" => "Medium", "large" => "Large");
+		if (!class_exists('ESSBSocialProfilesHelper')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles-helper.php');
+		}
+		
+		$this->register("template", array("type" => "dropdown", "text" => "Template:", "comment" => "", "sourceOptions" => ESSBSocialProfilesHelper::available_templates()));
+		$this->register("animation", array("type" => "dropdown", "text" => "Animation:", "comment" => "", "sourceOptions" => ESSBSocialProfilesHelper::available_animations()));
 		$this->register("nospace", array("type" => "checkbox", "text" => "Remove space between buttons:", "comment" => "", "value" => "true"));
 		$this->register('networks', array("type" => "networks_sp", "text" => "Select Social Networks:", "comment" => "Provide list of networks that will be included"));
 		
@@ -761,6 +684,13 @@ jQuery(document).ready(function(){
 		
 		$this->register("morebutton", array("type" => "dropdown", "text"=> "More button function:", "comment" => "Choose the more button function", "sourceOptions" => array (""=>"", "1" => "Display all active networks after more button", "2" => "Display all social networks as popup", "3" => "Display only active social networks as popup" )));
 		$this->register("morebutton_icon", array("type" => "dropdown", "text"=> "More button icon:", "comment" => "Choose the more button icon", "sourceOptions" => array (""=>"", "plus" => "Plus icon", "dots" => "Dots icon")));
+
+		
+		$this->register("sharebtn_func", array("type" => "dropdown", "text"=> "Share button function:", "comment" => "Choose the share button function", "sourceOptions" => array (""=>"", "1" => "Display all active networks after share button", "2" => "Display all social networks as popup", "3" => "Display only active social networks as popup" )));
+		$this->register("sharebtn_style", array("type" => "dropdown", "text"=> "Share button style:", "comment" => "Choose share button style", "sourceOptions" => array ("" => "", "icon"=> "Icon", "button" => "Button", "text" => "Text")));
+		$this->register("sharebtn_icon", array("type" => "dropdown", "text"=> "Share button icon:", "comment" => "Choose the share button icon", "sourceOptions" => array (""=> "", "plus" => "Plus", "dots" => "Dots", "share" => "Share icon #1", "share-alt-square" => "Share icon #2", "share-alt" => "Share icon #3", "share-tiny" => "Share icon #4", "share-outline" => "Share icon #5" )));
+		$this->register("sharebtn_counter", array("type" => "dropdown", "text"=> "Share button counter position:", "comment" => "Choose share button counter display. This option require to have counters active not in real time", "sourceOptions" => array (""=>"", "hidden" => "No counter", "inside" => "Inside button without text", "insidename" => "Inside button after text", "insidebeforename" => "Inside button before text", "topn" => "Top", "bottom" => "Bottom")));
+		
 		
 		$this->register('section1', array("type" => "section", "text" => "Counters"));
 		
@@ -800,6 +730,9 @@ jQuery(document).ready(function(){
 		$this->register('subsection3', array("type" => "subsection", "text" => "Display in columns"));
 		$this->register("column", array("type" => "checkbox", "text" => "Activate display in columns:", "comment" => "Activate display of buttons in columns", "value" => "yes"));
 		$this->register("columns", array("type" => "textbox", "text" => "Number of columns:", "comment" => "Provide number of button columns", "value" => ""));		
+		
+		$this->register('subsection4', array("type" => "subsection", "text" => "Flexible full width"));
+		$this->register("flex", array("type" => "checkbox", "text" => "Activate flexible full width:", "comment" => "Flexible full width is enchanced full width option where you can use counters, more button and etc.", "value" => "yes"));
 		
 		$this->register('section3', array("type" => "section", "text" => "Customize shared message"));
 		$this->register("url", array("type" => "textbox", "text" => "Share URL:", "comment" => "Provide custom share url. If nothing is filled the page/post address where buttons are displayed will be used", "value" => "", "fullwidth" => "true"));

@@ -8,9 +8,9 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 	protected $widget_slug = "easy-social-share-buttons3";
 	
 	public function __construct() {
-		$options = array( 'description' => __( 'Social Share Buttons' , ESSB3_TEXT_DOMAIN ), 'classname' => $this->widget_slug."-class" );
+		$options = array( 'description' => __( 'Social Share Buttons' , 'essb' ), 'classname' => $this->widget_slug."-class" );
 		
-		parent::__construct( false , __( 'Easy Social Share Buttons: Share Buttons' , ESSB3_TEXT_DOMAIN ) , $options );
+		parent::__construct( false , __( 'Easy Social Share Buttons: Share Buttons' , 'essb' ) , $options );
 	}
 	
 
@@ -73,7 +73,7 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 			$shortcode .= " counters=1";
 		}
 		
-		if ($essb_w_force == 'true') {
+		if ($essb_w_force) {
 			$shortcode .= ' forceurl="yes"';
 		}
 		$shortcode .= ' counters_pos="'.$essb_w_counter.'"';
@@ -183,19 +183,18 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$custom_list = isset($instance['custom_list']) ? $instance['custom_list'] : '';
 		$essb_w_force = isset($instance['essb_w_force']) ? $instance['essb_w_force'] : '';
-		
 		?>
 		
 		<p>
-  <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php echo __( 'Title' , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php echo __( 'Title' , 'essb' ); ?>:</label>
   <input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" class="widefat" value="<?php echo $title ?>" />
-  <br /><small><?php _e( 'Fill that field if you wish your widget to have title' , ESSB3_TEXT_DOMAIN ) ?></small>
+  <br /><small><?php _e( 'Fill that field if you wish your widget to have title' , 'essb' ) ?></small>
 </p>
 		
 				<p>
-  <label for="<?php echo $this->get_field_id( 'custom_list' ); ?>"><?php echo __( 'Custom network ordered list' , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <label for="<?php echo $this->get_field_id( 'custom_list' ); ?>"><?php echo __( 'Custom network ordered list' , 'essb' ); ?>:</label>
   <input type="text" name="<?php echo $this->get_field_name( 'custom_list' ); ?>" id="<?php echo $this->get_field_id( 'custom_list' ); ?>" class="widefat" value="<?php echo $custom_list ?>" />
-  <br /><small><?php _e( 'Fill social network keys to get custom order (no need to activate checks below). Example: facebook,twitter,pinterest' , ESSB3_TEXT_DOMAIN ) ?></small>
+  <br /><small><?php _e( 'Fill social network keys to get custom order (no need to activate checks below). Example: facebook,twitter,pinterest' , 'essb' ) ?></small>
 </p>
 		
 		<?php 
@@ -222,24 +221,25 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		?>
 		
 			<p>
-		<label for="<?php echo $this->get_field_id( 'essb_w_style' ); ?>"><?php _e( 'Button display style:' , ESSB3_TEXT_DOMAIN ) ?></label>
+		<label for="<?php echo $this->get_field_id( 'essb_w_style' ); ?>"><?php _e( 'Button display style:' , 'essb' ) ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'essb_w_style' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_style' ); ?>" >
-					<option value="icon" <?php if( $style == 'icon' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display share buttons only as icon without network names' , ESSB3_TEXT_DOMAIN ) ?></option>
-					<option value="icon_hover" <?php if( $style == 'icon_hover' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display share buttons as icon with network name appear when button is pointed' , ESSB3_TEXT_DOMAIN ) ?></option>
-					<option value="button" <?php if( $style == 'button' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display as share button with icon and network name' , ESSB3_TEXT_DOMAIN ) ?></option>
-					<option value="button_name" <?php if( $style == 'button_name' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display as share button with network name and without icon' , ESSB3_TEXT_DOMAIN ) ?></option>
+					<option value="icon" <?php if( $style == 'icon' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display share buttons only as icon without network names' , 'essb' ) ?></option>
+					<option value="icon_hover" <?php if( $style == 'icon_hover' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display share buttons as icon with network name appear when button is pointed' , 'essb' ) ?></option>
+					<option value="button" <?php if( $style == 'button' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display as share button with icon and network name' , 'essb' ) ?></option>
+					<option value="button_name" <?php if( $style == 'button_name' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display as share button with network name and without icon' , 'essb' ) ?></option>
+					<option value="vertical" <?php if( $style == 'vertical' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Display vertical button' , 'essb' ) ?></option>
 					</select>
 		</p>
 			<p>
-		<label for="<?php echo $this->get_field_id( 'essb_w_align' ); ?>"><?php _e( 'Buttons align:' , ESSB3_TEXT_DOMAIN ) ?></label>
+		<label for="<?php echo $this->get_field_id( 'essb_w_align' ); ?>"><?php _e( 'Buttons align:' , 'essb' ) ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'essb_w_align' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_align' ); ?>" >
-					<option value="left" <?php if( $align == 'left' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Left' , ESSB3_TEXT_DOMAIN ) ?></option>
-					<option value="right" <?php if( $align == 'right' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Right' , ESSB3_TEXT_DOMAIN ) ?></option>
-					<option value="center" <?php if( $align == 'center' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Center' , ESSB3_TEXT_DOMAIN ) ?></option>
+					<option value="left" <?php if( $align == 'left' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Left' , 'essb' ) ?></option>
+					<option value="right" <?php if( $align == 'right' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Right' , 'essb' ) ?></option>
+					<option value="center" <?php if( $align == 'center' ) echo "selected=\"selected\""; else echo ""; ?>><?php _e( 'Center' , 'essb' ) ?></option>
 					</select>
 		</p>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'essb_w_counter' ); ?>"><?php _e( 'Display Counter:' , ESSB3_TEXT_DOMAIN ) ?></label>
+		<label for="<?php echo $this->get_field_id( 'essb_w_counter' ); ?>"><?php _e( 'Display Counter:' , 'essb' ) ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'essb_w_counter' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_counter' ); ?>" >
 					<?php 
 			
@@ -254,7 +254,7 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		</p>
 		
 			<p>
-		<label for="<?php echo $this->get_field_id( 'essb_w_totalcounter' ); ?>"><?php _e( 'Display Total Counter:' , ESSB3_TEXT_DOMAIN ) ?></label>
+		<label for="<?php echo $this->get_field_id( 'essb_w_totalcounter' ); ?>"><?php _e( 'Display Total Counter:' , 'essb' ) ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'essb_w_totalcounter' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_totalcounter' ); ?>" >
 			
 			<?php 
@@ -270,21 +270,21 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		</p>
 		
 			<p>
-			<label for="<?php echo $this->get_field_id( 'essb_w_fixed' ); ?>"><?php _e( 'Fixed width buttons:' , ESSB3_TEXT_DOMAIN ) ?></label>
+			<label for="<?php echo $this->get_field_id( 'essb_w_fixed' ); ?>"><?php _e( 'Fixed width buttons:' , 'essb' ) ?></label>
 			<input id="<?php echo $this->get_field_id( 'essb_w_fixed' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_fixed' ); ?>" value="true" <?php if( $fixed ) echo 'checked="checked"'; ?> type="checkbox" />
-			<br /><small><?php _e( 'This option will generate buttons with equal width' , ESSB3_TEXT_DOMAIN ) ?></small>
+			<br /><small><?php _e( 'This option will generate buttons with equal width' , 'essb' ) ?></small>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'essb_w_width' ); ?>"><?php _e( 'Fixed width buttons value :' , ESSB3_TEXT_DOMAIN ) ?></label>
-			<input id="<?php echo $this->get_field_id( 'essb_w_width' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_width' ); ?>" value="<?php if(isset( $instance['essb_w_width'] )) echo $instance['essb_w_width']; ?>" style="width:40px;" type="text" /> <?php _e( 'px' , ESSB3_TEXT_DOMAIN ) ?>
+			<label for="<?php echo $this->get_field_id( 'essb_w_width' ); ?>"><?php _e( 'Fixed width buttons value :' , 'essb' ) ?></label>
+			<input id="<?php echo $this->get_field_id( 'essb_w_width' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_width' ); ?>" value="<?php if(isset( $instance['essb_w_width'] )) echo $instance['essb_w_width']; ?>" style="width:40px;" type="text" /> <?php _e( 'px' , 'essb' ) ?>
 		</p>
 		
 		<p>
-		<label for="<?php echo $this->get_field_id( 'essb_w_template' ); ?>"><?php _e( 'Template:' , ESSB3_TEXT_DOMAIN ) ?></label>
+		<label for="<?php echo $this->get_field_id( 'essb_w_template' ); ?>"><?php _e( 'Template:' , 'essb' ) ?></label>
 <select class="widefat" id="<?php echo $this->get_field_id( 'essb_w_template' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_template' ); ?>">
 							<?php 
 							
-	foreach (essb_available_tempaltes() as $position => $text) {
+	foreach (essb_available_tempaltes4(true) as $position => $text) {
 				$is_active = ($position == $template) ? " selected=\"selected\"" : "";
 				
 				echo '<option value="'.$position.'" '.$is_active.'>'.$text.'</option>';
@@ -294,14 +294,14 @@ class EasySocialShareButtons_Widget3 extends WP_Widget {
 		</p>		
 
 					<p>
-			<label for="<?php echo $this->get_field_id( 'essb_w_nospace' ); ?>"><?php _e( 'Remove space between buttons:' , ESSB3_TEXT_DOMAIN ) ?></label>
+			<label for="<?php echo $this->get_field_id( 'essb_w_nospace' ); ?>"><?php _e( 'Remove space between buttons:' , 'essb' ) ?></label>
 			<input id="<?php echo $this->get_field_id( 'essb_w_nospace' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_nospace' ); ?>" value="true" <?php if( $nospace ) echo 'checked="checked"'; ?> type="checkbox" />
-			<br /><small><?php _e( 'This option will remove space between buttons' , ESSB3_TEXT_DOMAIN ) ?></small>
+			<br /><small><?php _e( 'This option will remove space between buttons' , 'essb' ) ?></small>
 		</p>
 					<p>
-			<label for="<?php echo $this->get_field_id( 'essb_w_native' ); ?>"><?php _e( 'Include native social buttons:' , ESSB3_TEXT_DOMAIN ) ?></label>
+			<label for="<?php echo $this->get_field_id( 'essb_w_native' ); ?>"><?php _e( 'Include native social buttons:' , 'essb' ) ?></label>
 			<input id="<?php echo $this->get_field_id( 'essb_w_native' ); ?>" name="<?php echo $this->get_field_name( 'essb_w_native' ); ?>" value="true" <?php if( $native_buttons ) echo 'checked="checked"'; ?> type="checkbox" />
-			<br /><small><?php _e( 'This option will include native buttons' , ESSB3_TEXT_DOMAIN ) ?></small>
+			<br /><small><?php _e( 'This option will include native buttons' , 'essb' ) ?></small>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'essb_w_force' ); ?>"><?php _e( 'Force get of correct page:' , ESSB3_TEXT_DOMAIN ) ?></label>

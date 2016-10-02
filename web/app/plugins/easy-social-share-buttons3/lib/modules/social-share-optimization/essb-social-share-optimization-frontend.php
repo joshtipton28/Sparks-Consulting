@@ -45,6 +45,11 @@ class ESSBSocialShareOptimization {
 	private $fb_video_w = "";
 	private $fb_author_profile = "";
 	
+	private $fb_image1 = "";
+	private $fb_image2 = "";
+	private $fb_image3 = "";
+	private $fb_image4 = "";
+	
 	private $twitter_title = "";
 	private $twitter_description = "";
 	private $twitter_image = "";
@@ -54,9 +59,8 @@ class ESSBSocialShareOptimization {
 	private $google_image = "";
 	
 	private $sso_active = true;
-	
-	private $options;
-	
+	private $sso_fixhttps = false;
+		
 	private $meta = array();
 	
 	public static function get_instance() {
@@ -70,9 +74,6 @@ class ESSBSocialShareOptimization {
 	} // end get_instance;
 	
 	function __construct() {
-		
-		global $essb_options;		
-		$this->options = $essb_options;
 		
 		$this->loadDefaultFromOptions();
 		
@@ -98,37 +99,28 @@ class ESSBSocialShareOptimization {
 	
 	private function loadDefaultFromOptions() {
 		
-		$this->default_image = ESSBOptionValuesHelper::options_value($this->options, 'sso_default_image');
+		$this->default_image = essb_option_value('sso_default_image');
 				
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'sso_apply_the_content')) {
+		if (essb_option_bool_value('sso_apply_the_content')) {
 			$this->apply_the_content = true;
 		}
 		
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'opengraph_tags')) {
+		if (essb_option_bool_value('opengraph_tags')) {
 			$this->ogtags_active = true;
-			$this->fbadmins = isset ( $this->options ['opengraph_tags_fbadmins'] ) ? $this->options ['opengraph_tags_fbadmins'] : '';
-			$this->fbpage = isset ( $this->options ['opengraph_tags_fbpage'] ) ? $this->options ['opengraph_tags_fbpage'] : '';
-			$this->fbapp = isset ( $this->options ['opengraph_tags_fbapp'] ) ? $this->options ['opengraph_tags_fbapp'] : '';
-			$this->fb_author_profile = isset($this->options['opengraph_tags_fbauthor']) ? $this->options['opengraph_tags_fbauthor'] : '';
+			$this->fbadmins = essb_option_value('opengraph_tags_fbadmins');
+			$this->fbpage = essb_option_value('opengraph_tags_fbpage');
+			$this->fbapp = essb_option_value('opengraph_tags_fbapp');
+			$this->fb_author_profile = essb_option_value('opengraph_tags_fbauthor');
+			$this->sso_fixhttps = essb_option_bool_value('sso_httpshttp');
 		}
 				
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'twitter_card')) {
+		if (essb_option_bool_value('twitter_card')) {
 			$this->twitter_cards_active = true;
-			$this->card_type = isset ( $this->options ['twitter_card_type'] ) ? $this->options ['twitter_card_type'] : '';
-			$this->twitter_user = isset ( $this->options ['twitter_card_user'] ) ? $this->options ['twitter_card_user'] : '';
+			$this->card_type = essb_option_value('twitter_card_type');
+			$this->twitter_user = essb_option_value('twitter_card_user');
 		}
-		
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'sso_google_author')) {
-			$this->google_authorship = true;
-			$this->google_author = isset ( $this->options ['ss_google_author_profile'] ) ? $this->options ['ss_google_author_profile'] : '';
-			$this->google_publisher = isset ( $this->options ['ss_google_author_publisher'] ) ? $this->options ['ss_google_author_publisher'] : '';
-		}
-		
-		if (ESSBOptionValuesHelper::options_bool_value($this->options, 'sso_google_markup')) {
-			$this->google_markup = true;
-		}
-		
-		if ($this->ogtags_active || $this->twitter_cards_active || $this->google_authorship || $this->google_markup) {
+				
+		if ($this->ogtags_active || $this->twitter_cards_active) {
 			$this->sso_active = true;
 		}
 	}
@@ -195,7 +187,7 @@ class ESSBSocialShareOptimization {
 			//if ($fb_image) {
 			//	$this->post_image = $fb_image [0];
 			//}
-			$this->post_image = ESSBCoreHelper::get_post_featured_image(get_the_ID());
+			$this->post_image = essb_core_get_post_featured_image(get_the_ID());
 				
 			if ($this->post_image == "") {
 				$this->post_image = $this->default_image;
@@ -207,6 +199,11 @@ class ESSBSocialShareOptimization {
 				$this->fb_description = get_post_meta ( $post->ID, 'essb_post_og_desc', true );
 				$this->fb_title = get_post_meta ( $post->ID, 'essb_post_og_title', true );
 				$this->fb_image = get_post_meta ( $post->ID, 'essb_post_og_image', true );
+				
+				$this->fb_image1 = get_post_meta ( $post->ID, 'essb_post_og_image1', true );
+				$this->fb_image2 = get_post_meta ( $post->ID, 'essb_post_og_image2', true );
+				$this->fb_image3 = get_post_meta ( $post->ID, 'essb_post_og_image3', true );
+				$this->fb_image4 = get_post_meta ( $post->ID, 'essb_post_og_image4', true );
 				
 				// since 2.0
 				$this->fb_video_url = get_post_meta ( $post->ID, 'essb_post_og_video', true );
@@ -281,43 +278,6 @@ class ESSBSocialShareOptimization {
 				}
 			}
 			
-			if ($this->google_markup) {
-				$this->google_description =  get_post_meta($post->ID,'essb_post_google_desc',true);
-				$this->google_title =  get_post_meta($post->ID,'essb_post_google_title',true);
-				$this->google_image =  get_post_meta($post->ID,'essb_post_google_image',true);
-			
-				if ($this->google_description == "") {
-					$this->google_description = $this->fb_description;
-				}
-				if ($this->google_title == "") {
-					$this->google_title = $this->fb_title;
-				}
-				if ($this->google_image == "") {
-					$this->google_image = $this->fb_image;
-				}
-				
-				if (empty($this->google_description) && !empty($this->yoast_og_description)) {
-					$this->google_description = $this->yoast_og_description;
-				}
-				
-				if (empty($this->google_title) && !empty($this->yoast_og_title)) {
-					$this->google_title = $this->yoast_og_title;
-				}
-				
-				if (empty($this->google_image) && !empty($this->yoast_og_image)) {
-					$this->google_image = $this->yoast_og_image;
-				}
-				
-				if ($this->google_description == "") {
-					$this->google_description = $this->post_description;
-				}
-				if ($this->google_title == "") {
-					$this->google_title = $this->post_title;
-				}
-				if ($this->google_image == "") {
-					$this->google_image = $this->post_image;
-				}
-			}
 			
 			easy_share_reactivate();
 		
@@ -327,9 +287,9 @@ class ESSBSocialShareOptimization {
 	
 	public function loadFrontpageTags() {
 		if (is_front_page()) {
-			$fp_title = ESSBOptionValuesHelper::options_value($this->options, 'sso_frontpage_title');
-			$fp_description = ESSBOptionValuesHelper::options_value($this->options, 'sso_frontpage_description');
-			$fp_image = ESSBOptionValuesHelper::options_value($this->options, 'sso_frontpage_image');
+			$fp_title = essb_option_value('sso_frontpage_title');
+			$fp_description = essb_option_value('sso_frontpage_description');
+			$fp_image = essb_option_value('sso_frontpage_image');
 			
 			$this->fb_description = $fp_description;
 			$this->fb_title = $fp_title;
@@ -339,9 +299,6 @@ class ESSBSocialShareOptimization {
 			$this->twitter_title = $fp_title;
 			$this->twitter_image = $fp_image;
 			
-			$this->google_description = $fp_description;
-			$this->google_title = $fp_title;
-			$this->google_image = $fp_image;
 			
 			$this->post_url = get_site_url();
 		}
@@ -356,9 +313,6 @@ class ESSBSocialShareOptimization {
 			}
 		}
 		
-		if ($this->google_markup && is_singular ()) {
-			$content .= ' itemscope itemtype="http://schema.org/Article"';
-		}
 
 		return $content;
 	}
@@ -366,7 +320,7 @@ class ESSBSocialShareOptimization {
 	public function outputMeta() {
 		global $post;
 		
-		if (ESSBCoreHelper::is_module_deactivate_on('sso')) {
+		if (essb_is_module_deactivated_on('sso')) {
 			return "";
 		}
 		
@@ -399,9 +353,6 @@ class ESSBSocialShareOptimization {
 			$this->buildTwitterMeta();
 		}
 		
-		if ($this->google_authorship || $this->google_markup) {
-			$this->buildGoogleMeta();
-		}
 		
 		$output_meta = "";
 		
@@ -416,42 +367,6 @@ class ESSBSocialShareOptimization {
 			if ($cache_key != '') {
 				ESSBCache::put($cache_key, $output_meta);
 			}
-		}
-	}
-	
-	// Google
-	
-	private function buildGoogleMeta() {
-		if ($this->google_authorship) {
-			if (is_singular () && !is_front_page()) {
-				$this->googleAuthorshipBuilder('author', $this->google_author);
-			}
-			$this->googleAuthorshipBuilder('publisher', $this->google_publisher);
-		}
-		
-		if ($this->google_markup) {
-			$this->googleMetaBuilder('name', $this->google_title, true);
-			$this->googleMetaBuilder('description', $this->google_description, true);
-			$this->googleMetaBuilder('image', $this->google_image);
-		}
-	}
-	
-	private function googleMetaBuilder($property = '', $value = '', $apply_filters = false) {
-		if ($apply_filters) {
-			$value = str_replace ( '\'', "&#8217;", $value );
-			$value = str_replace ( '"', "&qout;", $value );
-				
-			$value = addslashes(strip_tags($value));
-		}
-		
-		if ($property != '' && $value != '') {
-			$this->meta[] = '<meta itemprop="'.$property.'" content="'.$value.'" />';
-		}
-	}
-	
-	private function googleAuthorshipBuilder($property = '', $value = '') {
-		if ($property != '' && $value != '') {
-			$this->meta[] = '<link rel="'.$property.'" href="'.$value.'"/>';
 		}
 	}
 	
@@ -501,8 +416,26 @@ class ESSBSocialShareOptimization {
 		
 		$this->openGraphMetaTagBuilder('title', $this->fb_title, true);
 		$this->openGraphMetaTagBuilder('description', $this->fb_description, true);
+		
+		if ($this->sso_fixhttps) {
+			$this->post_url = str_replace('https://', 'http://', $this->post_url);
+		}
+		
 		$this->openGraphMetaTagBuilder('url', $this->post_url);
 		$this->openGraphMetaTagBuilder('image', $this->fb_image);
+		
+		if ($this->fb_image1 != '') {
+			$this->openGraphMetaTagBuilder('image', $this->fb_image1);
+		}
+		if ($this->fb_image2 != '') {
+			$this->openGraphMetaTagBuilder('image', $this->fb_image2);
+		}
+		if ($this->fb_image3 != '') {
+			$this->openGraphMetaTagBuilder('image', $this->fb_image3);
+		}
+		if ($this->fb_image4 != '') {
+			$this->openGraphMetaTagBuilder('image', $this->fb_image4);
+		}
 		
 		$content_type = (is_single () || is_page ()) ? "article" : "website";
 		$this->openGraphMetaTagBuilder('type', $content_type);

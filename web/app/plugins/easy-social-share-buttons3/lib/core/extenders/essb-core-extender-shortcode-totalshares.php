@@ -49,14 +49,14 @@ class ESSBCoreExtenderShortcodeTotalShares {
 		
 		$css_class_align = "";
 		
-		$data_url = $post ? get_permalink() : ESSBUrlHelper::get_current_url( 'raw' );
+		$data_url = $post ? get_permalink() : essb_get_current_url( 'raw' );
 		
 		if (ESSBOptionValuesHelper::options_bool_value($options, 'avoid_nextpage')) {
-			$data_url = $post ? get_permalink(get_the_ID()) : ESSBUrlHelper::get_current_url( 'raw' );
+			$data_url = $post ? get_permalink(get_the_ID()) : essb_get_current_url( 'raw' );
 		}
 		
 		if (ESSBOptionValuesHelper::options_bool_value($options, 'force_wp_fullurl')) {
-			$data_url = ESSBUrlHelper::get_current_page_url();
+			$data_url = essb_get_current_page_url();
 		}
 		
 		if (ESSBOptionValuesHelper::options_bool_value($options, 'always_use_http')) {
@@ -106,7 +106,7 @@ class ESSBCoreExtenderShortcodeTotalShares {
 					$css_hide_total_counter = "";
 				}
 			}
-			$cached_total_counter = ESSBButtonHelper::kilomega($cached_total_counter);
+			$cached_total_counter = essb_kilomega($cached_total_counter);
 		}
 		
 		$output = "";

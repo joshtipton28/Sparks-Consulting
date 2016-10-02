@@ -1,11 +1,12 @@
 <?php
 if (!function_exists('css_build_followerscounter_customizer')) {
-	function essb_rs_css_build_followerscounter_customizer() {
+	add_filter('essb_css_buffer_head', 'essb_rs_css_build_followerscounter_customizer');
+	function essb_rs_css_build_followerscounter_customizer($buffer) {
 		global $essb_options;
 		
 		$is_active = ESSBOptionValuesHelper::options_bool_value($essb_options, 'activate_fanscounter_customizer');
 		if (!$is_active) {
-			return '';
+			return $buffer;
 		}
 		
 		$snippet = '';
@@ -27,6 +28,6 @@ if (!function_exists('css_build_followerscounter_customizer')) {
 				$snippet .= ('.essbfc-template-modern .essbfc-'.$network.':hover .essbfc-network { background-color: '.$color_isset.' !important }');
 			}
 		}
-		return $snippet;
+		return $buffer.$snippet;
 	}
 }

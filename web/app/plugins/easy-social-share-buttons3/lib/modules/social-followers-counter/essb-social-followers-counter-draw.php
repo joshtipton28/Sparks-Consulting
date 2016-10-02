@@ -51,6 +51,138 @@ class ESSBSocialFollowersCounterDraw {
 	}
 	
 	/**
+	 * draw_followers_sidebar
+	 * 
+	 * Display social followers sidebar
+	 * 
+	 * @param $options array
+	 * @since 4.0
+	 */
+	public static function draw_followers_sidebar($options) {
+		$instance_position = isset ( $options ['position'] ) ? $options ['position'] : '';
+		$instance_new_window = 1;
+		$instance_nofollow = 1;
+		$instance_show_total = 0;
+		$instance_columns = 1;
+		$instance_template = isset ( $options ['template'] ) ? $options ['template'] : 'flat';
+		$instance_animation = isset ( $options ['animation'] ) ? $options ['animation'] : '';
+		$instance_nospace = isset ( $options ['nospace'] ) ? $options ['nospace'] : 0;
+		$instance_button = isset($options['button']) ? $options['button'] : 'h';
+		$instance_width = isset($options['width']) ? $options['width'] : '0';
+		$width_style = '';
+		if (intval($instance_width) > 0) {
+			$width_style = ' style="width:'.$instance_width.'px !important;"';
+		}
+		
+		
+		// compatibility with previous template slugs
+		if (!empty($instance_template)) {
+			if ($instance_template == "lite") {
+				$instance_template = "light";
+			}
+			if ($instance_template == "grey-transparent") {
+				$instance_template = "grey";
+			}
+			if ($instance_template == "color-transparent") {
+				$instance_template = "color";
+			}
+		}
+		
+		$class_template = (! empty ( $instance_template )) ? " essbfc-template-" . $instance_template : '';
+		$class_animation = (! empty ( $instance_animation )) ? " essbfc-icon-" . $instance_animation : '';
+		$class_columns = (! empty ( $instance_columns )) ? " essbfc-col-" . $instance_columns : '';
+		$class_nospace = (intval ( $instance_nospace ) == 1) ? " essbfc-nospace" : "";
+		
+		$class_nospace .= ' essbfc-sidebar-btn'.$instance_button;
+		
+		$class_position = $instance_position == "right" ? " essbfc-sidebar-right" : " essbfc-sidebar-left";
+				
+		$link_nofollow = (intval ( $instance_nofollow ) == 1) ? ' rel="nofollow"' : '';
+		$link_newwindow = (intval ( $instance_new_window ) == 1) ? ' target="_blank"' : '';
+		
+		// loading animations
+		if (! empty ( $class_animation )) {
+			essb_resource_builder ()->add_static_footer_css ( ESSB3_PLUGIN_URL . '/lib/modules/social-followers-counter/assets/css/hover.css', 'essb-social-followers-counter-animations', 'css' );
+		}
+		
+		// followers main element
+		printf ( '<div class="essbfc-container essbfc-container-sidebar essbfc-container-sidebar-transition%1$s%2$s%3$s%4$s%5$s">', '', $class_columns, $class_template, $class_nospace, $class_position );
+		
+		// get current state of followers counter
+		$followers_count = essb_followers_counter ()->get_followers ();
+		
+		$display_total = (intval ( $instance_show_total ) == 1) ? true : false;
+		$total_followers = 0;
+		if ($display_total) {
+			foreach ( $followers_count as $network => $count ) {
+				if (intval ( $count ) > 0) {
+					$total_followers += intval ( $count );
+				}
+			}
+		}
+				
+		echo '<ul>';
+		
+		foreach ( essb_followers_counter ()->active_social_networks () as $social ) {
+			$social_followers_text = ESSBSocialFollowersCounterHelper::get_option ( $social . '_text' );
+			$social_custom_icon = ESSBSocialFollowersCounterHelper::get_option($social.'_icon_type');
+			if ($social_custom_icon != '') {
+				$social_custom_icon = ' essbfc-icon-'.$social.'-'.$social_custom_icon;
+			}
+			$social_followers_counter = isset ( $followers_count [$social] ) ? $followers_count [$social] : 0;
+				
+			$social_display = $social;
+			if ($social_display == "instgram") {
+				$social_display = "instagram";
+			}
+			
+				
+			printf ( '<li class="essbfc-%1$s"%2$s>', $social_display, $width_style );
+				
+			$follow_url = essb_followers_counter ()->create_follow_address ( $social );
+			if (! empty ( $follow_url )) {
+				printf ( '<a href="%1$s"%2$s%3$s>', $follow_url, $link_newwindow, $link_nofollow );
+			}
+				
+			echo '<div class="essbfc-network">';
+			printf ( '<i class="essbfc-icon essbfc-icon-%1$s%2$s%3$s"></i>', $social_display, $class_animation, $social_custom_icon );
+			printf ( '<span class="essbfc-followers-count">%1$s</span>', self::followers_number ( $social_followers_counter ) );
+			printf ( '<span class="essbfc-followers-text">%1$s</span>', $social_followers_text );
+			echo '</div>';
+				
+			if (! empty ( $follow_url )) {
+				echo '</a>';
+			}
+			echo '</li>';
+		}
+		
+		echo '</ul>';
+		
+		echo '</div>';
+		
+		echo '
+		<script type="text/javascript">
+		(function( $ ) {
+	$(document).ready(function() {
+		var essb_reveal_follower_sidebar_transition = function() {
+			$(".essbfc-container-sidebar").each(function() {
+				if ($(this).hasClass("essbfc-container-sidebar-transition")) {
+					$(this).removeClass("essbfc-container-sidebar-transition");
+				}
+			});
+		}
+
+		essb_reveal_follower_sidebar_transition();
+
+	});
+
+})( jQuery );
+		</script>';
+		// followers: end
+		
+	}
+	
+	/**
 	 * draw_followers
 	 *
 	 * Display instance of generated followers counter

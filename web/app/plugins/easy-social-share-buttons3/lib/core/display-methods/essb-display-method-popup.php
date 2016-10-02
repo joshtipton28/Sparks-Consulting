@@ -59,10 +59,10 @@ class ESSBDisplayMethodPopup {
 		}
 			
 		if (!empty($popup_user_message)) {
-			$popup_user_message = ESSBCoreHelper::post_details_to_content($popup_user_message);
+			$popup_user_message = essb_post_details_to_content($popup_user_message);
 		}
 		if (!empty($popup_window_title)) {
-			$popup_window_title = ESSBCoreHelper::post_details_to_content($popup_window_title);
+			$popup_window_title = essb_post_details_to_content($popup_window_title);
 		}
 			
 		$popup_trigger_oncomment = ESSBOptionValuesHelper::options_bool_value($options, 'popup_display_comment') ? " essb-popup-oncomment" : "";

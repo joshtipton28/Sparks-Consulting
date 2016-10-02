@@ -40,7 +40,7 @@ class ESSBDisplayMethodTopBar {
 		if ($topbar_usercontent != '') {
 			$topbar_usercontent = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#'), array(get_the_title(), get_site_url(), get_permalink()), $topbar_usercontent);
 		
-			$topbar_usercontent = ESSBCoreHelper::post_details_to_content($topbar_usercontent);
+			$topbar_usercontent = essb_post_details_to_content($topbar_usercontent);
 		}
 			
 		

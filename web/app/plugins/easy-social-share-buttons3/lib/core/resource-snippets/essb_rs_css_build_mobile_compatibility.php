@@ -1,6 +1,8 @@
 <?php
 if (!function_exists('essb_rs_css_build_mobile_compatibility')) {
-	function essb_rs_css_build_mobile_compatibility() {
+	add_filter('essb_css_buffer_head', 'essb_rs_css_build_mobile_compatibility');
+	
+	function essb_rs_css_build_mobile_compatibility($buffer) {
 		global $essb_options;
 		
 		$mobile_css_screensize = ESSBOptionValuesHelper::options_value($essb_options, 'mobile_css_screensize');
@@ -30,6 +32,6 @@ if (!function_exists('essb_rs_css_build_mobile_compatibility')) {
 		
 		}
 		
-		return $snippet;
+		return $buffer.$snippet;
 	}
 }

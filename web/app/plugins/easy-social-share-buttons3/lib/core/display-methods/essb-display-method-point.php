@@ -66,7 +66,7 @@ class ESSBDisplayMethodPoint {
 		
 		
 		$output .= '<div class="essb-point essb-point-'.$point_position.' essb-point-'.$point_shape.' '.$point_animation.'" id="essb-point" data-trigger-scroll="'.($point_open_end).'" data-point-type="'.$point_display_style.'">';
-		$output .= '<i class="essbpb-share"'.$point_style.'></i>';
+		$output .= '<i class="essbpb-share essb_icon_share"'.$point_style.'></i>';
 		
 		if ($point_display_total) {
 			$output .= '<div class="essb-point-total"'.$total_style.'>'.$total_shares_code.'</div>';
@@ -80,7 +80,7 @@ class ESSBDisplayMethodPoint {
 		
 		if ($point_top_content != '' && $point_display_style != 'simple') {
 			$point_top_content = stripslashes($point_top_content);
-			$point_top_content = ESSBCoreHelper::post_details_to_content($point_top_content);
+			$point_top_content = essb_post_details_to_content($point_top_content);
 			$point_top_content = do_shortcode($point_top_content);
 			
 			$output .= '<div class="essb-point-share-buttons-content-top">'.$point_top_content.'</div>';
@@ -90,7 +90,7 @@ class ESSBDisplayMethodPoint {
 
 		if ($point_bottom_content != '' && $point_display_style != 'simple') {
 			$point_bottom_content = stripslashes($point_bottom_content);
-			$point_bottom_content = ESSBCoreHelper::post_details_to_content($point_bottom_content);
+			$point_bottom_content = essb_post_details_to_content($point_bottom_content);
 			$point_bottom_content = do_shortcode($point_bottom_content);
 				
 			$output .= '<div class="essb-point-share-buttons-content-bottom">'.$point_bottom_content.'</div>';

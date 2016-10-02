@@ -146,6 +146,14 @@ class ESSBCoreExtenderShortcodeNative {
 		$message = isset ( $atts ['message'] ) ? $atts ['message'] : '';
 		$counters = isset ( $atts ['counters'] ) ? $atts ['counters'] : 'false';
 		
+		if (defined('ESSB3_DEMO_MODE')) {
+			$query_skinned = isset($_REQUEST['nativemode']) ? $_REQUEST['nativemode'] : '';
+			if ($query_skinned == 'skinned') { 
+				$skinned = true;
+				$skin = 'metro';
+			}
+		}
+		
 		// init global options
 		$native_lang = isset ( $options ['native_social_language'] ) ? $options ['native_social_language'] : "en";
 		
@@ -185,7 +193,7 @@ class ESSBCoreExtenderShortcodeNative {
 		
 		
 		$text = esc_attr ( urlencode ( $post->post_title ) );
-		$url = $post ? get_permalink () : ESSBUrlHelper::get_current_url ( 'raw' );
+		$url = $post ? get_permalink () : essb_get_current_url ( 'raw' );
 		
 		if ($align == "right" || $align == "center") {
 			$css_class_align = $align;
@@ -196,6 +204,10 @@ class ESSBCoreExtenderShortcodeNative {
 		
 		if ($message != '') {
 			$output .= '<div class="essb-message">' . $message . '</div>';
+		}
+		
+		if (defined('ESSB3_SOCIAL_PRIVACY_ACTIVE')) {
+			$css_class_noskin = ' essb-privacynative';
 		}
 		
 		$networks = preg_split ( '#[\s+,\s+]#', $order );

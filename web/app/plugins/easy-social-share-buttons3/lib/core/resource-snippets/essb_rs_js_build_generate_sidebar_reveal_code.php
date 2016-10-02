@@ -1,6 +1,7 @@
 <?php
 if (!function_exists('essb_rs_js_build_generate_sidebar_reveal_code')) {
-	function essb_rs_js_build_generate_sidebar_reveal_code() {
+	add_filter('essb_js_buffer_footer', 'essb_rs_js_build_generate_sidebar_reveal_code');
+	function essb_rs_js_build_generate_sidebar_reveal_code($buffer) {
 		global $essb_options;
 		
 		$appear_pos = ESSBOptionValuesHelper::options_value($essb_options, 'sidebar_leftright_percent');
@@ -118,6 +119,7 @@ if (!function_exists('essb_rs_js_build_generate_sidebar_reveal_code')) {
 		});
 		';
 		}
-		return $output;
+		$output = trim(preg_replace('/\s+/', ' ', $output));
+		return $buffer.$output;
 	}
 }

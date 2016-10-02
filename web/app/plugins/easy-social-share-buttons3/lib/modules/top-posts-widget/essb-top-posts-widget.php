@@ -731,3 +731,5 @@ if ( !class_exists( 'ESSBTopSocialPostsWidget' ) ) {
 
   add_action( 'widgets_init', 'init_wp_widget_essb_top_posts' );
 }
+
+?>

@@ -36,7 +36,9 @@ class ESSBOptionsStructureHelperShared {
 		$this->sidebar_section_options = array();
 	}
 
-	public function tab($tab_id, $tab_text, $tab_title, $hide_update_button = false, $hide_in_navigation = false, $wizard_tab = false) {
+	public function tab($tab_id, $tab_text, $tab_title, $tab_icon = '', $align = '', $hide_update_button = false, $hide_in_navigation = false, $wizard_tab = false) {
+		
+		if ($tab_icon == '') { $tab_icon = 'ti-settings'; }
 		
 		$this->tabs[$tab_id] = $tab_text;
 		$this->sidebar_sections[$tab_id] = array(
@@ -44,7 +46,9 @@ class ESSBOptionsStructureHelperShared {
 				'fields' => array(),
 				'hide_update_button' => $hide_update_button,
 				'hide_in_navigation' => $hide_in_navigation,
-				'wizard_tab' => $wizard_tab
+				'wizard_tab' => $wizard_tab,
+				'icon' => $tab_icon,
+				'align' => $align
 		);
 
 		$this->sidebar_section_options[$tab_id] = array();

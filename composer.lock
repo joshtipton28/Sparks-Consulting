@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "75d945f835369d4cecc63dd5f35fdf6a",
-    "content-hash": "726e6b1ef8d1a90d30c54089b91c8ed9",
+    "hash": "46a8128c2a8c0be08c5a92bf925bae6e",
+    "content-hash": "d6bf9a3bf96c0a3982fe2f4afa907519",
     "packages": [
         {
             "name": "composer/installers",
@@ -483,15 +483,15 @@
         },
         {
             "name": "wpackagist-plugin/rest-api",
-            "version": "2.0-beta13",
+            "version": "2.0-beta14",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/rest-api/",
-                "reference": "tags/2.0-beta13"
+                "reference": "tags/2.0-beta14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/rest-api.2.0-beta13.zip",
+                "url": "https://downloads.wordpress.org/plugin/rest-api.2.0-beta14.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -543,15 +543,15 @@
         },
         {
             "name": "wpackagist-plugin/wordfence",
-            "version": "6.1.17",
+            "version": "6.2.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordfence/",
-                "reference": "tags/6.1.17"
+                "reference": "tags/6.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordfence.6.1.17.zip",
+                "url": "https://downloads.wordpress.org/plugin/wordfence.6.2.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -560,6 +560,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/wordfence/"
+        },
+        {
+            "name": "wpackagist-plugin/wp-csv",
+            "version": "1.8.0.0",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wp-csv/",
+                "reference": "tags/1.8.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-csv.1.8.0.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/wp-csv/"
         },
         {
             "name": "wpackagist-plugin/xml-sitemap-feed",

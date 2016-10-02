@@ -120,13 +120,16 @@ class ESSBCoreExtenderTweetOptimization {
 					if ($twitter_message_optimize_dots) {
 						$length -= 3;
 					}
-					$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
-					$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
-					if ($twitter_message_optimize_dots) {
-						$trimmed_text .= '...';
+					
+					if ($length > $max_message_length) {
+						$last_space = strrpos ( substr ( $result ['tweet'], 0, $length ), '+' );
+						$trimmed_text = substr ( $result ['tweet'], 0, $last_space );
+						if ($twitter_message_optimize_dots) {
+							$trimmed_text .= '...';
+						}
+							
+						$result ['tweet'] = $trimmed_text;
 					}
-						
-					$result ['tweet'] = $trimmed_text;
 					break;
 			}
 				

@@ -19,6 +19,11 @@ if (!function_exists('essb_rs_css_popular_posts')) {
 		
 		$snippet .= '.essb-popular-posts .essb-widget-popular-posts-number-text, .widget_essb_popular_posts .essb-widget-popular-posts-number-text { margin-left: 4px; text-transform: uppercase; }';
 		
+		$snippet .= '.essbasc-popup-content .essb-popular-posts ul { width: 100%; }';
+		$snippet .= '.essbasc-popup-content .essb-popular-posts li { width: 45%; display: inline-block; margin-bottom: 15px; text-align: left; }';
+		$snippet .= '.essbasc-popup-content .essb-popular-posts h3 { background: none; text-align: left; }';
+		$snippet .= '.essbasc-popup-content .essb-popular-posts .entry-image { margin-bottom: 10px; }';
+		
 		return $snippet;
 	}
 }
@@ -38,7 +43,9 @@ if (! function_exists ( 'essb_popular_posts' )) {
 				'show_num' => 'false', 
 				'source' => '', 
 				'show_num_text' => '',
-				'same_cat' => 'false' 
+				'same_cat' => 'false',
+				'show_thumb' => 'false',
+				'thumb_size' => '' 
 				), $atts );
 				
 		$title = (! empty ( $attributes ['title'] )) ? $attributes ['title'] : '';
@@ -56,6 +63,9 @@ if (! function_exists ( 'essb_popular_posts' )) {
 			$show_num_text = 'shares';
 		
 		$same_cat = isset ( $attributes ['same_cat'] ) ? $attributes ['same_cat'] : 'false';
+		
+		$show_thumb = isset($attributes['show_thumb']) ? $attributes ['show_thumb'] : 'false';
+		$thumb_size = isset($attributes['thumb_size']) ? $attributes ['thumb_size'] : 'full';
 		
 		$sort_meta = "";
 		if ($source == "shares")
@@ -121,11 +131,19 @@ if (! function_exists ( 'essb_popular_posts' )) {
   					
   					$post_number_value = get_post_meta(get_the_ID(), $sort_meta, true);
   					
-  					$post_number_value = ESSBButtonHelper::kilomega($post_number_value);
+  					$post_number_value = essb_kilomega($post_number_value);
   					
   					?>
   				
   					<li>
+  					
+  					<?php if (current_theme_supports('post-thumbnails') && $show_thumb && has_post_thumbnail()) : ?>
+			              <div class="entry-image">
+			                <a href="<?php the_permalink(); ?>" rel="bookmark">
+			                  <?php the_post_thumbnail($thumb_size); ?>
+			                </a>
+			              </div>
+		            <?php endif; ?>
   						<a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?>
   					<?php if ( $show_num && $show_num == 'yes' ) : ?>
 				<span class="essb-widget-popular-posts-number"><?php echo $post_number_value; ?><span class="essb-widget-popular-posts-number-text"><?php echo $show_num_text; ?></span></span>
@@ -204,6 +222,8 @@ class ESSBPopularPostsWidget extends WP_Widget {
 		$instance['show_num'] = isset( $new_instance['show_num'] ) ? (bool) $new_instance['show_num'] : false;
 		$instance['same_cat'] = isset( $new_instance['same_cat'] ) ? (bool) $new_instance['same_cat'] : false;
 		$instance['show_num_text'] = sanitize_text_field( $new_instance['show_num_text'] );
+		$instance['show_thumb'] = isset( $new_instance['show_thumb'] ) ? (bool) $new_instance['show_thumb'] : false;
+		$instance['thumb_size'] = sanitize_text_field( $new_instance['thumb_size'] );
 		return $instance;
 	}
 
@@ -222,6 +242,10 @@ class ESSBPopularPostsWidget extends WP_Widget {
 		$same_cat = isset( $instance['same_cat'] ) ? (bool) $instance['same_cat'] : false;
 		$source    = isset( $instance['source'] ) ? esc_attr( $instance['source'] ) : '';
 		$show_num_text     = isset( $instance['show_num_text'] ) ? esc_attr( $instance['show_num_text'] ) : '';
+		$show_thumb = isset( $instance['show_thumb'] ) ? (bool) $instance['show_thumb'] : false;
+		$thumb_size    = isset( $instance['thumb_size'] ) ? esc_attr( $instance['thumb_size'] ) : '';
+		
+		$sizes = get_intermediate_image_sizes();
 		?>
 		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
@@ -245,6 +269,17 @@ class ESSBPopularPostsWidget extends WP_Widget {
 		
 		<p><input class="checkbox" type="checkbox"<?php checked( $same_cat ); ?> id="<?php echo $this->get_field_id( 'same_cat' ); ?>" name="<?php echo $this->get_field_name( 'same_cat' ); ?>" />
 		<label for="<?php echo $this->get_field_id( 'same_cat' ); ?>"><?php _e( 'Display posts from same category only?' ); ?></label></p>
+
+		<p><input class="checkbox" type="checkbox"<?php checked( $show_thumb ); ?> id="<?php echo $this->get_field_id( 'show_thumb' ); ?>" name="<?php echo $this->get_field_name( 'show_thumb' ); ?>" />
+		<label for="<?php echo $this->get_field_id( 'show_thumb' ); ?>"><?php _e( 'Include featured image of post?', 'essb' ); ?></label></p>
+		<p><label for="<?php echo $this->get_field_id( 'thumb_size' ); ?>"><?php _e( 'Featured image size:', 'essb' ); ?></label>
+		<select id="<?php echo $this->get_field_id('thumb_size'); ?>" name="<?php echo $this->get_field_name('thumb_size'); ?>" class="widefat">
+              <?php foreach ($sizes as $size) : ?>
+                <option value="<?php echo $size; ?>"<?php if ($thumb_size == $size) echo ' selected'; ?>><?php echo $size; ?></option>
+              <?php endforeach; ?>
+              <option value="full"<?php if ($thumb_size == $size) echo ' selected'; ?>><?php _e('full'); ?></option>
+            </select>
+		</p>
 		<?php
 	}
 }

@@ -8,6 +8,8 @@ class ESSBOptionsFramework {
 	public static $headings_count = 0;
 	public static $heading_navigations = array();
 	
+	public static $default_settings_group = "essb_options";
+	
 	public static function reset_row_status() {
 		self::$was_lastrow_even = false;
 		self::$heading_navigations = array();
@@ -33,7 +35,17 @@ class ESSBOptionsFramework {
 		$recommended = isset($option['recommended']) ? $option['recommended'] : '';
 		$select2_options = isset($option['select2_options']) ? $option['select2_options'] : array();
 		
-		$settings_group = "essb_options";
+		$width = isset($option['width']) ? $option['width'] : '';
+		$title_position = isset($option['title_position']) ? $option['title_position'] : '';
+		$colwidth = isset($option['colwidth']) ? $option['colwidth'] : '';
+		$style = isset($option['style']) ? $option['style'] : '';
+		$in_section = isset($option['in_section']) ? $option['in_section'] : '';
+		$element_options = isset($option['element_options']) ? $option['element_options']: array();
+		$col_width = isset($option['col_width']) ? $option['col_width'] : '';
+		$shortcode = isset($option['shortcode']) ? $option['shortcode'] : '';
+		
+		//$settings_group = "essb_options";
+		$settings_group = self::$default_settings_group;
 		$is_fans_counter = false;
 		if (strpos($id, 'essb3fans_') !== false) {
 			$option_value = isset($essb_admin_options_fanscounter[$id]) ? $essb_admin_options_fanscounter[$id] : '';
@@ -65,17 +77,17 @@ class ESSBOptionsFramework {
 				self::draw_heading($title, '5', $submenu_link);
 				break;		
 			case "switch":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_switch_field($id, $settings_group, $option_value, $on_text, $off_text);
 				self::draw_options_row_end();
 				break;		
 			case "switch-in-panel":
 				self::draw_settings_panel_start($title);
 				self::draw_switch_field($id, $settings_group, $option_value, $on_text, $off_text);
-				self::draw_settings_panel_end($description, $recommended);
+				self::draw_settings_panel_end($description, $recommended, $col_width);
 				break;		
 			case "text":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_input_field($id, false, $settings_group, $option_value, $icon, $class, $icon_position);
 				self::draw_options_row_end();
 				break;		
@@ -86,17 +98,17 @@ class ESSBOptionsFramework {
 				break;
 				
 			case "text-stretched":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_input_field($id, true, $settings_group, $option_value, $icon, $class, $icon_position);
 				self::draw_options_row_end();
 				break;		
 			case "checkbox":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_checkbox_field($id, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;		
 			case "checkbox_list":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_checkbox_list_field($id, $listOfValues, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;		
@@ -128,29 +140,47 @@ class ESSBOptionsFramework {
 							}
 						}
 						else {
-							if (!in_array('sms|SMS', $listOfValues)) {
-								$listOfValues[] = 'sms|SMS';
-							}
-							if (!in_array('viber|Viber', $listOfValues)) {
-								$listOfValues[] = 'viber|Viber';
-							}
-							if (!in_array('telegram|Telegram', $listOfValues)) {
-								$listOfValues[] = 'telegram|Telegram';
-							}
-							if (!in_array('subscribe|Subscribe', $listOfValues)) {
-								$listOfValues[] = 'subscribe|Subscribe';
+							
+							if (strpos($id, "profiles_") === false) {
+								if (!in_array('sms|SMS', $listOfValues)) {
+									$listOfValues[] = 'sms|SMS';
+								}
+								if (!in_array('viber|Viber', $listOfValues)) {
+									$listOfValues[] = 'viber|Viber';
+								}
+								if (!in_array('telegram|Telegram', $listOfValues)) {
+									$listOfValues[] = 'telegram|Telegram';
+								}
+								if (!in_array('subscribe|Subscribe', $listOfValues)) {
+									$listOfValues[] = 'subscribe|Subscribe';
+								}
+								if (!in_array('skype|Skype', $listOfValues)) {
+									$listOfValues[] = 'skype|Skype';
+								}
+								if (!in_array('messenger|Facebook Messenger', $listOfValues)) {
+									$listOfValues[] = 'messenger|Facebook Messenger';
+								}
+								if (!in_array('kakaotalk|Kakao', $listOfValues)) {
+									$listOfValues[] = 'kakaotalk|Kakao';
+								}
+								if (!in_array('share|Share Button', $listOfValues)) {
+									$listOfValues[] = 'share|Share';
+								}
+								if (!in_array('livejournal|LiveJournal', $listOfValues)) {
+									$listOfValues[] = 'livejournal|LiveJournal';
+								}
 							}
 						}
 						$listOfValues = self::translate_key_array($listOfValues);
 					}
 				}
 				
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_checkbox_list_sortable_field($id, $listOfValues, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;		
 			case "select":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_select_field($id, $listOfValues, false, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;	
@@ -160,22 +190,22 @@ class ESSBOptionsFramework {
 				self::draw_settings_panel_end( $description, $recommended);
 				break;	
 			case "textarea":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_textarea_field($id, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;
 			case "editor":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_editor_field($id, $settings_group, $option_value, $mode);
 				self::draw_options_row_end();
 				break;
 			case "wpeditor":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_wpeditor_field($id, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;
 			case "color":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_color_field($id, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;
@@ -185,37 +215,63 @@ class ESSBOptionsFramework {
 				self::draw_settings_panel_end($description, $recommended);
 				break;
 			case "image_checkbox":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_image_checkbox_field($id, $listOfValues, $settings_group, $option_value);
 				//self::draw_image_checkbox_field($id, $listOfValues, 'essb_options', array("checkbox_option2" => true));
 				self::draw_options_row_end();
 				break;
+			case "html_checkbox_buttons":
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
+				self::draw_image_checkbox_field($id, $listOfValues, $settings_group, $option_value, array('html' => 'true', 'shortcode' => $shortcode, 'width' => $width, 'buttons' => 'true'));
+				//self::draw_image_checkbox_field($id, $listOfValues, 'essb_options', array("checkbox_option2" => true));
+				self::draw_options_row_end();
+				break;
 			case "image_radio":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_image_radio_field($id, $listOfValues, $settings_group, $option_value);
 				//self::draw_image_radio_field($id, $listOfValues, 'essb_options', 'checkbox_option1');
 				self::draw_options_row_end();
 				break;
-			case "func":
-				self::draw_options_row_start($title, $description, $recommended);
+			case "html_radio":
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
+				self::draw_image_radio_field($id, $listOfValues, $settings_group, $option_value, array('html' => 'true', 'shortcode' => $shortcode, 'width' => $width));
+				self::draw_options_row_end();
+				break;
+			case "html_radio_buttons":
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
+				self::draw_image_radio_field($id, $listOfValues, $settings_group, $option_value, array('html' => 'true', 'shortcode' => $shortcode, 'width' => $width, 'buttons' => 'true'));
+				self::draw_options_row_end();
+			break;
+				case "func":
+				if ($title != '') {
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
+				}
+				else {
+					self::draw_options_row_start_full();
+				}
 				if (function_exists($id)) {					
 					$id($option);
 				}
+				if ($title != '') {
 				self::draw_options_row_end();
+				}
+				else {
+					self::draw_options_row_end();
+				}
 				break;
 				
 			case "file":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_fileselect_field($id, $settings_group, $option_value, $icon, $class);
 				self::draw_options_row_end();
 				break;	
 			case "simplesort":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_simplesort_field($id, $listOfValues, $settings_group, $option_value);
 				self::draw_options_row_end();
 				break;
 			case 'section_start':
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_section_start();
 				self::$section_active = true;
 				break;
@@ -225,12 +281,12 @@ class ESSBOptionsFramework {
 				self::$section_active = false;
 				break;
 			case "select2":
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width);
 				self::draw_select2_field($id, $listOfValues, false, $settings_group, $option_value, $select2_options);
 				self::draw_options_row_end();
 				break;	
 			case 'section_start_panels':
-				self::draw_options_row_start($title, $description, $recommended);
+				self::draw_options_row_start($title, $description, $recommended, $col_width, $title_position);
 				self::$section_active = true;
 				break;
 			case 'section_end_panels':
@@ -246,10 +302,275 @@ class ESSBOptionsFramework {
 				self::draw_options_row_end();
 				self::$section_active = false;
 				break;
+			case 'structure_section_start':
+				self::draw_structure_section_start($width, $title, $description, $title_position, $colwidth);
+				break;
+			case 'structure_section_end':
+				self::draw_structure_section_end($title_position);
+				break;
+			case 'structure_row_start':
+				self::draw_structure_row_start($class);
+				break;
+			case 'structure_row_end':
+				self::draw_structure_row_end();
+				break;	
+			case "hint":
+				self::draw_hint($title, $description, $icon, $style, $in_section);
+				break;	
+			case "panel_start":
+				self::draw_panel_start($title, $description, $icon, $element_options, $settings_group);
+				break;
+			case 'panel_end':
+				self::draw_panel_end();
+				break;	
+			case "tabs_start":
+				self::draw_tabs_start($listOfValues, $element_options);
+				break;
+			case 'tabs_end':
+				self::draw_tabs_end();
+				break;	
+			case "tab_start":
+				self::draw_tab_start($element_options);
+				break;
+			case 'tab_end':
+				self::draw_tab_end();
+				break;	
+			case 'title':
+				self::draw_title($title, $description, $class);
+				break;
 		}
 	}
 	
-	public static function draw_options_row_start($title, $description = '', $recommended = '') {
+	public static function draw_title($title = '', $description = '', $class = '') {
+		self::draw_options_row_start_full($class);
+		
+		if ($title != '') {
+			print '<strong class="essb-title">'.$title.'</strong>';
+		}
+		
+		if ($description != '') {
+			if ($title != '') { print '<br/>'; }
+			print '<span class="label">'.$description.'</span>';
+		}
+		
+		self::draw_options_row_end();
+	}
+
+	public static function draw_tab_start($element_options = array()) {
+		$element_id = isset($element_options['element_id']) ? $element_options['element_id'] : '';
+		$active = isset($element_options['active']) ? $element_options['active'] : '';
+	
+
+		print '<div class="essb-section-tab ess-section-tab-'.$element_id.($active == 'true' ? " active": '').'" id="'.$element_id.'">';
+		
+	}
+	
+	public static function draw_tab_end() {
+		print '</div>'; // tab
+	}
+	
+	public static function draw_tabs_start($values, $element_options = array()) {
+		$vertical = isset($element_options['vertical']) ? $element_options['vertical'] : '';
+		$element_id = isset($element_options['element_id']) ? $element_options['element_id'] : '';
+		
+		print '<div class="essb-section-tabs '.($vertical == 'true' ? " essb-section-tabs-vertical" : " essb-section-tabs-linear").'">';
+		print '<div class="essb-section-tabs-navigation">';
+		
+		$tab_count = 0;
+		print '<ul>';
+		foreach ($values as $tab) {
+			print '<li class="essb-section-tabs-single'.($tab_count == 0 ? " active": "").'" data-tab="'.$element_id.'-'.$tab_count.'">'.$tab.'</li>';
+			$tab_count++;
+		}
+		
+		print '</ul>';
+		print '</div>';
+		
+		print '<div class="essb-section-tabs-container">';
+	}
+	
+	public static function draw_tabs_end() {
+		print '</div>'; // container
+		print '</div>'; // tab
+	}
+	
+	public static function draw_panel_start($title = '', $description = '', $icon = '', $element_options = array(), $settings_group = 'essb_options') {
+		global $essb_admin_options;
+		
+		self::draw_options_row_start_full();
+		
+		$style = isset($element_options['style']) ? $element_options['style'] : '';
+		$mode = isset($element_options['mode']) ? $element_options['mode'] : '';
+		$state = isset($element_options['state']) ? $element_options['state'] : '';
+		$switch_id = isset($element_options['switch_id']) ? $element_options['switch_id'] : '';
+		$switch_value = ($switch_id != '') ? isset($essb_admin_options[$switch_id]) ? $essb_admin_options[$switch_id] : '' : '';
+		$switch_on = isset($element_options['switch_on']) ? $element_options['switch_on'] : '';
+		$switch_off = isset($element_options['switch_off']) ? $element_options['switch_off'] : '';
+		$switch_submit = isset($element_options['switch_submit']) ? $element_options['switch_submit'] : '';
+
+		print '<div class="essb-portlet'.($style != "" ? " essb-portlet-".$style : "").($mode != '' ? ' essb-portlet-'.$mode : '').($switch_submit == 'true' ? ' essb-portlet-submit' : '').'">';
+		
+		print '<div class="essb-portlet-heading'.($state == 'closed' ? ' essb-portlet-heading-closed' : '').($switch_submit == 'true' ? ' essb-portlet-submit' : '').'">';
+
+		if ($mode != '') {
+			if ($mode == 'toggle') {
+				print '<div class="essb-portlet-state">';
+				if ($state == 'closed') {
+					print '<i class="fa fa-chevron-right"></i>';
+				}
+				else {
+					print '<i class="fa fa-chevron-down"></i>';
+				}
+				print '</div>';
+			}
+			
+			if ($mode == 'switch') {
+				print '<div class="essb-portlet-state essb-portlet-state-switch">';
+				self::draw_switch_field($switch_id, $settings_group, $switch_value, $switch_on, $switch_off);
+				print '</div>';
+				
+				if ($switch_value != 'true') {
+					$state = 'closed';
+				}
+			}
+		}
+		
+		if ($icon != '') {
+			print '<div class="essb-portlet-heading-icon"><i class="'.$icon.'"></i></div>';
+		}
+		print "<h3>".$title.'</h3>';
+			if ($description != '') {
+			print '<div class="essb-portlet-description">'.$description.'</div>';
+		}
+		
+ 		
+		print '</div>';		
+		// end: heading
+		
+		print '<div class="essb-portlet-content'.($state == 'closed' ? ' essb-portlet-content-closed' : '').'">';
+		
+		print '<div class="essb-portlet-content-separator"></div>';
+		
+		
+	}
+	
+	public static function draw_panel_end() {
+		print '</div>'; // content
+		print '</div>'; // panel
+		
+		self::draw_options_row_end();
+	}
+	
+	public static function draw_hint($title = '', $description = '', $icon = '', $style = '', $in_section = 'false') {
+		
+		self::draw_options_row_start_full();
+		
+		print '<div class="essb-options-hint'.($style != "" ? " essb-options-hint-".$style : "").'">';
+		
+		if ($icon != '') {
+			print '<div class="essb-options-hint-icon"><i class="'.$icon.'"></i></div>';
+			print '<div class="essb-options-hint-withicon">';
+		}
+		
+		if ($title != '') {
+			printf('<div class="essb-options-hint-title">%1$s</div>', $title);
+		}
+		if ($description != '') {
+			printf('<div class="essb-options-hint-desc">%1$s</div>', $description);
+		}
+		
+		if ($icon != '') { print '</div>'; }
+		
+		print '</div>';
+		
+		self::draw_options_row_end();
+	}
+	
+	public static function draw_structure_row_start($class = '') {
+		$row_class = "";
+		if (!self::$section_active) {
+			$row_class = (self::$was_lastrow_even) ? "odd" : "even";
+			self::$was_lastrow_even = !self::$was_lastrow_even;
+		}
+		
+		if ($class != '') { $row_class .= ' '.$class; }
+		
+		printf('<div class="essb-flex-grid-r %1$s table-border-bottom">', $row_class);
+	}
+	
+	public static function draw_structure_row_end() {
+		print '</div>';
+	}
+	
+	public static function draw_structure_section_end($position = 'top') {
+		if ($position == 'left') {
+			print '</div>';
+		}
+		
+		print '</div>';
+	}
+	
+	public static function draw_structure_section_start($width = '', $title = '', $description = '', $position = 'top', $colwidth = '') {
+		if ($width == '') {
+			$width = 'c12'; // full row if no custom width is applied;
+		}
+
+		printf('<div class="essb-flex-grid-c %1$s">', $width);
+		
+		if ($position == '') { $position = 'top'; }
+		
+		if ($title != '') {
+			print '<div class="essb-flex-grid-r">';
+			
+			if ($position == 'top') {
+				print '<div class="essb-flex-grid-c c12 bold">';
+				print $title;
+				
+				if ($description != '') {
+					print '<br/><span class="label">'.$description.'</span>';
+				}
+				print '</div>';
+				
+				print '</div>';
+			}
+			if ($position == 'left') {
+				
+				$col1 = '3';
+				$col2 = '9';
+				
+				if (intval($colwidth) > 0) {
+					$col1 = $colwidth;
+					$col2 = 12 - intval($col1);
+				} 
+				
+				print '<div class="essb-flex-grid-c c'.$col1.' bold">';
+				print $title;
+				
+				if ($description != '') {
+					print '<br/><span class="label">'.$description.'</span>';
+				}
+				print '</div>';
+				echo '<div class="essb-flex-grid-c c'.$col2.'">';
+			}
+		}
+	}
+	
+	public static function draw_options_row_start($title, $description = '', $recommended = '', $col_width = '', $vertical = '') {
+		
+		// @new 4.0 - if field has no title than we use it in full width
+		if (empty($title)) {
+			self::draw_options_row_start_full();
+			return;
+		}
+		
+		$basic_param_col = '3';
+		$basic_value_col = '9';
+		
+		if (intval($col_width) > 0) {
+			$basic_param_col = $col_width;
+			$basic_value_col = 12 - $col_width;
+		}
+		
 		$row_class = "";
 		if (!self::$section_active) {
 			$row_class = (self::$was_lastrow_even) ? "odd" : "even";
@@ -268,25 +589,42 @@ class ESSBOptionsFramework {
 								</div>';
 		}
 		
-		printf('<tr class="%1$s table-border-bottom">', $row_class);
-		printf('<td class="bold" valign="top">%1$s%3$s%2$s</td>', $title, $description, $recommended);
-		echo '<td valign="top">';
+		//printf('<tr class="%1$s table-border-bottom">', $row_class);
+		//printf('<td class="bold" valign="top">%1$s%3$s%2$s</td>', $title, $description, $recommended);
+		//echo '<td valign="top">';
+		if ($vertical == 'true') {
+			printf('<div class="essb-flex-grid-r %1$s table-border-bottom essb-flex-grid-nomargin">', $row_class);
+			printf('<div class="essb-flex-grid-c c12 bold">%1$s%3$s%2$s</div>', $title, $description, $recommended);
+			echo '</div>';
+			printf('<div class="essb-flex-grid-r %1$s table-border-bottom">', $row_class);
+			echo '<div class="essb-flex-grid-c c12">';
+				
+		}
+		else {
+			printf('<div class="essb-flex-grid-r %1$s table-border-bottom">', $row_class);
+			printf('<div class="essb-flex-grid-c c'.$basic_param_col.' bold">%1$s%3$s%2$s</div>', $title, $description, $recommended);
+			echo '<div class="essb-flex-grid-c c'.$basic_value_col.'">';
+		}
 	}
 	
-	public static function draw_options_row_start_full() {
+	public static function draw_options_row_start_full($class = '') {
 		$row_class = "";
 		if (!self::$section_active) {
 			$row_class = (self::$was_lastrow_even) ? "odd" : "even";
 			self::$was_lastrow_even = !self::$was_lastrow_even;
 		}
 		
-		printf('<tr class="%1$s table-border-bottom">', $row_class);
-		echo '<td valign="top" colspan="2">';
+		if ($class != '') { $row_class .= ' '.$class; }
+		
+		//printf('<tr class="%1$s table-border-bottom">', $row_class);
+		//echo '<td valign="top" colspan="2">';
+		printf('<div class="essb-flex-grid-r %1$s table-border-bottom">', $row_class);
+		print '<div class="essb-flex-grid-c c12">';
 	}
 	
 	public static function draw_options_row_end() {
-		echo '</td>';
-		echo '</tr>';
+		echo '</div>';
+		echo '</div>';
 	}
 
 	public static function draw_settings_panel_start($title) {
@@ -362,9 +700,12 @@ class ESSBOptionsFramework {
 			$submenu_link = sprintf('id="%1$s"', $navigation_id);
 		}
 		
-		printf( '<tr class="table-border-bottom" %1$s>', $submenu_link);
+		/*printf( '<tr class="table-border-bottom" %1$s>', $submenu_link);
 		printf('<td colspan="2" class="%1$s"><div>%2$s</div></td>', $css_class_heading, $title);
-		echo '</tr>';
+		echo '</tr>';*/
+		printf('<div class="essb-flex-grid-r" %1$s>', $submenu_link);
+		printf('<div class="essb-flex-grid-c c12 essb-heading %1$s"><div>%2$s</div></div>', $css_class_heading, $title);
+		print '</div>';
 	}
 	
 	public static function draw_simplesort_field($field, $listOfValues, $settings_group = 'essb_options', $value = '') {
@@ -381,14 +722,22 @@ class ESSBOptionsFramework {
 		echo '</ul>';
 	}
 	
-	public static function draw_image_checkbox_field($field, $listOfValues, $settings_group = 'essb_options', $value = '') {
+	public static function draw_image_checkbox_field($field, $listOfValues, $settings_group = 'essb_options', $value = '', $element_options = array()) {
 		$exist_user_value = false;
 
 		if ($value != '') {
 			$exist_user_value = true;
 		}		
 		
-		echo '<div class="essb_image_checkbox_container essb_image_checkbox_container_'.$field.'">';
+		if (!isset($element_options)) {
+			$element_options = array();
+		}
+		$html_values = isset($element_options['html']) ? $element_options['html'] : '';
+		$shortcode = isset($element_options['shortcode']) ? $element_options['shortcode'] : '';
+		$width = isset($element_options['width']) ? $element_options['width'] : '';
+		$buttons = isset($element_options['buttons']) ? $element_options['buttons'] : '';
+		
+		echo '<div class="essb_image_checkbox_container essb_image_checkbox_container_'.$field.' '.($html_values == 'true' ? 'essb_radio_container_html' : '').' '.($buttons == 'true' ? 'essb_radio_container_buttons' : '').'">';
 		foreach ( $listOfValues as $singleValueCode => $singleValue ) {
 			$label = isset($singleValue['label']) ? $singleValue['label'] : '';
 			
@@ -407,24 +756,42 @@ class ESSBOptionsFramework {
 				$label = sprintf('<div class="essb_checkbox_label">%1$s</div>', $label);
 			}	
 			
+			if ($html_values == 'true') {
+				if ($shortcode == 'true') {
+					$singleValue['image'] = do_shortcode($singleValue['image']);
+				}
+				
+				printf('<div class="essb_checkbox"><div class="essb_image_checkbox%6$s" data-field="%8$s_%3$s" '.($width != '' ? ' style="width:'.$width.';"' : '').'>
+						<span class="checkbox-image">%5$s%2$s</span>
+						<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
+						<input type="checkbox" id="essb_options_%8$s_%3$s" name="%4$s[%8$s][]" value="%3$s"%7$s/>
+						</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $active_state, $active_element, $field);
+			}
+			else {
 			printf('<div class="essb_checkbox"><div class="essb_image_checkbox%6$s" data-field="%8$s_%3$s">
 					<span class="checkbox-image"><img src="%1$s/%2$s"/></span>
 					<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
 					<input type="checkbox" id="essb_options_%8$s_%3$s" name="%4$s[%8$s][]" value="%3$s"%7$s/>					
 					</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $active_state, $active_element, $field);
+			}
 		}	
 		echo '</div>';
 	}
 
-	public static function draw_image_radio_field($field, $listOfValues, $settings_group = 'essb_options', $value = '') {		
+	public static function draw_image_radio_field($field, $listOfValues, $settings_group = 'essb_options', $value = '', $element_options = array()) {		
 		$exist_user_value = false;
 		
 		//if ($value != '') {
 			$exist_user_value = true;
 		//}
 		
+		if (!isset($element_options)) { $element_options = array(); }
+		$html_values = isset($element_options['html']) ? $element_options['html'] : '';
+		$shortcode = isset($element_options['shortcode']) ? $element_options['shortcode'] : '';
+		$width = isset($element_options['width']) ? $element_options['width'] : '';
+		$buttons = isset($element_options['buttons']) ? $element_options['buttons'] : '';
 		
-		echo '<div class="essb_image_radio_container essb_image_radio_container_'.$field.'">';
+		echo '<div class="essb_image_radio_container essb_image_radio_container_'.$field.' '.($html_values == 'true' ? 'essb_radio_container_html' : '').' '.($buttons == 'true' ? 'essb_radio_container_buttons' : '').'">';
 		$position = 1;
 		foreach ( $listOfValues as $singleValueCode => $singleValue ) {
 			$label = isset($singleValue['label']) ? $singleValue['label'] : '';
@@ -440,14 +807,31 @@ class ESSBOptionsFramework {
 			}				
 			
 			if ($label != '') {
-				$label = sprintf('<div class="essb_radio_label">%1$s</div>', $label);
+				if ($html_values == 'true') {
+					$label = sprintf('<div class="essb_radio_label_html">%1$s</div>', $label);
+				}
+				else {
+					$label = sprintf('<div class="essb_radio_label">%1$s</div>', $label);
+				}
 			}
 				
-			printf('<div class="essb_radio"><div class="essb_image_radio%8$s" data-field="%6$s_%7$s">
-					<span class="checkbox-image"><img src="%1$s/%2$s"/></span>
-					<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
-					<input type="radio" id="essb_options_%6$s_%7$s" name="%4$s[%6$s]" value="%3$s"%9$s/>
-					</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $field, $position, $active_state, $active_element);
+			if ($html_values == 'true') {
+				if ($shortcode == 'true') {
+					$singleValue['image'] = do_shortcode($singleValue['image']);
+				}
+				printf('<div class="essb_radio"><div class="essb_image_radio%8$s" data-field="%6$s_%7$s" '.($width != '' ? ' style="width:'.$width.';"' : '').'>
+						<span class="checkbox-image">%5$s%2$s</span>
+						<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
+						<input type="radio" id="essb_options_%6$s_%7$s" name="%4$s[%6$s]" value="%3$s"%9$s/>
+						</div></div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $field, $position, $active_state, $active_element);
+			}
+			else {
+				printf('<div class="essb_radio"><div class="essb_image_radio%8$s" data-field="%6$s_%7$s">
+						<span class="checkbox-image"><img src="%1$s/%2$s"/></span>
+						<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
+						<input type="radio" id="essb_options_%6$s_%7$s" name="%4$s[%6$s]" value="%3$s"%9$s/>
+						</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $field, $position, $active_state, $active_element);
+			}
 			$position++;
 		}
 		echo '</div>';
@@ -551,7 +935,7 @@ class ESSBOptionsFramework {
 		}
 		
 		echo '<input id="essb_options_' . $field_id . '" type="text" name="' . $settings_group . '[' . $field_id . ']" value="' . $value . '" class="input-element small-stretched '.$class.'" />';
-		echo '<a href="#" class="button" id="essb_fileselect_' . $field_id . '">'.__('Select File', ESSB3_TEXT_DOMAIN).'</a>';
+		echo '<a href="#" class="essb-btn essb-btn-blue" id="essb_fileselect_' . $field_id . '" style="margin-left: 5px; margin-top: -2px;">'.__('Select File', ESSB3_TEXT_DOMAIN).'</a>';
 		?>
 		
 		<script type="text/javascript">

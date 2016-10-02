@@ -1,6 +1,7 @@
 <?php
 if (!function_exists('essb_rs_css_build_postbar_customizations')) {
-	function essb_rs_css_build_postbar_customizations() {
+	add_filter('essb_css_buffer_head', 'essb_rs_css_build_postbar_customizations');
+	function essb_rs_css_build_postbar_customizations($buffer) {
 		global $essb_options;
 		
 		$postbar_bgcolor = ESSBOptionValuesHelper::options_value($essb_options, 'postbar_bgcolor');
@@ -35,6 +36,6 @@ if (!function_exists('essb_rs_css_build_postbar_customizations')) {
 		// postbar related code to move body below it
 		$snippet .= ('body.single {margin-bottom: 46px !important;}');
 		
-		return $snippet;
+		return $buffer.$snippet;
 	}
 }

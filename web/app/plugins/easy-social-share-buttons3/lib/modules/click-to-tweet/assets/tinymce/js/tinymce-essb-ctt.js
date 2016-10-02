@@ -51,11 +51,6 @@
 							label: 'Custom URL attached to quote:'
 						},
 						{
-							type: 'textbox',
-							name: 'tweetimage',
-							label: 'Inlcude image (pic.twitter.com/xxxx only):'
-						},
-						{
 							type: 'listbox',
 							name: 'template',
 							label: 'Template',
@@ -63,14 +58,14 @@
 							   { text: 'Default (Blue)', value: ''},
 							   { text: 'Light', value: 'light'},
 							   { text: 'Dark', value: 'dark'},
-							   { text: 'Quote', value: 'quote' }
+							   { text: 'Quote', value: 'qlite' }
 							]
 						}
 
 						
 					],
-					width: 680,
-					height: 365,
+					width: 620,
+					height: 325,
 					onsubmit: function( e ) {
 
 						// bail without tweet text
@@ -105,10 +100,6 @@
 						}
 						if (e.data.template != '') {
 							essbcttBuild += ' template="'+e.data.template+'"';
-						}
-						
-						if (e.data.tweetimage != '') {
-							essbcttBuild += ' image="'+e.data.tweetimage+'"';
 						}
 						
 						// close it up

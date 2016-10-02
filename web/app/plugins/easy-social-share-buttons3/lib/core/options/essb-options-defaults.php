@@ -22,6 +22,67 @@ if (!function_exists('essb_default_native_buttons')) {
 	}
 }
 
+if (!function_exists('essb_available_tempaltes4')) {
+	function essb_available_tempaltes4($add_default_option = false) {
+		$essb_available_tempaltes = array ();
+		if ($add_default_option) {
+			$essb_available_tempaltes [''] = __("Default template from settings", 'essb');
+		}
+		$essb_available_tempaltes ['6'] = "Metro (Retina)";
+		$essb_available_tempaltes ['7'] = "Big (Retina)";
+		$essb_available_tempaltes ['8'] = "Light (Retina)";
+		$essb_available_tempaltes ['9'] = "Flat (Retina)";
+		$essb_available_tempaltes ['10'] = "Tiny (Retina)";
+		$essb_available_tempaltes ['11'] = "Round (Retina)";
+		$essb_available_tempaltes ['12'] = "Modern (Retina)";
+		$essb_available_tempaltes ['13'] = "Circles (Retina)";
+		$essb_available_tempaltes ['14'] = "Blocks (Retina)";
+		$essb_available_tempaltes ['15'] = "Dark (Retina)";
+		$essb_available_tempaltes ['16'] = "Grey Circles (Retina)";
+		$essb_available_tempaltes ['17'] = "Grey Blocks (Retina)";
+		$essb_available_tempaltes ['18'] = "Clear (Retina)";
+		$essb_available_tempaltes ['19'] = "Copy (Retina)";
+		$essb_available_tempaltes ['20'] = "Dimmed (Retina)";
+		$essb_available_tempaltes ['21'] = "Grey (Retina)";
+		$essb_available_tempaltes ['22'] = "Default 3.0 (Retina)";
+		$essb_available_tempaltes ['23'] = "Jumbo (Retina)";
+		$essb_available_tempaltes ['24'] = "Jumbo Rounded (Retina)";
+		$essb_available_tempaltes ['25'] = "Fancy (Retina)";
+		$essb_available_tempaltes ['26'] = "Deluxe (Retina)";
+		$essb_available_tempaltes ['27'] = "Modern Slim (Retina)";
+		$essb_available_tempaltes ['28'] = "Bold (Retina)";
+		$essb_available_tempaltes ['29'] = "Fancy Bold (Retina)";
+		$essb_available_tempaltes ['30'] = "Retro (Retina)";
+		$essb_available_tempaltes ['31'] = "Metro Bold (Retina)";
+
+		$essb_available_tempaltes ['32'] = "Default 4.0 (Retina)";
+		$essb_available_tempaltes ['33'] = "Clear Rounded (Retina)";
+		$essb_available_tempaltes ['34'] = "Grey Fill (Retina)";
+		$essb_available_tempaltes ['35'] = "White Fill (Retina)";
+		$essb_available_tempaltes ['36'] = "White (Retina)";
+		$essb_available_tempaltes ['37'] = "Grey Round (Retina)";
+		$essb_available_tempaltes ['38'] = "Color Leafs (Retina)";
+		$essb_available_tempaltes ['39'] = "Grey Leafs (Retina)";
+		$essb_available_tempaltes ['40'] = "Color Circles Outline (Retina)";
+		$essb_available_tempaltes ['41'] = "Color Blocks Outline (Retina)";
+		$essb_available_tempaltes ['42'] = "Grey Circles Outline (Retina)";
+		$essb_available_tempaltes ['43'] = "Grey Blocks Outline (Retina)";
+		$essb_available_tempaltes ['44'] = "Dark Outline (Retina)";
+		$essb_available_tempaltes ['45'] = "Dark Round Outline (Retina)";
+		$essb_available_tempaltes ['46'] = "Classic (Retina)";
+		$essb_available_tempaltes ['47'] = "Classic Round (Retina)";
+		$essb_available_tempaltes ['48'] = "Classic Fancy (Retina)";
+		$essb_available_tempaltes ['49'] = "Color Circles (Retina)";
+		$essb_available_tempaltes ['50'] = "Massive (Retina)";
+		
+		$essb_available_tempaltes ['51'] = "Cut Off (Retina)";
+		$essb_available_tempaltes ['52'] = "Color Cut Off (Retina)";
+		$essb_available_tempaltes ['53'] = "Modern Light (Retina)";
+		
+		return $essb_available_tempaltes;
+	}
+}
+
 
 if (!function_exists('essb_available_tempaltes')) {
 	function essb_available_tempaltes() {
@@ -111,8 +172,12 @@ if (!function_exists('essb_available_social_networks')) {
 				'sms' => array( 'name' => 'SMS', 'type' => 'buildin', 'supports' => 'mobile,retina templates only'),
 				'viber' => array( 'name' => 'Viber', 'type' => 'buildin', 'supports' => 'mobile,retina templates only'),
 				'telegram' => array( 'name' => 'Telegram', 'type' => 'buildin', 'supports' => 'mobile,retina templates only'),
-				'subscribe' => array( 'name' => 'Subscribe', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only')
-				
+				'subscribe' => array( 'name' => 'Subscribe', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only'),
+				'skype' => array( 'name' => 'Skype', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only'),
+				'messenger' => array( 'name' => 'Facebook Messenger', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only'),
+				'kakaotalk' => array( 'name' => 'Kakao', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only'),
+				'share' => array( 'name' => 'Share', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only'),
+				'livejournal' => array( 'name' => 'LiveJournal', 'type' => 'buildin', 'supports' => 'desktop,mobile,retina templates only')
 		);
 		
 		return $essb_available_social_networks;
@@ -124,19 +189,19 @@ if (!function_exists('essb_available_social_networks')) {
 if (!function_exists('essb_avaliable_counter_positions')) {
 	function essb_avaliable_counter_positions() {
 		$essb_avaliable_counter_positions = array ();
+		$essb_avaliable_counter_positions ['hidden'] = "Without single button counter";
 		$essb_avaliable_counter_positions ['left'] = "Left";
 		$essb_avaliable_counter_positions ['right'] = "Right";
 		$essb_avaliable_counter_positions ['inside'] = "Inside button instead of network name";
 		$essb_avaliable_counter_positions ['insidename'] = "Inside button after network name";
 		$essb_avaliable_counter_positions ['insidebeforename'] = "Inside button before network name";
-		$essb_avaliable_counter_positions ['insidehover'] = "Inside button and appear when you hover button over the network name";
-		$essb_avaliable_counter_positions ['hidden'] = "Hidden (use this position if you wish to have only total counter)";
 		$essb_avaliable_counter_positions ['leftm'] = "Left Modern";
 		$essb_avaliable_counter_positions ['rightm'] = "Right Modern";
-		$essb_avaliable_counter_positions ['top'] = "Top Modern";
 		$essb_avaliable_counter_positions ['topm'] = "Top Mini";
+		$essb_avaliable_counter_positions ['top'] = "Top Modern";
 		$essb_avaliable_counter_positions ['bottom'] = "Bottom";
 		$essb_avaliable_counter_positions ['topn'] = "Top";
+		$essb_avaliable_counter_positions ['insidehover'] = "Inside button and appear when you hover button over the network name";
 		
 		return $essb_avaliable_counter_positions;
 	}
@@ -177,7 +242,9 @@ if (!function_exists('essb_avaiable_total_counter_position')) {
 		$essb_avaiable_total_counter_position ['right'] = "Right";
 		$essb_avaiable_total_counter_position ['left'] = "Left";
 		$essb_avaiable_total_counter_position ['rightbig'] = "Right Big Number (with option for custom text)";
-		$essb_avaiable_total_counter_position ['leftbig'] = "Left Big Nubmer (with option for custom text)";
+		$essb_avaiable_total_counter_position ['leftbig'] = "Left Big Number (with option for custom text)";
+		$essb_avaiable_total_counter_position ['rightbigicon'] = "Right Big Number with icon (with option for custom text)";
+		$essb_avaiable_total_counter_position ['leftbigicon'] = "Left Big Number with icon (with option for custom text)";
 		$essb_avaiable_total_counter_position ['before'] = "Before social share buttons";
 		$essb_avaiable_total_counter_position ['after'] = "After social share buttons";
 		$essb_avaiable_total_counter_position ['hidden'] = "This will hide the total counter and make only button counters be visible";
@@ -205,6 +272,7 @@ if (!function_exists('essb_avaiable_button_style')) {
 		$essb_avaiable_button_style ['button_name'] = 'Display as share button with network name and without icon';
 		$essb_avaiable_button_style ['icon'] = 'Display share buttons only as icon without network names';
 		$essb_avaiable_button_style ['icon_hover'] = 'Display share buttons as icon with network name appear when button is pointed';
+		$essb_avaiable_button_style ['vertical'] = 'Display icon above network name (vertical buttons)';
 		
 		return $essb_avaiable_button_style;
 	}
@@ -220,6 +288,22 @@ if (!function_exists('essb_avaiable_button_style_with_recommend')) {
 		$essb_avaiable_button_style ['icon_hover'] = 'Display share buttons as icon with network name appear when button is pointed';
 
 		return $essb_avaiable_button_style;
+	}
+}
+
+if (!function_exists('essb_simplified_radio_check_list')) {
+	function essb_simplified_radio_check_list($list, $include_blank = false, $blank_text = '') {
+		$result = array();
+		
+		if ($include_blank) {
+			$result[''] = $blank_text;
+		}
+		
+		foreach ($list as $key => $data) {
+			$result[$key] = $data['label'];
+		}
+		
+		return $result;
 	}
 }
 
@@ -279,6 +363,7 @@ if (!function_exists('essb_available_button_positions')) {
 		$essb_available_button_positions ['heroshare'] = array ("image" => "assets/images/display-positions-22.png", "label" => "Full screen hero share" );
 		$essb_available_button_positions ['postbar'] = array ("image" => "assets/images/display-positions-23.png", "label" => "Post share bar" );
 		$essb_available_button_positions ['point'] = array ("image" => "assets/images/display-positions-24.png", "label" => "Share Point (Advanced Version)" );
+		$essb_available_button_positions ['widget'] = array ("image" => "assets/images/display-positions-25.png", "label" => "Widget" );
 		
 		return $essb_available_button_positions;
 	}
@@ -309,6 +394,7 @@ if (!function_exists('essb_available_button_positions_mobile')) {
 		$essb_available_button_positions_mobile ['sharebar'] = array ("image" => "assets/images/display-positions-18.png", "label" => "Share bar (Mobile Only Display Method)" );
 		$essb_available_button_positions_mobile ['sharepoint'] = array ("image" => "assets/images/display-positions-19.png", "label" => "Share point (Mobile Only Display Method)" );
 		$essb_available_button_positions_mobile ['point'] = array ("image" => "assets/images/display-positions-24.png", "label" => "Share Point (Advanced Version)" );
+		$essb_available_button_positions_mobile ['widget'] = array ("image" => "assets/images/display-positions-25.png", "label" => "Widget" );
 		
 		return $essb_available_button_positions_mobile;
 	}
@@ -351,9 +437,42 @@ if (!function_exists('essb_available_buttons_width')) {
 
 if (!function_exists('essb_available_social_profiles')) {
 	function essb_available_social_profiles() {
-		$essb_available_social_profiles = array ("twitter" => "Twitter", "facebook" => "Facebook", "google" => "Google+", "pinterest" => "Pinterest", "foursquare" => "foursquare", "yahoo" => "Yahoo!", "skype" => "skype", "yelp" => "yelp", "feedburner" => "FeedBurner", "linkedin" => "Linkedin", "viadeo" => "Viadeo", "xing" => "Xing", "myspace" => "Myspace", "soundcloud" => "soundcloud", "spotify" => "Spotify", "grooveshark" => "grooveshark", "lastfm" => "last.fm", "youtube" => "YouTube", "vimeo" => "vimeo", "dailymotion" => "Dailymotion", "vine" => "Vine", "flickr" => "flickr", "500px" => "500px", "instagram" => "Instagram", "wordpress" => "WordPress", "tumblr" => "tumblr", "blogger" => "Blogger", "technorati" => "Technorati", "reddit" => "reddit", "dribbble" => "dribbble", "stumbleupon" => "StumbleUpon", "digg" => "Digg", "envato" => "Envato", "behance" => "Behance", "delicious" => "Delicious", "deviantart" => "deviantART", "forrst" => "Forrst", "play" => "Play Store", "zerply" => "Zerply", "wikipedia" => "Wikipedia", "apple" => "Apple", "flattr" => "Flattr", "github" => "GitHub", "chimein" => "Chime.in", "friendfeed" => "FriendFeed", "newsvine" => "NewsVine", "identica" => "Identica", "bebo" => "bebo", "zynga" => "zynga", "steam" => "steam", "xbox" => "XBOX", "windows" => "Windows", "outlook" => "Outlook", "coderwall" => "coderwall", "tripadvisor" => "tripadvisor", "appnet" => "appnet", "goodreads" => "goodreads", "tripit" => "Tripit", "lanyrd" => "Lanyrd", "slideshare" => "SlideShare", "buffer" => "Buffer", "rss" => "RSS", "vkontakte" => "VKontakte", "disqus" => "DISQUS", "houzz" => "houzz", "mail" => "Mail", "patreon" => "Patreon", "paypal" => "Paypal", "playstation" => "PlayStation", "smugmug" => "SmugMug", "swarm" => "Swarm", "triplej" => "triplej", "yammer" => "Yammer", "stackoverflow" => "stackoverflow", "drupal" => "Drupal", "odnoklassniki" => "Odnoklassniki", "android" => "Android", "meetup" => "Meeptup", "persona" => "Mozilla Persona" );
-
-		return $essb_available_social_profiles;
+		$socials = array ();
+		$socials['facebook'] = 'Facebook';
+		$socials['twitter'] = 'Twitter';
+		$socials['google'] = 'Google';
+		$socials['pinterest'] = 'Pinterest';
+		$socials['linkedin'] = 'LinkedIn';
+		$socials['github'] = 'GitHub';
+		$socials['vimeo'] = 'Vimeo';
+		$socials['dribbble'] = 'Dribbble';
+		$socials['envato'] = 'Envato';
+		$socials['soundcloud'] = 'SoundCloud';
+		$socials['behance'] = 'Behance';
+		$socials['foursquare'] = 'Foursquare';
+		$socials['forrst'] = 'Forrst';
+		$socials['mailchimp'] = 'MailChimp';
+		$socials['delicious'] = 'Delicious';
+		$socials['instagram'] = 'Instagram';
+		$socials['youtube'] = 'YouTube';
+		$socials['vk'] = 'VK';
+		$socials['rss'] = 'RSS';
+		$socials['vine'] = 'Vine';
+		$socials['tumblr'] = 'Tumblr';
+		$socials['slideshare'] = 'SlideShare';
+		$socials['500px'] = '500px';
+		$socials['flickr'] = 'Flickr';
+		$socials['audioboo'] = 'Audioboo';
+		$socials['steamcommunity'] = 'Steam';
+		$socials['weheartit'] = 'WeHeartit';
+		$socials['feedly'] = 'Feedly';
+		$socials['love'] = 'Love Counter';
+		$socials['mailpoet'] = 'MailPoet';
+		$socials['mymail'] = 'myMail';
+		$socials['spotify'] = 'Spotify';
+		$socials['twitch'] = 'Twitch';
+		
+		return $socials;	
 	}
 }
 
@@ -405,25 +524,26 @@ if (!function_exists('essb_available_animations')) {
 if (! function_exists ( 'essb_cached_counters_update' )) {
 	function essb_cached_counters_update() {
 		$periods = array ();
-		$periods [1] = '1 Minute';
-		$periods [5] = '5 Minutes';
-		$periods [10] = '10 Minutes';
-		$periods [15] = '15 Minutes';
-		$periods [30] = '30 Minutes';
-		$periods [45] = '45 Minutes';
-		$periods [60] = '1 Hour';
-		$periods [120] = '2 Hours';
-		$periods [180] = '3 Hours';
-		$periods [240] = '4 Hours';
-		$periods [300] = '5 Hours';
-		$periods [360] = '6 Hours';
-		$periods [540] = '9 Hours';
-		$periods [720] = '12 Hours';
-		$periods [1080] = '18 Hours';
-		$periods [1440] = '1 Day';
-		$periods [4320] = '3 Days';
-		$periods [7200] = '5 Days';
-		$periods [10800] = '7 Days';
+		$periods [''] = 'Real time share counters';
+		$periods [1] = 'Updated on 1 Minute';
+		$periods [5] = 'Updated on 5 Minutes';
+		$periods [10] = 'Updated on 10 Minutes';
+		$periods [15] = 'Updated on 15 Minutes';
+		$periods [30] = 'Updated on 30 Minutes';
+		$periods [45] = 'Updated on 45 Minutes';
+		$periods [60] = 'Updated on 1 Hour';
+		$periods [120] = 'Updated on 2 Hours';
+		$periods [180] = 'Updated on 3 Hours';
+		$periods [240] = 'Updated on 4 Hours';
+		$periods [300] = 'Updated on 5 Hours';
+		$periods [360] = 'Updated on 6 Hours';
+		$periods [540] = 'Updated on 9 Hours';
+		$periods [720] = 'Updated on 12 Hours';
+		$periods [1080] = 'Updated on 18 Hours';
+		$periods [1440] = 'Updated on 1 Day';
+		$periods [4320] = 'Updated on 3 Days';
+		$periods [7200] = 'Updated on 5 Days';
+		$periods [10800] = 'Updated on 7 Days';
 		
 		return $periods;
 	}
@@ -436,8 +556,21 @@ if (! function_exists ( 'essb_optin_designs' )) {
 		$periods ['design2'] = 'Design #2';
 		$periods ['design3'] = 'Design #3';
 		$periods ['design4'] = 'Design #4';
-		
+		$periods ['design5'] = 'Design #5';
+		$periods ['design6'] = 'Design #6';
+		$periods ['design7'] = 'Design #7';
 		return $periods;
+	}
+}
+
+if (!function_exists('essb_device_select')) {
+	function essb_device_select() {
+		$devices = array();
+		$devices['desktop'] = array ("image" => '<div class="fa21 fa fa-desktop" title="Desktop"></div>', "label" => "" );
+		$devices['mobile'] = array ("image" => '<div class="fa21 fa fa-mobile" title="Mobile"></div>', "label" => "" );
+		$devices['tablet'] = array ("image" => '<div class="fa21 fa fa-tablet" title="Tablet"></div>', "label" => "" );
+		
+		return $devices;
 	}
 }
 

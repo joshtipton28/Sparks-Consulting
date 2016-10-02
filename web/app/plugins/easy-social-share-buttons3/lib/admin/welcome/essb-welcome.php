@@ -5,36 +5,25 @@ $active_tab = isset ( $_REQUEST ['tab'] ) ? $_REQUEST ['tab'] : "essb-welcome";
 $slug = "essb_about";
 
 if (ESSB3_ADDONS_ACTIVE) {
-	global $essb_options;
-	$deactivate_appscreo = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_appscreo');
-	if (!$deactivate_appscreo) {
 	if (class_exists('ESSBAddonsHelper')) {
 		$addons = ESSBAddonsHelper::get_instance();
 		$addons->call_remove_addon_list_update();
-		$new_addons = $addons->get_new_addons();
-	
-		foreach ($new_addons as $key => $data) {
-			$all_addons_button = '<a href="'.admin_url ("admin.php?page=essb_addons").'"  text="' . __ ( 'Add-ons', ESSB3_TEXT_DOMAIN ) . '" class="button button-orange float_right" style="margin-right: 5px;"><i class="fa fa-gear"></i>&nbsp;' . __ ( 'View list of all addons', ESSB3_TEXT_DOMAIN ) . '</a>';
-	
-			$dismiss_url = esc_url_raw(add_query_arg(array('dismiss' => 'true', 'addon' => $key), admin_url ("admin.php?page=essb_options")));
-	
-			$dismiss_addons_button = '<a href="'.$dismiss_url.'"  text="' . __ ( 'Add-ons', ESSB3_TEXT_DOMAIN ) . '" class="button button-orange float_right" style="margin-right: 5px;"><i class="fa fa-close"></i>&nbsp;' . __ ( 'Dismiss', ESSB3_TEXT_DOMAIN ) . '</a>';
-			printf ( '<div class="essb-information-box fade"><div class="icon orange"><i class="fa fa-cube"></i></div><div class="inner">New add-on for Easy Social Share Buttons for WordPress is available: <a href="%2$s" target="_blank"><b>%1$s</b></a> %4$s%3$s</div></div>', $data['title'], $data['url'], $all_addons_button, $dismiss_addons_button );
+		if (class_exists('ESSBAdminActivate')) {
+			ESSBAdminActivate::notice_new_addons();
 		}
-	}
 	}
 }
 
 ?>
 
 <div class="wrap essb-page-welcome about-wrap">
-	<h1><?php echo sprintf( __( 'Welcome to Easy Social Share Buttons for WordPress %s', ESSB3_TEXT_DOMAIN ), preg_replace( '/^(\d+)(\.\d+)?(\.\d)?/', '$1$2', ESSB3_VERSION ) ) ?></h1>
+	<h1><?php echo sprintf( __( 'Welcome to Easy Social Share Buttons for WordPress %s', 'essb' ), preg_replace( '/^(\d+)(\.\d+)?(\.\d)?/', '$1$2', ESSB3_VERSION ) ) ?></h1>
 
 	<div class="about-text">
-		<?php _e( 'Easy Social Share Buttons for WordPress is all-in-one social share solution that allows you share, monitor and increase your social popularity by AppsCreo', ESSB3_TEXT_DOMAIN )?>
+		<?php _e( 'Easy Social Share Buttons for WordPress is all-in-one social share solution that allows you share, monitor and increase your social popularity by AppsCreo', 'essb' )?>
 	</div>
-	<div class="wp-badge essb-page-logo">
-		<?php echo sprintf( __( 'Version %s', ESSB3_TEXT_DOMAIN ), ESSB3_VERSION )?>
+	<div class="wp-badge essb-page-logo essb-logo">
+		<?php echo sprintf( __( 'Version %s', 'essb' ), ESSB3_VERSION )?>
 	</div>
 	<div class="essb-page-actions">
 
@@ -42,12 +31,12 @@ if (ESSB3_ADDONS_ACTIVE) {
 		<div class="essb-welcome-button-container">
 			<a
 				href="<?php echo esc_attr( admin_url( 'admin.php?page=essb_options' ) ) ?>"
-				class="button button-primary"><?php _e( 'Settings', ESSB3_TEXT_DOMAIN ) ?></a>
-			<a href="http://codecanyon.net/downloads" target="_blank" class="button">Rate <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> Easy Social Share Buttons for WordPress</a>
+				class="essb-btn"><?php _e( 'Settings', 'essb' ) ?></a>
+			<a href="http://codecanyon.net/downloads" target="_blank" class="essb-btn essb-btn-orange">Rate <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> Easy Social Share Buttons for WordPress</a>
 		</div>
 		<div class="essb-welcome-button-container">
 			<a href="https://twitter.com/share" class="twitter-share-button"
-				data-text="Take full control over social sharing in WordPress with Easy Social Share Buttons by @appscreo"
+				data-text="I just install the best #socialsharing plugin for #wordpress Easy Social Share Buttons by @appscreo"
 				data-url="http://bit.ly/socialsharewp" data-size="large"
 				data-counturl="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476">Tweet</a>
 			<script>! function ( d, s, id ) {
@@ -102,15 +91,17 @@ if (ESSB3_ADDONS_ACTIVE) {
 				<img class="essb-featured-img"
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/focus-screenshot.png" />
 
-				<h3>Hello Subscribers</h3>
-				<p>Brand new subscribe button come to Easy Social Share Buttons with cool new features:</p>
+				<h3>Hello Easy Social Share Buttons 4.0 "Revolution"</h3>
+				<h4 style="text-transform: uppercase">Unparallaled Visual Experience</h4>
 				<ul>
-					<li style="list-style-type: disc;">3 different types of work: link to subscribe page, custom code where you can design your form or use shortcodes from other plugins, Service integrated form</li>
-					<li style="list-style-type: disc;">works on any device and with any display method</li>
-					<li style="list-style-type: disc;">service integrated form with support for MailChimp, myMail, MailPoet and GetReponse</li>
-					<li style="list-style-type: disc;">4 different eye catching designs with customization options</li>
+					<li style="list-style-type: disc;"><b>19 new templates</b> included</li>
+					<li style="list-style-type: disc;">new button styles & layouts</li>
+					<li style="list-style-type: disc;">over <b>35 ready made presents</b> that you can apply with single click to selected location</li>
+					<li style="list-style-type: disc;">new multipurpose <b>Share</b> button</li>
+					<li style="list-style-type: disc;">brand new admin dashboard with real time preview</li>
+					<li style="list-style-type: disc;">extremly light and fast</li>
 				</ul>
-				<a href="http://fb.creoworx.com/essb/subscribe-button-demo/" target="_blank" class="button">Try the new subscribe button</a>
+				
 				
 				</div>
 		</div>
@@ -119,26 +110,29 @@ if (ESSB3_ADDONS_ACTIVE) {
 			<div>
 				<img class="essb-img-center" title=""
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/welcome-features-01.png" />
-				<h4>New super cool social display method: Point</h4>
+				<h4>New Social Networks</h4>
 
-				<p>New multi purpose share point display method is here with various placements and 2 build in styles: simple and advanced. </p>
-				<a href="http://fb.creoworx.com/essb/display-position-point-simple/" target="_blank" class="button">Try Simple Point</a>&nbsp;
-				<a href="http://fb.creoworx.com/essb/display-position-point-simple/?point_style=advanced" target="_blank" class="button">Try Advanced Point</a>
-				
+				<p>
+				With version 4 of Easy Social Share Buttons for WordPress we extend the list of social networks by adding <b>Skype</b>, <b>Facebook Messenger</b>, <b>Kakao Story</b> and <b>Share button</b>. The brand new share button is unique in its possibilities (more button on steroids). 
+				</p>
+				<p>
+				Whant to try the new Share Button - we prepare few ready made presents that you can easy apply for quick start.
+				</p>
 				</div>
 			<div>
 				<img class="essb-img-center" title=""
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/welcome-features-02.png" />
-				<h4>New free extensions</h4>
+				<h4>Multilanguage Admin Interface</h4>
 
-				<p>We add two new free extensions to plugin: Facebook Comments and AMP Support. We also integrate extensions screen which you can use to see list of all extensions and easy download free or purchase premium.</p>
+				<p>We made version 4 admin panel translatable. Help us make Easy Social Share Buttons speak your language. Contact us <a href="http://support.creoworx.com/contact/" target="_blank">http://support.creoworx.com/contact/</a> to provide source file and instructions.</p>
 			</div>
 			<div class="last-feature">
 				<img class="essb-img-center" title=""
 					src="<?php echo ESSB3_PLUGIN_URL ?>/assets/images/welcome/welcome-features-03.png" />
 				<h4>Cool new updates under the hood</h4>
 
-				<p>We made various changes in plugin for faster and smooth work. Read all of them in <a href="http://appscreo.com/whats-new-easy-social-share-buttons-version-3-6/" target="_blank">our blog</a> or in the <a href="http://fb.creoworx.com/essb/change-log/" target="_blank">changelog</a>.</p>
+				<p>Brand new easy to use plugin settings screen with live previews. We simplify the initial setup with adding more than 35 ready made presents that you can apply to selected location.</p>
+				<p>This along with more than 100 other improvements under the hood make Easy Social Share Buttons the fast and light build we have ever made.</p>
 			</div>
 		</div>
 

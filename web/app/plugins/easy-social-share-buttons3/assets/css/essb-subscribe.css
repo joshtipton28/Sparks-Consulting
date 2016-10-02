@@ -901,3 +901,694 @@ font-weight: 400;
   fill: #ffffff;
 }
 
+/** Design 5 **/
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 {
+	clear: both;
+	padding: 15px;
+	color: #282828;
+	line-height: 1;
+	background: repeating-linear-gradient( 135deg, #4251db, #4251db 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important;
+	padding: 6px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-forced {
+	background-color: #fff;
+	padding: 10px 20px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 h4 {
+	font-size: 28px;
+	line-height: 1;
+	margin: 0px;
+	padding: 20px 0;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 p {
+	margin: 10px 0;
+	font-size: 15px;
+	line-height: 1.5em;
+	text-align: center;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input {
+	border: none;
+	box-sizing: border-box;
+	padding: 10px 0;
+	margin: 0;
+	box-shadow: none;
+	border-radius: 0;
+	height: 45px;
+	text-indent: 10px;
+	text-align: center;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-inputwidth1 {
+	width: 67%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-inputwidth2 {
+	width: 33%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-submitwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-submitwidth2 {
+	width: 30%;
+	display: inline-block;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5.essb-subscribe-form-inwidget .essb-subscribe-form-inputwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design5.essb-subscribe-form-inwidget .essb-subscribe-form-inputwidth2,
+.essb-subscribe-form-content.essb-subscribe-from-design5.essb-subscribe-form-inwidget .essb-subscribe-form-submitwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design5.essb-subscribe-form-inwidget .essb-subscribe-form-submitwidth2 {
+	width: 100%;
+	display: block;
+	margin-right: 0px;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input.submit {
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-ms-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-content-email-field,
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-content-name-field {
+	margin-top: 10px;
+	font-weight: bold;
+	-webkit-transition: all 0.1s ease;
+	-moz-transition: all 0.1s ease;
+	-ms-transition: all 0.1s ease;
+	-o-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-content-email-field:focus,
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-content-name-field:focus
+	{
+	border-bottom: 3px solid #b0b0b0;
+	outline: none;
+	
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input.essb-subscribe-form-content-email-field,
+.essb-subscribe-form-content.essb-subscribe-from-design5 input.essb-subscribe-form-content-name-field
+	{
+	color: #454545;
+	background: #e3e3e3;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+	font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input:-moz-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input::-moz-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input::-ms-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input:focus::-webkit-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input:focus::-moz-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input:focus:-moz-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input:focus::input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input.submit {
+	background: #4251db;
+	color: #ffffff;
+	margin-top: 5px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 700;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	border-bottom: 3px solid #1b268c;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input.submit:focus {
+	outline: none;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 input.submit:hover {
+	background: #1b268c;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-content-footer {
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design5 .essb-subscribe-form-result-message {
+	margin-top: 10px;
+	font-size: 12px;
+	font-weight: bold;
+	display: none;
+}
+
+
+.essb-subscribe-from-design5 .essb-subscribe-loader {
+  margin: 0 0 2em;
+  height: 35px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: none;
+  vertical-align: top;
+}
+/*
+  Set the color of the icon
+*/
+.essb-subscribe-from-design5 .essb-subscribe-loader svg path,
+.essb-subscribe-from-design5 .essb-subscribe-loader svg rect {
+  fill: #FF6700;
+}
+
+/** Design 6 **/
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 {
+	clear: both;	
+	background-color: #fff;
+	color: #303133;
+	line-height: 1;
+	border-top: 5px solid #fbb429;
+
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-top {
+	padding: 25px;
+	background-color: #fff;
+
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-content-top {
+	padding: 15px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-top-image-left {
+	float: left;
+	display: block;
+	padding: 10px;
+	margin-right: 10px;
+	max-width: 30%;
+	box-shadow: none;
+	margin-bottom: 10px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-top-image-right {
+	float: right;
+	display: block;
+	padding: 10px;
+	margin-left: 10px;
+	max-width: 30%;
+	box-shadow: none;
+	margin-bottom: 10px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-content-top-image-left,
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-content-top-image-right {
+	float: none;
+	text-align: center;
+	margin: 0 auto;
+	max-width: 60%;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-bottom {
+	padding: 25px;
+	background-color: #5dddd3;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	clear: both;
+	display: block;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-content-bottom {
+	padding: 15px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 h4 {
+	font-size: 21px;
+	line-height: 1;
+	margin: 0px;
+	padding: 5px 0;
+	position: relative;
+	display: inline-block;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 p {
+	margin: 10px 0;
+	font-size: 15px;
+	line-height: 1.5em;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input {
+	border: none;
+	box-sizing: border-box;
+	padding: 10px 0;
+	margin: 0;
+	box-shadow: none;
+	border-radius: 0;
+	height: 45px;
+	text-indent: 10px;
+	text-align: center;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-inputwidth1 {
+	width: 67%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-inputwidth2 {
+	width: 33%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-submitwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-submitwidth2 {
+	width: 30%;
+	display: inline-block;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-inputwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-inputwidth2,
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-submitwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design6.essb-subscribe-form-inwidget .essb-subscribe-form-submitwidth2 {
+	width: 100%;
+	display: block;
+	margin-right: 0px;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input.submit {
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-ms-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-email-field,
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-name-field {
+	margin-top: 10px;
+	font-weight: bold;
+	-webkit-transition: all 0.1s ease;
+	-moz-transition: all 0.1s ease;
+	-ms-transition: all 0.1s ease;
+	-o-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-email-field:focus,
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-name-field:focus
+	{
+	
+	outline: none;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input.essb-subscribe-form-content-email-field,
+.essb-subscribe-form-content.essb-subscribe-from-design6 input.essb-subscribe-form-content-name-field
+	{
+	color: #303133;
+	background: #f5f7f9;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+	font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input:-moz-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input::-moz-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input::-ms-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input:focus::-webkit-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input:focus::-moz-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input:focus:-moz-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input:focus::input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input.submit {
+	background: #fbb429;
+	color: #ffffff;
+	margin-top: 5px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 700;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	border-bottom: 3px solid #f5a209;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input.submit:focus {
+	outline: none;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 input.submit:hover {
+	background: #f5a209;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-footer {
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-result-message {
+	margin-top: 10px;
+	font-size: 12px;
+	font-weight: bold;
+	display: none;
+}
+
+
+.essb-subscribe-from-design6 .essb-subscribe-loader {
+  margin: 0 0 2em;
+  height: 35px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: none;
+  vertical-align: top;
+}
+/*
+  Set the color of the icon
+*/
+.essb-subscribe-from-design6 .essb-subscribe-loader svg path,
+.essb-subscribe-from-design6 .essb-subscribe-loader svg rect {
+  fill: #ffffff;
+}
+.essb-subscribe-form-content.essb-subscribe-from-design6 .essb-subscribe-form-content-footer { text-align: left; }
+
+/** Design 7 **/
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 {
+	clear: both;	
+	background-color: #fff;
+	color: #303133;
+	line-height: 1;
+
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-top {
+	padding: 25px;
+	background-color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	padding-left: 180px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-content-top {
+	padding: 15px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-top-image-left {
+	display: block;
+	width: 150px;
+	box-shadow: none;
+	margin: 25px 10px;
+	position: absolute;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-content-top-image-left,
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-content-top-image-right {
+	float: none;
+	text-align: center;
+	margin: 0 auto;
+	max-width: 60%;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-bottom {
+	padding: 15px;	
+	background-color: #ffca4f;
+	border-radius:5px;
+	
+	display: block;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-content-bottom {
+	padding: 15px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 h4 {
+	font-size: 21px;
+	line-height: 1;
+	margin: 0px;
+	padding: 5px 0;
+	position: relative;
+	display: inline-block;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 p {
+	margin: 10px 0;
+	font-size: 15px;
+	line-height: 1.5em;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input {
+	border: none;
+	box-sizing: border-box;
+	padding: 10px 0;
+	margin: 0;
+	box-shadow: none;
+	border-radius: 0;
+	height: 45px;
+	text-indent: 10px;
+	text-align: center;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-inputwidth1 {
+	width: 67%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-inputwidth2 {
+	width: 33%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-submitwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-submitwidth2 {
+	width: 30%;
+	display: inline-block;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-inputwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-inputwidth2,
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-submitwidth1,
+.essb-subscribe-form-content.essb-subscribe-from-design7.essb-subscribe-form-inwidget .essb-subscribe-form-submitwidth2 {
+	width: 100%;
+	display: block;
+	margin-right: 0px;
+}
+
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input.submit {
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-ms-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-email-field,
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-name-field {
+
+	font-weight: bold;
+	-webkit-transition: all 0.1s ease;
+	-moz-transition: all 0.1s ease;
+	-ms-transition: all 0.1s ease;
+	-o-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-email-field:focus,
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-name-field:focus
+	{
+	
+	outline: none;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input.essb-subscribe-form-content-email-field,
+.essb-subscribe-form-content.essb-subscribe-from-design7 input.essb-subscribe-form-content-name-field
+	{
+	color: #303133;
+	background: #fff;
+	border-radius: 3px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+	font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input:-moz-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input::-moz-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input::-ms-input-placeholder {
+	color: inherit;
+	opacity: 0.9;
+font-weight: 400;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input:focus::-webkit-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input:focus::-moz-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input:focus:-moz-input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input:focus::input-placeholder {
+	color: transparent !important;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input.submit {
+	background: #5dddd3;
+	color: #ffffff;
+	margin-top: 5px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 700;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	border-bottom: 3px solid #20d0c2;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input.submit:focus {
+	outline: none;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 input.submit:hover {
+	background: #20d0c2;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-content-footer {
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.essb-subscribe-form-content.essb-subscribe-from-design7 .essb-subscribe-form-result-message {
+	margin-top: 10px;
+	font-size: 12px;
+	font-weight: bold;
+	display: none;
+}
+
+
+.essb-subscribe-from-design7 .essb-subscribe-loader {
+  margin: 0 0 2em;
+  height: 35px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: none;
+  vertical-align: top;
+}
+/*
+  Set the color of the icon
+*/
+.essb-subscribe-from-design7 .essb-subscribe-loader svg path,
+.essb-subscribe-from-design7 .essb-subscribe-loader svg rect {
+  fill: #ffffff;
+}

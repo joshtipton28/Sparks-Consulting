@@ -40,7 +40,7 @@ class ESSBDisplayMethodBottomBar {
 		if ($bottombar_usercontent != '') {
 			$bottombar_usercontent = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#'), array(get_the_title(), get_site_url(), get_permalink()), $bottombar_usercontent);
 		
-			$bottombar_usercontent = ESSBCoreHelper::post_details_to_content($bottombar_usercontent);
+			$bottombar_usercontent = essb_post_details_to_content($bottombar_usercontent);
 		}
 				
 		$ssbuttons = $share_buttons;		

@@ -2,7 +2,7 @@
 
 class ESSBOptionsInterface {
 	
-	public static function draw_form_start($custom = false, $group = '') {
+	public static function draw_form_start($custom = false, $group = '', $without_menu = false) {
 		global $_REQUEST, $current_tab, $essb_options;
 		
 		$active_section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
@@ -27,7 +27,7 @@ class ESSBOptionsInterface {
 		echo '<input id="section" name="section" type="hidden" value="'.sanitize_text_field($active_section).'"/>';
 		echo '<input id="subsection" name="subsection" type="hidden" value="'.sanitize_text_field($active_subsection).'"/>';
 		echo '<input id="tab" name="tab" type="hidden" value="'.sanitize_text_field($current_tab).'"/>';
-		echo '<div class="essb-options '.$admin_template.'" id="essb-options">';
+		echo '<div class="essb-options '.$admin_template.' '.($without_menu ? "essb-options-nomenu":'').'" id="essb-options">';
 	}
 	
 	public static function draw_header($title = '', $hide_update_button = false, $wizard_tab = false) {
@@ -36,26 +36,26 @@ class ESSBOptionsInterface {
 			<div class="essb-options-title">
 			' . $title . '
 			</div>
-			<a href="#" text="Back to top" class="button button-essb essb-button-backtotop">' . __ ( 'Back To Top', ESSB3_TEXT_DOMAIN ) . '</a>
+			<a href="#" text="Back to top" class="essb-btn essb-btn-light essb-button-backtotop">' . __ ( 'Back To Top', 'essb' ) . '</a>
 			
 			</div>';
 		
 		} 
 		else {
-			$update_button_text = __('Update Settings', ESSB3_TEXT_DOMAIN);
+			$update_button_text = __('Update Settings', 'essb');
 			$next_prev_buttons = "";
 			if ($wizard_tab) {
-				$update_button_text = __('Save Settings', ESSB3_TEXT_DOMAIN);
-				$next_prev_buttons = '<a name="prevbutton" id="prevbutton" class="button essb-wizard-prev">< Previous</a>&nbsp;<a name="nextbutton" id="nextbutton" class="button essb-wizard-next">Next ></a>&nbsp;&nbsp;&nbsp;';
+				$update_button_text = __('Save Settings', 'essb');
+				$next_prev_buttons = '<a name="prevbutton" id="prevbutton" class="essb-btn essb-wizard-prev">< Previous</a>&nbsp;<a name="nextbutton" id="nextbutton" class="essb-btn essb-wizard-next">Next ></a>&nbsp;&nbsp;&nbsp;';
 			}
 			
 			echo '<div class="essb-options-header" id="essb-options-header">
 				<div class="essb-options-title">
 			  	' . $title . '<span class="essb-options-subtitle"></span>
 				</div>		
-				<a href="#" text="Back to top" class="button button-essb essb-button-backtotop">' . __ ( 'Back To Top', ESSB3_TEXT_DOMAIN ) . '</a>
+				<a href="#" text="Back to top" class="essb-btn essb-btn-light essb-button-backtotop">' . __ ( 'Back To Top', 'essb' ) . '</a>
 				'.$next_prev_buttons.'
-				<input type="Submit" name="Submit" value="' . $update_button_text . '" class="button-primary" />				
+				<input type="Submit" name="Submit" value="' . $update_button_text . '" class="essb-btn essb-btn-red" />				
 			</div>';
 		}
 	}
@@ -85,7 +85,12 @@ class ESSBOptionsInterface {
 			}
 			
 			if ($icon != '') {
-				$icon = sprintf('<i class="essb-sidebar-icon fa fa-%1$s"></i>', $icon);
+				if (strpos($icon, 'ti-') !== false ) {
+					$icon = sprintf('<i class="essb-sidebar-icon %1$s"></i>', $icon);
+				}
+				else {
+					$icon = sprintf('<i class="essb-sidebar-icon fa fa-%1$s"></i>', $icon);
+				}
 			}
 			
 			$css_class = "";
@@ -141,10 +146,12 @@ class ESSBOptionsInterface {
 		foreach($options as $section => $fields) {
 			printf('<div id="essb-container-%1$s" class="essb-data-container">',$section);
 									
-			echo '<table border="0" cellpadding="5" cellspacing="0" width="100%">
+			/*echo '<table border="0" cellpadding="5" cellspacing="0" width="100%">
 						<col width="25%" />
 						<col width="75%" />';
+			*/
 			
+			echo '<div class="essb-flex-grid">';
 			$section_options = $fields;
 			
 			ESSBOptionsFramework::reset_row_status();
@@ -153,9 +160,10 @@ class ESSBOptionsInterface {
 				ESSBOptionsFramework::draw_options_field($option, $custom, $user_settings);
 			}
 			
-			echo '</table>';
+			//echo '</table>';
+			echo '</div>';
 			
-			if (count(ESSBOptionsFramework::$heading_navigations) > 1) {
+			/*if (count(ESSBOptionsFramework::$heading_navigations) > 1) {
 				echo '<div class="essb-internal-navigation">';
 				echo '<div class="essb-internal-navigation-title">Quick Navigate <a class="essb-internal-navigation-close" href="#"></a></div>';
 				echo '<div class="essb-internal-navigation-inner">';
@@ -163,7 +171,7 @@ class ESSBOptionsInterface {
 					echo '<a href="#'.$navigation_item['id'].'" data-goto="'.$navigation_item['id'].'" class="essb-internal-navigation-item">'.$navigation_item['title'].'</a>';
 				}
 				echo '</div></div>';
-			}
+			}*/
 			
 			echo '</div>';
 		}

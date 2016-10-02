@@ -80,7 +80,7 @@ class ESSBSkinnedNativeButtons {
 			$output_text = '<span class="essb-native-text-inner">' . $text . '</span>';
 		}
 		
-		$output .= '<div class="essb-native-text'.$user_skin.'"><span class="fa ' . self::get_icon( $type ) . '"></span>' . $output_text . '</div>';
+		$output .= '<div class="essb-native-text'.$user_skin.'"><span class="' . self::get_icon( $type ) . '"></span>' . $output_text . '</div>';
 		$output .= '<div class="essb-native-click">' . $code . '</div>';
 		
 		$output .= '</div>';
@@ -94,29 +94,29 @@ class ESSBSkinnedNativeButtons {
 		
 		switch ($type) {
 			case "google" :
-				$icon = "fa-google-plus";
+				$icon = "essb_icon_google";
 				break;
 			
 			case "facebook" :
-				$icon = "fa-facebook";
+				$icon = "essb_icon_facebook";
 				break;
 			
 			case "twitter" :
-				$icon = "fa-twitter";
+				$icon = "essb_icon_twitter";
 				break;
 			
 			case "pinterest" :
-				$icon = "fa-pinterest";
+				$icon = "essb_icon_pinterest";
 				break;
 			
 			case "youtube" :
-				$icon = "fa-youtube-play";
+				$icon = "essb_icon_youtube";
 				break;
 			case "vk" :
-				$icon = "fa-vk";
+				$icon = "essb_icon_vk";
 				break;		
 			case "linkedin" :
-				$icon = "fa-linkedin";
+				$icon = "essb_icon_linkedin";
 				break;		
 		}
 		
@@ -129,9 +129,9 @@ class ESSBSkinnedNativeButtons {
 		$deactivate_fa = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_fa');
 		
 		self::$resouce_files[] = array("key" => "easy-social-share-buttons-nativeskinned", "file" => ESSB3_PLUGIN_URL . '/assets/css/essb-native-skinned.min.css', "type" => "css");
-		if (!$deactivate_fa) {
-			self::$resouce_files[] = array("key" => "essb-fontawsome", "file" => ESSB3_PLUGIN_URL . '/assets/css/font-awesome.min.css', "type" => "css");
-		}
+		//if (!$deactivate_fa) {
+		//	self::$resouce_files[] = array("key" => "essb-fontawsome", "file" => ESSB3_PLUGIN_URL . '/assets/css/font-awesome.min.css', "type" => "css");
+		//}
 
 		return self::$resouce_files;
 	}

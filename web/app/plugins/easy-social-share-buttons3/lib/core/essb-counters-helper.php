@@ -12,13 +12,15 @@ class ESSBCountersHelper {
 				CURLOPT_HEADER 			=> false, 	// don't return headers
 				//CURLOPT_FOLLOWLOCATION	=> true, 	// follow redirects
 				CURLOPT_ENCODING	 	=> "", 		// handle all encodings
-				CURLOPT_USERAGENT	 	=> 'essb', 	// who am i
+				CURLOPT_USERAGENT	 	=> isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'essb', 	// who am i
 				CURLOPT_AUTOREFERER 	=> true, 	// set referer on redirect
 				CURLOPT_CONNECTTIMEOUT 	=> 5, 		// timeout on connect
 				CURLOPT_TIMEOUT 		=> 10, 		// timeout on response
 				CURLOPT_MAXREDIRS 		=> 3, 		// stop after 3 redirects
 				CURLOPT_SSL_VERIFYHOST 	=> 0,
 				CURLOPT_SSL_VERIFYPEER 	=> false,
+				CURLOPT_FAILONERROR => false,
+				CURLOPT_NOSIGNAL => 1,
 		);
 		$ch = curl_init();
 	
@@ -275,17 +277,24 @@ class ESSBCountersHelper {
 		//$parse_url = 'https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%22' . $url . '%22';
 		//$parse_url = 'https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls='.$url;
 		$parse_url = 'https://graph.facebook.com/?id='.$url;
-		//print "Facebook count URL = ".$parse_url;
+		
+		$facebook_token = essb_option_value('facebook_counter_token');
+		if ($facebook_token != '') {
+			$parse_url = 'https://graph.facebook.com/?id='.$url.'&access_token=' . sanitize_text_field($facebook_token);
+		}
+		
 		$content = self::parse ( $parse_url );
+		
+		//print " facebook output = ".$content;
 		$result = 0;
 		$result_comments = 0;
 		
 		if ($content != '') {
-			//print "response = ".$content;
 			$content = json_decode ( $content, true );
 		
 			$data_parsers = $content;
 			$result = isset ( $data_parsers ['share'] ['share_count'] ) ? intval ( $data_parsers ['share'] ['share_count'] ) : 0;
+			//$result_comments = isset ( $data_parsers [0] ['comment_count'] ) ? intval ( $data_parsers [0] ['comment_count'] ) : 0;
 		}
 		
 		return $result;

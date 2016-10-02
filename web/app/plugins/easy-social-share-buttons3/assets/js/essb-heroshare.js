@@ -161,6 +161,7 @@ jQuery(document).ready(function($){
 
 	var element = $('.essb-heroshare');
 	if (!element.length) {
+		console.log('no heroshare');
 		return;
 	}
 	
@@ -183,12 +184,14 @@ jQuery(document).ready(function($){
 	var popManual = $(element).attr("data-load-manual") || "";
 	var popExit = $(element).attr("data-exit-intent") || "";
 
-	if (popManual == '1') { return; }
+	if (popManual == '1') { console.log('manual display'); return; }
 	 	
+	
 	if (popOnPercent != '' || popOnEnd == "1") {
 		heroshareTriggerPercent = Number(popOnPercent);
 		heroshareTriggeredOnScroll = false;
 		heroshareTriggerEnd = (popOnEnd == "1") ? true : false;
+		console.log('scroll event heroshareTriggerPercent = ' + heroshareTriggerPercent + ', heroshareTriggeredOnScroll = ' + heroshareTriggeredOnScroll+', heroshareTriggerEnd = ' + heroshareTriggerEnd)
 		$(window).scroll(essb_heroshare_onscroll);
 		return;
 	}

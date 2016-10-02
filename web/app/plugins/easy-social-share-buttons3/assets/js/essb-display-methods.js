@@ -81,6 +81,8 @@ jQuery(document).ready(
 
 		});
 
+
+
 /* ------------------------------------------------------------------------
  * Post Bar
  * ------------------------------------------------------------------------
@@ -271,6 +273,33 @@ jQuery(document).ready(function($){
 			
 			if (essb_point_mode != 'simple') $('.essb-point').toggleClass('essb-point-open');
         });
+	});
+
+})( jQuery );
+
+
+/* ------------------------------------------------------------------------
+ * Sidebar entry animations
+ * ------------------------------------------------------------------------
+ */
+
+(function( $ ) {
+	$(document).ready(function() {
+		var essb_reveal_sidebar_transition = function() {
+			$('.essb_sidebar_transition').each(function() {
+				if ($(this).hasClass('essb_sidebar_transition_slide')) {
+					$(this).toggleClass('essb_sidebar_transition_slide');
+				}
+				if ($(this).hasClass('essb_sidebar_transition_fade')) {
+					$(this).toggleClass('essb_sidebar_transition_fade');
+					//console.log('fade in');
+					//$(this).fadeIn(1000);
+				}
+			});
+		}
+
+		essb_reveal_sidebar_transition();
+
 	});
 
 })( jQuery );

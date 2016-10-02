@@ -76,6 +76,32 @@ class ESSBNetworks_Subscribe {
 	}
 	
 	
+	public static function draw_aftershare_popup_subscribe_form($design = '') {
+		$mode = "mailchimp";
+	
+		$salt = mt_rand();
+	
+		$output = '<script type="text/javascript">var after_share_easyoptin = "'.$salt.'";</script>';
+		$output .= '<div class="essb-subscribe-form essb-subscribe-form-'.$salt.' essb-subscribe-form-popup" style="display:none;" '.($two_step_inline == 'true' ? 'data-popup="0"' : 'data-popup="1"').'>';
+	
+		if ($mode == "form") {
+			$output .= do_shortcode(ESSBGlobalSettings::$subscribe_content);
+		}
+		else {
+			$output .= self::draw_integrated_subscribe_form($salt, false, $design, $is_widget);
+		}
+	
+		$output .= '<button type="button" class="essb-subscribe-form-close" onclick="essb_subscribe_popup_close(\''.$salt.'\');">x</button>';
+		$output .= '</div>';
+		$output .= '<div class="essb-subscribe-form-overlay essb-subscribe-form-overlay-'.$salt.'" onclick="essb_subscribe_popup_close(\''.$salt.'\');"></div>';
+	
+		if (!self::$assets_registered) {
+			self::register_assets();
+		}
+	
+		return $output;
+	}
+	
 	/**
 	 * Draw two step subscribe from
 	 * ---
@@ -98,7 +124,7 @@ class ESSBNetworks_Subscribe {
 		if (empty($mode)) $mode = ESSBGlobalSettings::$subscribe_function;
 		$salt = mt_rand();
 	
-		$output = '<a href="#" onclick="essb_toggle_subscribe(\''.$salt.'\');" data-twostep-subscribe="true" data-salt="'.$salt.'" class="essb-twostep-subscribe">'.$open_link_content.'</a>';
+		$output = '<a href="#" onclick="essb_toggle_subscribe(\''.$salt.'\'); return false;" data-twostep-subscribe="true" data-salt="'.$salt.'" class="essb-twostep-subscribe">'.$open_link_content.'</a>';
 		$output .= '<div class="essb-subscribe-form essb-subscribe-form-'.$salt.' essb-subscribe-form-popup" style="display:none;" '.($two_step_inline == 'true' ? 'data-popup="0"' : 'data-popup="1"').'>';
 	
 		if ($mode == "form") {
@@ -145,6 +171,15 @@ class ESSBNetworks_Subscribe {
 		else if ($user_design == 'design4') {
 			return self::draw_mailchimp_subscribe4($salt, $is_widget);
 		}
+		else if ($user_design == 'design5') {
+			return self::draw_mailchimp_subscribe5($salt, $is_widget);
+		}
+		else if ($user_design == 'design6') {
+			return self::draw_mailchimp_subscribe6($salt, $is_widget);
+		}
+		else if ($user_design == 'design7') {
+			return self::draw_mailchimp_subscribe7($salt, $is_widget);
+		}
 		else {
 			return self::draw_mailchimp_subscribe($salt, $is_widget);
 		}
@@ -183,5 +218,29 @@ class ESSBNetworks_Subscribe {
 		}
 		
 		return essb_subscribe_form_design4($salt, $is_widget);
+	}
+
+	public static function draw_mailchimp_subscribe5($salt, $is_widget = false) {
+		if (!function_exists('essb_subscribe_form_design5')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe-design5.php');
+		}
+		
+		return essb_subscribe_form_design5($salt, $is_widget);
+	}
+	
+	public static function draw_mailchimp_subscribe6($salt, $is_widget = false) {
+		if (!function_exists('essb_subscribe_form_design6')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe-design6.php');
+		}
+	
+		return essb_subscribe_form_design6($salt, $is_widget);
+	}
+
+	public static function draw_mailchimp_subscribe7($salt, $is_widget = false) {
+		if (!function_exists('essb_subscribe_form_design7')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe-design7.php');
+		}
+	
+		return essb_subscribe_form_design7($salt, $is_widget);
 	}
 }

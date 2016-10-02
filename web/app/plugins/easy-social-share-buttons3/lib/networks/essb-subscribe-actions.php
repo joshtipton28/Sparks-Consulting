@@ -60,6 +60,14 @@ class ESSBNetworks_SubscribeActions {
 		
 		$mp_list = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_mp_list' );
 		
+		$ml_api = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ml_api' );
+		$ml_list = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ml_list' );
+
+		$ac_api_url = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ac_api_url' );
+		$ac_api = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ac_api' );
+		$ac_list = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ac_list' );
+		
+		
 		$output = array();
 		$output['name'] = $user_name;
 		$output['email'] = $user_email;
@@ -72,7 +80,8 @@ class ESSBNetworks_SubscribeActions {
 					
 				if ($result) {
 					$result = json_decode($result);
-					if (isset($result->euid)) {
+				
+					if ($result->euid) {
 						$output['code'] = '1';
 						$output['message'] = 'Thank you';
 					}
@@ -98,6 +107,12 @@ class ESSBNetworks_SubscribeActions {
 			case "mailpoet":
 				
 				$output = self::subscribe_mailpoet($mp_list, $user_email, $user_name);
+				break;
+			case "mailerlite":
+				$output = self::subscribe_mailerlite($ml_api, $ml_list, $user_email, $user_name);
+				break;
+			case "activecampaign":
+				$output = self::subscribe_activecampaign($ac_api_url, $ac_api, $ac_list, $user_email, $user_name);
 				break;
 		}
 		
@@ -189,6 +204,46 @@ class ESSBNetworks_SubscribeActions {
 		return $response;
 	}
 
+	public static function subscribe_mailerlite($api_key, $list_id, $email, $name = '') {
+	
+		$response = array();
+		
+		$data = array(
+				'apiKey' => $api_key,
+				'id' => $list_id,
+				'email' => $email,
+				'name' => $name,
+				'resubscribe' => '1'
+		);
+		$request = http_build_query($data);
+		
+		try {
+			$curl = curl_init('https://app.mailerlite.com/api/v1/subscribers/'.$list_id.'/');
+			curl_setopt($curl, CURLOPT_POST, 1);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			//curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+			
+			$server_response = curl_exec($curl);
+			curl_close($curl);
+			
+			$response ['code'] = '1';
+			$response ['message'] = 'Thank you';
+		}
+		catch (Exception $e) {
+			$response ['code'] = "99";
+			$response ['message'] = __ ( 'Missing connection', 'essb' );
+		}
+		
+		return $response;
+	}
+	
 	public static function subscribe_mymail($list_id, $email, $name = '') {
 		$response = array();
 		
@@ -277,4 +332,48 @@ class ESSBNetworks_SubscribeActions {
 	
 		return $response;
 	}
+
+	public static function subscribe_activecampaign($api_url, $api_key, $list_id, $email, $name = '') {
+	
+		$response = array();
+	
+		$data = array(
+				'api_action' => 'contact_add',
+				'api_key' => $api_key,
+				'api_output' => 'serialize',
+				'p['.$list_id.']' => $list_id,
+				'email' => $email
+		);
+		
+		if ($name != '') {
+			$data['first_name'] = $name;
+			$data['last_name'] = '';
+		}
+		
+		$request = http_build_query($data);
+	
+		try {
+			$url = str_replace('https://', 'http://', $api_url);
+			$curl = curl_init($url.'/admin/api.php?api_action=contact_add');
+			curl_setopt($curl, CURLOPT_POST, 1);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 20);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_HEADER, 0);
+			$server_response = curl_exec($curl);
+			curl_close($curl);
+				
+			$response ['code'] = '1';
+			$response ['message'] = 'Thank you';
+		}
+		catch (Exception $e) {
+			$response ['code'] = "99";
+			$response ['message'] = __ ( 'Missing connection', 'essb' );
+		}
+	
+		return $response;
+	}
+	
 }

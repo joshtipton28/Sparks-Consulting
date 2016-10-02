@@ -31,7 +31,7 @@ if (!function_exists('essb_check_applicability_module')) {
 			}
 		}
 		
-		if (ESSBCoreHelper::is_module_deactivate_on('share')) {
+		if (essb_is_module_deactivated_on('share')) {
 			$is_singular = false;
 			$is_lists_authorized = false;
 		}

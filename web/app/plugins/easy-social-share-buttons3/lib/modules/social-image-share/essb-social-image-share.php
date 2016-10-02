@@ -4,11 +4,11 @@ class ESSBSocialImageShare {
 	private static $instance = null;
 	
 	public static function get_instance() {
-		
+	
 		if (null == self::$instance) {
 			self::$instance = new self ();
 		}
-		
+	
 		return self::$instance;
 	
 	} // end get_instance;
@@ -16,69 +16,98 @@ class ESSBSocialImageShare {
 	function __construct() {
 		add_action ( 'wp_enqueue_scripts', array (&$this, 'enqueue_scripts' ) );
 		add_action ( 'wp_footer', array (&$this, 'include_social_image_share' ) );
-		add_action ( 'template_redirect', array ($this, 'essb_proccess_share_this_image' ), 1 );
+		add_action ( 'essb_js_buffer_head', array($this, 'generate_settings'));
+		
+		add_filter( 'body_class', array($this, 'essbis_class_names'));
+		add_filter( 'the_content', array($this, 'essbis_content_filter'));
+		add_filter( 'the_excerpt', array($this, 'essbis_content_filter'));
 	}
 	
-	function essb_proccess_share_this_image() {
-		$current_action = isset($_REQUEST['essb-image-share']) ? $_REQUEST['essb-image-share'] : '';
-		
-		if ($current_action == "yes") {
-			define('DOING_AJAX', true);
-			send_nosniff_header();
-			header('Pragma: no-cache');
-				
-			include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-image-share/essb-social-image-share-selected.php');
-				
-			exit;
+	public function essbis_class_names( $classes ) {
+		// add 'class-name' to the $classes array
+		if ($this->can_run()) {
+			$classes[] = 'essbis_site';
 		}
+		// return the $classes array
+		return $classes;
 	}
 	
-	function enqueue_scripts() {
-		global $essb_options;
-		
-		$mobile_detect = new ESSB_Mobile_Detect ();
-		
-		if ($mobile_detect->isMobile () && ! ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'sis_on_mobile' )) {
+	public function can_run() {
+		// deactivate on mobile when included
+		if (essb_is_mobile() && ! essb_option_bool_value('sis_on_mobile')) {
 			return false;
 		}
 		
-		if (ESSBCoreHelper::is_plugin_deactivated_on() || ESSBCoreHelper::is_module_deactivate_on('sis')) {
-			return;
+		// deactivate at all via settings
+		if (essb_is_plugin_deactivated_on() || essb_is_module_deactivated_on('sis')) {
+			return false;
 		}
-				
-		essb_resource_builder()->add_static_resource_footer(ESSB3_PLUGIN_URL . '/lib/modules/social-image-share/assets/css/easy-social-image-share2.min.css', 'essb-social-image-share', 'css');
+		
+		if (is_feed()) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public function essbis_content_filter($content) {
+		if (!$this->can_run()) { return $content; }
+		
+		$attributes = ' data-essbisPostContainer=""';
+		$attributes.= ' data-essbisPostUrl="' . get_permalink() . '"';
+		$attributes.= ' data-essbisPostTitle="' . wp_strip_all_tags( get_the_title(), true ) . '"';
+		$attributes.= ' data-essbisHoverContainer=""';
+		
+		$post_container = '<input type="hidden" value=""' . $attributes . '>';
+		
+		return $post_container . $content;
+	}
+	
+	public function enqueue_scripts() {
+		if (!$this->can_run()) { return; }
+		
+		essb_resource_builder()->add_static_resource_footer(ESSB3_PLUGIN_URL . '/lib/modules/social-image-share/assets/css/easy-social-image-share.min.css', 'essb-social-image-share', 'css');
 		wp_enqueue_script ( 'jquery' );
-		wp_enqueue_script ( 'essb-social-image-share', ESSB3_PLUGIN_URL . '/lib/modules/social-image-share/assets/js/easy-social-image-share2.min.js', array ('jquery' ), false, true );
+		wp_enqueue_script ( 'essb-social-image-share', ESSB3_PLUGIN_URL . '/lib/modules/social-image-share/assets/js/easy-social-image-share.min.js', array ('jquery' ), false, true );
 	}
 	
-	function include_social_image_share() {
-		global $essb_options;
-		
-		if (ESSBCoreHelper::is_plugin_deactivated_on() || ESSBCoreHelper::is_module_deactivate_on('sis')) {
-			return;
-		}
-		
-		
-		$mobile_detect = new ESSB_Mobile_Detect ();
-		
-		if ($mobile_detect->isMobile () && ! ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'sis_on_mobile' )) {
-			return false;
-		}
-		
-		$current_post_address = ESSBUrlHelper::get_current_page_url();
-		$current_post_address = ESSBUrlHelper::attach_tracking_code($current_post_address, 'essb-image-share=yes');
-
-		$calling = 'jQuery(document).ready(function(){jQuery("'.$this->get_settings('sis_selector', 'img').'").essbis({selector:"'.$this->get_settings('sis_selector', 'img').'",dontshow:"'.$this->get_settings('sis_dontshow').'",minWidth:'.$this->get_settings('sis_minWidth', '100').',minHeight:'.$this->get_settings('sis_minHeight', '100').',align:{x:"'.$this->get_settings('sis_align_x', 'left').'",y:"'.$this->get_settings('sis_align_y', 'top').'"},offset:{x:'.$this->get_settings('sis_offset_x', '0').',y:'.$this->get_settings('sis_offset_y', '0').'},orientation:"'.$this->get_settings('sis_orientation').'",style:"'.$this->get_settings('sis_style').'",sharer:"'.(( $this->get_settings('sis_sharer') == 'true' ) ? $current_post_address : '').'",is_mobile:'.($mobile_detect->isMobile () ? 'true' : 'false').',always_show:'.$this->get_settings('sis_always_show', 'false').',pinterest_alt:'.$this->get_settings('sis_pinterest_alt', 'false').',primary_menu: [ '.$this->get_primary_menu().'],avoid_class: "'.$this->get_settings('sis_dontaddclass').'"});});';
-		essb_resource_builder()->add_js($calling, true, 'essb-onmedia-code');
-	
+	public function include_social_image_share() {
+		if (!$this->can_run()) { return; }	
 	}
 	
-	function get_primary_menu() {
-		global $essb_options;
+	public function get_settings() {
+		$settings = array(
+				'imageSelector'      => '.essbis-hover-container img',
+				'minImageHeight'     => 100,
+				'minImageWidth'      => 100,
+				'hoverPanelPosition' => 'middle-middle',
+				'theme' 			=> 'flat',
+				'orientation'       => 'horizontal',
+				'showOnHome'         => '1',
+				'showOnSingle'      => '1',
+				'showOnPage'         => '1',
+				'showOnBlog'         => '1',
+				'showOnLightbox' => '1'
+		);
+		return $settings;
+	}
+	
+	public function generate_settings($buffer) {
+		$default_setup = $this->get_settings();
 		
-		$sis_networks = ESSBOptionValuesHelper::options_value($essb_options, 'sis_networks');
-		$sis_network_order = ESSBOptionValuesHelper::options_value($essb_options, 'sis_network_order');
-				
+		if (essb_option_value('sis_selector') != '') {
+			$default_setup['imageSelector'] = essb_option_value('sis_selector');
+		}
+		if (essb_option_value('sis_minWidth') != '') {
+			$default_setup['minImageWidth'] = intval(essb_option_value('sis_minWidth'));
+		}
+		if (essb_option_value('sis_minHeight') != '') {
+			$default_setup['minImageHeight'] = intval(essb_option_value('sis_minHeight'));
+		}
+		
+		$sis_networks = essb_option_value('sis_networks');
+		$sis_network_order = essb_option_value('sis_network_order');
+		
 		$result_list = "";
 		
 		foreach ($sis_network_order as $network) {
@@ -87,30 +116,44 @@ class ESSBSocialImageShare {
 					if ($result_list != '') {
 						$result_list .= ',';
 					}
-					
-					$result_list .= "'".$network."'";
+						
+					$result_list .= $network;
 				}
 			}
 		}
-			
 		
-		return $result_list;
-	}
-	
-	function get_settings($option_name, $default_value = '', $boolean = false) {
-		global $essb_options;
-
+		if ($result_list == '') { $result_list = 'pinterest'; }
+		$default_setup['networks'] = $result_list;
 		
-		$value = ESSBOptionValuesHelper::options_value($essb_options, $option_name);
-		if (trim($value) == '') {
-			$value = $default_value;
+		$button_position = essb_option_value('sis_position');
+		if ($button_position != '') {
+			$default_setup['hoverPanelPosition'] = $button_position;
 		}
 		
-		// @new image share support only top position @since version 3.2.6
-		if ($option_name == "sis_align_y") { $value = "top";}
+		$button_orientation = essb_option_value('sis_orientation');
+		if ($button_orientation != '') {
+			$default_setup['orientation'] = $button_orientation;
+		}
 		
-		return $value;
+		if (essb_option_value('sis_style') != '') {
+			$default_setup['theme'] = essb_option_value('sis_style');
+		}
+		
+		$setup = array();
+		$setup["modules"] = array();
+		$setup["modules"]["settings"] = array();
+		$setup["modules"]["settings"]["moduleHoverActive"] = 1;
+		$setup["modules"]["settings"]["activeModules"] = array("settings", "buttons", "hover");
+		$setup["modules"]["buttons"] = array();
+		$setup["modules"]["buttons"]["pinterestImageDescription"] = array("titleAttribute", "altAttribute", "postTitle", "mediaLibraryDescription");
+		$setup["modules"]["buttons"]["networks"] = $result_list;
+		$setup["modules"]["hover"] = $default_setup;
+		$setup["buttonSets"] = array();
+		$setup["themes"] = array();	
+		
+		$output = 'var essbis_settings = '.json_encode($setup).';';
+		
+		return $buffer.$output;
 	}
 }
 
-?>

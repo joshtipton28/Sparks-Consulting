@@ -1,4 +1,5 @@
 function essbasc_popup_show() {
+	
 	jQuery.fn.extend({
         center: function () {
             return this.each(function() {

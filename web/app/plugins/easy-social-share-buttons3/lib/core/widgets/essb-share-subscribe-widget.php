@@ -92,7 +92,7 @@ class ESSBSubscribeButtonWidget extends WP_Widget {
 		<p><label for="<?php echo $this->get_field_id( 'mode' ); ?>"><?php _e( 'Form type:' ); ?></label>
 		<select class="widefat" id="<?php echo $this->get_field_id( 'mode' ); ?>" name="<?php echo $this->get_field_name( 'mode' ); ?>">
 			<option value="form" <?php if ($mode == "form") echo 'selected="selected"'; ?>>Custom code form</option>
-			<option value="mailchimp" <?php if ($mode == "mailchimp") echo 'selected="selected"'; ?>>MailChimp integrated form</option>
+			<option value="mailchimp" <?php if ($mode == "mailchimp") echo 'selected="selected"'; ?>>Service integrated subscribe form</option>
 		</select></p>
 
 		<p><label for="<?php echo $this->get_field_id( 'design' ); ?>"><?php _e( 'Design:' ); ?></label>
@@ -101,7 +101,10 @@ class ESSBSubscribeButtonWidget extends WP_Widget {
 			<option value="design2" <?php if ($mode == "design2") echo 'selected="selected"'; ?>>Design #2</option>
 			<option value="design3" <?php if ($mode == "design3") echo 'selected="selected"'; ?>>Design #3</option>
 			<option value="design4" <?php if ($mode == "design4") echo 'selected="selected"'; ?>>Design #4</option>
-		
+			<option value="design5" <?php if ($mode == "design5") echo 'selected="selected"'; ?>>Design #5</option>
+			<option value="design6" <?php if ($mode == "design6") echo 'selected="selected"'; ?>>Design #6</option>
+			<option value="design7" <?php if ($mode == "design7") echo 'selected="selected"'; ?>>Design #7</option>
+			
 		</select></p>
 		
 <?php

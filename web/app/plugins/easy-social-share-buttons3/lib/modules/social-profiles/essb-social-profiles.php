@@ -14,19 +14,16 @@ class ESSBSocialProfiles {
 	} // end get_instance;
 	
 	function __construct() {
-		global $essb_options;
-		
 		$is_active = false;
 		
-		if (ESSBOptionValuesHelper::options_bool_value($essb_options, 'profiles_display')) {
-			$profiles_display_position = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_display_position');
+		if (essb_option_bool_value('profiles_display')) {
+			$profiles_display_position = essb_option_value('profiles_display_position');
 			
 			if ($profiles_display_position != 'widget') {
 				$is_active = true;
 				
-				if (ESSBOptionValuesHelper::options_bool_value($essb_options, 'profiles_mobile_deactivate')) {
-					$mobile = new ESSB_Mobile_Detect();
-					if ($mobile->isMobile()) {
+				if (essb_option_bool_value('profiles_mobile_deactivate')) {
+					if (essb_is_mobile()) {
 						$is_active = false;
 					}
 				}
@@ -35,61 +32,142 @@ class ESSBSocialProfiles {
 		
 		
 		if ($is_active) {
-			add_action('wp_footer', array($this, 'display_profiles'));
+			add_action( 'wp_enqueue_scripts' , array ( $this , 'register_front_assets' ), 1);
+			add_action( 'wp_footer', array($this, 'display_profiles'));
 		}
 	}	
 	
+	public function register_front_assets() {
+		if (essb_is_plugin_deactivated_on() || essb_is_module_deactivated_on('profiles')) {
+			return;
+		}
+	
+		essb_resource_builder()->add_static_resource(ESSB3_PLUGIN_URL . '/lib/modules/social-followers-counter/assets/css/essb-followers-counter.min.css', 'essb-social-followers-counter', 'css');
+	
+	}
+	
 	function display_profiles() {
-		global $essb_options;
-		
-		if (ESSBCoreHelper::is_module_deactivate_on('profiles')) {
+		if (essb_is_plugin_deactivated_on() || essb_is_module_deactivated_on('profiles')) {
 			return "";
 		}
 		
-		$profiles_display_position = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_display_position');
-		$profiles_button_type = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_button_type');
-		$profiles_button_size = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_button_size');
-		$profiles_nospace = ESSBOptionValuesHelper::options_bool_value($essb_options, 'profiles_nospace');
-		$profiles_button_fill = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_button_fill');
-		
-		$profiles_order = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_order');
-		
-		// @new version 3.0.4
-		$profiles_allowtext = ESSBOptionValuesHelper::options_bool_value($essb_options, 'profiles_allowtext');
-		$profiles_width = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_width');
-		
-		if (!is_array($profiles_order)) {
-			$profiles_order = array();
-			foreach (essb_available_social_profiles() as $network => $text) {
-				$profiles_order[] = $network;
-			}
-		}
+		$profiles_display_position = essb_option_value('profiles_display_position');
+		$profiles_template = essb_option_value('profiles_template');
+		$profiles_animation = essb_option_value('profiles_animation');
+		$profiles_nospace = essb_option_bool_value('profiles_nospace');
+
+		$profile_networks = ESSBSocialProfilesHelper::get_active_networks();
+		$profile_networks_order = ESSBSocialProfilesHelper::get_active_networks_order();
 		
 		$profiles = array();
-		foreach ($profiles_order as $network) {
-			$value_address = ESSBOptionValuesHelper::options_value($essb_options, 'profile_'.$network);
+		foreach ($profile_networks_order as $network) {
 			
-			if (!empty($value_address)) {
-				$profiles[$network] = $value_address;
+			if (in_array($network, $profile_networks)) {
+				$value_address = essb_option_value('profile_'.$network);
+				
+				if (!empty($value_address)) {
+					$profiles[$network] = $value_address;
+				}
 			}
 		}		
 		
-		$profiles_texts = array ();
-		if ($profiles_allowtext) {
-			foreach ( $profiles_order as $network ) {
-				$value_address = ESSBOptionValuesHelper::options_value ( $essb_options, 'profile_text_' . $network );
-				
-				if (! empty ( $value_address )) {
-					$profiles_texts [$network] = $value_address;
-				}
+		$options = array(
+				'position' => $profiles_display_position,
+				'template' => $profiles_template,
+				'animation' => $profiles_animation,
+				'nospace' => $profiles_nospace,
+				'networks' => $profiles
+				);
+		
+		echo $this->draw_social_profiles($options);
+	}
+	
+	/**
+	 * draw_social_profiles
+	 * 
+	 * @param array $options
+	 * @since 4.0
+	 */
+	public static function draw_social_profiles($options) {
+		
+		$instance_position = isset ( $options ['position'] ) ? $options ['position'] : '';
+		$instance_new_window = 1;
+		$instance_nofollow = 1;
+		$instance_template = isset ( $options ['template'] ) ? $options ['template'] : 'flat';
+		$instance_animation = isset ( $options ['animation'] ) ? $options ['animation'] : '';
+		$instance_nospace = isset ( $options ['nospace'] ) ? $options ['nospace'] : 0;
+		$instance_networks = isset($options['networks']) ? $options['networks'] : array();
+
+		// compatibility with previous template slugs
+		if (!empty($instance_template)) {
+			if ($instance_template == "lite") {
+				$instance_template = "light";
+			}
+			if ($instance_template == "grey-transparent") {
+				$instance_template = "grey";
+			}
+			if ($instance_template == "color-transparent") {
+				$instance_template = "color";
 			}
 		}
 		
-		echo $this->generate_social_profile_icons($profiles, $profiles_button_type, $profiles_button_size, $profiles_button_fill,
-				$profiles_nospace, $profiles_display_position, $profiles_allowtext, $profiles_texts, $profiles_width);
+		$class_template = (! empty ( $instance_template )) ? " essbfc-template-" . $instance_template : '';
+		$class_animation = (! empty ( $instance_animation )) ? " essbfc-icon-" . $instance_animation : '';
+		$class_columns = 'essbfc-col-profiles';
+		$class_nospace = (intval ( $instance_nospace ) == 1) ? " essbfc-nospace" : "";
+				
+		$class_position = ($instance_position != '') ? ' essbfc-profiles-bar essbfc-profiles-'.$instance_position : '';
+		
+		$link_nofollow = (intval ( $instance_nofollow ) == 1) ? ' rel="nofollow"' : '';
+		$link_newwindow = (intval ( $instance_new_window ) == 1) ? ' target="_blank"' : '';
+		
+		// loading animations
+		if (! empty ( $class_animation )) {
+			essb_resource_builder ()->add_static_footer_css ( ESSB3_PLUGIN_URL . '/lib/modules/social-followers-counter/assets/css/hover.css', 'essb-social-followers-counter-animations', 'css' );
+		}
+		
+		$code = '';
+		// followers main element
+		$code .= sprintf ( '<div class="essbfc-container essbfc-container-profiles %1$s%2$s%3$s%4$s%5$s">', '', $class_columns, $class_template, $class_nospace, $class_position );
+		
+		
+		$code .= '<ul>';
+		
+		foreach ( $instance_networks as $social => $url ) {
+			$social_display = $social;
+			if ($social_display == "instgram") {
+				$social_display = "instagram";
+			}
+
+			$social_custom_icon = '';
+		
+			$code .= sprintf ( '<li class="essbfc-%1$s">', $social_display );
+		
+			$follow_url = $url;
+			if (! empty ( $follow_url )) {
+				$code .= sprintf ( '<a href="%1$s"%2$s%3$s>', $follow_url, $link_newwindow, $link_nofollow );
+			}
+		
+			$code .= '<div class="essbfc-network">';
+			$code .= sprintf ( '<i class="essbfc-icon essbfc-icon-%1$s%2$s%3$s"></i>', $social_display, $class_animation, $social_custom_icon );
+			//printf ( '<span class="essbfc-followers-count">%1$s</span>', self::followers_number ( $social_followers_counter ) );
+			//printf ( '<span class="essbfc-followers-text">%1$s</span>', $social_followers_text );
+			$code .= '</div>';
+		
+			if (! empty ( $follow_url )) {
+				$code .= '</a>';
+			}
+			$code .= '</li>';
+		}
+		
+		$code .= '</ul>';
+		
+		$code .= '</div>';
+		
+		return $code;
 	}
 	
-	public static function generate_social_profile_icons($profiles = array(), $button_type = 'square', 
+	public static function _deprecated_generate_social_profile_icons($profiles = array(), $button_type = 'square', 
 			$button_size = 'small', $button_fill = 'colored', $nospace = true, $position = '', $profiles_text = false, 
 			$profiles_texts = array(), $button_width = '') {
 		

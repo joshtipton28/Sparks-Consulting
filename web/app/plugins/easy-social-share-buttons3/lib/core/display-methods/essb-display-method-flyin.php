@@ -53,10 +53,10 @@ class ESSBDisplayMethodFlyin {
 		}
 			
 		if (!empty($flyin_user_message)) {
-			$flyin_user_message = ESSBCoreHelper::post_details_to_content($flyin_user_message);
+			$flyin_user_message = essb_post_details_to_content($flyin_user_message);
 		}
 		if (!empty($flyin_window_title)) {
-			$flyin_window_title = ESSBCoreHelper::post_details_to_content($flyin_window_title);
+			$flyin_window_title = essb_post_details_to_content($flyin_window_title);
 		}
 			
 		$output .= sprintf('<div class="essb-flyin%10$s essb-flyin-%11$s" data-width="%1$s" data-load-percent="%2$s" data-load-end="%3$s" data-load-manual="%4$s" data-load-time="%5$s" data-close-after="%6$s" data-close-hide="%7$s" data-close-hide-all="%8$s" data-postid="%9$s">',

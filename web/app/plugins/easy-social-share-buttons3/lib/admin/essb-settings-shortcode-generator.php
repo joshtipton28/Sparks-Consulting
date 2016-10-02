@@ -55,12 +55,12 @@ $scg->activate($active_shortcode);
 		<input type="hidden" id="cmd" name="cmd" value="generate" />
 		<input type="hidden" id="code" name="code" value="<?php echo sanitize_text_field($active_shortcode); ?>"/>
  			<?php wp_nonce_field('essb'); ?>
-			<div class="essb-options">
+			<div class="essb-options essb-options-shortcodegen">
 			<div class="essb-options-header" id="essb-options-header">
 				<div class="essb-options-title">
-					Shortcode Generator
+					Shortcode Generator<?php echo $scg->getTitleNavigation(); ?>
 				</div>		
-		<?php echo '<input type="Submit" name="Submit" value="' . __ ( 'Generate Shortcode', ESSB3_TEXT_DOMAIN ) . '" class="button-primary" />'; ?>
+		<?php echo '<input type="Submit" name="Submit" value="' . __ ( 'Generate Shortcode', ESSB3_TEXT_DOMAIN ) . '" class="essb-btn essb-btn-red" />'; ?>
 	</div>
 			<div class="essb-options-sidebar">
 				<ul class="essb-options-group-menu">

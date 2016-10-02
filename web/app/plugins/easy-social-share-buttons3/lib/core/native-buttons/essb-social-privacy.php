@@ -36,8 +36,8 @@ class ESSBSocialPrivacyNativeButtons {
 		$this->active = ESSBOptionValuesHelper::options_bool_value($this->options, 'native_privacy_active');
 		
 		if (ESSB3_DEMO_MODE) {
-			$is_active_option = isset($_REQUEST['native-privacy']) ? $_REQUEST['native-privacy'] : '';
-			if ($is_active_option == 'true') {
+			$is_active_option = isset($_REQUEST['nativemode']) ? $_REQUEST['nativemode'] : '';
+			if ($is_active_option == 'privacy') {
 				$this->active = true;
 			}
 		}
@@ -103,37 +103,37 @@ class ESSBSocialPrivacyNativeButtons {
 		return $result;
 	}
 	
-	public function get_icon($type) {
+	public static function get_icon($type) {
 		$icon = "";
-	
+		
 		switch ($type) {
 			case "google" :
-				$icon = "fa-google-plus";
+				$icon = "essb_icon_google";
 				break;
-					
+			
 			case "facebook" :
-				$icon = "fa-facebook";
+				$icon = "essb_icon_facebook";
 				break;
-					
+			
 			case "twitter" :
-				$icon = "fa-twitter";
+				$icon = "essb_icon_twitter";
 				break;
-					
+			
 			case "pinterest" :
-				$icon = "fa-pinterest";
+				$icon = "essb_icon_pinterest";
 				break;
-					
+			
 			case "youtube" :
-				$icon = "fa-youtube-play";
+				$icon = "essb_icon_youtube";
 				break;
 			case "vk" :
-				$icon = "fa-vk";
-				break;
+				$icon = "essb_icon_vk";
+				break;		
 			case "linkedin" :
-				$icon = "fa-linkedin";
-				break;
+				$icon = "essb_icon_linkedin";
+				break;		
 		}
-	
+		
 		return $icon;
 	}
 	
@@ -169,7 +169,7 @@ class ESSBSocialPrivacyNativeButtons {
 			$output_text = '<span class="essb-privacy-text-inner">' . $text . '</span>';
 		}
 		
-		$output .= '<div class="essb-privacy-text'.$user_skin.'"><span class="fa ' . $this->get_icon($type) . '"></span>' . $output_text . '</div>';
+		$output .= '<div class="essb-privacy-text'.$user_skin.'"><span class="' . $this->get_icon($type) . '"></span>' . $output_text . '</div>';
 		
 		$output .= '</div>';
 		$output .= '</div>';
@@ -183,9 +183,9 @@ class ESSBSocialPrivacyNativeButtons {
 		
 		$this->resource_files[] = array("key" => "essb-native-privacy", "file" => ESSB3_PLUGIN_URL . '/assets/css/essb-native-privacy.min.css', "type" => "css");
 		
-		if (!$deactivate_fa) {
-			$this->resource_files[] = array("key" => "essb-fontawsome", "file" => ESSB3_PLUGIN_URL . '/assets/css/font-awesome.min.css', "type" => "css");
-		}
+		//if (!$deactivate_fa) {
+		//	$this->resource_files[] = array("key" => "essb-fontawsome", "file" => ESSB3_PLUGIN_URL . '/assets/css/font-awesome.min.css', "type" => "css");
+		//}
 		$this->resource_files[] = array("key" => "essb-socialprivacy-script", "file" => ESSB3_PLUGIN_URL . '/assets/js/essb-social-privacy.min.js', "type" => "js");
 				
 	}

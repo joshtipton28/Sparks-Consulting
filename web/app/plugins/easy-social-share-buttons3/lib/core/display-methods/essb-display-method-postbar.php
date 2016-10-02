@@ -46,7 +46,7 @@ class ESSBDisplayMethodPostBar {
 		
 			if ( is_a( $prev_post, 'WP_Post' ) ) {
 				$output .= '<div class="essb-postbar-prev-post">';
-				$output .= '<a href="'.get_permalink( $prev_post->ID ).'"><i class="essbpb-prev"></i></a>';
+				$output .= '<a href="'.get_permalink( $prev_post->ID ).'"><i class="essb_icon_prev"></i></a>';
 					
 				$output .= '<div class="essb_prev_post">';
 				$output .= '<div class="essb_prev_post_info">';
@@ -128,13 +128,13 @@ class ESSBDisplayMethodPostBar {
 		$output .= '<div class="essb-posbar-icons-container">';
 			
 		if ($postbar_activate_total) {
-			$output .= '<span class="essb-postbar-totalshares"><i class="essbpb-share"></i><span class="essb-postbar-number">'.$total_shares_code.'</span></span>';
+			$output .= '<span class="essb-postbar-totalshares"><i class="essb_icon_share"></i><span class="essb-postbar-number">'.$total_shares_code.'</span></span>';
 			$one_icon = true;
 		}
 		if ($postbar_activate_comments) {
 			$comment_count = get_post_field( 'comment_count', $post->ID );
 		
-			$output .= '<span class="essb-postbar-comments"><i class="essbpb-comment"></i><span class="essb-postbar-number">'.$comment_count.'</span></span>';
+			$output .= '<span class="essb-postbar-comments"><i class="essb_icon_comments"></i><span class="essb-postbar-number">'.$comment_count.'</span></span>';
 			$one_icon = true;
 		}
 		if ($postbar_activate_time) {
@@ -151,7 +151,7 @@ class ESSBDisplayMethodPostBar {
 				$ttr = '<1';
 			}
 		
-			$output .= '<span class="essb-postbar-time"><i class="essbpb-clock"></i><span class="essb-postbar-number">'.$ttr.' '.__('min', 'easy-social-share-buttons').'</span></span>';
+			$output .= '<span class="essb-postbar-time"><i class="essb_icon_clock"></i><span class="essb-postbar-number">'.$ttr.' '.__('min', 'easy-social-share-buttons').'</span></span>';
 			$one_icon = true;
 		}
 		if (!$one_icon) {
@@ -171,7 +171,7 @@ class ESSBDisplayMethodPostBar {
 				
 			if ( is_a( $next_post, 'WP_Post' ) ) {
 				$output .= '<div class="essb-postbar-next-post">';
-				$output .= '<a href="'.get_permalink( $next_post->ID ).'"><i class="essbpb-next"></i></a>';
+				$output .= '<a href="'.get_permalink( $next_post->ID ).'"><i class="essb_icon_next"></i></a>';
 					
 				$output .= '<div class="essb_next_post">';
 					

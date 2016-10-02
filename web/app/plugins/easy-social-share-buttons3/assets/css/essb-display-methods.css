@@ -87,7 +87,7 @@
 }
 
 .essb_displayed_flyin .essb_t_l_big,.essb_displayed_flyin .essb_t_r_big {
-	padding-top: 8px !important;
+	padding-top: 2px !important;
 }
 
 .essb_displayed_flyin .essb_t_l_big .essb_t_nb,.essb_displayed_flyin .essb_t_r_big .essb_t_nb {
@@ -342,7 +342,7 @@
 
 .essb_displayed_popup .essb_t_l_big,.essb_displayed_popup .essb_t_r_big
 	{
-	padding-top: 8px !important;
+	padding-top: 2px !important;
 }
 
 .essb_displayed_popup .essb_t_l_big .essb_t_nb,.essb_displayed_popup .essb_t_r_big .essb_t_nb
@@ -365,99 +365,6 @@
    PostBar
    ========================================================================== */
 
-@font-face {
-	font-family: 'essb-postbar';
-	src: url('../fonts/essb-postbar.eot?18666610');
-	src: url('../fonts/essb-postbar.eot?18666610#iefix')
-		format('embedded-opentype'),
-		url('../fonts/essb-postbar.woff?18666610') format('woff'),
-		url('../fonts/essb-postbar.ttf?18666610') format('truetype'),
-		url('../fonts/essb-postbar.svg?18666610#essb-postbar') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
-/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-/*
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
-    font-family: 'essb-postbar';
-    src: url('../fonts/essb-postbar.svg?18666610#essb-postbar') format('svg');
-  }
-}
-*/
-[class ^="essbpb-"]:before,[class *=" essbpb-"]:before {
-	font-family: "essb-postbar";
-	font-style: normal;
-	font-weight: normal;
-	speak: none;
-	display: inline-block;
-	text-decoration: inherit;
-	width: 1em;
-	margin-right: .2em;
-	text-align: center;
-	/* opacity: .8; */
-	/* For safety - reset parent styles, that can break glyph codes*/
-	font-variant: normal;
-	text-transform: none;
-	/* fix buttons height, for twitter bootstrap */
-	line-height: 1em;
-	/* Animation center compensation - margins should be symmetric */
-	/* remove if not needed */
-	margin-left: .2em;
-	/* you can be more comfortable with increased icons size */
-	/* font-size: 120%; */
-	/* Font smoothing. That was taken from TWBS */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-
-	/* Uncomment for 3D effect */
-	/* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
-}
-
-.essbpb-share:before {
-	content: '\61';
-} /* 'a' */
-.essbpb-comment:before {
-	content: '\62';
-} /* 'b' */
-.essbpb-comment-empty:before {
-	content: '\63';
-} /* 'c' */
-.essbpb-clock:before {
-	content: '\64';
-} /* 'd' */
-.essbpb-left-open:before {
-	content: '\65';
-} /* 'e' */
-.essbpb-right-open:before {
-	content: '\66';
-} /* 'f' */
-.essbpb-next:before {
-	content: '\67';
-} /* 'g' */
-.essbpb-tag:before {
-	content: '\68';
-} /* 'h' */
-.essbpb-prev:before {
-	content: '\69';
-} /* 'i' */
-.essbpb-comment-inv-alt2:before {
-	content: '\6b';
-} /* 'k' */
-.essbpb-clock-2:before {
-	content: '\6c';
-} /* 'l' */
-.essbpb-export:before {
-	content: '\6d';
-} /* 'm' */
-.essbpb-tag-1:before {
-	content: '\6e';
-} /* 'n' */
-.essbpb-clock-1:before {
-	content: '\e803';
-} /*  */
-
 .essb-postbar {
 	height: 46px;
 	position: fixed;
@@ -476,6 +383,10 @@
 .essb-postbar a {
 	color: #111;
 	text-decoration: none;
+}
+
+.essb-postbar i {
+	vertical-align: middle;
 }
 
 .essb-postbar .essb-postbar-container {
@@ -714,6 +625,14 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
    Sidebar
    ========================================================================== */
 
+.essb_links.essb_displayed_sidebar.essb_nospace li a,
+.essb_links.essb_displayed_sidebar_right.essb_nospace li a {
+	border-radius: 0px !important;
+}
+
+.essb_displayed_sidebar ul, .essb_displayed_sidebar_left ul, .essb_displayed_sidebar_right ul {
+	display: block !important;
+}
 .essb_displayed_sidebar, .essb_displayed_sidebar_left {
 	position: fixed;
 	left: 0;
@@ -775,7 +694,8 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
 	height: 18px !important;
 box-shadow: none !important;
 		-webkit-box-shadow: none !important;
-	background-color: trasnparent !important;
+	background-color: transparent !important;
+	margin-left: 5px;
 }
 
 .essb_displayed_sidebar_right:hover .essb_link_sidebar-close .essb_icon { 
@@ -787,6 +707,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 box-shadow: none !important;
 		-webkit-box-shadow: none !important;
 background-color: trasnparent !important;
+	margin-right: 5px;
 }
 
 
@@ -796,6 +717,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	vertical-align:-6px;
 	width: 18px !important;
 	height: 18px !important;
+	margin-left: 5px;
 }
 
 .essb_displayed_sidebar_right .essb-sidebar-closed-clicked .essb_icon, .essb_displayed_sidebar_right:hover .essb-sidebar-closed-clicked .essb_icon {
@@ -804,6 +726,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	vertical-align:-6px;
 	width: 18px !important;
 	height: 18px !important;
+	margin-right: 5px;
 }
 
 .essb_links.essb_displayed_sidebar li, .essb_links.essb_displayed_sidebar_right li {
@@ -829,15 +752,6 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 .essb_displayed_sidebar .essb_item.essb_after_more, .essb_displayed_sidebar_right .essb_item.essb_after_more { display: none !important; }
 
 
-/*.essb_displayed_sidebar .essb_counter {
-	width: 56px !important;
-	min-width: 56px !important;
-	max-width: 56px !important;
-}*/
-
-.essb_native_twitter_item div div { margin-left: 5px !important;}
-.essb_native_facebook_item div div { margin-left: 3px !important;}
-
 .essb_displayed_sidebar_right {
 	position: fixed;
 	right: 0;
@@ -852,54 +766,6 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 .essb_displayed_sidebar_right li:last-child a { margin-right:5px;}
 
-.essb_displayed_sidebar_bottom {
-	position: fixed;
-	margin: auto auto;
-	bottom:0;
-	z-index: 2000;
-	text-align: center;
-	width: 100%;
-}
-
-.essb_displayed_sidebar_bottom ul {
-	text-align: center;
-	margin: 0 auto;
-}
-.essb_displayed_sidebar_bottom li {
-	list-style: none !important;
-}
-
-.essb_displayed_sidebar_bottom.sbal li {
-	float: left;
-}
-.essb_displayed_sidebar_bottom.sbar li {
-	float: right;
-}
-
-.essb_displayed_sidebar_top {
-	position: fixed;
-	margin: auto auto;
-	top:0;
-	z-index: 2000;
-	text-align: center;
-	width: 100%;
-}
-
-.essb_displayed_sidebar_top ul {
-	text-align: center;
-	margin: 0 auto;
-}
-.essb_displayed_sidebar_top li {
-	list-style: none !important;
-}
-
-.essb_displayed_sidebar_top.sbal li {
-	float: left;
-}
-.essb_displayed_sidebar_top.sbar li {
-	float: right;
-}
-
 
 .essb_displayed_sidebar .essb_counter_right:after {
 	border-right: 0px solid #FFF !important;
@@ -909,12 +775,42 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 .essb_displayed_sidebar_right .essb_hide_name a:hover .essb_icon, .essb_displayed_sidebar_right .essb_hide_name a:focus .essb_icon { margin-right:0px !important; margin-left:0px !important; }
 
+
+.essb_displayed_sidebar.essb_sidebar_transition_slide {
+	margin-left: -500px;
+}
+
+.essb_displayed_sidebar_right.essb_sidebar_transition_slide {
+	margin-right: -500px;
+}
+
+.essb_displayed_sidebar.essb_sidebar_transition_fade, .essb_displayed_sidebar_right.essb_sidebar_transition_fade {
+	opacity: 0;
+}
+
+.essb_displayed_sidebar.essb_sidebar_transition, .essb_displayed_sidebar_right.essb_sidebar_transition {
+	transition:All 0.8s ease;
+-webkit-transition:All 0.8s ease;
+-moz-transition:All 0.8s ease;
+-o-transition:All 0.8s ease;
+}
+
+/*** Post Float ****/
+
 .essb_displayed_postfloat {
 	position: absolute;
 	z-index: 2000;
 	margin-left: -95px !important;
 	margin-top: 0px !important;
 	margin-bottom: 0px !important;
+}
+
+.essb_displayed_postfloat.essb_nospace li a {
+	margin: 0px !important;
+}
+
+.essb_displayed_postfloat ul {
+	display: block !important;
 }
 
 .essb_displayed_postfloat li {
@@ -1111,29 +1007,31 @@ z-index: 2000;
 }
 
 
-.essb-point .essbpb-share {
+.essb-point .essb_icon_share {
 	font-size: 21px;
+	line-height: 21px;
 	color: #fff;
 	background-color: #1D628B;
-	padding: 10px;
+	padding: 12px !important;
 	cursor: pointer;
+	font-family: essb !important;
 	
 }
 
-.essb-point.essb-point-round .essbpb-share {
+.essb-point.essb-point-round .essb_icon_share {
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;	
 }
 
-.essb-point.essb-point-rounded .essbpb-share {
+.essb-point.essb-point-rounded .essb_icon_share {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;	
 }
 
 
-.essb-point .essbpb-share:hover {
+.essb-point .essb_icon_share:hover {
 	background-color: #144461;
 }
 
@@ -1264,7 +1162,8 @@ z-index: 2001;
 .essb-point-share-buttons-simple.essb-point-share-buttons .essb_links { margin: 0 !important; }
 
 .essb-point-share-buttons .essb_fixedwidth_65_right .essb_network_name {
-	margin-top: 3px;
+	margin-top: 10px;
+	font-weight: bold;
 }
 
 /* Prev/Next post styling */

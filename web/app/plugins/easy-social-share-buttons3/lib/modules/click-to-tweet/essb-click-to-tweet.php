@@ -1,9 +1,11 @@
 <?php
 
-add_filter ( 'tiny_mce_version', 'refresh_mce' );
-
-// Add button to visual editor
-include dirname ( __FILE__ ) . '/assets/tinymce/essb-ctt-tinymce.php';
+if (is_admin()) {
+	add_filter ( 'tiny_mce_version', 'refresh_mce' );
+	
+	// Add button to visual editor
+	include dirname ( __FILE__ ) . '/assets/tinymce/essb-ctt-tinymce.php';
+}
 
 function essb_ctt_shorten($input, $length, $ellipsis = true, $strip_html = true) {
 	
@@ -58,15 +60,7 @@ function essb_ctt_shorten($input, $length, $ellipsis = true, $strip_html = true)
 function essb_ctt_shortcode($atts) {
 	global $essb_options;
 	
-	extract ( shortcode_atts ( array ('tweet' => '', 
-			'via' => 'yes', 
-			'url' => 'yes', 
-			'nofollow' => 'no', 
-			'user' => '', 
-			'hashtags' => '', 
-			'usehashtags' => 'yes', 
-			'template' => '',
-			'image' => '' )
+	extract ( shortcode_atts ( array ('tweet' => '', 'via' => 'yes', 'url' => 'yes', 'nofollow' => 'no', 'user' => '', 'hashtags' => '', 'usehashtags' => 'yes', 'template' => '' )
 
 	, $atts ) );
 	
@@ -129,12 +123,13 @@ function essb_ctt_shortcode($atts) {
 	}
 	
 	$short_url = "";
-	$twitter_shareshort = ESSBOptionValuesHelper::options_bool_value ( $essb_options, 'shorturl_activate' );
+	$twitter_shareshort = essb_option_bool_value('shorturl_activate' );
 	if ($twitter_shareshort) {
-		$provider = ESSBOptionValuesHelper::options_value($essb_options, 'shorturl_type');
-		$shorturl_bitlyuser = ESSBOptionValuesHelper::options_value($essb_options, 'shorturl_bitlyuser');
-		$shorturl_bitlyapi = ESSBOptionValuesHelper::options_value($essb_options, 'shorturl_bitlyapi');
-		$short_url = ESSBUrlHelper::short_url ( $post_url, $provider, get_the_ID (), $shorturl_bitlyuser, $shorturl_bitlyapi );
+		$provider = essb_option_value('shorturl_type');
+		$shorturl_bitlyuser = essb_option_value('shorturl_bitlyuser');
+		$shorturl_bitlyapi = essb_option_value('shorturl_bitlyapi');
+		essb_depend_load_function('essb_short_url', 'lib/core/essb-shorturl-helper.php');
+		$short_url = essb_short_url ( $post_url, $provider, get_the_ID (), $shorturl_bitlyuser, $shorturl_bitlyapi );
 	}
 	
 	if (filter_var ( $url, FILTER_VALIDATE_URL )) {
@@ -156,8 +151,8 @@ function essb_ctt_shortcode($atts) {
 	
 	}
 	
-	$bcttBttn = __('Click to Tweet', ESSB3_TEXT_DOMAIN);
-	$user_text = ESSBOptionValuesHelper::options_value($essb_options, 'translate_clicktotweet');
+	$bcttBttn = __('Click to Tweet', 'essb');
+	$user_text = essb_option_value('translate_clicktotweet');
 	if ($user_text != '') {
 		$bcttBttn = $user_text;
 	}
@@ -173,9 +168,6 @@ function essb_ctt_shortcode($atts) {
 	}
 	
 	$link_short = $short;
-	if ($image != '') {
-		$link_short .= ' '.$image;
-	}
 	//$link_short = str_replace('#', '%23', $link_short);
 	
 	if ($nofollow != 'no') {
@@ -194,7 +186,7 @@ function essb_ctt_shortcode($atts) {
 			<span class='essb-click-to-tweet-quote'>
 			" . $short . "
 			</span>
-			<span class='essb-click-to-tweet-button'>" . $bcttBttn . "<span class='essb-click-to-tweet-button-icon'></span>
+			<span class='essb-click-to-tweet-button'>" . $bcttBttn . "<span class='essb-click-to-tweet-button-icon essb_icon_twitter'></span>
 		</div>";
 	} 
 }
@@ -206,13 +198,10 @@ add_shortcode ( 'easy-tweet', 'essb_ctt_shortcode' );
 function essb_ctt_scripts() {
 	
 	
-		if (!ESSBCoreHelper::is_plugin_deactivated_on() && !ESSBCoreHelper::is_module_deactivate_on('ctt')) {
+		if (!essb_is_plugin_deactivated_on() && !essb_is_module_deactivated_on('ctt')) {
 		    essb_resource_builder()->add_static_resource(plugins_url ( 'assets/css/styles.css', __FILE__ ), 'essb-cct-style', 'css');
 		}
-	
-
 }
-;
 
 add_action ( 'wp_enqueue_scripts', 'essb_ctt_scripts' );	
 	

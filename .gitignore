@@ -11,6 +11,7 @@ web/app/plugins/*
 !web/app/plugins/wp-migrate-db-pro
 !web/app/plugins/wp-migrate-db-pro-media-files
 !web/app/plugins/rowing-db
+!web/app/plugins/sparks-settings
 web/app/mu-plugins/*/
 web/app/upgrade
 web/app/uploads/*

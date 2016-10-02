@@ -1,6 +1,8 @@
 <?php
 if (!function_exists('essb_rs_js_build_generate_bottombar_reveal_code')) {
-	function essb_rs_js_build_generate_bottombar_reveal_code() {
+	add_filter('essb_js_buffer_footer', 'essb_rs_js_build_generate_bottombar_reveal_code');
+	function essb_rs_js_build_generate_bottombar_reveal_code($buffer) {
+		
 		global $essb_options;
 		
 		
@@ -61,6 +63,7 @@ if (!function_exists('essb_rs_js_build_generate_bottombar_reveal_code')) {
 		});
 		';
 		}
-		return $output;
+		$output = trim(preg_replace('/\s+/', ' ', $output));
+		return $buffer.$output;
 	}
 }

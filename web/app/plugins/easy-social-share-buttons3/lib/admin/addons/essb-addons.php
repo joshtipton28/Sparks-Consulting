@@ -2,9 +2,6 @@
 
 $current_list = array ();
 
-global $essb_options;
-$deactivate_appscreo = ESSBOptionValuesHelper::options_bool_value($essb_options, 'deactivate_appscreo');
-if (!$deactivate_appscreo) {
 if (class_exists ( 'ESSBAddonsHelper' )) {
 	
 	$essb_addons = ESSBAddonsHelper::get_instance ();
@@ -12,16 +9,7 @@ if (class_exists ( 'ESSBAddonsHelper' )) {
 	
 	$current_list = $essb_addons->get_addons ();
 }
-}
-else {
-	$current_list = 'eyJlc3NiLXNlbGYtc2hvcnQtdXJsIjp7InNsdWciOiJlc3NiLXNlbGYtc2hvcnQtdXJsIiwibmFtZSI6IlNlbGYtSG9zdGVkIFNob3J0IFVSTHMgYWRkLW9uIGZvciBFYXN5IFNvY2lhbCBTaGFyZSBCdXR0b25zIiwiaW1hZ2UiOiJodHRwOlwvXC9hZGRvbnMuYXBwc2NyZW8uY29tXC9pXC9hZGRvbl9pbWFnZXMtMDEucG5nIiwiZGVzY3JpcHRpb24iOiJHZW5lcmF0ZSBzZWxmIGhvc3RlZCBzaG9ydCBVUkxzIGRpcmVjdGx5IGZyb20geW91ciBXb3JkUHJlc3Mgd2l0aG91dCBleHRlcm5hbCBzZXJ2aWNlcyBsaWtlIGh0dHA6XC9cL2RvbWFpbi5jb21cL2F4V3NhIG9yIGN1c3RvbSBiYXNlZCBodHRwOlwvXC9kb21haW4uY29tXC9lc3NiLiIsInByaWNlIjoiJDE0IiwicGFnZSI6Imh0dHA6XC9cL2NvZGVjYW55b24ubmV0XC9pdGVtXC9zZWxmLWhvc3RlZC1zaG9ydC11cmxzLWFkZG9uLWZvci1lYXN5LXNvY2lhbC1zaGFyZS1idXR0b25zXC8xNTA2NjQ0NyIsImRlbW9fdXJsIjoiaHR0cDpcL1wvY29kZWNhbnlvbi5uZXRcL2l0ZW1cL3NlbGYtaG9zdGVkLXNob3J0LXVybHMtYWRkb24tZm9yLWVhc3ktc29jaWFsLXNoYXJlLWJ1dHRvbnNcL2Z1bGxfc2NyZWVuX3ByZXZpZXdcLzE1MDY2NDQ3IiwiY2hlY2siOiJFU1NCM19TU1VfVkVSU0lPTiIsInJlcXVpcmVzIjoiMy4xLjIifSwiaGVsbG8tZm9sbG93ZXJzIjp7InNsdWciOiJoZWxsby1mb2xsb3dlcnMiLCJuYW1lIjoiSGVsbG8gRm9sbG93ZXJzIC0gU29jaWFsIENvdW50ZXIgUGx1Z2luIiwiaW1hZ2UiOiJodHRwOlwvXC9hZGRvbnMuYXBwc2NyZW8uY29tXC9pXC9hZGRvbl9pbWFnZXMtMDUucG5nIiwiZGVzY3JpcHRpb24iOiJCZWF0aWZ1bCBhbmQgdW5pcXVlIGV4dGVuc2lvbiBvZiB5b3VyIGN1cnJlbnQgc29jaWFsIGZvbGxvd2VycyB3aXRoIGNvdmVyIGJveGVzLCBsYXlvdXQgYnVpbGRlciwgYWR2YW5jZWQgY3VzdG9taXplciwgcHJvZmlsZSBhbmFseXRpY3MuIFRyeSB0aGUgbGl2ZSBkZW1vIHRvIHRlc3QuIiwicHJpY2UiOiIkMjQiLCJwYWdlIjoiaHR0cDpcL1wvY29kZWNhbnlvbi5uZXRcL2l0ZW1cL2hlbGxvLWZvbGxvd2Vycy1zb2NpYWwtY291bnRlci1wbHVnaW4tZm9yLXdvcmRwcmVzc1wvMTU4MDE3MjkiLCJkZW1vX3VybCI6Imh0dHA6XC9cL2NvZGVjYW55b24ubmV0XC9pdGVtXC9oZWxsby1mb2xsb3dlcnMtc29jaWFsLWNvdW50ZXItcGx1Z2luLWZvci13b3JkcHJlc3NcL2Z1bGxfc2NyZWVuX3ByZXZpZXdcLzE1ODAxNzI5IiwiY2hlY2siOiJIRl9WRVJTSU9OIiwicmVxdWlyZXMiOiIxLjAifSwiZXNzYi1wb3N0LXZpZXdzIjp7InNsdWciOiJlc3NiLXBvc3Qtdmlld3MiLCJuYW1lIjoiUG9zdCBWaWV3cyBBZGQtb24gZm9yIEVhc3kgU29jaWFsIFNoYXJlIEJ1dHRvbnMiLCJpbWFnZSI6Imh0dHA6XC9cL2FkZG9ucy5hcHBzY3Jlby5jb21cL2lcL2FkZG9uX2ltYWdlcy0wMi5wbmciLCJkZXNjcmlwdGlvbiI6IlRyYWNrIGFuZCBkaXNwbGF5IHBvc3Qgdmlld3NcL3JlYWRzIHdpdGggeW91ciBzaGFyZSBidXR0b25zIGFuZCBhbHNvIGRpc3BsYXkgbW9zdCBwb3B1bGFyIHBvc3RzIHdpdGggd2lkZ2V0IG9yIHNob3J0Y29kZS4iLCJwcmljZSI6IkZSRUUiLCJwYWdlIjoiaHR0cDpcL1wvZ2V0LmFwcHNjcmVvLmNvbVwvP2Rvd25sb2FkPWVzc2ItcG9zdC12aWV3cyIsImRlbW9fdXJsIjoiaHR0cDpcL1wvZmIuY3Jlb3dvcnguY29tXC9lc3NiXC92aWV3c3JlYWRzLWNvdW50ZXJcLyIsImNoZWNrIjoiRVNTQjNfUFZfVkVSU0lPTiIsInJlcXVpcmVzIjoiMS4wIn0sImVzc2ItZmFjZWJvb2stY29tbWVudHMiOnsic2x1ZyI6ImVzc2ItZmFjZWJvb2stY29tbWVudHMiLCJuYW1lIjoiRmFjZWJvb2sgQ29tbWVudHMgQWRkLW9uIGZvciBFYXN5IFNvY2lhbCBTaGFyZSBCdXR0b25zIiwiaW1hZ2UiOiJodHRwOlwvXC9hZGRvbnMuYXBwc2NyZW8uY29tXC9pXC9hZGRvbl9pbWFnZXMtMDQucG5nIiwiZGVzY3JpcHRpb24iOiJBdXRvbWF0aWNhbGx5IGluY2x1ZGUgRmFjZWJvb2sgY29tbWVudHMgdG8geW91ciBibG9nIHdpdGggbW9kZXJhdGlvbiBvcHRpb24gYmVsb3cgcG9zdHMiLCJwcmljZSI6IkZSRUUiLCJwYWdlIjoiaHR0cDpcL1wvZ2V0LmFwcHNjcmVvLmNvbVwvP2Rvd25sb2FkPWVzc2ItZmFjZWJvb2stY29tbWVudHMiLCJkZW1vX3VybCI6Imh0dHA6XC9cL2ZiLmNyZW93b3J4LmNvbVwvZXNzYlwvYWRkb24tZmFjZWJvb2stY29tbWVudHNcLyIsImNoZWNrIjoiRVNTQjNfRkNfVkVSU0lPTiIsInJlcXVpcmVzIjoiMS4wIn0sImVzc2ItYW1wLXN1cHBvcnQiOnsic2x1ZyI6ImVzc2ItYW1wLXN1cHBvcnQiLCJuYW1lIjoiQU1QIFNoYXJlIEJ1dHRvbnMgQWRkLW9uIGZvciBFYXN5IFNvY2lhbCBTaGFyZSBCdXR0b25zIiwiaW1hZ2UiOiJodHRwOlwvXC9hZGRvbnMuYXBwc2NyZW8uY29tXC9pXC9hZGRvbl9pbWFnZXMtMDMucG5nIiwiZGVzY3JpcHRpb24iOiJJbmNsdWRlIHNoYXJlIGJ1dHRvbnMgb24geW91ciBBTVAgcGFnZXMgaWYgeW91IHVzZSBvZmZpY2lhbCBwbHVnaW4gV29yZFByZXNzIEFNUCIsInByaWNlIjoiRlJFRSIsInBhZ2UiOiJodHRwOlwvXC9nZXQuYXBwc2NyZW8uY29tXC8/ZG93bmxvYWQ9ZXNzYi1hbXAtc3VwcG9ydCIsImRlbW9fdXJsIjoiIiwiY2hlY2siOiJFU1NCM19BTVBfUExVR0lOX1JPT1QiLCJyZXF1aXJlcyI6IjEuMCJ9fQ==';
-	$current_list = base64_decode($current_list);
-	
-	$current_list = htmlspecialchars_decode ( $current_list );
-	$current_list = stripslashes ( $current_list );
-	$current_list = json_decode($current_list, true);
-}
-
+// print_r($current_list);
 
 ?>
 
@@ -41,20 +29,73 @@ else {
 .plugin-card:nth-child(3n+1) { clear: none !important; margin-left: 8px; }
 .plugin-card:nth-child(3n) { margin-right: 8px; }
 .essb-free { background-color: #27AE60; color: #fff; margin-right: 5px; border-radius: 4px; padding: 2px 6px; font-size: 11px; }
+.essb-addon-tag {
+	color: #fff;
+	margin-right: 5px; border-radius: 4px; padding: 2px 6px; font-size: 11px;
+	text-transform: uppercase; 
+	font-weight: bold;
+}
+
+.essb-addon-unique {
+	background-color:#D8335B;
+}
+
+.essb-addon-new {
+	background-color: #2C82C9;
+}
+
+.essb-addon-popular {
+	background-color: #00B5B5;
+}
+.essb-addon-updated {
+	background-color: #FD5B03;
+}
+.essb-options-hint-addonhint {
+	background-color: #fff !important;
+}
+
+.essb-options-hint-addonhint i {
+	font-size: 28px !important;
+	margin-right: 10px;
+}
+
+.essb-options-hint-addonhint a { font-weight: bold; }
 </style>
 
 <div class="wrap">
-	<div class="essb-title-panel" style="margin-bottom: 20px;">
 
-		<h3>Extensions for Easy Social Share Buttons for WordPress</h3>
-		<p>
-			Version <strong><?php echo ESSB3_VERSION;?></strong>. &nbsp;<strong><a
-				href="http://fb.creoworx.com/essb/change-log/" target="_blank">See
-					what's new in this version</a></strong>&nbsp;&nbsp;&nbsp;<strong><a
-				href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo"
-				target="_blank">Easy Social Share Buttons plugin homepage</a></strong>
-		</p>
+	<div class="essb-tabs" style="margin-bottom: 20px;">
+		<div class="essb-tabs-title" style="padding-top: 15px; padding-bottom: 20px;">
+			<div class="essb-tabs-version">
+				<div class="essb-logo essb-logo32"></div>
+				<div class="essb-text-afterlogo">
+					<h3>Extensions for Easy Social Share Buttons for WordPress</h3>
+					<p>
+						Version <strong><?php echo ESSB3_VERSION;?></strong>. &nbsp;<strong><a
+							href="http://socialsharingplugin.com/version-changes/" target="_blank">See
+								what's new in this version</a></strong>&nbsp;&nbsp;&nbsp;<strong><a
+							href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo"
+							target="_blank">Easy Social Share Buttons plugin homepage</a></strong>
+					</p>
+					
+				</div>
+			</div>
+		</div>
+		
+
 	</div>
+
+	<?php 
+	
+	global $essb_options;
+	$exist_user_purchase_code = isset($essb_options['purchase_code']) ? $essb_options['purchase_code'] : '';
+	
+	if ($exist_user_purchase_code == '') {
+		ESSBOptionsFramework::draw_hint(__('Activate plugin to download add-ons', 'essb'), __('Thank you for choosing Easy Social Share Buttons for WordPress. To download our free add-ons please activate plugin by filling your purchase code in Activate tab. <a href="admin.php?page=essb_redirect_update">Click here to visit Activation Page</a>', 'essb'), 'fa fa-lock', 'addonhint');
+	}
+	
+	?>
+	
 
 	<div class="wp-list-table widefat plugin-install">
 		<div id="the-list">
@@ -66,8 +107,6 @@ else {
 		
 		$site_url = get_bloginfo('url');
 		
-		global $essb_options;
-		$exist_user_purchase_code = isset($essb_options['purchase_code']) ? $essb_options['purchase_code'] : '';
 		
 		foreach ( $current_list as $addon_key => $addon_data ) {
 			$demo_url = isset ( $addon_data ['demo_url'] ) ? $addon_data ['demo_url'] : '';
@@ -76,10 +115,21 @@ else {
 			print '<h4><a href="' . $addon_data ['page'] . '" target="_blank">' . (($addon_data ['price'] == 'FREE') ? '<span class="essb-free">FREE</span>' : '' ) . $addon_data ["name"] . '</a></h4>';
 			print '<a href="' . $addon_data ['page'] . '" target="_blank"><img src="' . $addon_data ["image"] . '" style="max-width: 100%;"/>';
 			print '</a>';
-			print '<p class="essb-description">' . $addon_data ['description'];
+			print '<p class="essb-description">';
+			if (isset($addon_data['tags'])) {
+			
+				$tags = explode(',', $addon_data['tags']);
+				foreach ($tags as $tag) {
+					print '<span class="essb-addon-tag essb-addon-'.$tag.'">'.$tag.'</span>';
+				}
+			
+			}
+			print  $addon_data ['description'];
+			
+			
 			
 			print '</p>';
-			
+				
 			//print '<div class="plugin-action-buttons"></div>';
 			
 			print '<div class="essb-column-compatibility column-compatibility">';
@@ -118,21 +168,27 @@ else {
 			
 			if (! $is_installed) {
 				if ($addon_data ['price'] != 'FREE') {
-					print '<a class="button button-primary" target="_blank"  href="' . $addon_data ['page'] . '">Get it now ' . $addon_data ['price'] . '</a>';
+					print '<a class="essb-btn" target="_blank"  href="' . $addon_data ['page'] . '">Get it now ' . $addon_data ['price'] . '</a>';
 				}
 				else {
-					print '<a class="button button-primary" target="_blank"  href="' . $addon_data ['page'] .'&url='.$site_url .'&purchase_code='.$exist_user_purchase_code . '">Download Free</a>';
+					if ($exist_user_purchase_code != '') {
+						print '<a class="essb-btn" target="_blank"  href="' . $addon_data ['page'] .'&url='.$site_url .'&purchase_code='.$exist_user_purchase_code . '">Download Free</a>';
+					}
+					else {
+						print '<span class="button button-primary button-disabled">Download Free</span>';
+						
+					}
 				}
 			} else {
 				print '<span class="button button-primary button-disabled">Installed</span>';
 			}
 			
 			if (! empty ( $demo_url )) {
-				print '<a class="button button-no-margin" target="_blank" style="float: right;" href="' . $demo_url . '">Try live demo</a>';
+				print '<a class="essb-btn essb-btn-orange button-no-margin" target="_blank" style="float: right;" href="' . $demo_url . '">Try live demo</a>';
 			}
 			
 			if ($addon_data ['price'] != 'FREE') {
-				print '<a class="button" target="_blank"  href="' . $addon_data ['page'] . '">Learn more</a>';
+				print '<a class="essb-btn essb-btn-red" target="_blank"  href="' . $addon_data ['page'] . '" style="margin-left: 5px;">Learn more</a>';
 			}
 			
 			print '</div>';

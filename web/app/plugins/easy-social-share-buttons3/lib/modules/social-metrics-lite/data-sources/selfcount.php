@@ -143,7 +143,13 @@ class EasySocialMetricsLiteSharedCountUpdater {
 	}
 	
 	public function get_facebook($url) {
-		$parse_url = 'https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%22' . $url . '%22';
+		//$parse_url = 'https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%22' . $url . '%22';
+		$parse_url = 'https://graph.facebook.com/?id='.$url;
+		
+		$facebook_token = essb_option_value('facebook_counter_token');
+		if ($facebook_token != '') {
+			$parse_url = 'https://graph.facebook.com/?id='.$url.'&access_token=' . sanitize_text_field($facebook_token);
+		}
 		$content = $this->parse ( $parse_url );
 	
 		$result = 0;
@@ -161,7 +167,7 @@ class EasySocialMetricsLiteSharedCountUpdater {
 	}
 	
 	function get_tweets($url) {
-		$json_string = $this->parse ( 'http://urls.api.twitter.com/1/urls/count.json?url=' . $url );
+		$json_string = $this->parse ( 'https://public.newsharecounts.com/count.json?url=' . $url );
 		$json = json_decode ( $json_string, true );
 		$result = isset ( $json ['count'] ) ? intval ( $json ['count'] ) : 0;
 	

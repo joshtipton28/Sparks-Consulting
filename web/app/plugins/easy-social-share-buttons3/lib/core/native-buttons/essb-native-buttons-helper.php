@@ -13,7 +13,7 @@ class ESSBNativeButtonsHelper {
 			return $social_apis;
 		}		
 		
-		if (ESSBCoreHelper::is_module_deactivate_on('native')) {
+		if (essb_is_module_deactivated_on('native')) {
 			return $social_apis;
 		}
 		

@@ -43,13 +43,13 @@ if (!function_exists('essb_native_privacy')) {
 
 if (!function_exists ('essb_options_value')) {
 	function essb_options_value($param, $default = '') {
-		return essb_manager()->optionsValue($param, $default);
+		return essb_option_value($param);
 	}
 }
 
 if (!function_exists('essb_options_bool_value')) {
 	function essb_options_bool_value($param) {
-		return essb_manager()->optionsBoolValue($param);
+		return essb_option_bool_value($param);
 	}
 }
 
@@ -79,15 +79,13 @@ if (!function_exists('essb_is_tablet')) {
 
 if (!function_exists('essb_is_plugin_activated_on')) {
 	function essb_is_plugin_activated_on() {
-		global $essb_options;
-		
 		if (is_admin()) {
 			return;
 		}
 		
 		//display_deactivate_on
 		$is_activated = false;
-		$display_include_on = ESSBOptionValuesHelper::options_value($essb_options, 'display_include_on');
+		$display_include_on = essb_options_value('display_include_on');
 		if ($display_include_on != "") {
 			$excule_from = explode(',', $display_include_on);
 	
@@ -97,5 +95,100 @@ if (!function_exists('essb_is_plugin_activated_on')) {
 			}
 		}
 		return $is_activated;
+	}
+}
+
+if (!function_exists('essb_is_plugin_deactivated_on')) {
+	function essb_is_plugin_deactivated_on() {
+		if (is_admin()) {
+			return;
+		}
+		
+		//display_deactivate_on
+		$is_deactivated = false;
+		$display_deactivate_on = essb_options_value('display_deactivate_on');
+		if ($display_deactivate_on != "") {
+			$excule_from = explode(',', $display_deactivate_on);
+				
+			$excule_from = array_map('trim', $excule_from);
+			if (in_array(get_the_ID(), $excule_from, false)) {
+				$is_deactivated = true;
+			}
+		}
+		
+		return $is_deactivated;
+	}
+}
+
+if (!function_exists('essb_is_module_deactivated_on')) {
+	function essb_is_module_deactivated_on($module = 'share') {
+		if (is_admin()) {
+			return;
+		}
+		
+		$is_deactivated = false;
+		$exclude_from = essb_options_value( 'deactivate_on_'.$module);
+		if (!empty($exclude_from)) {
+			$excule_from = explode(',', $exclude_from);
+		
+			$excule_from = array_map('trim', $excule_from);
+			if (in_array(get_the_ID(), $excule_from, false)) {
+				$is_deactivated = true;
+			}
+		}
+		return $is_deactivated;
+	}
+}
+
+if (!function_exists('essb_option_bool_value')) {
+	function essb_option_bool_value($param, $options = null) {
+		global $essb_options;
+		
+		if (!$options || !is_array($options)) {
+			$options = $essb_options;
+		}
+		
+		$value = isset ( $options [$param] ) ? $options [$param]  : 'false';
+		
+		if ($value == "true") {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
+if (!function_exists('essb_option_value')) {
+	function essb_option_value($param, $options = null) {
+		global $essb_options;
+
+		if (!$options || is_array($options)) {
+			$options = $essb_options;
+		}
+
+		return isset($options[$param]) ? $options[$param] : '';
+	}
+}
+
+if (!function_exists('essb_object_value')) {
+	function essb_object_value($object, $param, $default = '') {
+		return isset($object[$param]) ? $object[$param] : ($default != '' ? $default : '');
+	}
+}
+
+if (!function_exists('essb_depend_load_function')) {
+	function essb_depend_load_function($function, $path) {
+		if (!function_exists($function)) {
+			include_once ESSB3_PLUGIN_ROOT.$path;
+		}
+	}
+}
+
+if (!function_exists('essb_depend_load_class')) {
+	function essb_depend_load_class($class, $path) {
+		if (!class_exists($class)) {
+			include_once ESSB3_PLUGIN_ROOT.$path;
+		}
 	}
 }

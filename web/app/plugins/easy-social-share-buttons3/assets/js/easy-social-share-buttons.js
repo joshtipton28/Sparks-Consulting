@@ -131,6 +131,7 @@ jQuery(document).ready(function($){
 				
 				switch (network) {
 				case "facebook":
+					//var facebook_url = "https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls="+url;
 					var facebook_url = "https://graph.facebook.com/?id="+url;
 					$.getJSON(facebook_url)
 					.done(function(data){
@@ -300,11 +301,13 @@ jQuery(document).ready(function($){
 			
 			var $total_counter_hidden = $total_count_item.attr('data-essb-hide-till') || "";
 			
-			var total_text = $total_count.attr('title');
-			var total_text_after = $total_count.attr('title_after');
+			var total_text = $total_count.attr('title') || "";
+			var total_text_after = $total_count.attr('title_after') || "";
+			var total_inside_text = $total_count.attr('data-shares-text') || "";
 			if (typeof(total_text) == "undefined") { total_text = ""; }
 			if (typeof(total_text_after) == "undefined") { total_text_after = ""; }
-			$total_count.prepend('<span class="essb_total_text">'+total_text+'</span>');
+			if (total_text != '')
+				$total_count.prepend('<span class="essb_total_text">'+total_text+'</span>');
 			
 			function count_total() {
 				var total = 0;
@@ -353,7 +356,6 @@ jQuery(document).ready(function($){
 						total += parseInt($(this).attr('cnt'));		
 						
 						var value = parseInt($(this).attr('cnt'));
-						
 						if (!$total_count_nb) {
 						value = essb_shorten_number(value);
 						$(this).text(value);
@@ -361,8 +363,12 @@ jQuery(document).ready(function($){
 						//alert(shortenNumber(total));
 					});
 					
-				
-				$total_count_nb.text(essb_shorten_number(total)+total_text_after);
+				if (total_inside_text != '') {
+					$total_count_nb.html(essb_shorten_number(total) + '<span class="essb_t_nb_after">'+total_inside_text+'</span>')
+				}
+				else {
+					$total_count_nb.text(essb_shorten_number(total));
+				}
 				
 				// show total counter when value is reached
 				if ($total_counter_hidden != '') {

@@ -23,10 +23,14 @@ class ESSBSocialFollowersCounter {
 		
 		add_action( 'wp_enqueue_scripts' , array ( $this , 'register_front_assets' ), 1);
 		
+		if (essb_option_bool_value('fanscounter_sidebar')) {
+			add_action( 'wp_footer', array ($this, 'draw_followers_sidebar'), 99);
+		}
+		
 	}
 		
 	public function register_front_assets() {
-		if (ESSBCoreHelper::is_plugin_deactivated_on() || ESSBCoreHelper::is_module_deactivate_on('fanscounter')) {
+		if (essb_is_plugin_deactivated_on() || essb_is_module_deactivated_on('fanscounter')) {
 			return;
 		}
 		
@@ -536,5 +540,32 @@ class ESSBSocialFollowersCounter {
 				return ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
 				break;
 		}
+	}
+	
+	public function draw_followers_sidebar() {
+		$options = array("position" => "", "template" => "", "animation" => "", "nospace" => "", "width" => "");
+		
+		$sidebar_template = ESSBSocialFollowersCounterHelper::get_option('sidebar_template');
+		$sidebar_animation = ESSBSocialFollowersCounterHelper::get_option('sidebar_animation');
+		$sidebar_nospace = ESSBSocialFollowersCounterHelper::get_option('sidebar_nospace');
+		$sidebar_position = ESSBSocialFollowersCounterHelper::get_option('sidebar_position');
+		$sidebar_width = ESSBSocialFollowersCounterHelper::get_option('sidebar_width');
+		$sidebar_orientation = ESSBSocialFollowersCounterHelper::get_option('sidebar_orientation');
+		if ($sidebar_orientation == '') { $sidebar_orientation = 'h'; }
+		
+		if ($sidebar_template != '') {
+			$options['template'] = $sidebar_template;
+		}
+		else {
+			$options['template'] = 'flat';
+		}
+		
+		$options['animation'] = $sidebar_animation;
+		$options['nospace'] = ($sidebar_nospace == 'true') ? 1 : 0;
+		$options['position'] = ($sidebar_position != '') ? $sidebar_position: 'left';
+		$options['width'] = $sidebar_width;
+		$options['button'] = $sidebar_orientation;
+		
+		ESSBSocialFollowersCounterDraw::draw_followers_sidebar($options);
 	}
 }

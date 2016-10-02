@@ -31,10 +31,12 @@ class ESSBAfterCloseShare3 {
 		if ($this->single_display_cookie_length == 0) { $this->single_display_cookie_length = 7; }
 		
 		$afterclose_deactive_sharedisable = ESSBOptionValuesHelper::options_bool_value($this->options, 'afterclose_deactive_sharedisable');
-		if ($is_active) {
-			add_action ( 'wp_enqueue_scripts', array ($this, 'check_after_postload_settings' ), 1 );
-		}
+		//if ($is_active) {
+			//add_action ( 'wp_enqueue_scripts', array ($this, 'check_after_postload_settings' ), 1 );
+		//}
 		
+		
+ 		
 		$is_active_option = "";
 		if (ESSB3_DEMO_MODE) {
 			$is_active_option = isset($_REQUEST['aftershare']) ? $_REQUEST['aftershare'] : '';
@@ -60,14 +62,48 @@ class ESSBAfterCloseShare3 {
 		}
 		//print "is active after share = ".$is_active;
 		if ($is_active) {
-			$this->load($is_active_option);
+			//$this->load($is_active_option);
+			add_action ( 'wp_enqueue_scripts', array ($this, 'check_after_postload_settings' ), 1 );
 		}
 	}
 	
 	public function check_after_postload_settings() {
+		
+		$is_active = true;
+		
+		$is_active_option = "";
+		if (ESSB3_DEMO_MODE) {
+			$is_active_option = isset($_REQUEST['aftershare']) ? $_REQUEST['aftershare'] : '';
+			if ($is_active_option != '') {
+				$is_active = true;
+			}
+		}
+		
 		if ($this->isUserDeactivated()) {
+			$is_active = false;
+		}
+		
+		// @since 4.0
+		$afterclose_activate_all = essb_options_bool_value('afterclose_activate_all');
+		if (!$afterclose_activate_all) {
+			$post_types_run = essb_option_value('display_in_types');
+				
+			if (!essb_core()->check_applicability($post_types_run, 'aftershare')) {
+				$is_active = false;
+			}
+		}
+		
+		//print "after share state = ".$is_active;
+		
+		if (!$is_active) {
 			remove_action ( 'wp_footer', array ($this, 'generateFollowWindow' ), 99 );
 			remove_action ( 'wp_footer', array ($this, 'generateMessageText' ), 99 );
+			remove_action ( 'wp_footer', array ($this, 'generate_option_code' ), 99 );
+			remove_action ( 'wp_footer', array ($this, 'generate_popular_posts' ), 99 );
+				
+		}
+		else {
+			$this->load($is_active_option);
 		}
 	}
 	
@@ -85,7 +121,7 @@ class ESSBAfterCloseShare3 {
 			}
 		}
 		
-		if ( ESSBCoreHelper::is_module_deactivate_on('aftershare')) {
+		if ( essb_is_module_deactivated_on('aftershare')) {
 			$is_user_deactivated = true;
 		}
 		
@@ -133,6 +169,8 @@ class ESSBAfterCloseShare3 {
 			$acs_type = $demo_mode;
 		}
 		
+		//print "loading code = ". $acs_type;
+		
 		switch ($acs_type) {
 			case "follow":
 				$this->register_asc_assets();
@@ -151,7 +189,28 @@ class ESSBAfterCloseShare3 {
 				break;
 			case "code":
 				$this->generateMessageCode();
-				break;			
+				break;		
+			case "optin":
+				add_action ( 'wp_footer', array ($this, 'generate_option_code' ), 99 );
+				if ($always_use_code) {
+					$this->generateMessageCode();
+				}
+				break;
+			case "popular":
+				$this->register_asc_assets();				
+				add_action ( 'wp_footer', array ($this, 'generate_popular_posts' ), 99 );
+				if ($always_use_code) {
+					$this->generateMessageCode();
+				}
+				break;					
+		}
+		
+		foreach ($this->js_code as $key => $code) {
+			essb_resource_builder()->add_js($code, false, 'essbasc_custom'.$key);
+		}
+		
+		foreach ($this->social_apis as $key => $code) {
+			essb_resource_builder()->add_social_api($key);
 		}
 	}
 	
@@ -159,6 +218,12 @@ class ESSBAfterCloseShare3 {
 		
 		$this->resource_files[] = array("key" => "easy-social-share-buttons-popupasc", "file" => ESSB3_PLUGIN_URL . '/assets/css/essb-after-share-close.min.css', "type" => "css");
 		$this->resource_files[] = array("key" => "essb-aftershare-close-script", "file" => ESSB3_PLUGIN_URL . '/assets/js/essb-after-share-close.min.js', "type" => "js");
+		
+		//print "register footer assets ";
+		
+		foreach ($this->resource_files as $key => $object) {
+			essb_resource_builder()->add_static_resource_footer($object["file"], $object["key"], $object["type"]);
+		}
 	}
 	
 	public function generateMessageCode() {
@@ -208,7 +273,7 @@ class ESSBAfterCloseShare3 {
 		
 		$output .= '<div class="essbasc-fans-single essbasc-fans-'.$network_key.'">
 				<div class="essbasc-fans-icon">
-					<i class="essbasc-fans-icon-'.$icon_key.'"></i>
+					<i class="essb_icon_'.$icon_key.'"></i>
 				</div>
 				<div class="essbasc-fans-text">
 		'.$social_code.'
@@ -254,11 +319,11 @@ class ESSBAfterCloseShare3 {
 		}
 		if ($afterclose_like_google_url != '') {
 			$social_code = '<div class="g-plusone" data-size="medium" data-href="'.$afterclose_like_google_url.'"></div>';
-			$widget .= $this->generateFollowButton($social_code, 'google', 'gplus');
+			$widget .= $this->generateFollowButton($social_code, 'google', 'google');
 		}
 		if ($afterclose_like_google_follow_url != '') {
 			$social_code = '<div class="g-follow" data-annotation="bubble" data-height="20" data-href="'.$afterclose_like_google_follow_url.'" data-rel="author"></div>';
-			$widget .= $this->generateFollowButton($social_code, 'google', 'gplus');
+			$widget .= $this->generateFollowButton($social_code, 'google', 'google');
 		}
 		if ($afterclose_like_twitter_profile != '') {
 			$social_code = '<a href="https://twitter.com/'.$afterclose_like_twitter_profile.'" class="twitter-follow-button" data-show-count="true" data-show-screen-name="false">Follow @'.$afterclose_like_twitter_profile.'</a>';
@@ -271,7 +336,7 @@ class ESSBAfterCloseShare3 {
 		}	
 		if ($afterclose_like_youtube_channel != '') {
 			$social_code = '<div class="g-ytsubscribe" data-channelid="'.$afterclose_like_youtube_channel.'" data-layout="default" data-count="default"></div>';
-			$widget .= $this->generateFollowButton($social_code, 'youtube', 'youtube');				
+			$widget .= $this->generateFollowButton($social_code, 'youtube', 'youtube-play');				
 		}
 		if ($afterclose_like_linkedin_company != '') {
 			$social_code = '<script src="//platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script><script type="IN/FollowCompany" data-id="'.$afterclose_like_linkedin_company.'" data-counter="right"></script>';
@@ -318,6 +383,21 @@ class ESSBAfterCloseShare3 {
 		echo '<script type="text/javascript">';
 		echo 'var essbasc_cookie_live = '.$this->single_display_cookie_length.';';
 		echo '</script>';
+	}
+	
+	public function generate_option_code() {
+		$design = essb_option_value('aftershare_optin_design');
+		if ($design == '') { $design = 'design1'; }
+		
+		if (!class_exists('ESSBNetworks_Subscribe')) {
+			include_once (ESSB3_PLUGIN_ROOT . 'lib/networks/essb-subscribe.php');
+		}
+		echo ESSBNetworks_Subscribe::draw_aftershare_popup_subscribe_form($design);
+	}
+	
+	public function generate_popular_posts() {
+		$code = do_shortcode('[easy-popular-posts title="'.__('Popular posts', 'essb').'" show_num="yes" num_text="'.__('Shares', 'essb').'" number="4" same_cat="true" show_thumb="true" thumb_size="thumb"]');
+		$this->popupWindowGenerate($code, 'follow', '500');
 	}
 }
 

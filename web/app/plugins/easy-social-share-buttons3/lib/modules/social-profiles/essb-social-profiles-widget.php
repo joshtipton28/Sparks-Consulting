@@ -2,29 +2,34 @@
 
 add_action( 'widgets_init' , create_function( '' , 'return register_widget( "ESSBSocialProfilesWidget" );' ) );
 
+if (!defined('ESSB3_SOCIALPROFILES_ACTIVE')) {
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles.php');
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles-helper.php');
+	define('ESSB3_SOCIALPROFILES_ACTIVE', 'true');
+	$template_url = ESSB3_PLUGIN_URL . '/lib/modules/social-followers-counter/assets/css/essb-followers-counter.min.css';
+	essb_resource_builder()->add_static_footer_css($template_url, 'essb-social-followers-counter');
+}
+
 class ESSBSocialProfilesWidget extends WP_Widget {
 	
 	protected $widget_slug = "easy-social-profile-buttons";
 
 	public function __construct() {
 
-		$options = array( 'description' => __( 'Social Profiles' , ESSB3_TEXT_DOMAIN ), 'classname' => $this->widget_slug."-class" );
+		$options = array( 'description' => __( 'Social Profiles' , 'essb' ), 'classname' => $this->widget_slug."-class" );
 
-		parent::__construct( false , __( 'Easy Social Share Buttons: Social Profiles' , ESSB3_TEXT_DOMAIN ) , $options );
+		parent::__construct( false , __( 'Easy Social Share Buttons: Social Profiles' , 'essb' ) , $options );
 
 	}
 	
 	public function form( $instance ) {
 		
 		$defaults = array(
-				'title' => 'Social Profiles' ,
-				'type' => 'square' ,
-				'size' => 'small' ,
-				'style' => 'fill' ,
+				'title' => __('Follow us', 'essb') ,
+				'template' => 'flat' ,
+				'animation' => '' ,
 				'nospace' => 0,
-				'show_title' => 1,
-				'allowtext' => 0,
-				'width' => ''
+				'show_title' => 1
 		);
 		
 		$profile_networks = array();
@@ -34,41 +39,34 @@ class ESSBSocialProfilesWidget extends WP_Widget {
 			$defaults['profile_'.$network] = '';
 		}
 		
-		foreach ($profile_networks as $network) {
+		/*foreach ($profile_networks as $network) {
 			$defaults['profile_text_'.$network] = '';
-		}
+		}*/
 	
 		$instance = wp_parse_args( ( array ) $instance , $defaults );
 
-		$listOfType = array("square" => "Square buttons", "round" => "Round buttons", "edge" => "Round edges");
-		$listOfFill = array("fill" => "White icons on colored background", "colored" => "Colored icons");
 		
-		$listOfSize = array("small" => "Small", "medium" => "Medium", "large" => "Large");
-		
-		$instance_type = $instance['type'];
-		$instance_size = $instance['size'];
-		$instance_style = $instance['style'];
-		
-		$instance_width = isset($instance['width']) ? $instance['width'] : '';
+		$instance_template = isset($instance['template']) ? $instance['template'] : '';
+		$instance_animation = isset($instance['animation']) ? $instance['animation'] : '';
 		
 		?>
 		
 <p>
-  <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php echo __( 'Title' , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php echo __( 'Title' , 'essb' ); ?>:</label>
   <input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" class="widefat" value="<?php echo $instance['title']; ?>" />
 </p>
 	
 <p>
-  <label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php echo __( 'Display widget title' , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php echo __( 'Display widget title' , 'essb' ); ?>:</label>
   <input type="checkbox" name="<?php echo $this->get_field_name( 'show_title' ); ?>" id="<?php echo $this->get_field_id( 'show_title' ); ?>" value="1" <?php if ( 1 == $instance['show_title'] ) { echo ' checked="checked"'; } ?> />
 </p>
 
 <p>
-  <label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php echo __( 'Button style' , ESSB3_TEXT_DOMAIN ); ?>:</label>
-  <select name="<?php echo $this->get_field_name( 'type' ); ?>" id="<?php echo $this->get_field_id( 'type' ); ?>" class="widefat">
+  <label for="<?php echo $this->get_field_id( 'template' ); ?>"><?php echo __( 'Template' , 'essb' ); ?>:</label>
+  <select name="<?php echo $this->get_field_name( 'template' ); ?>" id="<?php echo $this->get_field_id( 'template' ); ?>" class="widefat">
 <?php 
-foreach ($listOfType as $key => $text) {
-	$selected = ($key == $instance_type) ? " selected='selected'" : '';
+foreach (ESSBSocialProfilesHelper::available_templates() as $key => $text) {
+	$selected = ($key == $instance_template) ? " selected='selected'" : '';
 	
 	printf('<option value="%1$s" %2$s>%3$s</option>', $key, $selected, $text);
 }
@@ -77,11 +75,11 @@ foreach ($listOfType as $key => $text) {
 </p>
 
 <p>
-  <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php echo __( 'Button color style' , ESSB3_TEXT_DOMAIN ); ?>:</label>
-  <select name="<?php echo $this->get_field_name( 'style' ); ?>" id="<?php echo $this->get_field_id( 'style' ); ?>" class="widefat">
+  <label for="<?php echo $this->get_field_id( 'animation' ); ?>"><?php echo __( 'Animation' , 'essb' ); ?>:</label>
+  <select name="<?php echo $this->get_field_name( 'animation' ); ?>" id="<?php echo $this->get_field_id( 'animation' ); ?>" class="widefat">
 <?php 
-foreach ($listOfFill as $key => $text) {
-	$selected = ($key == $instance_style) ? " selected='selected'" : '';
+foreach (ESSBSocialProfilesHelper::available_animations() as $key => $text) {
+	$selected = ($key == $instance_animation) ? " selected='selected'" : '';
 	
 	printf('<option value="%1$s" %2$s>%3$s</option>', $key, $selected, $text);
 }
@@ -89,21 +87,9 @@ foreach ($listOfFill as $key => $text) {
   </select>
 </p>
 
-<p>
-  <label for="<?php echo $this->get_field_id( 'size' ); ?>"><?php echo __( 'Button size' , ESSB3_TEXT_DOMAIN ); ?>:</label>
-  <select name="<?php echo $this->get_field_name( 'size' ); ?>" id="<?php echo $this->get_field_id( 'size' ); ?>" class="widefat">
-<?php 
-foreach ($listOfSize as $key => $text) {
-	$selected = ($key == $instance_size) ? " selected='selected'" : '';
-	
-	printf('<option value="%1$s" %2$s>%3$s</option>', $key, $selected, $text);
-}
-?>
-  </select>
-</p>
 
 <p>
-  <label for="<?php echo $this->get_field_id( 'nospace' ); ?>"><?php echo __( 'Remove space between buttons' , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <label for="<?php echo $this->get_field_id( 'nospace' ); ?>"><?php echo __( 'Remove space between buttons' , 'essb' ); ?>:</label>
   <input type="checkbox" name="<?php echo $this->get_field_name( 'nospace' ); ?>" id="<?php echo $this->get_field_id( 'nospace' ); ?>" value="1" <?php if ( 1 == $instance['nospace'] ) { echo ' checked="checked"'; } ?> />
 </p>
 		<?php
@@ -112,7 +98,7 @@ foreach ($listOfSize as $key => $text) {
 			$network_value = $instance['profile_'.$network];
 			?>
 <p>
-  <label for="<?php echo $this->get_field_id('profile_'.$network ); ?>"><?php echo __( $display , ESSB3_TEXT_DOMAIN ); ?>:</label>
+  <label for="<?php echo $this->get_field_id('profile_'.$network ); ?>"><?php echo __( $display , 'essb' ); ?>:</label>
   <input type="text" name="<?php echo $this->get_field_name( 'profile_'.$network ); ?>" id="<?php echo $this->get_field_id( 'profile_'.$network ); ?>" class="widefat" value="<?php echo $network_value ?>" />
 </p>
 
@@ -122,31 +108,7 @@ foreach ($listOfSize as $key => $text) {
 		
 		?>
 		
-<p>
-  <label for="<?php echo $this->get_field_id( 'allowtext' ); ?>"><?php echo __( 'Display text with icons for network profiles' , ESSB3_TEXT_DOMAIN ); ?>:</label>
-  <input type="checkbox" name="<?php echo $this->get_field_name( 'allowtext' ); ?>" id="<?php echo $this->get_field_id( 'allowtext' ); ?>" value="1" <?php if ( 1 == $instance['allowtext'] ) { echo ' checked="checked"'; } ?> />
-</p>
-		
-<p>
-  <label for="<?php echo $this->get_field_id('width' ); ?>"><?php echo __( 'Change default width of buttons' , ESSB3_TEXT_DOMAIN ); ?>:</label>
-  <input type="text" name="<?php echo $this->get_field_name( 'width' ); ?>" id="<?php echo $this->get_field_id( 'width'); ?>" class="widefat" value="<?php echo $instance_width; ?>" />
-</p>
 
-<?php
-
-		foreach (essb_available_social_profiles() as $network => $display) {
-			$network_value = $instance['profile_text_'.$network];
-			?>
-<p>
-  <label for="<?php echo $this->get_field_id('profile_text_'.$network ); ?>"><?php echo __( 'Custom text for '.$display , ESSB3_TEXT_DOMAIN ); ?>:</label>
-  <input type="text" name="<?php echo $this->get_field_name( 'profile_text_'.$network ); ?>" id="<?php echo $this->get_field_id( 'profile_text_'.$network ); ?>" class="widefat" value="<?php echo $network_value ?>" />
-</p>
-
-
-			<?php 
-		}
-		
-		?>
 
 		<?php 
 	}
@@ -159,22 +121,16 @@ foreach ($listOfSize as $key => $text) {
 		$profile_networks = ESSBOptionValuesHelper::advanced_array_to_simple_array(essb_available_social_profiles());
 		
 		$instance['title'] = $new_instance['title'];
-		$instance['type'] = $new_instance['type'];
-		$instance['size'] = $new_instance['size'];
-		$instance['style'] = $new_instance['style'];
+		$instance['template'] = $new_instance['template'];
+		$instance['animation'] = $new_instance['animation'];
 		$instance['nospace'] = $new_instance['nospace'];
 		$instance['show_title'] = $new_instance['show_title'];
-		$instance['allowtext'] = $new_instance['allowtext'];
-		$instance['width'] = $new_instance['width'];
 		
 		
 		foreach ($profile_networks as $network) {
 			$instance['profile_'.$network] = $new_instance['profile_'.$network];
 		}
 
-		foreach ($profile_networks as $network) {
-			$instance['profile_text_'.$network] = $new_instance['profile_text_'.$network];
-		}
 		
 		return $instance;
 	}
@@ -182,7 +138,7 @@ foreach ($listOfSize as $key => $text) {
 	public function widget( $args, $instance ) {
 		global $essb_options;
 		
-		if (ESSBCoreHelper::is_module_deactivate_on('profiles')) {
+		if (essb_is_module_deactivated_on('profiles')) {
 			return "";
 		}
 		
@@ -196,9 +152,8 @@ foreach ($listOfSize as $key => $text) {
 		$show_title = $instance['show_title'];
 		$title = $instance['title'];
 		
-		$sc_button_type = isset($instance['type']) ? $instance['type'] : 'square';
-		$sc_button_size = isset($instance['size']) ? $instance['size'] : 'small';
-		$sc_button_fill = isset($instance['style']) ? $instance['style'] : 'fill';
+		$sc_template = isset($instance['template']) ? $instance['template'] : 'flat';
+		$sc_animation = isset($instance['animation']) ? $instance['animation'] : '';
 		$sc_nospace = $instance['nospace'];
 		
 		if (!empty($sc_nospace) && $sc_nospace != '0') {
@@ -209,21 +164,12 @@ foreach ($listOfSize as $key => $text) {
 		}
 		$sc_nospace = ESSBOptionValuesHelper::unified_true($sc_nospace);
 		
-		$sc_allowtext = isset($instance['allowtext']) ? $instance['allowtext'] : '0';
-		if (!empty($sc_allowtext) && $sc_allowtext != '0') {
-			$sc_allowtext = "true";
-		}
-		else {
-			$sc_allowtext = "false";
-		}
-		$sc_allowtext = ESSBOptionValuesHelper::unified_true($sc_allowtext);
-		
-		$sc_width = isset($instance['width']) ? $instance['width'] : '';
 		
 		$profile_networks = array();
 		$profile_networks = ESSBOptionValuesHelper::advanced_array_to_simple_array(essb_available_social_profiles());
 		
-		$profiles_order = ESSBOptionValuesHelper::options_value($essb_options, 'profiles_order');
+		$profiles_order = essb_option_value('profile_networks_order');
+		$profiles_order = ESSBSocialProfilesHelper::simplify_order_list($profiles_order);
 		if (is_array($profiles_order)) {
 			$profile_networks = $profiles_order;
 		}
@@ -237,30 +183,22 @@ foreach ($listOfSize as $key => $text) {
 			}
 		}
 		
-		$sc_network_texts = array();
-		foreach ($profile_networks as $network) {
-			$value = $instance['profile_text_'.$network];
-				
-			if (!empty($value)) {
-				$sc_network_texts[$network] = $value;
-			}
-		}
 		
 		if (!empty($show_title)) {
 			echo $before_widget . $before_title . $title . $after_title;
 		}
 		
 		// if module is not activated include the code
-		if (!defined('ESSB3_SOCIALPROFILES_ACTIVE')) {
-			include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles.php');
-			define('ESSB3_SOCIALPROFILES_ACTIVE', 'true');
-			//$resource_builder = ESSBResourceBuilder::get_instance();
-			$template_url = ESSB3_PLUGIN_URL.'/assets/css/essb-profiles.css';
-			essb_resource_builder()->add_static_footer_css($template_url, 'easy-social-share-buttons-profiles');
-		}
 		
-		echo ESSBSocialProfiles::generate_social_profile_icons($sc_network_address, $sc_button_type, $sc_button_size, $sc_button_fill, $sc_nospace,
-				'', $sc_allowtext, $sc_network_texts, $sc_width);
+		$options = array(
+				'position' => '',
+				'template' => $sc_template,
+				'animation' => $sc_animation,
+				'nospace' => $sc_nospace,
+				'networks' => $sc_network_address
+		);
+		
+		echo ESSBSocialProfiles::draw_social_profiles($options);
 		
 		if (!empty($show_title)) {
 			echo $after_widget;

@@ -49,7 +49,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 				dbDelta ( $sql );
 	}
 	
-	public static function essb_stats_by_networks($month = '', $post_id = '', $date = '') {
+	public static function essb_stats_by_networks($month = '', $post_id = '', $date = '', $position = '') {
 		global $wpdb, $essb_options, $essb_networks;
 				
 		$query = "";
@@ -78,6 +78,9 @@ class ESSBSocialShareAnalyticsBackEnd {
 		if ($date != '') {
 			$query .= " WHERE DATE_FORMAT( essb_date,  \"%Y-%m-%d\" ) = '".$date."'";
 		}
+		if ($position != '') {
+			$query .= " WHERE essb_position = '".$position."'";
+		}
 		
 		if ($post_id != '') {
 			$query .= " WHERE essb_post_id='".$post_id."'";
@@ -90,7 +93,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 		return $network_stats;
 	}
 	
-	public static function essb_stats_by_position($month = '', $post_id = '', $date = '') {
+	public static function essb_stats_by_position($month = '', $post_id = '', $date = '', $position = '') {
 		global $wpdb, $essb_options, $essb_networks;
 		
 		$query = "";
@@ -111,7 +114,9 @@ class ESSBSocialShareAnalyticsBackEnd {
 		if ($date != '') {
 			$query .= " WHERE DATE_FORMAT( essb_date,  \"%Y-%m-%d\" ) = '".$date."'";
 		}
-		
+		if ($position != '') {
+			$query .= " WHERE essb_position = '".$position."'";
+		}
 		
 		if ($post_id != '') {
 			$query .= " WHERE essb_post_id='".$post_id."'";
@@ -121,11 +126,13 @@ class ESSBSocialShareAnalyticsBackEnd {
 		
 		$network_stats = $wpdb->get_row ( $query );
 		
+		//print $query;
+		
 		return $network_stats;
 		
 	}
 	
-	public static function essb_stats_by_device($month = '', $post_id = '') {
+	public static function essb_stats_by_device($month = '', $post_id = '', $date = '', $position = '') {
 		global $wpdb, $essb_options, $essb_networks;
 		
 		$query = "";
@@ -142,6 +149,12 @@ class ESSBSocialShareAnalyticsBackEnd {
 		WHERE essb_service != 'sidebar-close' ";
 		if ($month != '') {
 			$query .= " AND DATE_FORMAT( essb_date,  \"%Y-%m\" ) = '".$month."'";
+		}
+		if ($date != '') {
+			$query .= " AND DATE_FORMAT( essb_date,  \"%Y-%m-%d\" ) = '".$date."'";
+		}
+		if ($position != '') {
+			$query .= " AND essb_position = '".$position."'";
 		}
 		if ($post_id != '') {
 			$query .= " AND essb_post_id='".$post_id."'";
@@ -290,7 +303,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 	
 		
 	
-		print '<table border="0" cellpadding="5" cellspacing="0" width="100%" class="post-table">';
+		print '<table border="0" cellpadding="5" cellspacing="0" width="100%" class="post-table display hover row-border stripe" id="table-month">';
 	
 		print "<thead>";
 		print "<tr>";
@@ -348,7 +361,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 		print "</table>";
 	}
 
-	public static function essb_stat_admin_detail_by_post($month = '', $networks_with_data, $limit = '', $date = '') {
+	public static function essb_stat_admin_detail_by_post($month = '', $networks_with_data, $limit = '', $date = '', $position = '') {
 		global $wpdb, $essb_networks;
 		$table_name = $wpdb->prefix . ESSB3_TRACKER_TABLE;
 
@@ -369,7 +382,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 			}
 		}
 	
-		if ($month == '' && $date == '') {
+		if ($month == '' && $date == '' && $position == '') {
 			$query .= " FROM  ".$table_name . "
 			GROUP BY essb_post_id
 			ORDER BY cnt DESC ";
@@ -382,7 +395,13 @@ class ESSBSocialShareAnalyticsBackEnd {
 				ORDER BY cnt DESC ";
 				
 			}
-			else {
+			else if ($position != '') {
+				$query .= " FROM  ".$table_name . "
+				WHERE essb_position = '".$position."'
+				GROUP BY essb_post_id
+				ORDER BY cnt DESC ";
+			}
+  			else {
 				$query .= " FROM  ".$table_name . "
 				WHERE DATE_FORMAT( essb_date,  \"%Y-%m\" ) = '".$month."'
 				GROUP BY essb_post_id
@@ -393,7 +412,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 		//print $query;
 		$post_stats = $wpdb->get_results ( $query );
 	
-		print '<table border="0" cellpadding="5" cellspacing="0" width="100%" class="post-table">';
+		print '<table border="0" cellpadding="5" cellspacing="0" width="100%" class="post-table display hover row-border stripe" id="table-posts">';
 	
 		print "<thead>";
 		print "<tr>";
@@ -475,7 +494,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 		ykeys: ['a'],
 		hideHover: true,
 		hoverCallback: function (index, options, content, row) {
-  return '<span style=\'font-size:14px;\'><b>'+row.y+'</b></span><br/><span style=\'font-size:14px; color: #3498db;\'>Social activity for date: <b>'+row.a+'</b> clicks<br/><b style=\"cursor: pointer; color: #333;\" onclick=\"essb_analytics_date_report(\''+row.y+'\'); return false;\" title=\"Activate detailed date report\">Click here to see detailed date report</b></span>';
+  return '<span style=\'font-size:14px;\'><b>'+row.y+'</b></span><br/><span style=\'font-size:14px; color: #3498db;\'>Social activity for date: <b>'+row.a+'</b> clicks<br/><b style=\"cursor: pointer; color: #333;\" onclick=\"essb_analytics_date_report(\''+row.y+'\'); return false;\" title=\"Activate detailed date report\">Double click here to see detailed date report</b></span>';
 },
 		labels: ['" . $series_label . "'],
 		lineColors: ['#3498db']
@@ -513,6 +532,8 @@ class ESSBSocialShareAnalyticsBackEnd {
 		}
 	
 	
+		$report_html = "";
+		
 		for ($i=1;$i<=intval($days_in_mon);$i++) {
 	
 			if ($graph_data != "") {
@@ -529,6 +550,7 @@ class ESSBSocialShareAnalyticsBackEnd {
 				//print "exist " . $today;
 				$rec = $result_array[$today];
 				$graph_data .= "{ y: '".$today."', a:".intval($rec->cnt)."}";
+				$report_html .= '<div class="day-value"><a href="#" onclick="essb_analytics_date_report(\''.$today.'\'); return false;">'.$today.' <span class="value">('.intval($rec->cnt).')</span></a></div>';
 			}
 			else {
 				$graph_data .= "{ y: '".$today."', a:".intval(0)."}";
@@ -536,22 +558,22 @@ class ESSBSocialShareAnalyticsBackEnd {
 	
 		}
 	
-		print '
-		<div id="bar-by-dates"></div>
-	
-		<script type="text/javascript">
+		print "
+		<div id=\"bar-by-dates\"></div>
+		<div class=\"date-reports essb-title5\"><div>Start detailed report for date</div></div><div class=\"date-reports-dates\">".$report_html."</div>
+		<script type=\"text/javascript\">
 		Morris.Bar({
-		element: \'bar-by-dates\',
+		element: 'bar-by-dates',
 		data: [
-		'.$graph_data.'
+		".$graph_data."
 		],
-		xkey: \'y\',
-		ykeys: [\'a\'],
-		labels: [\'Total\']
+		xkey: 'y',
+		ykeys: ['a'],
+		labels: ['Total']
 	});
 	
 	</script>
-	';
+	";
 	}
 }
 

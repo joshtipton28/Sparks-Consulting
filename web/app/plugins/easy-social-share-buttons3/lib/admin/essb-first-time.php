@@ -2,13 +2,13 @@
 update_option(ESSB3_FIRST_TIME_NAME, 'false');
 ?>
 <div class="wrap essb-page-welcome about-wrap">
-	<h1><?php echo sprintf( __( 'Welcome to Easy Social Share Buttons for WordPress %s', ESSB3_TEXT_DOMAIN ), preg_replace( '/^(\d+)(\.\d+)?(\.\d)?/', '$1$2', ESSB3_VERSION ) ) ?></h1>
+	<h1><?php echo sprintf( __( 'Welcome to Easy Social Share Buttons for WordPress %s', 'essb' ), preg_replace( '/^(\d+)(\.\d+)?(\.\d)?/', '$1$2', ESSB3_VERSION ) ) ?></h1>
 
 	<div class="about-text">
-		<?php _e( 'Easy Social Share Buttons for WordPress is all-in-one social share solution that allows you share, monitor and increase your social popularity by AppsCreo', ESSB3_TEXT_DOMAIN )?>
+		<?php _e( 'Easy Social Share Buttons for WordPress is all-in-one social share solution that allows you share, monitor and increase your social popularity by AppsCreo', 'essb' )?>
 	</div>
-	<div class="wp-badge essb-page-logo">
-		<?php echo sprintf( __( 'Version %s', ESSB3_TEXT_DOMAIN ), ESSB3_VERSION )?>
+	<div class="wp-badge essb-page-logo essb-logo">
+		<?php echo sprintf( __( 'Version %s', 'essb' ), ESSB3_VERSION )?>
 	</div>
 
 	<!-- welcome content -->
@@ -40,32 +40,26 @@ update_option(ESSB3_FIRST_TIME_NAME, 'false');
 			<div class="last-feature">
 				<span class="essb-firsttime-center"> <i
 					class="fa fa-check-square-o fa-lg essb-firsttime-icon"></i>
-					<h4>Choose settings mode</h4>
+					<h4>Continue to plugin settings</h4>
 				</span>
 
-				<p>Choose settings mode that you wish to work with. For beginner
-					users we recommend to start with Easy Mode (you can turn it off at
-					any time). Easy mode is a great way to start work with plugin as it
-					contains only most popular functions and some preset settings.</p>
+				<p>Don't know where to start? Continue and explore plugin settings. Quick setup wizard or ready made styles can be started at any time.</p>
 				
 			</div>
 			<div><p align="center">
 					<a
 						href="<?php echo esc_attr( admin_url( 'admin.php?page=essb_redirect_quick&tab=quick' ) ) ?>"
-						class="button button-primary" style="width: 95%; text-align: center;"><?php _e( 'Start quick setup wizard', ESSB3_TEXT_DOMAIN ) ?></a>
+						class="essb-btn essb-btn-orange" style="width: 95%; text-align: center;"><?php _e( 'Start quick setup wizard', 'essb' ) ?></a>
 				</p></div>
 			<div><p align="center">
 					<a
 						href="<?php echo esc_attr( admin_url( 'admin.php?page=essb_redirect_import&tab=import&section=readymade' ) ) ?>"
-						class="button button-primary" style="width: 95%; text-align: center;"><?php _e( 'Go to ready made style import', ESSB3_TEXT_DOMAIN ) ?></a>
+						class="essb-btn essb-btn-green" style="width: 95%; text-align: center;"><?php _e( 'Go to ready made style library', 'essb' ) ?></a>
 				</p></div>
 			<div class="last-feature"><p align="center">
 					<a
 						href="<?php echo esc_attr( admin_url( 'admin.php?page=essb_options' ) ) ?>"
-						class="button button-primary" style="width: 95%; text-align: center; margin-bottom: 10px;"><?php _e( 'Continue with full settings', ESSB3_TEXT_DOMAIN ) ?></a>
-					<a
-						href="<?php echo esc_attr( admin_url( 'admin.php?page=essb_options&easymode=activate' ) ) ?>"
-						class="button button-primary" style="width: 95%; text-align: center;"><?php _e( 'Continue in Easy Mode', ESSB3_TEXT_DOMAIN ) ?></a>
+						class="essb-btn essb-btn-red" style="width: 95%; text-align: center; margin-bottom: 10px;"><?php _e( 'Continue to plugin settings', 'essb' ) ?></a>
 				</p></div>
 		</div>
 
