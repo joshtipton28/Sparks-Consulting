@@ -152,6 +152,8 @@ function rowdb_register_taxonomies() {
 		'show_admin_column' => true,
 		'query_var'         => true,
 		'rewrite'           => array( 'slug' => 'rowingdb/religious-affiliation' ),
+		'show_in_rest' 		=> true,
+		'rest_base'          => 'religion',
 	);
 
 	register_taxonomy( 'religion', array( 'school' ), $args );

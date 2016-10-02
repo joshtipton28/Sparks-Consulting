@@ -20,7 +20,8 @@ $getselectivity= get_term( get_field ( 'selectivity' ) );
 $selectivityName = $getselectivity->name;
 $financialAid = get_field ( 'financial_aid_score' );
 $schoolPrivacy = get_field ( 'school_privacy' );
-$religion = get_field ( 'religion' );
+$getReligion= get_term( get_field ( 'religion' ) );
+$religionName = $getReligion->name;
 $foodServices = get_field ( 'food_services' );
 $housingTypes = get_field ( 'housing_types' );
 $housingAlcohol = get_field ( 'housing_alcohol' );
@@ -161,11 +162,11 @@ $majors = get_field ( 'school_majors' );
 					</td>
 				</tr>
 			<?php endif; ?>
-			<?php if (!empty($religion)): ?>
+			<?php if (!empty($religionName)): ?>
 				<tr>
 					<th>Religious Affiliation:</th>
 					<td>
-						<?php echo $religion->name; ?>
+						<?php echo $religionName; ?>
 					</td>
 				</tr>
 			<?php endif; ?>

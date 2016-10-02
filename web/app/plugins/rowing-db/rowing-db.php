@@ -13,6 +13,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-require ( plugin_dir_path(__FILE__) . 'rowing-db-terms.php' );
-require ( plugin_dir_path(__FILE__) . 'rowing-db-cpt.php' );
-require ( plugin_dir_path(__FILE__) . 'rowing-db-options.php' );
+require ( plugin_dir_path(__FILE__) . 'api/rowing-db-terms.php' );
+require ( plugin_dir_path(__FILE__) . 'api/rowing-db-cpt.php' );
+require ( plugin_dir_path(__FILE__) . 'api/rowing-db-options.php' );
