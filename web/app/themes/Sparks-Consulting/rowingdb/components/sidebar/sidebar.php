@@ -2,8 +2,8 @@
 	<h3>Filters:</h3>
 	<a ng-click='reset()'>Reset</a>
 	<ul>
-		<li><a>Program Type</a></li>
-		<li><a>Enrollment</a></li>
+		<li><a ng-controller="ProgramFilter" ng-click='open()'>Program Type</a></li>
+		<li><a ng-controller="EnrollmentFilter" ng-click='open()'>Enrollment</a></li>
 		<li><a>Tuition</a></li>
 		<li><a>Financial Aid Score</a></li>
 		<li><a>Classroom Ratio</a></li>
@@ -20,4 +20,6 @@
 		<li><a>Housing, Alcohol</a></li>
 	</ul>
 	<ng-include src="getReligion()"></ng-include>
+	<ng-include src="getProgram()"></ng-include>
+	<ng-include src="getEnrollment()"></ng-include>
 </div>

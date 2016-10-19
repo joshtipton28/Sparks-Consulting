@@ -22,8 +22,10 @@ var stylesheet_directory_uri = "<?php echo get_stylesheet_directory_uri(); ?>";
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/main/mainController.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/sidebarController.js"></script>
 
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/program-type/programController.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/enrollment/enrollmentController.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/religion/religionController.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/religion/religionService.js"></script>
+
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/app.js"></script>
 
 <?php get_footer(); ?>
