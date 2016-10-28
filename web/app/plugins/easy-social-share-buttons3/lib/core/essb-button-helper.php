@@ -712,7 +712,12 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 			break;	
 			
 		case "messenger":
-			$url = sprintf ( 'https://www.facebook.com/dialog/send?app_id=%1$s&link=%2$s&redirect_uri=https://facebook.com', ESSBGlobalSettings::$fbmessengerapp, $share ['url']);
+			if (essb_is_mobile()) {
+				$url = sprintf('fb-messenger://share/?link=%1$s', $share ['url']);
+			}
+			else {
+				$url = sprintf ( 'https://www.facebook.com/dialog/send?app_id=%1$s&link=%2$s&redirect_uri=https://facebook.com', ESSBGlobalSettings::$fbmessengerapp, $share ['url']);
+			}
 			
 			break;
 		case "livejournal":

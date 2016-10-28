@@ -66,6 +66,9 @@ class ESSBNetworks_SubscribeActions {
 		$ac_api_url = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ac_api_url' );
 		$ac_api = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ac_api' );
 		$ac_list = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_ac_list' );
+
+		$cm_api = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_cm_api' );
+		$cm_list = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_cm_list' );
 		
 		
 		$output = array();
@@ -113,6 +116,9 @@ class ESSBNetworks_SubscribeActions {
 				break;
 			case "activecampaign":
 				$output = self::subscribe_activecampaign($ac_api_url, $ac_api, $ac_list, $user_email, $user_name);
+				break;
+			case "campaignmonitor":
+				$output = self::subscribe_campaignmonitor($cm_api, $cm_list, $user_email, $user_name);
 				break;
 		}
 		
@@ -364,6 +370,53 @@ class ESSBNetworks_SubscribeActions {
 			curl_setopt($curl, CURLOPT_HEADER, 0);
 			$server_response = curl_exec($curl);
 			curl_close($curl);
+				
+			$response ['code'] = '1';
+			$response ['message'] = 'Thank you';
+		}
+		catch (Exception $e) {
+			$response ['code'] = "99";
+			$response ['message'] = __ ( 'Missing connection', 'essb' );
+		}
+	
+		return $response;
+	}
+
+	public static function subscribe_campaignmonitor($api_key, $list_id, $email, $name = '') {
+	
+		$response = array();
+			
+	
+		try {
+			$options['EmailAddress'] = $email;
+			$options['Name'] = $name;
+			$options['Resubscribe'] = 'true';
+			$options['RestartSubscriptionBasedAutoresponders'] = 'true';
+			$post = json_encode($options);
+
+			$curl = curl_init('http://api.createsend.com/api/v3/subscribers/'.urlencode($list_id).'.json');
+			curl_setopt($curl, CURLOPT_POST, 1);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+				
+			$header = array(
+				'Content-Type: application/json',
+				'Content-Length: '.strlen($post),
+				'Authorization: Basic '.base64_encode($api_key)
+				);
+
+			//curl_setopt($curl, CURLOPT_PORT, 443);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+			curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC ) ;
+			//curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1); // verify certificate
+			//curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); // check existence of CN and verify that it matches hostname
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+					
+			$server_response = curl_exec($curl);
+			curl_close($curl);
+			
 				
 			$response ['code'] = '1';
 			$response ['message'] = 'Thank you';

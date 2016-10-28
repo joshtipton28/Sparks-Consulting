@@ -23,17 +23,42 @@ ESSBOptionsStructureHelper::submenu_item('social', 'display-3', __('Display Posi
 //ESSBOptionsStructureHelper::menu_item('display', 'locations', __('Display Position Settings', 'essb'), 'default', 'activate_first', 'positions-3');
 ESSBOptionsStructureHelper::submenu_item('social', 'display-4', __('Content Top', 'essb'),  'default', 'menu', 'true');
 ESSBOptionsStructureHelper::submenu_item('social', 'display-5', __('Content Bottom', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-6', __('Float from top', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-7', __('Post vertical float', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-8', __('Sidebar', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-9', __('Top bar', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-10', __('Bottom bar', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-11', __('Pop up', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-12', __('Fly in', 'essb'),  'default', 'menu', 'true');
+if (!essb_options_bool_value('deactivate_method_float')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-6', __('Float from top', 'essb'),  'default', 'menu', 'true');
+}
+
+if (!essb_options_bool_value('deactivate_method_postfloat')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-7', __('Post vertical float', 'essb'),  'default', 'menu', 'true');
+}
+if (!essb_options_bool_value('deactivate_method_sidebar')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-8', __('Sidebar', 'essb'),  'default', 'menu', 'true');
+}
+if (!essb_options_bool_value('deactivate_method_topbar')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-9', __('Top bar', 'essb'),  'default', 'menu', 'true');
+}
+if (!essb_options_bool_value('deactivate_method_bottombar')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-10', __('Bottom bar', 'essb'),  'default', 'menu', 'true');
+}
+
+if (!essb_options_bool_value('deactivate_method_popup')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-11', __('Pop up', 'essb'),  'default', 'menu', 'true');
+}
+
+if (!essb_options_bool_value('deactivate_method_flyin')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-12', __('Fly in', 'essb'),  'default', 'menu', 'true');
+}
 ESSBOptionsStructureHelper::submenu_item('social', 'display-13', __('On media', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-14', __('Full screen hero share', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-15', __('Post share bar', 'essb'),  'default', 'menu', 'true');
-ESSBOptionsStructureHelper::submenu_item('social', 'display-16', __('Point', 'essb'),  'default', 'menu', 'true');
+
+if (!essb_options_bool_value('deactivate_method_heroshare')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-14', __('Full screen hero share', 'essb'),  'default', 'menu', 'true');
+}
+
+if (!essb_options_bool_value('deactivate_method_postbar')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-15', __('Post share bar', 'essb'),  'default', 'menu', 'true');
+}
+if (!essb_options_bool_value('deactivate_method_point')) {
+	ESSBOptionsStructureHelper::submenu_item('social', 'display-16', __('Point', 'essb'),  'default', 'menu', 'true');
+}
 ESSBOptionsStructureHelper::submenu_item('social', 'display-17', __('Excerpt', 'essb'),  'default', 'menu', 'true');
 
 ESSBOptionsStructureHelper::menu_item('social', 'mobile', __('Mobile', 'essb'), ' ti-mobile', 'activate_first', 'mobile-1');
@@ -604,154 +629,168 @@ add_action('admin_init', 'essb3_register_positions_by_posttypes');
 essb_prepare_location_advanced_customization('social', 'display-4', 'top');
 essb_prepare_location_advanced_customization('social', 'display-5', 'bottom');
 
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-6', __('Set custom top position of float bar', 'essb'), __('If your current theme has fixed bar or menu you may need to provide custom top position of float or it will be rendered below this sticked bar. For example you can try with value 40 (which is equal to 40px from top).', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_top', __('Top position for non logged in users', 'essb'), __('', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_top_loggedin', __('Top position for logged in users', 'essb'), __('If you display WordPress admin bar for logged in users you can correct float from top position for logged in users to avoid bar to be rendered below WordPress admin bar.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_top_disappear', __('Hide buttons after percent of content is viewed', 'essb'), __('Provide value in percent if you wish to hide float bar - for example 80 will make bar to disappear when 80% of page content is viewed from user.', 'essb'), '', 'input60', 'fa-sort-numeric-asc', 'right');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-6');
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-6', __('Background color', 'essb'), __('Change default background color of float bar (default is white #FFFFFF).', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-6', 'float_bg', __('Choose background color', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_bg_opacity', __('Change opacity of background color', 'essb'), __('Change default opacity of background color if you wish to have a semi-transparent effect (default is 1 full color). You can enter value between 0 and 1 (example: 0.7)', 'essb'), '', 'input60');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-6');
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-6', __('Width and positioning settings', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-6', 'float_full', __('Set full width of float bar', 'essb'), __('This option will make float bar to take full width of browser window.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_full_maxwidth', __('Max width of buttons area', 'essb'), __('Provide custom max width of buttons area when full width float bar is active. Provide number value in pixels without the px (example 960)', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-6', 'float_remove_margin', __('Remove top space', 'essb'), __('This option will clear the blank space that may appear according to theme settings between top of window and float bar.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-6');
-essb_prepare_location_advanced_customization('social', 'display-6', 'float');
+if (!essb_options_bool_value('deactivate_method_float')) {
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-6', __('Set custom top position of float bar', 'essb'), __('If your current theme has fixed bar or menu you may need to provide custom top position of float or it will be rendered below this sticked bar. For example you can try with value 40 (which is equal to 40px from top).', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_top', __('Top position for non logged in users', 'essb'), __('', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_top_loggedin', __('Top position for logged in users', 'essb'), __('If you display WordPress admin bar for logged in users you can correct float from top position for logged in users to avoid bar to be rendered below WordPress admin bar.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_top_disappear', __('Hide buttons after percent of content is viewed', 'essb'), __('Provide value in percent if you wish to hide float bar - for example 80 will make bar to disappear when 80% of page content is viewed from user.', 'essb'), '', 'input60', 'fa-sort-numeric-asc', 'right');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-6');
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-6', __('Background color', 'essb'), __('Change default background color of float bar (default is white #FFFFFF).', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-6', 'float_bg', __('Choose background color', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_bg_opacity', __('Change opacity of background color', 'essb'), __('Change default opacity of background color if you wish to have a semi-transparent effect (default is 1 full color). You can enter value between 0 and 1 (example: 0.7)', 'essb'), '', 'input60');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-6');
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-6', __('Width and positioning settings', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-6', 'float_full', __('Set full width of float bar', 'essb'), __('This option will make float bar to take full width of browser window.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-6', 'float_full_maxwidth', __('Max width of buttons area', 'essb'), __('Provide custom max width of buttons area when full width float bar is active. Provide number value in pixels without the px (example 960)', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-6', 'float_remove_margin', __('Remove top space', 'essb'), __('This option will clear the blank space that may appear according to theme settings between top of window and float bar.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-6');
+	essb_prepare_location_advanced_customization('social', 'display-6', 'float');
+}
 
-ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-7');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_initialtop', __('Custom top position of post float bar when loaded', 'essb'), __('Customize the initial top position of post float bar if you wish to be different from content start.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_top', __('Top position of post float buttons when they are fixed', 'essb'), __('Filled value to change the top position if you have another fixed element (example: fixed menu).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_marginleft', __('Horizontal offset from content', 'essb'), __('You can provide custom left offset from content. Leave blank to use default value.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_margintop', __('Vertical offset from content start', 'essb'), __('You can provide custom vertical offset from content start. Leave blank to use default value. (Negative values moves up, positve moves down).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_percent', __('Display after percent of content is passed', 'essb'), __('Provide percent of content to viewed when buttons will appear (default state if this field is provided will be hidden for that display method).', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-7', 'postfloat_always_visible', __('Do not hide post vertical float at the end of content', 'essb'), __('Activate this option to make post vertical float stay on screen when end of post content is reached.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-7');
-essb_prepare_location_advanced_customization('social', 'display-7', 'postfloat');
+if (!essb_options_bool_value('deactivate_method_postfloat')) {
+	ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-7');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_initialtop', __('Custom top position of post float bar when loaded', 'essb'), __('Customize the initial top position of post float bar if you wish to be different from content start.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_top', __('Top position of post float buttons when they are fixed', 'essb'), __('Filled value to change the top position if you have another fixed element (example: fixed menu).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_marginleft', __('Horizontal offset from content', 'essb'), __('You can provide custom left offset from content. Leave blank to use default value.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_margintop', __('Vertical offset from content start', 'essb'), __('You can provide custom vertical offset from content start. Leave blank to use default value. (Negative values moves up, positve moves down).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-7', 'postfloat_percent', __('Display after percent of content is passed', 'essb'), __('Provide percent of content to viewed when buttons will appear (default state if this field is provided will be hidden for that display method).', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-7', 'postfloat_always_visible', __('Do not hide post vertical float at the end of content', 'essb'), __('Activate this option to make post vertical float stay on screen when end of post content is reached.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-7');
+	essb_prepare_location_advanced_customization('social', 'display-7', 'postfloat');
+}
 
-$listOfOptions = array("" => "Left", "right" => "Right");
-ESSBOptionsStructureHelper::field_select('social', 'display-8', 'sidebar_pos', __('Sidebar Appearance', 'essb'), __('You choose different position for sidebar. Available options are Left (default), Right', 'essb'), $listOfOptions);
-ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-8', __('Left or Right sidebar appearance options', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_fixedleft', __('Customize left/right position of sidebar', 'essb'), __('Use this field to change initial position of sidebar. You can use numeric value for example 10.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_fixedtop', __('Fixed top position of sidebar', 'essb'), __('You can provide custom top position of sidebar in pixels or percents (ex: 100px, 15%).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_leftright_percent', __('Display after percent of content is viewed', 'essb'), __('If you wish to make sidebar appear after percent of content is viewed enter value here (leave blank to appear immediately after load).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_leftright_percent_hide', __('Hide after percent of content is viewed', 'essb'), __('If you wish to make sidebar disappear after percent of content is viewed enter value here (leave blank to make it always be visible).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-8', 'sidebar_leftright_close', __('Add close sidebar button', 'essb'), __('Activate that option to add a close sidebar button.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-$sidebar_loading_animations = array("" => __("No animation", "essb"), "slide" => __("Slide", "essb"), "fade" => __("Fade", "essb"));
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-8', 'sidebar_entry_ani', __('Display animation', 'essb'), __('Assign sidebar initial appearance animation - a nice way to catch visitors attention.', 'essb'), $sidebar_loading_animations);
-ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-8');
-essb_prepare_location_advanced_customization('social', 'display-8', 'sidebar');
+if (!essb_options_bool_value('deactivate_method_sidebar')) {
+	$listOfOptions = array("" => "Left", "right" => "Right");
+	ESSBOptionsStructureHelper::field_select('social', 'display-8', 'sidebar_pos', __('Sidebar Appearance', 'essb'), __('You choose different position for sidebar. Available options are Left (default), Right', 'essb'), $listOfOptions);
+	ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-8', __('Left or Right sidebar appearance options', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_fixedleft', __('Customize left/right position of sidebar', 'essb'), __('Use this field to change initial position of sidebar. You can use numeric value for example 10.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_fixedtop', __('Fixed top position of sidebar', 'essb'), __('You can provide custom top position of sidebar in pixels or percents (ex: 100px, 15%).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_leftright_percent', __('Display after percent of content is viewed', 'essb'), __('If you wish to make sidebar appear after percent of content is viewed enter value here (leave blank to appear immediately after load).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-8', 'sidebar_leftright_percent_hide', __('Hide after percent of content is viewed', 'essb'), __('If you wish to make sidebar disappear after percent of content is viewed enter value here (leave blank to make it always be visible).', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-8', 'sidebar_leftright_close', __('Add close sidebar button', 'essb'), __('Activate that option to add a close sidebar button.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	$sidebar_loading_animations = array("" => __("No animation", "essb"), "slide" => __("Slide", "essb"), "fade" => __("Fade", "essb"));
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-8', 'sidebar_entry_ani', __('Display animation', 'essb'), __('Assign sidebar initial appearance animation - a nice way to catch visitors attention.', 'essb'), $sidebar_loading_animations);
+	ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-8');
+	essb_prepare_location_advanced_customization('social', 'display-8', 'sidebar');
+}
 
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-9', __('Top bar appearance', 'essb'), __('If your current theme has fixed bar or menu you may need to provide custom top position of top bar or it will be rendered below this sticked bar. For example you can try with value 40 (which is equal to 40px from top).', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_top', __('Top position for non logged in users', 'essb'), __('', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_top_loggedin', __('Top position for logged in users', 'essb'), __('f you display WordPress admin bar for logged in users you can correct float from top position for logged in users to avoid bar to be rendered below WordPress admin bar.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_top_onscroll', __('Appear after percent of content is viewed', 'essb'), __('If you wish top bar to appear when user starts scrolling fill here percent of conent after is viewed it will be visible.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_hide', __('Hide buttons after percent of content is viewed', 'essb'), __('Provide value in percent if you wish to hide float bar - for example 80 will make bar to disappear when 80% of page content is viewed from user.', 'essb'), '', 'input60', 'fa-sort-numeric-asc', 'right');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-9');
+if (!essb_options_bool_value('deactivate_method_topbar')) {
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-9', __('Top bar appearance', 'essb'), __('If your current theme has fixed bar or menu you may need to provide custom top position of top bar or it will be rendered below this sticked bar. For example you can try with value 40 (which is equal to 40px from top).', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_top', __('Top position for non logged in users', 'essb'), __('', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_top_loggedin', __('Top position for logged in users', 'essb'), __('f you display WordPress admin bar for logged in users you can correct float from top position for logged in users to avoid bar to be rendered below WordPress admin bar.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_top_onscroll', __('Appear after percent of content is viewed', 'essb'), __('If you wish top bar to appear when user starts scrolling fill here percent of conent after is viewed it will be visible.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_hide', __('Hide buttons after percent of content is viewed', 'essb'), __('Provide value in percent if you wish to hide float bar - for example 80 will make bar to disappear when 80% of page content is viewed from user.', 'essb'), '', 'input60', 'fa-sort-numeric-asc', 'right');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-9');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-9', __('Background color', 'essb'), __('Change default background color of top bar (default is white #FFFFFF).', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-9', 'topbar_bg', __('Choose background color', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_bg_opacity', __('Change opacity of background color', 'essb'), __('Change default opacity of background color if you wish to have a semi-transparent effect (default is 1 full color). You can enter value between 0 and 1 (example: 0.7)', 'essb'), '', 'input60');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-9');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-9', __('Top bar width, height & placement', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_height', __('Height of top bar content area', 'essb'), __('Provide custom height of content area. Provide number value in pixels without the px (example 40). Leave blank for default height.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_maxwidth', __('Max width of content area', 'essb'), __('Provide custom max width of content area. Provide number value in pixels without the px (example 960). Leave blank for full width.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	$listOfOptions = array("left" => "Left", "center" => "Center", "right" => "Right");
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-9', 'topbar_buttons_align', __('Align buttons', 'essb'), __('Choose your button alignment', 'essb'), $listOfOptions);
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-9');
+	
+	ESSBOptionsStructureHelper::panel_start('social', 'display-9', __('TOP BAR CUSTOM CONTENT SETTINGS', 'essb'), __('Include custom content into top bar along with your share buttons'), 'fa21 fa fa-cogs', array("mode" => "switch", 'switch_id' => 'topbar_contentarea', 'switch_on' => __('Yes', 'essb'), 'switch_off' => __('No', 'essb')));
+	ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-9', __('Background color', 'essb'), __('Change default background color of top bar (default is white #FFFFFF).', 'essb'));
+	$listOfOptions = array("left" => "Left", "right" => "Right");
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_contentarea_width', __('Custom content area % width', 'essb'), __('Provide custom width of content area (default value if nothing is filled is 30 which means 30%). Fill number value without % mark - example 40.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-9', 'topbar_contentarea_pos', __('Custom content area position', 'essb'), __('Choose your content area alignment', 'essb'), $listOfOptions);
+	ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-9');
+	ESSBOptionsStructureHelper::field_wpeditor('social', 'display-9', 'topbar_usercontent', __('Custom content', 'essb'), '', 'htmlmixed');
+	ESSBOptionsStructureHelper::panel_end('social', 'display-9');
+	//ESSBOptionsStructureHelper::field_section_end('social', 'display-9');
+	
+	essb_prepare_location_advanced_customization('social', 'display-9', 'topbar');
+}
 
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-9', __('Background color', 'essb'), __('Change default background color of top bar (default is white #FFFFFF).', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-9', 'topbar_bg', __('Choose background color', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_bg_opacity', __('Change opacity of background color', 'essb'), __('Change default opacity of background color if you wish to have a semi-transparent effect (default is 1 full color). You can enter value between 0 and 1 (example: 0.7)', 'essb'), '', 'input60');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-9');
+if (!essb_options_bool_value('deactivate_method_bottombar')) {
 
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-9', __('Top bar width, height & placement', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_height', __('Height of top bar content area', 'essb'), __('Provide custom height of content area. Provide number value in pixels without the px (example 40). Leave blank for default height.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_maxwidth', __('Max width of content area', 'essb'), __('Provide custom max width of content area. Provide number value in pixels without the px (example 960). Leave blank for full width.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-$listOfOptions = array("left" => "Left", "center" => "Center", "right" => "Right");
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-9', 'topbar_buttons_align', __('Align buttons', 'essb'), __('Choose your button alignment', 'essb'), $listOfOptions);
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-9');
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-10', __('Bottom bar appearance', 'essb'), __('Use to fit the buttons to the style of your footer area.', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_top_onscroll', __('Appear after percent of content is viewed', 'essb'), __('If you wish bottom bar to appear when user starts scrolling fill here percent of conent after is viewed it will be visible.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_hide', __('Hide buttons after percent of content is viewed', 'essb'), __('Provide value in percent if you wish to hide float bar - for example 80 will make bar to disappear when 80% of page content is viewed from user.', 'essb'), '', 'input60', 'fa-sort-numeric-asc', 'right');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-10');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-10', __('Background color', 'essb'), __('Change default background color of bottom bar (default is white #FFFFFF).', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-10', 'bottombar_bg', __('Choose background color', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_bg_opacity', __('Change opacity of background color', 'essb'), __('Change default opacity of background color if you wish to have a semi-transparent effect (default is 1 full color). You can enter value between 0 and 1 (example: 0.7)', 'essb'), '', 'input60');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-10');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-10', __('Bottom bar width, height & placement', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_height', __('Height of top bar content area', 'essb'), __('Provide custom height of content area. Provide number value in pixels without the px (example 40). Leave blank for default value.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_maxwidth', __('Max width of content area', 'essb'), __('Provide custom max width of content area. Provide number value in pixels without the px (example 960). Leave blank for full width.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	$listOfOptions = array("left" => "Left", "center" => "Center", "right" => "Right");
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-10', 'bottombar_buttons_align', __('Align buttons', 'essb'), __('Choose your content area alignment', 'essb'), $listOfOptions);
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-10');
+	
+	ESSBOptionsStructureHelper::panel_start('social', 'display-10', __('BOTTOM BAR CUSTOM CONTENT SETTINGS', 'essb'), __('Include custom content into bottom bar along with your share buttons'), 'fa21 fa fa-cogs', array("mode" => "switch", 'switch_id' => 'bottombar_contentarea', 'switch_on' => __('Yes', 'essb'), 'switch_off' => __('No', 'essb')));
+	ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-10', __('Bottom bar content settings', 'essb'), __('', 'essb'));
+	$listOfOptions = array("left" => "Left", "right" => "Right");
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_contentarea_width', __('Custom content area % width', 'essb'), __('Provide custom width of content area (default value if nothing is filled is 30 which means 30%). Fill number value without % mark - example 40.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-10', 'bottombar_contentarea_pos', __('Custom content area position', 'essb'), __('Choose your button alignment', 'essb'), $listOfOptions);
+	ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-10');
+	ESSBOptionsStructureHelper::field_wpeditor('social', 'display-10', 'bottombar_usercontent', __('Custom content', 'essb'), '', 'htmlmixed');
+	ESSBOptionsStructureHelper::panel_end('social', 'display-10');
+	
+	essb_prepare_location_advanced_customization('social', 'display-10', 'bottombar');
+}
 
-ESSBOptionsStructureHelper::panel_start('social', 'display-9', __('TOP BAR CUSTOM CONTENT SETTINGS', 'essb'), __('Include custom content into top bar along with your share buttons'), 'fa21 fa fa-cogs', array("mode" => "switch", 'switch_id' => 'topbar_contentarea', 'switch_on' => __('Yes', 'essb'), 'switch_off' => __('No', 'essb')));
-ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-9', __('Background color', 'essb'), __('Change default background color of top bar (default is white #FFFFFF).', 'essb'));
-$listOfOptions = array("left" => "Left", "right" => "Right");
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-9', 'topbar_contentarea_width', __('Custom content area % width', 'essb'), __('Provide custom width of content area (default value if nothing is filled is 30 which means 30%). Fill number value without % mark - example 40.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-9', 'topbar_contentarea_pos', __('Custom content area position', 'essb'), __('Choose your content area alignment', 'essb'), $listOfOptions);
-ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-9');
-ESSBOptionsStructureHelper::field_wpeditor('social', 'display-9', 'topbar_usercontent', __('Custom content', 'essb'), '', 'htmlmixed');
-ESSBOptionsStructureHelper::panel_end('social', 'display-9');
-//ESSBOptionsStructureHelper::field_section_end('social', 'display-9');
+if (!essb_options_bool_value('deactivate_method_popup')) {
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-11', __('Pop up window settings', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-11', 'popup_window_title', __('Pop up window title', 'essb'), __('Set your custom pop up window title.', 'essb'));
+	ESSBOptionsStructureHelper::field_editor('social', 'display-11', 'popup_user_message', __('Pop up window message', 'essb'), __('Set your custom message that will appear above buttons', 'essb'), "htmlmixed");
+	ESSBOptionsStructureHelper::field_textbox('social', 'display-11', 'popup_user_width', __('Pop up window width', 'essb'), __('Set your custom window width (default is 800 or window width - 60). Value if provided should be numeric without px symbols.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-11');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-11', __('Pop up window display', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_window_popafter', __('Display pop up window after (sec)', 'essb'), __('If you wish pop up window to appear after amount of seconds you can provide theme here. Leave blank for immediate pop up after page load.', 'essb'), '', 'input60', 'fa-clock-o', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_user_percent', __('Display pop up window after percent of content is viewed', 'essb'), __('Set amount of page content after which the pop up will appear.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_end', __('Display pop up at the end of content', 'essb'), __('Automatically display pop up when the content end is reached', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_exit', __('Display pop up on exit intent', 'essb'), __('Automatically display pop up when exit intent is detected', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_comment', __('Display pop up on user comment', 'essb'), __('Automatically display pop up when user leave a comment.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_purchase', __('Display pop up after WooCommerce purchase', 'essb'), __('Display on Thank You page of WooCommerce after purchase', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_user_manual_show', __('Manual window display mode', 'essb'), __('Activating manual display mode will allow you to show window when you decide with calling following javascript function essb_popup_show();', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_avoid_logged_users', __('Do not show pop up for logged in users', 'essb'), __('Activate this option to avoid display of pop up when user is logged in into site.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-11');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-11', __('Pop up window close', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_window_close_after', __('Automatically close pop up after (sec)', 'essb'), __('You can provide seconds and after they expire window will close automatically. User can close this window manually by pressing close button.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_user_autoclose', __('Close up message customize', 'essb'), __('Set custom text announcement for closing the pop up. After your text there will be timer counting the seconds leaving.', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_user_notshow_onclose', __('After user close window do not show it again on this page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on this post/page', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_user_notshow_onclose_all', __('After user close window do not show it again on all page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on all posts/pages', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-11');
+	essb_prepare_location_advanced_customization('social', 'display-11', 'popup');
+}
 
-essb_prepare_location_advanced_customization('social', 'display-9', 'topbar');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-10', __('Bottom bar appearance', 'essb'), __('Use to fit the buttons to the style of your footer area.', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_top_onscroll', __('Appear after percent of content is viewed', 'essb'), __('If you wish bottom bar to appear when user starts scrolling fill here percent of conent after is viewed it will be visible.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_hide', __('Hide buttons after percent of content is viewed', 'essb'), __('Provide value in percent if you wish to hide float bar - for example 80 will make bar to disappear when 80% of page content is viewed from user.', 'essb'), '', 'input60', 'fa-sort-numeric-asc', 'right');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-10');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-10', __('Background color', 'essb'), __('Change default background color of bottom bar (default is white #FFFFFF).', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-10', 'bottombar_bg', __('Choose background color', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_bg_opacity', __('Change opacity of background color', 'essb'), __('Change default opacity of background color if you wish to have a semi-transparent effect (default is 1 full color). You can enter value between 0 and 1 (example: 0.7)', 'essb'), '', 'input60');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-10');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-10', __('Bottom bar width, height & placement', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_height', __('Height of top bar content area', 'essb'), __('Provide custom height of content area. Provide number value in pixels without the px (example 40). Leave blank for default value.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_maxwidth', __('Max width of content area', 'essb'), __('Provide custom max width of content area. Provide number value in pixels without the px (example 960). Leave blank for full width.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-$listOfOptions = array("left" => "Left", "center" => "Center", "right" => "Right");
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-10', 'bottombar_buttons_align', __('Align buttons', 'essb'), __('Choose your content area alignment', 'essb'), $listOfOptions);
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-10');
-
-ESSBOptionsStructureHelper::panel_start('social', 'display-10', __('BOTTOM BAR CUSTOM CONTENT SETTINGS', 'essb'), __('Include custom content into bottom bar along with your share buttons'), 'fa21 fa fa-cogs', array("mode" => "switch", 'switch_id' => 'bottombar_contentarea', 'switch_on' => __('Yes', 'essb'), 'switch_off' => __('No', 'essb')));
-ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-10', __('Bottom bar content settings', 'essb'), __('', 'essb'));
-$listOfOptions = array("left" => "Left", "right" => "Right");
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-10', 'bottombar_contentarea_width', __('Custom content area % width', 'essb'), __('Provide custom width of content area (default value if nothing is filled is 30 which means 30%). Fill number value without % mark - example 40.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-10', 'bottombar_contentarea_pos', __('Custom content area position', 'essb'), __('Choose your button alignment', 'essb'), $listOfOptions);
-ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-10');
-ESSBOptionsStructureHelper::field_wpeditor('social', 'display-10', 'bottombar_usercontent', __('Custom content', 'essb'), '', 'htmlmixed');
-ESSBOptionsStructureHelper::panel_end('social', 'display-10');
-
-essb_prepare_location_advanced_customization('social', 'display-10', 'bottombar');
-
-ESSBOptionsStructureHelper::field_section_start('social', 'display-11', __('Pop up window settings', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-11', 'popup_window_title', __('Pop up window title', 'essb'), __('Set your custom pop up window title.', 'essb'));
-ESSBOptionsStructureHelper::field_editor('social', 'display-11', 'popup_user_message', __('Pop up window message', 'essb'), __('Set your custom message that will appear above buttons', 'essb'), "htmlmixed");
-ESSBOptionsStructureHelper::field_textbox('social', 'display-11', 'popup_user_width', __('Pop up window width', 'essb'), __('Set your custom window width (default is 800 or window width - 60). Value if provided should be numeric without px symbols.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_section_end('social', 'display-11');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-11', __('Pop up window display', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_window_popafter', __('Display pop up window after (sec)', 'essb'), __('If you wish pop up window to appear after amount of seconds you can provide theme here. Leave blank for immediate pop up after page load.', 'essb'), '', 'input60', 'fa-clock-o', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_user_percent', __('Display pop up window after percent of content is viewed', 'essb'), __('Set amount of page content after which the pop up will appear.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_end', __('Display pop up at the end of content', 'essb'), __('Automatically display pop up when the content end is reached', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_exit', __('Display pop up on exit intent', 'essb'), __('Automatically display pop up when exit intent is detected', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_comment', __('Display pop up on user comment', 'essb'), __('Automatically display pop up when user leave a comment.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_display_purchase', __('Display pop up after WooCommerce purchase', 'essb'), __('Display on Thank You page of WooCommerce after purchase', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_user_manual_show', __('Manual window display mode', 'essb'), __('Activating manual display mode will allow you to show window when you decide with calling following javascript function essb_popup_show();', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_avoid_logged_users', __('Do not show pop up for logged in users', 'essb'), __('Activate this option to avoid display of pop up when user is logged in into site.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-11');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-11', __('Pop up window close', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_window_close_after', __('Automatically close pop up after (sec)', 'essb'), __('You can provide seconds and after they expire window will close automatically. User can close this window manually by pressing close button.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-11', 'popup_user_autoclose', __('Close up message customize', 'essb'), __('Set custom text announcement for closing the pop up. After your text there will be timer counting the seconds leaving.', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_user_notshow_onclose', __('After user close window do not show it again on this page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on this post/page', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-11', 'popup_user_notshow_onclose_all', __('After user close window do not show it again on all page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on all posts/pages', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-11');
-essb_prepare_location_advanced_customization('social', 'display-11', 'popup');
-
-
-ESSBOptionsStructureHelper::field_section_start('social', 'display-12', __('Fly In window settings', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-12', 'flyin_window_title', __('Fly in window title', 'essb'), __('Set your custom fly in window title.', 'essb'));
-ESSBOptionsStructureHelper::field_editor('social', 'display-12', 'flyin_user_message', __('Fly in window message', 'essb'), __('Set your custom message that will appear above buttons', 'essb'), "htmlmixed");
-ESSBOptionsStructureHelper::field_textbox('social', 'display-12', 'flyin_user_width', __('Fly in window width', 'essb'), __('Set your custom window width (default is 400 or window width - 60). If value is provided should be numeric without px symbols.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-$listOfOptions = array("right" => "Right", "left" => "Left");
-ESSBOptionsStructureHelper::field_select('social', 'display-12', 'flyin_position', __('Choose fly in display position', 'essb'), '', $listOfOptions);
-ESSBOptionsStructureHelper::field_section_end('social', 'display-12');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-12', __('Fly in window display', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_window_popafter', __('Display fly in window after (sec)', 'essb'), __('If you wish fly in window to appear after amount of seconds you can provide them here. Leave blank for immediate pop up after page load.', 'essb'), '', 'input60', 'fa-clock-o', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_user_percent', __('Display fly in window after percent of content is viewed', 'essb'), __('Set amount of page content after which the pop up will appear.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_display_end', __('Display fly in at the end of content', 'essb'), __('Automatically display fly in when the content end is reached.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_display_comment', __('Display fly in on user comment', 'essb'), __('Automatically display fly in when user leaves a comment.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_user_manual_show', __('Manual fly in display mode', 'essb'), __('Activating manual display mode will allow you to show window when you decide with calling following javascript function essb_flyin_show();', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-12');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-12', __('Fly in window close', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_window_close_after', __('Automatically close fly in after (sec)', 'essb'), __('You can provide seconds and after they expire window will close automatically. User can close this window manually by pressing close button.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_user_autoclose', __('Close up message customize', 'essb'), __('Set custom text announcement for closing the fly in. After your text there will be timer counting the seconds leaving.', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_user_notshow_onclose', __('After user closes window do not show it again on this page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on this post/page', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_user_notshow_onclose_all', __('After user close window do not show it again on all page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on all posts/pages', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-12');
-ESSBOptionsStructureHelper::field_switch('social', 'display-12', 'flyin_noshare', __('Do not show share buttons in fly in', 'essb'), __('Activating this you will get a fly in display without share buttons in it - only the custom content you have set.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-essb_prepare_location_advanced_customization('social', 'display-12', 'flyin');
+if (!essb_options_bool_value('deactivate_method_flyin')) {
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-12', __('Fly In window settings', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-12', 'flyin_window_title', __('Fly in window title', 'essb'), __('Set your custom fly in window title.', 'essb'));
+	ESSBOptionsStructureHelper::field_editor('social', 'display-12', 'flyin_user_message', __('Fly in window message', 'essb'), __('Set your custom message that will appear above buttons', 'essb'), "htmlmixed");
+	ESSBOptionsStructureHelper::field_textbox('social', 'display-12', 'flyin_user_width', __('Fly in window width', 'essb'), __('Set your custom window width (default is 400 or window width - 60). If value is provided should be numeric without px symbols.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	$listOfOptions = array("right" => "Right", "left" => "Left");
+	ESSBOptionsStructureHelper::field_select('social', 'display-12', 'flyin_position', __('Choose fly in display position', 'essb'), '', $listOfOptions);
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-12');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-12', __('Fly in window display', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_window_popafter', __('Display fly in window after (sec)', 'essb'), __('If you wish fly in window to appear after amount of seconds you can provide them here. Leave blank for immediate pop up after page load.', 'essb'), '', 'input60', 'fa-clock-o', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_user_percent', __('Display fly in window after percent of content is viewed', 'essb'), __('Set amount of page content after which the pop up will appear.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_display_end', __('Display fly in at the end of content', 'essb'), __('Automatically display fly in when the content end is reached.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_display_comment', __('Display fly in on user comment', 'essb'), __('Automatically display fly in when user leaves a comment.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_user_manual_show', __('Manual fly in display mode', 'essb'), __('Activating manual display mode will allow you to show window when you decide with calling following javascript function essb_flyin_show();', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-12');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-12', __('Fly in window close', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_window_close_after', __('Automatically close fly in after (sec)', 'essb'), __('You can provide seconds and after they expire window will close automatically. User can close this window manually by pressing close button.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-12', 'flyin_user_autoclose', __('Close up message customize', 'essb'), __('Set custom text announcement for closing the fly in. After your text there will be timer counting the seconds leaving.', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_user_notshow_onclose', __('After user closes window do not show it again on this page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on this post/page', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-12', 'flyin_user_notshow_onclose_all', __('After user close window do not show it again on all page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on all posts/pages', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-12');
+	ESSBOptionsStructureHelper::field_switch('social', 'display-12', 'flyin_noshare', __('Do not show share buttons in fly in', 'essb'), __('Activating this you will get a fly in display without share buttons in it - only the custom content you have set.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	essb_prepare_location_advanced_customization('social', 'display-12', 'flyin');
+}
 
 ESSBOptionsStructureHelper::panel_start('social', 'display-13', __('On media buttons appearance', 'essb'), __('Choose where you wish buttons to appear', 'essb'), 'fa21 ti-layout-grid2-alt', array("mode" => "toggle"));
 ESSBOptionsStructureHelper::field_section_start_full_panels('social', 'display-13', __('Appearance', 'essb'), __('', 'essb'));
@@ -806,118 +845,126 @@ ESSBOptionsStructureHelper::field_select_panel('social', 'display-13', 'sis_orie
 ESSBOptionsStructureHelper::field_section_end_full_panels('social', 'display-13');
 ESSBOptionsStructureHelper::panel_end('social', 'display-13');
 
-ESSBOptionsStructureHelper::field_textbox('social', 'display-14', 'heroshare_user_width', __('Custom window width', 'essb'), __('Set your custom window width (default is 960 or window width - 60). Value if provided should be numeric without px symbols.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
-ESSBOptionsStructureHelper::field_section_start('social', 'display-14', __('Primary content area', 'essb'), __('Primary content area is located above post information and share details. You can use it to add custom title or message that will appear on top. Leave it blank if you do not wish to have such', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-14', 'heroshare_window_title', __('Window title', 'essb'), __('Set your custom pop up window title.', 'essb'));
-ESSBOptionsStructureHelper::field_editor('social', 'display-14', 'heroshare_user_message', __('Window message', 'essb'), __('Set your custom message that will appear above buttons', 'essb'), "htmlmixed");
-ESSBOptionsStructureHelper::field_section_end('social', 'display-14');
+if (!essb_options_bool_value('deactivate_method_heroshare')) {
+	ESSBOptionsStructureHelper::field_textbox('social', 'display-14', 'heroshare_user_width', __('Custom window width', 'essb'), __('Set your custom window width (default is 960 or window width - 60). Value if provided should be numeric without px symbols.', 'essb'), '', 'input60', 'fa-arrows-h', 'right');
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-14', __('Primary content area', 'essb'), __('Primary content area is located above post information and share details. You can use it to add custom title or message that will appear on top. Leave it blank if you do not wish to have such', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-14', 'heroshare_window_title', __('Window title', 'essb'), __('Set your custom pop up window title.', 'essb'));
+	ESSBOptionsStructureHelper::field_editor('social', 'display-14', 'heroshare_user_message', __('Window message', 'essb'), __('Set your custom message that will appear above buttons', 'essb'), "htmlmixed");
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-14');
+	
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-14', __('Additional content area', 'essb'), __('Additional content area is located below share buttons and provide various message types. If you do not wish to display it choose data type to html message and leave field for message blank', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-14', 'heroshare_second_title', __('Title', 'essb'), __('Set your custom pop up window title for additional content area.', 'essb'));
+	$listOfOptions = array("top" => "Top social posts (require build in analytics to be active)", "fans" => "Followers counter (require followers counter to be activated)", "html" => "Custom HTML message");
+	ESSBOptionsStructureHelper::field_select('social', 'display-14', 'heroshare_second_type', __('Type of displayed data', 'essb'), __('Choose what you wish to be displayed into second widget area below share buttons. If you wish to leave it blank choose Custom HTML message and do not fill anything inside field for custom message.', 'essb'), $listOfOptions);
+	ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-14', 'heroshare_second_fans', __('Followers counter shortcode', 'essb'), __('Fill in this field you followers counter shortcode that will be used if you select in second widget area to have followers counter. Shortcode can be generated using shortcode generator.', 'essb'));
+	ESSBOptionsStructureHelper::field_editor('social', 'display-14', 'heroshare_second_message', __('Custom HTML message', 'essb'), __('Set your custom message (for example html code for opt-in form). This field supports shortcodes.', 'essb'), "htmlmixed");
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-14');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-14', __('Hero share window display', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-14', 'heroshare_window_popafter', __('Display pop up window after (sec)', 'essb'), __('If you wish pop up window to appear after amount of seconds you can provide theme here. Leave blank for immediate pop up after page load.', 'essb'), '', 'input60', 'fa-clock-o', 'right');
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-14', 'heroshare_user_percent', __('Display pop up window after percent of content is viewed', 'essb'), __('Set amount of page content after which the pop up will appear.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_display_end', __('Display pop up at the end of content', 'essb'), __('Automatically display pop up when the content end is reached', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_display_exit', __('Display pop up on exit intent', 'essb'), __('Automatically display pop up when exit intent is detected', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_user_manual_show', __('Manual window display mode', 'essb'), __('Activating manual display mode will allow you to show window when you decide with calling following javascript function essb_heroshare_show();', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_avoid_logged_users', __('Do not show pop up for logged in users', 'essb'), __('Activate this option to avoid display of pop up when user is logged in into site.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-14');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-14', __('Window close', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_user_notshow_onclose', __('After user close window do not show it again on this page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on this post/page', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_user_notshow_onclose_all', __('After user close window do not show it again on all page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on all posts/pages', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-14');
+	essb_prepare_location_advanced_customization('social', 'display-14', 'heroshare');
+}
 
-ESSBOptionsStructureHelper::field_section_start('social', 'display-14', __('Additional content area', 'essb'), __('Additional content area is located below share buttons and provide various message types. If you do not wish to display it choose data type to html message and leave field for message blank', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-14', 'heroshare_second_title', __('Title', 'essb'), __('Set your custom pop up window title for additional content area.', 'essb'));
-$listOfOptions = array("top" => "Top social posts (require build in analytics to be active)", "fans" => "Followers counter (require followers counter to be activated)", "html" => "Custom HTML message");
-ESSBOptionsStructureHelper::field_select('social', 'display-14', 'heroshare_second_type', __('Type of displayed data', 'essb'), __('Choose what you wish to be displayed into second widget area below share buttons. If you wish to leave it blank choose Custom HTML message and do not fill anything inside field for custom message.', 'essb'), $listOfOptions);
-ESSBOptionsStructureHelper::field_textbox_stretched('social', 'display-14', 'heroshare_second_fans', __('Followers counter shortcode', 'essb'), __('Fill in this field you followers counter shortcode that will be used if you select in second widget area to have followers counter. Shortcode can be generated using shortcode generator.', 'essb'));
-ESSBOptionsStructureHelper::field_editor('social', 'display-14', 'heroshare_second_message', __('Custom HTML message', 'essb'), __('Set your custom message (for example html code for opt-in form). This field supports shortcodes.', 'essb'), "htmlmixed");
-ESSBOptionsStructureHelper::field_section_end('social', 'display-14');
+if (!essb_options_bool_value('deactivate_method_postbar')) {
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-15', __('Deactivate default components', 'essb'), __('Deactivate default active display elements', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_deactivate_prevnext', __('Deactivate previous/next articles', 'essb'), __('Activate this option if you wish to deactivate display of previous/next article buttons', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_deactivate_progress', __('Deactivate read progress bar', 'essb'), __('Activate this option if you wish to deactivate display of read progress', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_deactivate_title', __('Deactivate post title', 'essb'), __('Activate this option if you wish to deactivate display of post title', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-15');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-15', __('Activate additional components', 'essb'), __('Activate additional display elements', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_category', __('Activate display of category', 'essb'), __('Activate this option if you wish to activate display of category', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_author', __('Activate display of post author', 'essb'), __('Activate this option if you wish to activate display of post author', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_total', __('Activate display of total shares counter', 'essb'), __('Activate this option if you wish to activate display of total shares counter', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_comments', __('Activate display of comments counter', 'essb'), __('Activate this option if you wish to activate display of comments counter', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_time', __('Activate display of time to read', 'essb'), __('Activate this option if you wish to activate display of time to read', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-15', 'postbar_activate_time_words', __('Words per minuted for time to read', 'essb'), __('Customize the words per minute for time to read display', 'essb'), '', 'input60', 'fa-clock-o', 'right');
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-15');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-15', __('Customize colors', 'essb'), __('Customize default colors of core components', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_bgcolor', __('Change default background color', 'essb'), __('Customize the default post bar background color (#FFFFFF)', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_color', __('Change default text color', 'essb'), __('Customize the default post bar text color (#111111)', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_accentcolor', __('Change default accent color', 'essb'), __('Customize the default post bar accent color (#3D8EB9)', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_altcolor', __('Change default alt text color', 'essb'), __('Customize the default post bar alt text color (#FFFFFF) which is applied to elements with accent background color', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-15');
+	
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-15', __('Customize button style', 'essb'), __('', 'essb'));
+	$tab_id = 'social';
+	$menu_id = 'display-15';
+	$location = 'postbar';
+	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', 'essb'), __('Select your button display style.', 'essb'), essb_avaiable_button_style_with_recommend());
+	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', 'essb'), __('Select your template for that display location.', 'essb'), essb_available_tempaltes());
+	ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', 'essb'), __('Activate this option to remove default space between share buttons.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', 'essb'), __('Activate display of share counters.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', 'essb'), __('Choose your default button counter position', 'essb'), essb_avaliable_counter_positions());
+	
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-15');
+	
+	essb_prepare_location_advanced_customization('social', 'display-15', 'postbar');
+}
 
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-14', __('Hero share window display', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-14', 'heroshare_window_popafter', __('Display pop up window after (sec)', 'essb'), __('If you wish pop up window to appear after amount of seconds you can provide theme here. Leave blank for immediate pop up after page load.', 'essb'), '', 'input60', 'fa-clock-o', 'right');
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-14', 'heroshare_user_percent', __('Display pop up window after percent of content is viewed', 'essb'), __('Set amount of page content after which the pop up will appear.', 'essb'), '', 'input60', 'fa-arrows-v', 'right');
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_display_end', __('Display pop up at the end of content', 'essb'), __('Automatically display pop up when the content end is reached', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_display_exit', __('Display pop up on exit intent', 'essb'), __('Automatically display pop up when exit intent is detected', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_user_manual_show', __('Manual window display mode', 'essb'), __('Activating manual display mode will allow you to show window when you decide with calling following javascript function essb_heroshare_show();', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_avoid_logged_users', __('Do not show pop up for logged in users', 'essb'), __('Activate this option to avoid display of pop up when user is logged in into site.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-14');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-14', __('Window close', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_user_notshow_onclose', __('After user close window do not show it again on this page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on this post/page', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-14', 'heroshare_user_notshow_onclose_all', __('After user close window do not show it again on all page/post for him', 'essb'), __('Activating this option will set cookie that will not show again pop up message for next 7 days for user on all posts/pages', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-14');
-essb_prepare_location_advanced_customization('social', 'display-14', 'heroshare');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-15', __('Deactivate default components', 'essb'), __('Deactivate default active display elements', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_deactivate_prevnext', __('Deactivate previous/next articles', 'essb'), __('Activate this option if you wish to deactivate display of previous/next article buttons', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_deactivate_progress', __('Deactivate read progress bar', 'essb'), __('Activate this option if you wish to deactivate display of read progress', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_deactivate_title', __('Deactivate post title', 'essb'), __('Activate this option if you wish to deactivate display of post title', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-15');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-15', __('Activate additional components', 'essb'), __('Activate additional display elements', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_category', __('Activate display of category', 'essb'), __('Activate this option if you wish to activate display of category', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_author', __('Activate display of post author', 'essb'), __('Activate this option if you wish to activate display of post author', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_total', __('Activate display of total shares counter', 'essb'), __('Activate this option if you wish to activate display of total shares counter', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_comments', __('Activate display of comments counter', 'essb'), __('Activate this option if you wish to activate display of comments counter', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-15', 'postbar_activate_time', __('Activate display of time to read', 'essb'), __('Activate this option if you wish to activate display of time to read', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_textbox_panel('social', 'display-15', 'postbar_activate_time_words', __('Words per minuted for time to read', 'essb'), __('Customize the words per minute for time to read display', 'essb'), '', 'input60', 'fa-clock-o', 'right');
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-15');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-15', __('Customize colors', 'essb'), __('Customize default colors of core components', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_bgcolor', __('Change default background color', 'essb'), __('Customize the default post bar background color (#FFFFFF)', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_color', __('Change default text color', 'essb'), __('Customize the default post bar text color (#111111)', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_accentcolor', __('Change default accent color', 'essb'), __('Customize the default post bar accent color (#3D8EB9)', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-15', 'postbar_altcolor', __('Change default alt text color', 'essb'), __('Customize the default post bar alt text color (#FFFFFF) which is applied to elements with accent background color', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-15');
-
-ESSBOptionsStructureHelper::field_section_start('social', 'display-15', __('Customize button style', 'essb'), __('', 'essb'));
-$tab_id = 'social';
-$menu_id = 'display-15';
-$location = 'postbar';
-ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', 'essb'), __('Select your button display style.', 'essb'), essb_avaiable_button_style_with_recommend());
-ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', 'essb'), __('Select your template for that display location.', 'essb'), essb_available_tempaltes());
-ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', 'essb'), __('Activate this option to remove default space between share buttons.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', 'essb'), __('Activate display of share counters.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', 'essb'), __('Choose your default button counter position', 'essb'), essb_avaliable_counter_positions());
-
-ESSBOptionsStructureHelper::field_section_end('social', 'display-15');
-
-essb_prepare_location_advanced_customization('social', 'display-15', 'postbar');
+if (!essb_options_bool_value('deactivate_method_point')) {
 
 // Point
-ESSBOptionsStructureHelper::field_heading('social', 'display-16', 'heading1', __('Display Position Settings: Point', 'essb'));
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-16', __('Point display', 'essb'), __('Choose location of point and style', 'essb'));
-$point_positions = array("bottomright" => __('Bottom Right', 'essb'), 'bottomleft' => __('Bottom Left', 'essb'), 'topright' => __('Top Right', 'essb'), 'topleft' => __('Top Left', 'essb'));
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_position', __('Point will appear on', 'essb'), __('Choose where you wish sharing point to appear', 'essb'), $point_positions);
-ESSBOptionsStructureHelper::field_switch_panel('social', 'display-16', 'point_total', __('Display total counter', 'essb'), __('Activate this option if you wish to activate display of total counter on point', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-//ESSBOptionsStructureHelper::field_switch_panel('social', 'display-16', 'point_open_end', __('Automatic share point open at the end of content', 'essb'), __('Activate this option if you wish to automatic share point open at the end of post content', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-$point_open_triggers = array("no" => __("No", "essb"), "end" => __("At the end of content", "essb"), "middle" => __("After the middle of content", "essb"));
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_open_auto', __('Automatic share point open', 'essb'), __('Select your button display style.', 'essb'), $point_open_triggers);
+	ESSBOptionsStructureHelper::field_heading('social', 'display-16', 'heading1', __('Display Position Settings: Point', 'essb'));
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-16', __('Point display', 'essb'), __('Choose location of point and style', 'essb'));
+	$point_positions = array("bottomright" => __('Bottom Right', 'essb'), 'bottomleft' => __('Bottom Left', 'essb'), 'topright' => __('Top Right', 'essb'), 'topleft' => __('Top Left', 'essb'));
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_position', __('Point will appear on', 'essb'), __('Choose where you wish sharing point to appear', 'essb'), $point_positions);
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-16', 'point_total', __('Display total counter', 'essb'), __('Activate this option if you wish to activate display of total counter on point', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	//ESSBOptionsStructureHelper::field_switch_panel('social', 'display-16', 'point_open_end', __('Automatic share point open at the end of content', 'essb'), __('Activate this option if you wish to automatic share point open at the end of post content', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	$point_open_triggers = array("no" => __("No", "essb"), "end" => __("At the end of content", "essb"), "middle" => __("After the middle of content", "essb"));
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_open_auto', __('Automatic share point open', 'essb'), __('Select your button display style.', 'essb'), $point_open_triggers);
+	
+	$point_display_style = array("simple" => __('Simple icons', 'essb'), 'advanced' => __('Advanced Panel', 'essb'));
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_style', __('Share buttons action type', 'essb'), __('Choose your share buttons action type. Simple buttons will just open share buttons when you click the point. Advanced panel allows you also to include custom texts before/after buttons into nice flyout panel', 'essb'), $point_display_style);
+	$point_display_style = array("round" => __('Round', 'essb'), 'square' => __('Square', 'essb'), 'rounded' => __('Rounded edges square', 'essb'));
+	ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_shape', __('Point button shape', 'essb'), __('Choose the shape of share point - default is round', 'essb'), $point_display_style);
 
-$point_display_style = array("simple" => __('Simple icons', 'essb'), 'advanced' => __('Advanced Panel', 'essb'));
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_style', __('Share buttons action type', 'essb'), __('Choose your share buttons action type. Simple buttons will just open share buttons when you click the point. Advanced panel allows you also to include custom texts before/after buttons into nice flyout panel', 'essb'), $point_display_style);
-$point_display_style = array("round" => __('Round', 'essb'), 'square' => __('Square', 'essb'), 'rounded' => __('Rounded edges square', 'essb'));
-ESSBOptionsStructureHelper::field_select_panel('social', 'display-16', 'point_shape', __('Point button shape', 'essb'), __('Choose the shape of share point - default is round', 'essb'), $point_display_style);
-
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-16');
-
-ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-16', __('Customize colors', 'essb'), __('Customize default colors of core components', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_bgcolor', __('Change default background color', 'essb'), __('Customize the default point background color', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_color', __('Change default text color', 'essb'), __('Customize the default point text color', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_accentcolor', __('Change default total background color', 'essb'), __('Customize the default total background color', 'essb'));
-ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_altcolor', __('Change default total text color', 'essb'), __('Customize the default total text color', 'essb'));
-ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-16');
-
-
-
-
-ESSBOptionsStructureHelper::field_section_start('social', 'display-16', __('Customize button style', 'essb'), __('', 'essb'));
-$tab_id = 'social';
-$menu_id = 'display-16';
-$location = 'point';
-ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', 'essb'), __('Select your button display style.', 'essb'), essb_avaiable_button_style_with_recommend());
-ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', 'essb'), __('Select your template for that display location.', 'essb'), essb_available_tempaltes4());
-ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', 'essb'), __('Activate this option to remove default space between share buttons.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', 'essb'), __('Activate display of share counters.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', 'essb'), __('Choose your default button counter position. Please note that if you use Simple icons mode all Inside positions will act like Inside - network names will not appear because of visual limitations', 'essb'), essb_avaliable_counter_positions_point());
-ESSBOptionsStructureHelper::field_section_end('social', 'display-16');
-
-ESSBOptionsStructureHelper::field_section_start('social', 'display-16', __('Custom button content for Advanced panel display', 'essb'), __('', 'essb'));
-ESSBOptionsStructureHelper::field_wpeditor('social', 'display-16', 'point_top_content', __('Custom content above share buttons', 'essb'), __('Optional: Provide custom content that will appear above share buttons. You can use the variables to display post related content: %%title%%, %%url%%, %%image%%, %%permalink%%', 'essb'), 'htmlmixed');
-ESSBOptionsStructureHelper::field_wpeditor('social', 'display-16', 'point_bottom_content', __('Custom content below share buttons', 'essb'), __('Optional: Provide custom content that will appear below share buttons. You can use the variables to display post related content: %%title%%, %%url%%, %%image%%, %%permalink%%', 'essb'), 'htmlmixed');
-ESSBOptionsStructureHelper::field_switch('social', 'display-16', 'point_articles', __('Display prev/next article', 'essb'), __('Activate this option to display prev/next article from same category', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_section_end('social', 'display-16');
-
-
-essb_prepare_location_advanced_customization('social', 'display-16', 'point');
-
+	ESSBOptionsStructureHelper::field_switch_panel('social', 'display-16', 'point_allowall', __('Display share point anywhere on site', 'essb'), __('Default point setup is made to appear on posts, custom post types and pages but it will not appear on lists of posts, dynamic pages activate this option.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-16');
+	
+	ESSBOptionsStructureHelper::field_section_start_panels('social', 'display-16', __('Customize colors', 'essb'), __('Customize default colors of core components', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_bgcolor', __('Change default background color', 'essb'), __('Customize the default point background color', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_color', __('Change default text color', 'essb'), __('Customize the default point text color', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_accentcolor', __('Change default total background color', 'essb'), __('Customize the default total background color', 'essb'));
+	ESSBOptionsStructureHelper::field_color_panel('social', 'display-16', 'point_altcolor', __('Change default total text color', 'essb'), __('Customize the default total text color', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end_panels('social', 'display-16');
+	
+	
+	
+	
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-16', __('Customize button style', 'essb'), __('', 'essb'));
+	$tab_id = 'social';
+	$menu_id = 'display-16';
+	$location = 'point';
+	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_button_style', __('Buttons Style', 'essb'), __('Select your button display style.', 'essb'), essb_avaiable_button_style_with_recommend());
+	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_template', __('Template', 'essb'), __('Select your template for that display location.', 'essb'), essb_available_tempaltes4());
+	ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_nospace', __('Remove spacing between buttons', 'essb'), __('Activate this option to remove default space between share buttons.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_switch($tab_id, $menu_id, $location.'_show_counter', __('Display counter of sharing', 'essb'), __('Activate display of share counters.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_select($tab_id, $menu_id, $location.'_counter_pos', __('Position of counters', 'essb'), __('Choose your default button counter position. Please note that if you use Simple icons mode all Inside positions will act like Inside - network names will not appear because of visual limitations', 'essb'), essb_avaliable_counter_positions_point());
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-16');
+	
+	ESSBOptionsStructureHelper::field_section_start('social', 'display-16', __('Custom button content for Advanced panel display', 'essb'), __('', 'essb'));
+	ESSBOptionsStructureHelper::field_wpeditor('social', 'display-16', 'point_top_content', __('Custom content above share buttons', 'essb'), __('Optional: Provide custom content that will appear above share buttons. You can use the variables to display post related content: %%title%%, %%url%%, %%image%%, %%permalink%%', 'essb'), 'htmlmixed');
+	ESSBOptionsStructureHelper::field_wpeditor('social', 'display-16', 'point_bottom_content', __('Custom content below share buttons', 'essb'), __('Optional: Provide custom content that will appear below share buttons. You can use the variables to display post related content: %%title%%, %%url%%, %%image%%, %%permalink%%', 'essb'), 'htmlmixed');
+	ESSBOptionsStructureHelper::field_switch('social', 'display-16', 'point_articles', __('Display prev/next article', 'essb'), __('Activate this option to display prev/next article from same category', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+	ESSBOptionsStructureHelper::field_section_end('social', 'display-16');
+	
+	
+	essb_prepare_location_advanced_customization('social', 'display-16', 'point');
+}
 
 essb_prepare_location_advanced_customization('social', 'display-17', 'excerpt');
 

@@ -26,7 +26,13 @@ ESSBOptionsStructureHelper::submenu_item('display', 'profiles-1', __('Settings',
 ESSBOptionsStructureHelper::submenu_item('display', 'profiles-2', __('Social Networks', 'essb'));
 
 // Easy Optin
-$optin_connectors = array("mailchimp" => "MailChimp", "getresponse" => "GetResponse", "mymail" => "MyMail", "mailpoet" => "MailPoet","mailerlite" => "MailerLite", "activecampaign" => "ActiveCampaign");
+$optin_connectors = array("mailchimp" => "MailChimp", 
+		"getresponse" => "GetResponse", 
+		"mymail" => "MyMail", 
+		"mailpoet" => "MailPoet",
+		"mailerlite" => "MailerLite", 
+		"activecampaign" => "ActiveCampaign",
+		"campaignmonitor" => "CampaignMonitor");
 ESSBOptionsStructureHelper::field_select('display', 'optin-1', 'subscribe_connector', __('Choose your service', 'essb'), __('Select service that you wish to integrate with Easy Optin forms. Please note that for correct work you need to fill all required authorizations details for it below', 'essb'), $optin_connectors);
 ESSBOptionsStructureHelper::field_switch('display', 'optin-1', 'subscribe_widget', __('Activate subscribe widget & shortcode', 'essb'), __('Activation of this option will allow you to use subscribe widget and shortcode anywhere on your site not connected with subscribe button inside share buttons', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 
@@ -54,6 +60,11 @@ ESSBOptionsStructureHelper::panel_start('display', 'optin-1', __('ActiveCampaign
 ESSBOptionsStructureHelper::field_textbox_stretched('display', 'optin-1', 'subscribe_ac_api_url', __('ActiveCampaign API URL', 'essb'), __('Enter your ActiveCampaign API URL. To get API URL please go to your ActiveCampaign Account >> My Settings >> Developer.', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('display', 'optin-1', 'subscribe_ac_api', __('ActiveCampaign API Key', 'essb'), __('Enter your ActiveCampaign API Key. To get API Key please go to your ActiveCampaign Account >> My Settings >> Developer.', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('display', 'optin-1', 'subscribe_ac_list', __('ActiveCapaign List ID', 'essb'), __('Entery your ActiveCampaign List ID. To get your list ID visit lists pages and copy ID that you see in browser when you open list ?listid=<yourid>.', 'essb'));
+ESSBOptionsStructureHelper::panel_end('display', 'optin-1');
+
+ESSBOptionsStructureHelper::panel_start('display', 'optin-1', __('CampaignMonitor', 'essb'), __('Configure mailing list service access details', 'essb'), 'fa21 fa fa-cogs', array("mode" => "toggle"));
+ESSBOptionsStructureHelper::field_textbox_stretched('display', 'optin-1', 'subscribe_cm_api', __('CampaignMonitor API Key', 'essb'), __('Enter your Campaign Monitor API Key. You can get your API Key from the Account Settings page when logged into your Campaign Monitor account.', 'essb'));
+ESSBOptionsStructureHelper::field_textbox_stretched('display', 'optin-1', 'subscribe_cm_list', __('CampaignMonitor List ID', 'essb'), __('Enter your List ID. You can get List ID from the list editor page when logged into your Campaign Monitor account.', 'essb'));
 ESSBOptionsStructureHelper::panel_end('display', 'optin-1');
 
 

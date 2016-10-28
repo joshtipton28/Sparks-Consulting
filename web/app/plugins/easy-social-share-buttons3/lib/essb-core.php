@@ -1138,6 +1138,10 @@ class ESSBCore {
 			// post share bar cannot work on list of posts
 			if (!is_single () && !is_page ()) {
 				$is_valid = false;
+				
+				if (essb_option_bool_value('point_allowall')) {
+					$is_valid = true;
+				}
 			}
 		}
 		

@@ -572,6 +572,8 @@ class ESSBAdminControler {
 				$goback = esc_url_raw(add_query_arg(array('settings-updated' => 'true', 'section' => $user_section, 'subsection' => $user_subsection), wp_get_referer ()));
 				//$goback = str_replace('#038;', '', $goback);
 				wp_redirect ( $goback );
+				//print  (int) $_SERVER['CONTENT_LENGTH'];
+				
 				die ();
 			}
 		}

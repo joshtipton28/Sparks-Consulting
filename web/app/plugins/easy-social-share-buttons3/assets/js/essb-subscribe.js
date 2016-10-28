@@ -56,7 +56,8 @@ var essb_toggle_subscribe = function(key) {
 	
 }
 
-var essb_ajax_subscribe = function(key) {
+var essb_ajax_subscribe = function(key, event) {
+	
 	event.preventDefault();
 	
 	var formContainer = jQuery('.essb-subscribe-form-' + key + ' #essb-subscribe-from-content-form-mailchimp');	

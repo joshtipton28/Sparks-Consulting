@@ -67,7 +67,7 @@ function essb_process_additional_ajax_requests() {
 	if (defined('ESSB3_CACHED_COUNTERS')) {
 		if (ESSBGlobalSettings::$cached_counters_cache_mode) {
 			if (isset($_REQUEST['essb_counter_cache']) && $_REQUEST['essb_counter_cache'] == 'rebuild') {
-				$share_details = essb_core()->get_post_share_details('');
+				$share_details = essb_get_post_share_details('');
 				$share_details['full_url'] = $share_details['url'];
 				$networks = essb_option_value('networks');
 				$result = ESSBCachedCounters::get_counters(get_the_ID(), $share_details, $networks);

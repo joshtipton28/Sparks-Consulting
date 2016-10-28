@@ -61,7 +61,7 @@ if (!function_exists('essb_subscribe_form_design5')) {
 		}
 		
 		$output .= '<input class="essb-subscribe-form-content-email-field '.$input_cols.'" type="text" value="" placeholder="'.$subscribe_mc_email.'" name="mailchimp_email">';
-		$output .= '<input class="submit '.$submit_width.'" name="submit" type="submit" value="'.$subscribe_mc_button.'" onclick="essb_ajax_subscribe(\''.$salt.'\');">';
+		$output .= '<input class="submit '.$submit_width.'" name="submit" type="submit" value="'.$subscribe_mc_button.'" onclick="essb_ajax_subscribe(\''.$salt.'\', event);">';
 		$output .= '</form>';
 		
 		$output .= '<p class="essb-subscribe-form-content-text">'.$subscribe_mc_text.'</p>';

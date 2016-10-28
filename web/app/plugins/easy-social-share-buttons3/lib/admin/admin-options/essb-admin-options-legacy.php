@@ -239,9 +239,24 @@ ESSBOptionsStructureHelper::field_section_end('advanced', 'administrative');
 ESSBOptionsStructureHelper::field_func('advanced', 'administrative', 'essb3_reset_postdata', __('Reset plugin settings', 'essb'), __('Warning! Pressing this button will restore initial plugin configuration values and all settings that you apply after plugin activation will be removed.', 'essb'));
 
 //ESSBOptionsStructureHelper::field_heading('advanced', 'deactivate', 'heading1', __('Deactivate Functions & Modules', 'essb'));
+
 ESSBOptionsStructureHelper::field_section_start('advanced', 'deactivate', __('Modules', 'essb'), __('Turn off build in modules that does not have option in their settings', 'essb'));
 ESSBOptionsStructureHelper::field_switch('advanced', 'deactivate', 'deactivate_ctt', __('Deactivate Sharable Quotes module', 'essb'), __('This option will deactivate and remove code used by click to tweet module', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 ESSBOptionsStructureHelper::field_section_end('advanced', 'deactivate');
+
+ESSBOptionsStructureHelper::field_section_start_panels('advanced', 'deactivate', __('Display methods', 'essb'), __('Easy Social Share Buttons has so many display methods but we suppose you will not use all at same time (or at least we hope so). As an advice from us to speed up work you can deactivate display methods that you will not use (you can activate them again at any time).', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_float', __('Turn off Float from Top', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_postfloat', __('Turn off Post Vertical Float', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_sidebar', __('Turn off Sidebar', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_topbar', __('Turn off Top Bar', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_bottombar', __('Turn off Bottom Bar', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_popup', __('Turn off Pop Up', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_flyin', __('Turn off Fly In', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_heroshare', __('Turn off Full Screen Hero Share', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_postbar', __('Turn off Post Bar', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('advanced', 'deactivate', 'deactivate_method_point', __('Turn off Point', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_section_end_panels('advanced', 'deactivate');
+
 
 ESSBOptionsStructureHelper::field_section_start('advanced', 'deactivate', __('Plugin Functions', 'essb'), __('Deactivate functions of plugin on selected pages', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'deactivate', 'deactivate_on_share', __('Social Share Buttons', 'essb'), __('Deactivate function on posts/pages with these IDs? Comma seperated: "11, 15, 125". Deactivating plugin will make no style or scripts to be executed for those pages/posts related to this function', 'essb'));

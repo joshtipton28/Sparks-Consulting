@@ -315,13 +315,13 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 		// load mail resource on access
 		if (in_array ( 'mail', $networks )) {
 			if (! essb_resource_builder ()->is_activated ( 'mail' )) {
-				$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mailform' . $use_minifed_css . '.css';
-				essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mailform', 'css' );
+				//$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mailform' . $use_minifed_css . '.css';
+				//essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mailform', 'css' );
 				
-				$script_url = ESSB3_PLUGIN_URL . '/assets/js/essb-mailform.js';
-				essb_resource_builder ()->add_static_resource_footer ( $script_url, 'essb-mailform', 'js', true );
+				//$script_url = ESSB3_PLUGIN_URL . '/assets/js/essb-mailform.js';
+				//essb_resource_builder ()->add_static_resource_footer ( $script_url, 'essb-mailform', 'js', true );
 				
-				essb_resource_builder ()->activate_resource ( 'mail' );
+				//essb_resource_builder ()->activate_resource ( 'mail' );
 			}
 		}
 		

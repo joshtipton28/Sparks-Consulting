@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "46a8128c2a8c0be08c5a92bf925bae6e",
-    "content-hash": "d6bf9a3bf96c0a3982fe2f4afa907519",
+    "hash": "3463aef57fdf53bf6aa4024c53cd8575",
+    "content-hash": "3e654bb00f1df0ca95b7f2f91f5941da",
     "packages": [
         {
             "name": "composer/installers",
@@ -383,15 +383,15 @@
         },
         {
             "name": "wpackagist-plugin/all-in-one-seo-pack",
-            "version": "2.3.9.2",
+            "version": "2.3.10.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/all-in-one-seo-pack/",
-                "reference": "tags/2.3.9.2"
+                "reference": "tags/2.3.10.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/all-in-one-seo-pack.2.3.9.2.zip",
+                "url": "https://downloads.wordpress.org/plugin/all-in-one-seo-pack.2.3.10.2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -423,15 +423,15 @@
         },
         {
             "name": "wpackagist-plugin/google-sitemap-plugin",
-            "version": "3.0.6",
+            "version": "3.0.7",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/google-sitemap-plugin/",
-                "reference": "tags/3.0.6"
+                "reference": "tags/3.0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/google-sitemap-plugin.3.0.6.zip",
+                "url": "https://downloads.wordpress.org/plugin/google-sitemap-plugin.3.0.7.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -483,15 +483,15 @@
         },
         {
             "name": "wpackagist-plugin/rest-api",
-            "version": "2.0-beta14",
+            "version": "2.0-beta15",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/rest-api/",
-                "reference": "tags/2.0-beta14"
+                "reference": "tags/2.0-beta15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/rest-api.2.0-beta14.zip",
+                "url": "https://downloads.wordpress.org/plugin/rest-api.2.0-beta15.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -523,15 +523,15 @@
         },
         {
             "name": "wpackagist-plugin/updraftplus",
-            "version": "1.12.20",
+            "version": "1.12.23",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/updraftplus/",
-                "reference": "tags/1.12.20"
+                "reference": "tags/1.12.23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/updraftplus.1.12.20.zip",
+                "url": "https://downloads.wordpress.org/plugin/updraftplus.1.12.23.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -543,15 +543,15 @@
         },
         {
             "name": "wpackagist-plugin/wordfence",
-            "version": "6.2.0",
+            "version": "6.2.3",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordfence/",
-                "reference": "tags/6.2.0"
+                "reference": "tags/6.2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordfence.6.2.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/wordfence.6.2.3.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -560,26 +560,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/wordfence/"
-        },
-        {
-            "name": "wpackagist-plugin/wp-csv",
-            "version": "1.8.0.0",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/wp-csv/",
-                "reference": "tags/1.8.0.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-csv.1.8.0.0.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/wp-csv/"
         },
         {
             "name": "wpackagist-plugin/xml-sitemap-feed",

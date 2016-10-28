@@ -74,6 +74,7 @@ $system_status = '
 <tr class="odd table-border-bottom"><td><b>PHP Version</b></td><td>' . phpversion () . '</td></tr>
 <tr class="even table-border-bottom"><td><b>WP Memory Limit</b></td><td>' . WP_MEMORY_LIMIT . '</td></tr>
 <tr class="odd table-border-bottom"><td><b>Easy Social Share Buttons version</b></td><td>' . ESSB3_VERSION . '</td></tr>
+<tr class="even table-border-bottom"><td><b>Max Post Size</b></td><td>' . ini_get('post_max_size') . '</td></tr>
 <tr><td class="sub4" colspan="2"><div>Connection Statuses</div></td><td></td></tr>
 <tr class="even table-border-bottom"><td><b>fsockopen</b></td><td>' . $fsockopen . '</td></tr>
 <tr class="odd table-border-bottom"><td><b>cURL</b></td><td>' . $curl_status . '</td></tr>
