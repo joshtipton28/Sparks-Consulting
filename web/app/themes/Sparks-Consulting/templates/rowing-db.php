@@ -5,7 +5,7 @@ Template Name: Rowing DB
 get_header(); ?>
 <base href="/rowingdb/">
 
-<div class="row" ng-app="app" style="background: #ffffff;">
+<div class="row" ng-app="app" style="background: #ffffff; margin-top: 150px; padding: 30px;">
 	<div ui-view></div>
 </div>
 <script type="text/javascript">
