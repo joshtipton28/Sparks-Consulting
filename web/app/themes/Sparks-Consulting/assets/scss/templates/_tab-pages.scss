@@ -149,7 +149,7 @@ li.tabs-title{
 }
 .tabs-content{
   border-radius:10px;
-  border: 1px solid #222;
+  border: 1px solid #222 !important;
   box-shadow: 10px 10px 20px 0px $charc;
   height: 67vh;
   overflow:auto;
@@ -189,6 +189,7 @@ li.tabs-title{
   display: block;
   margin:0 auto;
   margin-top:20px;
+  border: 0px solid !important;
 
   .horizontal {
     text-align: center;
