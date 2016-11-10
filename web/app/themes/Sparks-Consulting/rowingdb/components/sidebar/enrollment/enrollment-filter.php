@@ -1,8 +1,8 @@
 <script type="text/ng-template" id="enrollment-filter">
-  <h4>Enrollment</h4>
-  <p>Select the size of school you're interested in. Numbers pertain to undergraduate enrollment.</p>
+  <h4>{{ data.title }}</h4>
+  <p>{{ data.content }}</p>
 
-  <select ng-model="data.model">
+  <select ng-model="data.model" ng-if="data.type === 'dropdown'">
     <option id="{{item.id}}"
             value="{{item.name}}"
             name="{{item.name}}"
