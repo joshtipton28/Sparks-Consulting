@@ -6,13 +6,13 @@
       <li><a>Program Type</a></li>
       <li><a ng-click='open("enrollment")'>Enrollment</a></li>
       <li><a ng-click='open("tuition")'>Tuition</a></li>
-      <li><a>Financial Aid Score</a></li>
-      <li><a>Classroom Ratio</a></li>
-      <li><a>Environment</a></li>
+      <li><a ng-click='open("financial-score")'>Financial Aid Score</a></li>
+      <li><a ng-click='open("class-ratio")'>Classroom Ratio</a></li>
+      <li><a ng-click='open("environment")'>Environment</a></li>
       <li><a>Location</a></li>
       <li><a>Selectivity</a></li>
-      <li><a>Academic Intensity</a></li>
-      <li><a>Private/Public</a></li>
+      <li><a ng-click='open("academic-intensity")'>Academic Intensity</a></li>
+      <li><a ng-click='open("school-privacy")'>Private/Public</a></li>
       <li><a ng-controller="ReligionFilter" ng-click='open()'>Religious Affiliation</a></li>
       <li><a>Majors</a></li>
       <li><a>Food Service</a></li>
