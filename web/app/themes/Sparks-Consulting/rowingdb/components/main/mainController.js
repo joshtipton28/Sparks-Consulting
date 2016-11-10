@@ -102,13 +102,13 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
   }
 
   // Render text intelligently
-  $scope.render_acf_text = function(priority, acf_text) {
-    if( acf_text === 'false' )
+  $scope.render_acf_text = function(priority, acf) {
+    if( !acf || acf[priority.id] === 'false' )
       return '';
 
     data = get_type_data(priority.id);
     if( data && angular.isFunction(data.render_text) )
-      return $scope.filter.types_map[priority.id].render_text(acf_text, data);
-    return acf_text;
+      return $scope.filter.types_map[priority.id].render_text(acf, data);
+    return acf[priority.id];
   };
 }

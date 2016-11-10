@@ -10,6 +10,68 @@ app.factory('Filter', ['$filter', function($filter) {
     return res;
   }
 
+  var states = {
+    "Alabama": "AL",
+    "Alaska": "AK",
+    "American Samoa": "AS",
+    "Arizona": "AZ",
+    "Arkansas": "AR",
+    "California": "CA",
+    "Colorado": "CO",
+    "Connecticut": "CT",
+    "Delaware": "DE",
+    "District Of Columbia": "DC",
+    "Federated States Of Micronesia": "FM",
+    "Florida": "FL",
+    "Georgia": "GA",
+    "Guam": "GU",
+    "Hawaii": "HI",
+    "Idaho": "ID",
+    "Illinois": "IL",
+    "Indiana": "IN",
+    "Iowa": "IA",
+    "Kansas": "KS",
+    "Kentucky": "KY",
+    "Louisiana": "LA",
+    "Maine": "ME",
+    "Marshall Islands": "MH",
+    "Maryland": "MD",
+    "Massachusetts": "MA",
+    "Michigan": "MI",
+    "Minnesota": "MN",
+    "Mississippi": "MS",
+    "Missouri": "MO",
+    "Montana": "MT",
+    "Nebraska": "NE",
+    "Nevada": "NV",
+    "New Hampshire": "NH",
+    "New Jersey": "NJ",
+    "New Mexico": "NM",
+    "New York": "NY",
+    "North Carolina": "NC",
+    "North Dakota": "ND",
+    "Northern Mariana Islands": "MP",
+    "Ohio": "OH",
+    "Oklahoma": "OK",
+    "Oregon": "OR",
+    "Palau": "PW",
+    "Pennsylvania": "PA",
+    "Puerto Rico": "PR",
+    "Rhode Island": "RI",
+    "South Carolina": "SC",
+    "South Dakota": "SD",
+    "Tennessee": "TN",
+    "Texas": "TX",
+    "Utah": "UT",
+    "Vermont": "VT",
+    "Virgin Islands": "VI",
+    "Virginia": "VA",
+    "Washington": "WA",
+    "West Virginia": "WV",
+    "Wisconsin": "WI",
+    "Wyoming": "WY"
+  };
+
 	return {
 		priority: ["", "", ""],
     types_map: {
@@ -27,8 +89,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 3,
           "name": "Large (10,000 or more)"
         }],
-        "render_text": function(acf_text, data) {
-          return $filter('number')(acf_text);
+        "render_text": function(acf, data) {
+          return $filter('number')(acf.enrollment_count);
         }
       },
       "tuition": {
@@ -48,11 +110,11 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "High ($40,001 or more)"
         }],
-        "render_text": function(acf_text, data) {
-          var tuition = parseInt(acf_text);
+        "render_text": function(acf, data) {
+          var tuition = parseInt(acf.tuition);
           if( isNaN(tuition) || !tuition )
             return 'Full Scholarship';
-          return $filter('currency')(acf_text);
+          return $filter('currency')(acf.tuition);
         }
       },
       "financial_aid_score": {
@@ -93,11 +155,11 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Average (14:1 or larger)"
         }],
-        "render_text": function(acf_text, data) {
-          count = parseInt(acf_text);
+        "render_text": function(acf, data) {
+          count = parseInt(acf.st_ratio);
           if( !isNaN(count) )
             return count + ':1';
-          return acf_text;
+          return acf.st_ratio;
         }
       },
       "environment": {
@@ -123,14 +185,14 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 6,
           "name": "Small Town"
         }],
-        "render_text": function(acf_text, data) {
-          count = parseInt(acf_text);
+        "render_text": function(acf, data) {
+          var count = parseInt(acf.environment);
           if( !isNaN(count) ) {
             item = get_item_by_id(data, count);
             if( item )
               return item.name;
           }
-          return acf_text;
+          return acf.environment;
         }
       },
       "academic_intensity": {
@@ -174,7 +236,18 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 2,
           "name": "Not Allowed"
         }]
+      },
+      "location": {
+        "type": "dropdown",
+        "title": "location",
+        "content": "",
+        "items": [],
+        "render_text": function(acf, data) {
+          var state = acf.school_state;
+          return acf.school_city + ', ' + (states[state] || state);
+        }
       }
-    }
+    },
+    "states": states
 	};
 }]);
