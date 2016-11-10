@@ -18,7 +18,7 @@
       <li><a>Food Service</a></li>
       <li><a>Housing, Types</a></li>
       <li><a>Housing, Sub-types</a></li>
-      <li><a>Housing, Alcohol</a></li>
+      <li><a ng-click='open("alcohol")'>Housing, Alcohol</a></li>
     </ul>
     <ng-include src="getReligion()"></ng-include>
     <ng-include src="getProgram()"></ng-include>

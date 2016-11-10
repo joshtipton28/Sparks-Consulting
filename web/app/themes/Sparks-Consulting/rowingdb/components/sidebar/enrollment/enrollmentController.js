@@ -133,6 +133,18 @@ function FilterCtrl($scope, $modal, $http, Filter) {
         "id": 2,
         "name": "Private"
       }]
+    },
+    "alcohol": {
+      "type": "dropdown",
+      "title": "Housing, Alcohol",
+      "content": "Make a selection - this information is based on school policy, though the reality can vary.",
+      "items": [{
+        "id": 1,
+        "name": "Allowed"
+      }, {
+        "id": 2,
+        "name": "Not Allowed"
+      }]
     }
   };
 
