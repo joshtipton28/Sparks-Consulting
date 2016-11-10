@@ -5,7 +5,7 @@
 	</header>
 
   <div style="border: 2px white inset;"
-       ng-repeat="college in colleges | filter:filter.religion | filter:query | limit:5">
+       ng-repeat="college in colleges | filter:filter.religion | filter:query | limitTo:5">
     <pre>{{ college | json }}</pre>
   </div>
 
