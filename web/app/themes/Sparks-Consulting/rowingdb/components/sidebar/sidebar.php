@@ -3,9 +3,9 @@
     <h3>Filters:</h3>
     <a ng-click='reset()'>Reset</a>
     <ul ng-controller="FilterCtrl">
-      <li><a ng-click='open("program-type")'>Program Type</a></li>
+      <li><a>Program Type</a></li>
       <li><a ng-click='open("enrollment")'>Enrollment</a></li>
-      <li><a>Tuition</a></li>
+      <li><a ng-click='open("tuition")'>Tuition</a></li>
       <li><a>Financial Aid Score</a></li>
       <li><a>Classroom Ratio</a></li>
       <li><a>Environment</a></li>
