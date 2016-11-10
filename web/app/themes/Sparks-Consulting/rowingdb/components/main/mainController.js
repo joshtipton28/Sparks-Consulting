@@ -27,6 +27,12 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
     }, {
       "id": "location",
       "name": "Location"
+    }, {
+      "id": "financial_aid_score",
+      "name": "Financial Aid"
+    }, {
+      "id": "academic_intensity",
+      "name": "Academic Intensity"
     }
   ];
 
@@ -76,19 +82,6 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
       }
     });
     return prios;
-  };
-
-  // Find a priority by id
-  $scope.get_priority_by_id = function(pid) {
-    var prio = null;
-    if( pid === null ) return prio;
-    angular.forEach($scope.priorities, function(val) {
-      if( pid === val.id ) {
-        prio = val;
-        return;
-      }
-    });
-    return prio;
   };
 
   // Find a type's corresponding data

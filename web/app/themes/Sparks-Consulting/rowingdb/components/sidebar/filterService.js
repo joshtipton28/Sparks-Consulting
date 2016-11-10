@@ -136,7 +136,10 @@ app.factory('Filter', ['$filter', function($filter) {
         }, {
           "id": 5,
           "name": "Moderate, Top 40%"
-        }]
+        }],
+        "render_text": function(acf, data) {
+          return $filter('number')(acf.financial_aid_score);
+        }
       },
       "st_ratio": {
         "type": "dropdown",
@@ -211,7 +214,10 @@ app.factory('Filter', ['$filter', function($filter) {
         }, {
           "id": 4,
           "name": "Intense"
-        }]
+        }],
+        "render_text": function(acf, data) {
+          return $filter('number')(acf.academic_intensity) + '%';
+        }
       },
       "school_privacy": {
         "type": "dropdown",
