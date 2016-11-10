@@ -71,6 +71,19 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
     };
   };
 
+  // Find a priority by id
+  $scope.get_priority_by_id = function(pid) {
+    var prio = null;
+    if( pid === null ) return prio;
+    angular.forEach($scope.priorities, function(val) {
+      if( pid === val.id ) {
+        prio = val;
+        return;
+      }
+    });
+    return prio;
+  };
+
   // Return ordered, existing priorities list
   $scope.get_priorities = function() {
     var prios = [];
