@@ -19,11 +19,14 @@ function FilterCtrl($scope, $modal, Filter) {
   };
 
   function get_type_data(type) {
+    var res = null;
     angular.forEach(types_map, function(val, key) {
-      if( type === key )
-        return val;
+      if( type === key ) {
+        res = val;
+        return;
+      }
     });
-    return null;
+    return res;
   }
 
   $scope.open = function(type) {
