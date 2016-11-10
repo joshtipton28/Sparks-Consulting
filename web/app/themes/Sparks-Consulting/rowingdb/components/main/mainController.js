@@ -41,7 +41,9 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
   $scope.prioritiesFilter = function(current_idx) {
     return function() {
       var keep = true;
+      console.debug('prioritiesFilter(' + current_idx + ')', $scope.filter.priority);
       angular.forEach($scope.filter.priority, function(priority, idx) {
+        console.debug('itr', idx, priority, current_idx);
         if( idx !== current_idx ) {
           if( priority && priority !== "" &&
               priority === $scope.filter.priority[current_idx] ) {
