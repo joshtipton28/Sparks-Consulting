@@ -17,11 +17,11 @@
         </select>
       </div>
     </header>
-    <div class="map">
+    <div class="rowing-map map">
     <h1>{{filtered.length}} Colleges</h1>
     <a ui-sref="listing">Show Schools</a>
-    <ul ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
-      <li>
+    <ul>
+      <li ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
         {{college.acf.school_zip}}
       </li>
     </ul>
