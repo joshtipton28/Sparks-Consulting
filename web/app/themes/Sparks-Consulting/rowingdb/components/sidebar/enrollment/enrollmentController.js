@@ -54,6 +54,7 @@ function FilterCtrl($scope, $modal, $http, Filter) {
   //    console.error('Could not load types_map.json', err);
   //  });
 
+  // Find a type's corresponding data
   function get_type_data(type) {
     var res = null;
     angular.forEach(types_map, function(val, key) {
@@ -79,26 +80,30 @@ function FilterCtrl($scope, $modal, $http, Filter) {
     data.model = $scope.filter[data.name];
     // Set up the $modal parameters
     var modalInstance = $modal.open({
-      templateUrl: data.name + '-filter',
+      // Use a general template
+      templateUrl: 'enrollment-filter',
+      // Pass in parameters to the modal
       resolve: {
         data: function(){ return data; },
         Filter: function() { return Filter; }
       },
+      // Modal controller
       controller: function($scope, $modalInstance, data, Filter) {
         $scope.data = data;
         $scope.filter = Filter;
-
+        // OK, accept button callback (store state)
         $scope.ok = function() {
           console.debug('Modal closed', $scope.data);
           $modalInstance.close($scope.data);
         };
+        // Cancel, exit button callback (no action)
         $scope.cancel = function() {
           console.debug('Modal cancelled', $scope.data);
           $modalInstance.dismiss('cancel');
         };
       }
     });
-
+    // Modal close callback
     modalInstance.result.then(function(data) {
       console.debug('Modal closed callback', data);
       $scope.filter[data.name] = data.model;
