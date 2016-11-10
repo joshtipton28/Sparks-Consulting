@@ -74,7 +74,7 @@ function MainController($scope, CollegeFactory, Filter) {
   function get_item_by_id(data, iid) {
     var res = null;
     angular.forEach(data.items, function(val) {
-      if( iid == val.id  ) {
+      if( iid === val.id  ) {
         res = val;
         return;
       }
@@ -87,7 +87,7 @@ function MainController($scope, CollegeFactory, Filter) {
     data = get_type_data(priority.id);
     if( data ) {
       if( priority.id === 'enrollment_count' ) {
-        var item = get_item_by_id(data, acf_text);
+        var item = get_item_by_id(data, parseInt(acf_text));
         if( item )
           return item.name;
       }
