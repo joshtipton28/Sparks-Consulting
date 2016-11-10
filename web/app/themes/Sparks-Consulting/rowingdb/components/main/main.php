@@ -17,18 +17,8 @@
     </header>
     <div class="rowing-map map">
       <!-- Start Debugging -->
-      <div style="border: 2px white dotted;">
-        <h4>query</h4>
-        <pre>{{ query | json }}</pre>
-      </div>
-
-      <div style="border: 2px white dotted;">
-        <h4>filter</h4>
-        <pre>{{ filter | json }}</pre>
-      </div>
-
       <div style="border: 2px white inset;"
-           ng-repeat="college in colleges | filter:filter.religion | filter:query | limitTo:1">
+           ng-repeat="college in colleges | limitTo:3">
         <h4>college</h4>
         <pre>{{ college | json }}</pre>
       </div>

@@ -85,6 +85,9 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
 
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf_text) {
+    if( acf_text === 'false' )
+      return '';
+
     data = get_type_data(priority.id);
     if( data ) {
       // Enrollment
