@@ -44,7 +44,7 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
       angular.forEach($scope.filter.priority, function(priority, idx) {
         if( idx !== current_idx ) {
           if( priority && priority !== "" &&
-              priority === $scope.filter.priority[priority_idx] ) {
+              priority === $scope.filter.priority[current_idx] ) {
             keep = false;
             return;
           }
