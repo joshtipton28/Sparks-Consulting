@@ -204,6 +204,7 @@ function FilterCtrl($scope, $modal, $http, Filter) {
         // Cancel, exit button callback (no action)
         $scope.cancel = function() {
           console.debug('Modal cancelled', $scope.data);
+          $scope.filter[$scope.data.name] = null;
           $modalInstance.dismiss('cancel');
         };
       }
