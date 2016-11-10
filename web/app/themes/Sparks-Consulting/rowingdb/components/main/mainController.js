@@ -87,9 +87,13 @@ function MainController($scope, CollegeFactory, Filter) {
     data = get_type_data(priority.id);
     if( data ) {
       if( priority.id === 'enrollment_count' ) {
-        var item = get_item_by_id(data, parseInt(acf_text));
-        if( item )
-          return item.name;
+        count = parseInt(acf_text);
+        if( !isNaN(count) ) {
+          count = (count < 2500) ? 1 : (count >= 2500 && count < 10000) ? 2 : 3;
+          var item = get_item_by_id(data, count);
+          if( item )
+            return item.name;
+        }
       }
     }
     return acf_text;

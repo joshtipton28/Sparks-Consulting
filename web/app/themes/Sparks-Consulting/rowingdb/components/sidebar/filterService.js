@@ -11,7 +11,7 @@ app.factory('Filter', function(){
             "name": "Small (less than 2500)"
           }, {
             "id": 2,
-            "name": "Medium (2501 - 10,000)"
+            "name": "Medium (2500 - 10,000)"
           }, {
             "id": 3,
             "name": "Large (10,000 or more)"
