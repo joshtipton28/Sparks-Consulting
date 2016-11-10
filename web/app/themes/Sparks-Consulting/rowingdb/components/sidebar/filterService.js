@@ -4,5 +4,5 @@ app.factory('Filter', function(){
 		program:"",
 		enrollment: "",
 		religion:""
-	}
-})
+	};
+});

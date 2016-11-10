@@ -12,5 +12,4 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		templateUrl: stylesheet_directory_uri + '/rowingdb/components/listing/listing.php',
 		controller: 'MainController'
 	});
-
-})
+});

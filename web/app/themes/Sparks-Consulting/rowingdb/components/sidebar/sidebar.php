@@ -2,9 +2,9 @@
   <div class="filter-bar large-4 columns" ng-controller="SidebarController">
     <h3>Filters:</h3>
     <a ng-click='reset()'>Reset</a>
-    <ul>
-      <li><a ng-controller="ProgramFilter" ng-click='open()'>Program Type</a></li>
-      <li><a ng-controller="EnrollmentFilter" ng-click='open()'>Enrollment</a></li>
+    <ul ng-controller="FilterCtrl as ctrl">
+      <li><a ng-click='ctrl.open("program-type")'>Program Type</a></li>
+      <li><a ng-click='ctrl.open("enrollment")'>Enrollment</a></li>
       <li><a>Tuition</a></li>
       <li><a>Financial Aid Score</a></li>
       <li><a>Classroom Ratio</a></li>
