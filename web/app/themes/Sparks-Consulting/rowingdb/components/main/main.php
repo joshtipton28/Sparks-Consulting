@@ -8,7 +8,7 @@
         <select class="rowing-priority large-4 columns"
                 ng-repeat="priority_idx in [0,1,2]"
                 ng-model="filter.priority[priority_idx]">
-          <option ng-repeat="priority in priorities"
+          <option ng-repeat="priority in priorities | filter:prioritiesFilter(priority_idx)"
                   value="{{ priority.id }}">
             {{ priority.name }}
           </option>

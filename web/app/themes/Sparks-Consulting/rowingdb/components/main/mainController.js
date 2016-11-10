@@ -37,6 +37,23 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
 	  return stylesheet_directory_uri + '/rowingdb/components/sidebar/sidebar.php';
 	};
 
+  // Priorities options filter
+  $scope.prioritiesFilter = function(current_idx) {
+    return function() {
+      var keep = true;
+      angular.forEach($scope.filter.priority, function(priority, idx) {
+        if( idx !== current_idx ) {
+          if( priority && priority !== "" &&
+              priority === $scope.filter.priority[priority_idx] ) {
+            keep = false;
+            return;
+          }
+        }
+      });
+      return keep;
+    };
+  };
+
   // Return ordered, existing priorities list
   $scope.get_priorities = function() {
     var prios = [];
