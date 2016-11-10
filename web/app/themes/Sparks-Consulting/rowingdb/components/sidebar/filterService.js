@@ -231,10 +231,11 @@ app.factory('Filter', ['$filter', function($filter) {
           "name": "Private"
         }],
         "render_text": function(acf, data) {
-          if( acf.school_privacy &&
-              data.items.hasOwnProperty(acf.school_privacy) )
-            return data.items[acf.school_privacy].name;
-          console.debug('public?', acf.school_privacy);
+          var priv = parseInt(acf.school_privacy);
+          if( !isNaN(priv) ) {
+            item = get_item_by_id(data, priv);
+            if( item )
+              return item.name;
           return '';
         }
       },
