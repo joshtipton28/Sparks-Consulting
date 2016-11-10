@@ -18,13 +18,32 @@
       </div>
     </header>
     <div class="rowing-map map">
-    <h1>{{filtered.length}} Colleges</h1>
-    <a ui-sref="listing">Show Schools</a>
-    <ul>
-      <li ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
-        {{college.acf.school_zip}}
-      </li>
-    </ul>
+      <!-- Start Debugging -->
+      <div style="border: 2px white dotted;">
+        <h4>query</h4>
+        <pre>{{ query | json }}</pre>
+      </div>
+
+      <div style="border: 2px white dotted;">
+        <h4>filter</h4>
+        <pre>{{ filter | json }}</pre>
+      </div>
+
+      <div style="border: 2px white inset;"
+           ng-repeat="college in colleges | filter:filter.religion | filter:query | limitTo:2">
+        <h4>college</h4>
+        <pre>{{ college | json }}</pre>
+      </div>
+      <!-- End Debugging -->
+
+      <h1>{{filtered.length}} Colleges</h1>
+      <a ui-sref="listing">Show Schools</a>
+
+      <ul>
+        <li ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
+          {{college.acf.school_zip}}
+        </li>
+      </ul>
     </div>
   </div>
 </div>
