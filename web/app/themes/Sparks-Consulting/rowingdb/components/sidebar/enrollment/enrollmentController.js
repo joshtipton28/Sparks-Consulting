@@ -9,7 +9,7 @@ function FilterCtrl($scope, $modal, $http, Filter) {
   var types_map = {};
   $scope.filter = Filter;
 
-  $http.get('types_map.json')
+  $http.get('assets/types_map.json')
     .success(function(data) {
       console.debug('Loaded types_map.json', data);
       types_map = data;
