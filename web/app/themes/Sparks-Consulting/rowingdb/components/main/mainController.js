@@ -24,6 +24,9 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
     }, {
       "id": "st_ratio",
       "name": "Classroom Ratio"
+    }, {
+      "id": "location",
+      "name": "Location"
     }
   ];
 
