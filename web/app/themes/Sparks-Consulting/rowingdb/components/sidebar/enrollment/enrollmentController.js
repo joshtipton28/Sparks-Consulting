@@ -60,7 +60,7 @@ function FilterCtrl($scope, $modal, Filter) {
     // Modal close callback
     modalInstance.result.then(function(data) {
       console.debug('Modal closed callback', data);
-      $scope.filters[data.name] = data.model;
+      $scope.filter.filters[data.name] = data.model;
     });
   };
 }
