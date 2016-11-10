@@ -51,6 +51,7 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
       if( !existing_priorities.length )
         return items;
       // Check if this item already is defined elsewhere
+      console.debug('items, existing_priorities', items, existing_priorities);
       angular.forEach(items, function(item) {
         angular.forEach(existing_priorities, function(priority) {
           if( this !== priority )
