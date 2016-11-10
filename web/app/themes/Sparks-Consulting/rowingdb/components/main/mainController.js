@@ -53,9 +53,9 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
       // Check if this item already is defined elsewhere
       angular.forEach(items, function(item) {
         angular.forEach(existing_priorities, function(priority) {
-          if( item.id !== priority )
-            keep.push(item);
-        });
+          if( this !== priority )
+            keep.push(this);
+        }, item);
       });
       return keep;
     };
