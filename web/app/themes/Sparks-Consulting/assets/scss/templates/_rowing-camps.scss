@@ -334,56 +334,85 @@
   }
 }
 
- //Camp Forms Tab
-  .form-packet{
-    margin:0 !important;
-    li{
-      list-style: none;
-    }
+//Camp Forms Tab
+.form-packet{
+  margin:0 !important;
+  li{
+    list-style: none;
   }
-  .form-toggle{
-    .gfield_label{
-      display: block !important;
-      margin:0 !important;
-    }
-    input{
-      display: none;
-    }
-    .ginput_container{
-      display: inline-block;
-      float: left;
-      margin-top:0 !important;
+}
+.form-toggle{
+  .gfield_label{
+    display: block !important;
+    margin:0 !important;
+  }
+  input{
+    display: none;
+  }
+  .ginput_container{
+    display: inline-block;
+    float: left;
+    margin-top:0 !important;
 
-      label{
-        margin-left:0 !important;
-        cursor: pointer;
-        color:$ablue;
-        font-size:rem-calc(16);
-      }
-    }
-    .gfield_description{
-      display: inline-block !important;
-      max-width: 50%;
-      margin-left:4px;
-      font-size:rem-calc(16) !important;
-      line-height: 1 !important;
-      padding:0 !important;
+    label{
+      margin-left:0 !important;
+      cursor: pointer;
+      color:$ablue;
+      font-size:rem-calc(16);
     }
   }
-  .gform_footer{
-    input[type='submit']{
-      background: $blue;
-    }
-  }
-  .gform_wrapper{
-    margin:0 !important;
+  .gfield_description{
+    display: inline-block !important;
+    max-width: 50%;
+    margin-left:4px;
+    font-size:rem-calc(16) !important;
+    line-height: 1 !important;
     padding:0 !important;
   }
-  .gform_wrapper .gform_footer{
-    padding:0 !important;
-    margin:0 !important;
-  }
+}
 
- .gform_wrapper ul.gfield_checkbox li{
+.gform_footer{
+  input[type='submit']{
+    background: $blue;
+  }
+}
+.gform_wrapper{
+  margin:0 !important;
+  padding:0 !important;
+}
+.gform_wrapper .gform_footer{
+  padding:0 !important;
+  margin:0 !important;
+}
+
+.gform_wrapper ul.gfield_checkbox li{
  	margin:0 !important;
- }
+}
+
+/* Rowing sidebar */
+.filter-bar-wrapper {
+  padding-right: 20%;
+}
+
+.filter-bar {
+  background: rgba(2, 23, 50, 0.78);
+  border-radius: 15px;
+}
+
+/* Rowing priorities bar */
+.rowing-priorities-header {
+  background: rgba(2, 23, 50, 0.78);
+  border-radius: 15px;
+  padding: 10px 10px 0px 10px;
+}
+
+.rowing-priorities-header > h5 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.rowing-priorities {
+  height: 60px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
