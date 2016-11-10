@@ -39,18 +39,23 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
 
   // Priorities options filter
   $scope.prioritiesFilter = function(current_idx) {
-    return function() {
-      var keep = true;
-      console.debug('prioritiesFilter(' + current_idx + ')', $scope.filter.priority);
+    return function(items) {
+      var keep = [];
+      var existing_priorities = [];
+      // Get a list of all priorities defined
       angular.forEach($scope.filter.priority, function(priority, idx) {
-        console.debug('itr', idx, priority, current_idx);
-        if( idx !== current_idx ) {
-          if( priority && priority !== "" &&
-              priority === $scope.filter.priority[current_idx] ) {
-            keep = false;
-            return;
-          }
-        }
+        if( idx !== current_idx && priority && priority !== "" )
+          existing_priorities.push(priority);
+      });
+      // If no priorities already defined, return
+      if( !existing_priorities.length )
+        return items;
+      // Check if this item already is defined elsewhere
+      angular.forEach(items, function(item) {
+        angular.forEach(existing_priorities, function(priority) {
+          if( item.id !== priority )
+            keep.push(item);
+        });
       });
       return keep;
     };
