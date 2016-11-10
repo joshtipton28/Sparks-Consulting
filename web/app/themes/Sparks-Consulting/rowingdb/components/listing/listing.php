@@ -1,8 +1,13 @@
-<div class="college-results large-12 columns">
+<div class="rowing-map college-results large-12 columns">
 	<header>
 		<h2>Results(Showing {{filtered.length}} colleges)</h2>
 		<a ui-sref="home">Modify Filters</a>
 	</header>
+
+  <div style="border: 2px white inset;"
+       ng-repeat="college in colleges | filter:filter.religion | filter:query | limit:5">
+    <pre>{{ college | json }}</pre>
+  </div>
 
 	<table>
 		<thead>
