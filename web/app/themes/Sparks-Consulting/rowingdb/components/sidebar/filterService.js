@@ -1,4 +1,15 @@
-app.factory('Filter', function(){
+app.factory('Filter', ['$filter', function($filter) {
+  function get_item_by_id(data, iid) {
+    var res = null;
+    angular.forEach(data.items, function(val) {
+      if( iid === val.id  ) {
+        res = val;
+        return;
+      }
+    });
+    return res;
+  }
+
 	return {
 		priority: ["", "", ""],
     types_map: {
@@ -7,16 +18,18 @@ app.factory('Filter', function(){
         "title": "Enrollment",
         "content": "Select the size of school you're interested in. Numbers pertain to undergraduate enrollment.",
         "items": [{
-            "id": 1,
-            "name": "Small (less than 2500)"
-          }, {
-            "id": 2,
-            "name": "Medium (2500 - 10,000)"
-          }, {
-            "id": 3,
-            "name": "Large (10,000 or more)"
-          },
-        ]
+          "id": 1,
+          "name": "Small (less than 2500)"
+        }, {
+          "id": 2,
+          "name": "Medium (2500 - 10,000)"
+        }, {
+          "id": 3,
+          "name": "Large (10,000 or more)"
+        }],
+        "render_text": function(acf_text, data) {
+          return $filter('number')(acf_text);
+        }
       },
       "tuition": {
         "type": "dropdown",
@@ -34,7 +47,13 @@ app.factory('Filter', function(){
         }, {
           "id": 4,
           "name": "High ($40,001 or more)"
-        }]
+        }],
+        "render_text": function(acf_text, data) {
+          var tuition = parseInt(acf_text);
+          if( isNaN(tuition) || !tuition )
+            return 'Full Scholarship';
+          return $filter('currency')(acf_text);
+        }
       },
       "financial_aid_score": {
         "type": "dropdown",
@@ -73,7 +92,13 @@ app.factory('Filter', function(){
         }, {
           "id": 4,
           "name": "Average (14:1 or larger)"
-        }]
+        }],
+        "render_text": function(acf_text, data) {
+          count = parseInt(acf_text);
+          if( !isNaN(count) )
+            return count + ':1';
+          return acf_text;
+        }
       },
       "environment": {
         "type": "dropdown",
@@ -97,7 +122,16 @@ app.factory('Filter', function(){
         }, {
           "id": 6,
           "name": "Small Town"
-        }]
+        }],
+        "render_text": function(acf_text, data) {
+          count = parseInt(acf_text);
+          if( !isNaN(count) ) {
+            item = get_item_by_id(data, count);
+            if( item )
+              return item.name;
+          }
+          return acf_text;
+        }
       },
       "academic_intensity": {
         "type": "dropdown",

@@ -75,50 +75,14 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
     return res;
   }
 
-  function get_item_by_id(data, iid) {
-    var res = null;
-    angular.forEach(data.items, function(val) {
-      if( iid === val.id  ) {
-        res = val;
-        return;
-      }
-    });
-    return res;
-  }
-
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf_text) {
-    var item = null;
     if( acf_text === 'false' )
       return '';
 
     data = get_type_data(priority.id);
-    if( data ) {
-      // Enrollment
-      if( priority.id === 'enrollment_count' ) {
-        return $filter('number')(acf_text);
-      // Tuition
-      } else if( priority.id === 'tuition' ) {
-        var tuition = parseInt(acf_text);
-        if( isNaN(tuition) || !tuition )
-          return 'Full Scholarship';
-        return $filter('currency')(acf_text);
-      // Environment
-      } else if( priority.id === 'environment' ) {
-        count = parseInt(acf_text);
-        if( !isNaN(count) ) {
-          item = get_item_by_id(data, count);
-          if( item )
-            return item.name;
-        }
-      // Classroom Ratio
-      } else if( priority.id === 'st_ratio' ) {
-        count = parseInt(acf_text);
-        if( !isNaN(count) ) {
-          return count + ':1';
-        }
-      }
-    }
+    if( data && angular.isFunction(data.render_text) )
+      return $scope.filter.types_map[priority.id].render_text(acf_text, data);
     return acf_text;
   };
 }
