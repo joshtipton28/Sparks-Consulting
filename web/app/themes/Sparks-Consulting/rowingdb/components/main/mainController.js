@@ -98,7 +98,7 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
         //}
       } else if( priority.id === 'tuition' ) {
         var tuition = parseInt(acf_text);
-        if( isNan(tuition) || !tuition )
+        if( isNaN(tuition) || !tuition )
           return 'Full Scholarship';
         return $filter('currency')(acf_text);
       }
