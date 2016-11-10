@@ -36,19 +36,23 @@
 
       <h1>{{filtered.length}} Colleges</h1>
       <!-- <a ui-sref="listing">Show Schools</a> -->
-      <table>
-        <tr>
-          <td>School Name</td>
-          <td ng-repeat="priority in get_priorities()">
-            {{ priority.name }}
-          </td>
-        </tr>
-        <tr ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
-          <td>{{ college.title.rendered }}</td>
-          <td ng-repeat="priority in get_priorities()">
-            {{ college.acf[priority.id] }}
-          </td>
-        </tr>
+      <table class="hover">
+        <thead>
+          <tr>
+            <th>School Name</th>
+            <th ng-repeat="priority in get_priorities()">
+              {{ priority.name }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
+            <td>{{ college.title.rendered }}</td>
+            <td ng-repeat="priority in get_priorities()">
+              {{ render_acf_text(priority, college.acf[priority.id]) }}
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

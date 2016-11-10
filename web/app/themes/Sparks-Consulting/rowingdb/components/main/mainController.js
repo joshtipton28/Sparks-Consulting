@@ -58,4 +58,38 @@ function MainController($scope, CollegeFactory, Filter) {
     });
     return prio;
   };
+
+  // Find a type's corresponding data
+  function get_type_data(type) {
+    var res = null;
+    angular.forEach($scope.filter.types_map, function(val, key) {
+      if( type === key ) {
+        res = val;
+        return;
+      }
+    });
+    return res;
+  }
+
+  function get_item_by_id(data, iid) {
+    var res = null;
+    angular.forEach(data.items, function(val) {
+      if( iid == val.id  ) {
+        res = val;
+        return;
+      }
+    });
+    return res;
+  }
+
+  // Render text intelligently
+  $scope.render_acf_text = function(priority, acf_text) {
+    data = get_type_data(priority.id);
+    if( data ) {
+      if( priority.id === 'enrollment_count' ) {
+        return get_item_by_id(data, acf_text);
+      }
+    }
+    return acf_text;
+  };
 }
