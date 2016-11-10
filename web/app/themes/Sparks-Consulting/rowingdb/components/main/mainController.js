@@ -1,10 +1,11 @@
 app.controller('MainController', [
   '$scope',
+  '$filter',
   'CollegeFactory',
   'Filter',
   MainController]);
 
-function MainController($scope, CollegeFactory, Filter) {
+function MainController($scope, $filter, CollegeFactory, Filter) {
   $scope.filter = Filter;
   $scope.colleges = [];
   $scope.priorities = [
@@ -87,13 +88,16 @@ function MainController($scope, CollegeFactory, Filter) {
     data = get_type_data(priority.id);
     if( data ) {
       if( priority.id === 'enrollment_count' ) {
-        count = parseInt(acf_text);
-        if( !isNaN(count) ) {
-          count = (count < 2500) ? 1 : (count >= 2500 && count < 10000) ? 2 : 3;
-          var item = get_item_by_id(data, count);
-          if( item )
-            return item.name;
-        }
+        return $filter('number')(acf_text);
+        //count = parseInt(acf_text);
+        //if( !isNaN(count) ) {
+        //  count = (count < 2500) ? 1 : (count >= 2500 && count < 10000) ? 2 : 3;
+        //  var item = get_item_by_id(data, count);
+        //  if( item )
+        //    return item.name;
+        //}
+      } else if( priority.id === 'tuition' ) {
+        return $filter('currency')(acf_text);
       }
     }
     return acf_text;
