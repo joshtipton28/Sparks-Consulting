@@ -87,20 +87,23 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
   $scope.render_acf_text = function(priority, acf_text) {
     data = get_type_data(priority.id);
     if( data ) {
+      // Enrollment
       if( priority.id === 'enrollment_count' ) {
         return $filter('number')(acf_text);
-        //count = parseInt(acf_text);
-        //if( !isNaN(count) ) {
-        //  count = (count < 2500) ? 1 : (count >= 2500 && count < 10000) ? 2 : 3;
-        //  var item = get_item_by_id(data, count);
-        //  if( item )
-        //    return item.name;
-        //}
+      // Tuition
       } else if( priority.id === 'tuition' ) {
         var tuition = parseInt(acf_text);
         if( isNaN(tuition) || !tuition )
           return 'Full Scholarship';
         return $filter('currency')(acf_text);
+      // Environment
+      } else if( priority.id === 'environment' ) {
+        count = parseInt(acf_text);
+        if( !isNaN(count) ) {
+          var item = get_item_by_id(data, count);
+          if( item )
+            return item.name;
+        }
       }
     }
     return acf_text;
