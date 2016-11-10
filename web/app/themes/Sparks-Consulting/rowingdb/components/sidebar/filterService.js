@@ -236,6 +236,7 @@ app.factory('Filter', ['$filter', function($filter) {
             item = get_item_by_id(data, priv);
             if( item )
               return item.name;
+          }
           return '';
         }
       },
