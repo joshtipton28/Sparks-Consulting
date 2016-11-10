@@ -85,6 +85,7 @@ function MainController($scope, CollegeFactory, Filter) {
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf_text) {
     data = get_type_data(priority.id);
+    console.debug('render_acf_text(priority, acf_text): data', priority, acf_text, data);
     if( data ) {
       if( priority.id === 'enrollment_count' ) {
         return get_item_by_id(data, acf_text);
