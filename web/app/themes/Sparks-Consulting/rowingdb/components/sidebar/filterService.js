@@ -74,6 +74,7 @@ app.factory('Filter', ['$filter', function($filter) {
 
 	return {
 		priority: ["", "", ""],
+    filters: {},
     types_map: {
       "enrollment_count": {
         "type": "dropdown",

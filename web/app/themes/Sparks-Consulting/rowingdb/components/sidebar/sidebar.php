@@ -3,22 +3,12 @@
     <h3>Filters:</h3>
     <a ng-click='reset()'>Reset</a>
     <ul ng-controller="FilterCtrl">
-      <li><a>Program Type</a></li>
-      <li><a ng-click='open("enrollment_count")'>Enrollment</a></li>
-      <li><a ng-click='open("tuition")'>Tuition</a></li>
-      <li><a ng-click='open("financial_aid_score")'>Financial Aid Score</a></li>
-      <li><a ng-click='open("st_ratio")'>Classroom Ratio</a></li>
-      <li><a ng-click='open("environment")'>Environment</a></li>
-      <li><a>Location</a></li>
-      <li><a>Selectivity</a></li>
-      <li><a ng-click='open("academic_intensity")'>Academic Intensity</a></li>
-      <li><a ng-click='open("school_privacy")'>Private/Public</a></li>
-      <li><a>Religious Affiliation</a></li>
-      <li><a>Majors</a></li>
-      <li><a>Food Service</a></li>
-      <li><a>Housing, Types</a></li>
-      <li><a>Housing, Sub-types</a></li>
-      <li><a ng-click='open("housing_alcohol")'>Housing, Alcohol</a></li>
+      <li ng-repeat="(type_id, type) in filter.types_map">
+        <a ng-click='open(type_id)'
+           ng-class='{"filters[type_id]": "lead"}'>
+          {{ type.title }}
+        </a>
+      </li>
     </ul>
     <!--<ng-include src="getReligion()"></ng-include>
     <ng-include src="getProgram()"></ng-include>-->

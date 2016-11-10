@@ -17,6 +17,10 @@
     </header>
     <div class="rowing-map map">
       <!-- Start Debugging -->
+      <div style="border: 2px white dotted;">
+        <h4>filters</h4>
+        <pre>{{ filter.filters | json }}</pre>
+      </div>
       <div style="border: 2px white inset;"
            ng-repeat="college in colleges | limitTo:3">
         <h4>college</h4>

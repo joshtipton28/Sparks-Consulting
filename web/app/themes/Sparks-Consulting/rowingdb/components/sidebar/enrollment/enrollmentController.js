@@ -30,7 +30,7 @@ function FilterCtrl($scope, $modal, Filter) {
     // Re-inject the name of the filter
     data.name = type;
     // Inject the global filter value
-    data.model = $scope.filter[data.name];
+    data.model = $scope.filter.filters[data.name];
     // Set up the $modal parameters
     var modalInstance = $modal.open({
       // Use a general template
@@ -43,7 +43,7 @@ function FilterCtrl($scope, $modal, Filter) {
       // Modal controller
       controller: function($scope, $modalInstance, data, Filter) {
         $scope.data = data;
-        $scope.filter = Filter;
+        $scope.filters = Filter.filters;
         // OK, accept button callback (store state)
         $scope.ok = function() {
           console.debug('Modal closed', $scope.data);
@@ -52,7 +52,7 @@ function FilterCtrl($scope, $modal, Filter) {
         // Cancel, exit button callback (no action)
         $scope.cancel = function() {
           console.debug('Modal cancelled', $scope.data);
-          $scope.filter[$scope.data.name] = null;
+          $scope.filters[$scope.data.name] = null;
           $modalInstance.dismiss('cancel');
         };
       }
@@ -60,7 +60,7 @@ function FilterCtrl($scope, $modal, Filter) {
     // Modal close callback
     modalInstance.result.then(function(data) {
       console.debug('Modal closed callback', data);
-      $scope.filter[data.name] = data.model;
+      $scope.filters[data.name] = data.model;
     });
   };
 }
