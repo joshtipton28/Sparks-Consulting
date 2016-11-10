@@ -112,6 +112,11 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     return res;
   }
 
+  // Allow for HTML rendering / unescaping
+  $scope.trustHtml = function(html) {
+    return $sce.trustAsHtml(html);
+  };
+
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf) {
     if( !acf || acf[priority.id] === 'false' )
@@ -119,8 +124,7 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
 
     data = get_type_data(priority.id);
     if( data && angular.isFunction(data.render_text) )
-      return $sce.trustAsHtml(
-        $scope.filter.types_map[priority.id].render_text(acf, data));
+      return $scope.filter.types_map[priority.id].render_text(acf, data);
     return acf[priority.id];
   };
 }

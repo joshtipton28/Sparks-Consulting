@@ -37,9 +37,9 @@
         </thead>
         <tbody>
           <tr ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
-            <td>{{ college.title.rendered }}</td>
-            <td ng-repeat="priority in get_priorities()"
-                ng-bind-html="render_acf_text(priority, college.acf)">
+            <td ng-bind-html="trustHtml(college.title.rendered)"></td>
+            <td ng-repeat="priority in get_priorities()">
+              {{ render_acf_text(priority, college.acf) }}
             </td>
           </tr>
         </tbody>
