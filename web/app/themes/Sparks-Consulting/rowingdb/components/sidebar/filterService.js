@@ -63,7 +63,7 @@ app.factory('Filter', function(){
         "content": "Select the type of relationship you'd like to have with professors.",
         "items": [{
           "id": 1,
-          "name": "Intimate (8:1 or smaller)"
+          "name": "Intimate (smaller than 8:1)"
         }, {
           "id": 2,
           "name": "Close (8:1 - 11:1)"

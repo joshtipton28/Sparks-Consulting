@@ -21,6 +21,9 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
     }, {
       "id": "tuition",
       "name": "Tuition"
+    }, {
+      "id": "st_ratio",
+      "name": "Classroom Ratio"
     }
   ];
 
@@ -85,6 +88,7 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
 
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf_text) {
+    var item = null;
     if( acf_text === 'false' )
       return '';
 
@@ -103,7 +107,16 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
       } else if( priority.id === 'environment' ) {
         count = parseInt(acf_text);
         if( !isNaN(count) ) {
-          var item = get_item_by_id(data, count);
+          item = get_item_by_id(data, count);
+          if( item )
+            return item.name;
+        }
+      // Classroom Ratio
+      } else if( priority.id === 'st_ratio' ) {
+        count = parseInt(acf_text);
+        if( !isNaN(count) ) {
+          count = (count < 8) ? 1 : (count < 11) ? 2 : (count < 14) ? 3 : 4;
+          item = get_item_by_id(data, count);
           if( item )
             return item.name;
         }
