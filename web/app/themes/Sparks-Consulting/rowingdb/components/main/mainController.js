@@ -9,6 +9,9 @@ function MainController($scope, CollegeFactory, Filter) {
   $scope.colleges = [];
   $scope.priorities = [
     {
+      "id": null,
+      "name": null,
+    }, {
       "id": "enrollment_count",
       "name": "Enrollment"
     }, {

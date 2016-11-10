@@ -1,5 +1,5 @@
 app.factory('Filter', function(){
 	return {
-		priority: ["enrollment", null, null]
+		priority: ["enrollment_count", null, null]
 	};
 });
