@@ -1,11 +1,12 @@
 app.controller('MainController', [
   '$scope',
   '$filter',
+  '$sce',
   'CollegeFactory',
   'Filter',
   MainController]);
 
-function MainController($scope, $filter, CollegeFactory, Filter) {
+function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
   $scope.colleges = [];
   $scope.priorities = [
@@ -118,7 +119,8 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
 
     data = get_type_data(priority.id);
     if( data && angular.isFunction(data.render_text) )
-      return $scope.filter.types_map[priority.id].render_text(acf, data);
+      return $sce.trustAsHtml(
+        $scope.filter.types_map[priority.id].render_text(acf, data));
     return acf[priority.id];
   };
 }
