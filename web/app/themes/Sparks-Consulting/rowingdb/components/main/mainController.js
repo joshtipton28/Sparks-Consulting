@@ -63,6 +63,7 @@ function MainController($scope, CollegeFactory, Filter) {
   function get_type_data(type) {
     var res = null;
     angular.forEach($scope.filter.types_map, function(val, key) {
+      console.debug('key, val, type', key, val, type);
       if( type === key ) {
         res = val;
         return;
