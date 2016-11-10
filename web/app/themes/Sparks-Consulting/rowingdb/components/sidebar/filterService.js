@@ -177,4 +177,4 @@ app.factory('Filter', ['$filter', function($filter) {
       }
     }
 	};
-});
+}]);
