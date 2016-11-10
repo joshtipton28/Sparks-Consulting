@@ -39,15 +39,17 @@
       <table>
         <tr>
           <td>School Name</td>
-
+          <td ng-repeat="priority in get_priorities()">
+            {{ priority.name }}
+          </td>
+        </tr>
+        <tr ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
+          <td>{{ college.title.rendered }}</td>
+          <td ng-repeat="priority in get_priorities()">
+            {{ college.acf[priority.id] }}
+          </td>
         </tr>
       </table>
-
-      <ul>
-        <li ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
-          {{college.acf.school_zip}}
-        </li>
-      </ul>
     </div>
   </div>
 </div>
