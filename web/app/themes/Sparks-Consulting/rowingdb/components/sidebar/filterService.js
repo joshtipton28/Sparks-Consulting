@@ -229,7 +229,13 @@ app.factory('Filter', ['$filter', function($filter) {
         }, {
           "id": 2,
           "name": "Private"
-        }]
+        }],
+        "render_text": function(acf, data) {
+          if( acf.school_privacy &&
+              data.items.hasOwnProperty(acf.school_privacy) )
+            return data.items[acf.school_privacy].name;
+          return '';
+        }
       },
       "housing_alcohol": {
         "type": "dropdown",

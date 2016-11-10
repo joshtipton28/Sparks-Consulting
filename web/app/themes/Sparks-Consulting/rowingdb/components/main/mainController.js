@@ -33,6 +33,9 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
     }, {
       "id": "academic_intensity",
       "name": "Academic Intensity"
+    }, {
+      "id": "school_privacy",
+      "name": "Private/Public"
     }
   ];
 
