@@ -66,7 +66,6 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
           return;
         }
       }, item);
-      console.debug('keep?', keep);
       return keep;
     };
   };
