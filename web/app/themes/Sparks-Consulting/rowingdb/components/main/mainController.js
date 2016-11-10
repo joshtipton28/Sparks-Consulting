@@ -115,10 +115,7 @@ function MainController($scope, $filter, CollegeFactory, Filter) {
       } else if( priority.id === 'st_ratio' ) {
         count = parseInt(acf_text);
         if( !isNaN(count) ) {
-          count = (count < 8) ? 1 : (count < 11) ? 2 : (count < 14) ? 3 : 4;
-          item = get_item_by_id(data, count);
-          if( item )
-            return item.name;
+          return count + ':1';
         }
       }
     }
