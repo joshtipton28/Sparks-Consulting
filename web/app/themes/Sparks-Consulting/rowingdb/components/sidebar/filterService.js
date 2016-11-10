@@ -234,6 +234,7 @@ app.factory('Filter', ['$filter', function($filter) {
           if( acf.school_privacy &&
               data.items.hasOwnProperty(acf.school_privacy) )
             return data.items[acf.school_privacy].name;
+          console.debug('public?', acf.school_privacy);
           return '';
         }
       },
