@@ -63,7 +63,6 @@ function MainController($scope, CollegeFactory, Filter) {
   function get_type_data(type) {
     var res = null;
     angular.forEach($scope.filter.types_map, function(val, key) {
-      console.debug('key, val, type', key, val, type);
       if( type === key ) {
         res = val;
         return;
@@ -86,10 +85,11 @@ function MainController($scope, CollegeFactory, Filter) {
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf_text) {
     data = get_type_data(priority.id);
-    console.debug('render_acf_text(priority, acf_text): data', priority, acf_text, data);
     if( data ) {
       if( priority.id === 'enrollment_count' ) {
-        return get_item_by_id(data, acf_text);
+        var item = get_item_by_id(data, acf_text);
+        if( item )
+          return item.name;
       }
     }
     return acf_text;
