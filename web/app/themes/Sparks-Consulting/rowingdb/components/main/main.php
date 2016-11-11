@@ -25,9 +25,9 @@
       <div class="colleges-map-wrapper">
         <div class="map-overlay">
           <p>{{filtered.length}} Colleges</p>
-          <button type="button" class="success large button">
+          <a ui-sref="listing" class="success large button">
             Show Schools
-          </button>
+          </a>
         </div>
         <ng-map class="map"
                 zoom="4"
