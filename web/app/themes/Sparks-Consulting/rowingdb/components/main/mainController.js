@@ -96,11 +96,12 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     if( !college.hasOwnProperty('acf') ||
         !college.acf.hasOwnProperty('school_zip') ||
         !angular.isString(college.acf.school_zip) ||
-        college.acf.school_zip === "" ) {
-      console.error('val, type', college.acf.school_zip, typeof college.acf.school_zip);
+        (college.acf.school_zip.length === 0 ||
+         !college.acf.school_zip.trim()) ) {
+      console.error('"' + college.acf.school_zip + '", ' + typeof college.acf.school_zip);
       return false;
     }
-    console.error('val, type', college.acf.school_zip, typeof college.acf.school_zip);
+    console.debug('"' + college.acf.school_zip + '", ' + typeof college.acf.school_zip);
     return true;
   };
 
