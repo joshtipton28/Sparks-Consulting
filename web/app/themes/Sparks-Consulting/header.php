@@ -24,23 +24,15 @@
     <!-- Google Fonts: Open Sans -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Roboto+Slab:400,700|Days+One' rel='stylesheet' type='text/css'>
 
-    <!-- Google Maps v3 -->
-    <script type="text/javascript"
-            src="https://maps.google.com/maps/api/js"></script>
-
-    <!-- Google Maps v3 Angularjs bindings -->
-    <script type="text/javascript"
-            src="https://rawgit.com/allenhwkim/angularjs-google-maps/v1.17.8/build/scripts/ng-map.min.js"></script>
-
 		<script>
-	        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-	        ga('create', 'UA-13277703-1', 'auto');
-	        ga('send', 'pageview');
-        </script>
+      ga('create', 'UA-13277703-1', 'auto');
+      ga('send', 'pageview');
+    </script>
 
 		<?php wp_head(); ?>
 	</head>

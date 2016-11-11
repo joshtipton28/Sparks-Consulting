@@ -54,6 +54,9 @@ var PATHS = {
     'assets/components/foundation-sites/js/foundation.toggler.js',
     'assets/components/foundation-sites/js/foundation.tooltip.js',
 
+    // Google Maps
+    'assets/components/ngmap/build/scripts/ng-map.js',
+
     // Motion UI
     'assets/components/motion-ui/motion-ui.js',
 
