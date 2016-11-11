@@ -23,12 +23,12 @@
 
       <!-- Dynamic map -->
       <div style="height: 400px;">
-        <ng-map zoom="4"
+        <ng-map id="colleges-map"
+                zoom="4"
                 center="[39.095962936305476, -94.8779296875]"
                 disable-default-u-i="true"
                 disable-double-click-zoom="true"
                 draggable="false"
-                draggable-cursor="help"
                 dragging-cursor="move"
                 keyboard-shortcuts="false"
                 style="height:100%;">
