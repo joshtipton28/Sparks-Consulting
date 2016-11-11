@@ -10,6 +10,17 @@ app.factory('Filter', ['$filter', function($filter) {
     return res;
   }
 
+  function get_item_by_name(data, name) {
+    var res = null;
+    angular.forEach(data.items, function(val) {
+      if( name === val.name  ) {
+        res = val;
+        return;
+      }
+    });
+    return res;
+  }
+
   var states = {
     "alabama": "al",
     "alaska": "ak",
@@ -97,14 +108,17 @@ app.factory('Filter', ['$filter', function($filter) {
           return $filter('number')(acf.enrollment_count);
         },
         "filter": function(self, college, spec) {
-          var ret = false;
-          angular.forEach(self.items, function(item) {
-            if( item.name === spec ) {
-              ret = true;
-              return;
-            }
-          });
-          return ret;
+          var val = parseInt(college.acf.enrollment_count);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id === 1 && val >= 2500 )
+            return false;
+          if( item.id === 2 && (val < 2500 || val >= 10000) )
+            return false;
+          if( item.id === 3 && val < 10000 )
+            return false;
+          return true;
         }
       },
       "tuition": {
@@ -131,14 +145,19 @@ app.factory('Filter', ['$filter', function($filter) {
           return $filter('currency')(acf.tuition);
         },
         "filter": function(self, college, spec) {
-          var ret = false;
-          angular.forEach(self.items, function(item) {
-            if( item.name === spec ) {
-              ret = true;
-              return;
-            }
-          });
-          return ret;
+          var val = parseInt(college.acf.tuition);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id === 1 && val >= 10000 )
+            return false;
+          if( item.id === 2 && (val < 10000 || val >= 25000) )
+            return false;
+          if( item.id === 3 && (val < 25000 || val >= 40000) )
+            return false;
+          if( item.id === 4 && val < 40000 )
+            return false;
+          return true;
         }
       },
       "financial_aid_score": {
