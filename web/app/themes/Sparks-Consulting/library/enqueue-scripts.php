@@ -23,7 +23,7 @@ if ( ! function_exists( 'foundationpress_scripts' ) ) :
 	wp_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js', array(), '2.1.0', false );
 
   // Google Maps v3
-  wp_enqueue_script( 'googlemaps', '//maps.google.com/maps/api/js', array() );
+  wp_enqueue_script( 'googlemaps', '//maps.google.com/maps/api/js?key=AIzaSyAYSALnkTnVvwiCOjlg7TLA6Ll9HL_uR6s', array() );
 
 	// If you'd like to cherry-pick the foundation components you need in your project, head over to gulpfile.js and see lines 35-54.
 	// It's a good idea to do this, performance-wise. No need to load everything if you're just going to use the grid anyway, you know :)
