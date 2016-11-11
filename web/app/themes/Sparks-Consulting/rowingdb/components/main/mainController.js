@@ -59,7 +59,10 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   };
 
   $scope.resetFilters = function() {
-    $filter.filters = {};
+    $scope.$apply(function() {
+      $scope.priority = ["", "", ""];
+      $filter.filters = {};
+    });
   };
 
   // Load the sidebar
