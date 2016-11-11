@@ -5,7 +5,7 @@
     <ul ng-controller="FilterCtrl">
       <li ng-repeat="(type_id, type) in filter.types_map">
         <a ng-click='open(type_id)'
-           ng-class='{"filter.filters[type_id]": "lead"}'>
+           ng-class='{"lead": "filter.filters[type_id]"}'>
           {{ type.title }}
         </a>
       </li>
