@@ -22,12 +22,14 @@
       <h1>{{filtered.length}} Colleges</h1>
 
       <!-- Dynamic map -->
-      <div style="height: 400px;">
-        <ng-map id="colleges-map"
+      <div class="colleges-map-wrapper">
+        <div class="map-overlay">
+          {{filtered.length}} Colleges
+        </div>
+        <ng-map class="map"
                 zoom="4"
                 center="[39.095962936305476, -94.8779296875]"
                 disable-default-u-i="true"
-                disable-double-click-zoom="true"
                 draggable="false"
                 dragging-cursor="move"
                 keyboard-shortcuts="false"
@@ -36,25 +38,6 @@
                   position="{{college.acf.school_city}}, {{college.acf.school_state}}"></marker>
         </ng-map>
       </div>
-
-      <table class="hover">
-        <thead>
-          <tr>
-            <th>School Name</th>
-            <th ng-repeat="priority in get_priorities()">
-              {{ priority.name }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="college in colleges | filter:masterFilter as filtered">
-            <td ng-bind-html="trustHtml(college.title.rendered)"></td>
-            <td ng-repeat="priority in get_priorities()">
-              {{ render_acf_text(priority, college.acf) }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>

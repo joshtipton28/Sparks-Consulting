@@ -6413,10 +6413,24 @@ p {
   font-weight: bold; }
 
 /* College dynamic map */
-#colleges-map {
+.colleges-map-wrapper {
+  height: 400px;
+  position: relative;
+  padding-bottom: 40px; }
+
+.colleges-map-wrapper > .map-overlay {
+  z-index: 10;
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  font-size: 75px;
+  font-weight: bold;
+  text-shadow: 1px 3px 6px black; }
+
+.colleges-map-wrapper > .map {
   border-radius: 14px; }
 
-#colleges-map > div {
+.colleges-map-wrapper > .map > div {
   -webkit-transform: translate3d(0px, 0px, 0px);
   -webkit-mask-image: -webkit-radial-gradient(white, black); }
 
