@@ -28,6 +28,8 @@
       </div>-->
       <!-- End Debugging -->
 
+      <a ui-sref="listing">View Results</a>
+
       <h1>{{filtered.length}} Colleges</h1>
       <table class="hover">
         <thead>

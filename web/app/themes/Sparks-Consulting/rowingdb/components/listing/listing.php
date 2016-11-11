@@ -1,47 +1,42 @@
-<div class="rowing-map college-results large-12 columns">
-	<header>
-		<h2>Results(Showing {{filtered.length}} colleges)</h2>
-		<a ui-sref="home">Modify Filters</a>
-	</header>
+<div class="rowing-priorities-wrapper">
+  <div class="map large-12 columns college-results">
+    <header>
+      <h2>Results(Showing {{filtered.length}} colleges)</h2>
+      <a ui-sref="home">Modify Filters</a>
+    </header>
+    <div class="rowing-map map">
+      <!-- Start Debugging -->
+      <div style="border: 2px white dotted;">
+        <h4>filters</h4>
+        <pre>{{ filter.filters | json }}</pre>
+      </div>
+      <div style="border: 2px white inset;"
+           ng-repeat="college in colleges | limitTo:1">
+        <h4>college</h4>
+        <pre>{{ college | json }}</pre>
+      </div>
+      <!-- End Debugging -->
 
-  <div style="border: 2px white dotted;">
-    <h4>query</h4>
-    <pre>{{ query | json }}</pre>
+      <h1>{{filtered.length}} Colleges</h1>
+      <table class="hover">
+        <thead>
+          <tr>
+            <th>School Name</th>
+            <th ng-repeat="priority in get_priorities()">
+              {{ priority.name }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="college in colleges | filter:masterFilter as filtered">
+            <td ng-bind-html="trustHtml(college.title.rendered)"></td>
+            <td ng-repeat="priority in get_priorities()">
+              {{ render_acf_text(priority, college.acf) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <div style="border: 2px white dotted;">
-    <h4>filter</h4>
-    <pre>{{ filter | json }}</pre>
-  </div>
-
-  <div style="border: 2px white inset;"
-       ng-repeat="college in colleges | filter:filter.religion | filter:query | limitTo:3">
-    <h4>college</h4>
-    <pre>{{ college | json }}</pre>
-  </div>
-
-	<table>
-		<thead>
-			<tr>
-				<th>School name</th>
-				<th>{{filter.priority}}</th>
-				<th>Tuition</th>
-				<th>Location</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
-				<td><a ng-href="{{college.link}}" ng-bind-html="college.title.rendered"></a></td>
-				<td ng-if="filter.priority == 'Religion'">
-					{{college.acf.religion.name}}
-				</td>
-				<td ng-if="filter.priority == 'Enrollment'">
-					{{college.acf.enrollment_count | number:0}}
-				</td>
-				<td>{{ college.acf.tuition | currency:"$":0}}</td>
-				<td>{{college.acf.school_city}}, {{college.acf.school_state}}</td>
-			</tr>
-		</tbody>
-	</table>
 </div>
+
