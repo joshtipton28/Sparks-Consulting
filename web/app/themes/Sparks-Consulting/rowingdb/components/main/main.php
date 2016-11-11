@@ -24,8 +24,8 @@
       <!-- Dynamic map -->
       <div class="colleges-map-wrapper">
         <div class="map-overlay">
-          {{filtered.length}} Colleges
-          <button type="button" class="success button">
+          <p>{{filtered.length}} Colleges</p>
+          <button type="button" class="success large button">
             Show Schools
           </button>
         </div>

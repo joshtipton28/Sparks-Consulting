@@ -416,10 +416,14 @@
   position: absolute;
   top: 20%;
   left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.colleges-map-wrapper > .map-overlay > p {
   font-size: 75px;
   font-weight: bold;
   text-shadow: 1px 3px 6px black;
-  text-align: center;
 }
 
 .colleges-map-wrapper > .map {
