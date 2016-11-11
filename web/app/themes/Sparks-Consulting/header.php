@@ -20,7 +20,17 @@
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/icons/apple-touch-icon-114x114-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/icons/apple-touch-icon-72x72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/icons/apple-touch-icon-precomposed.png">
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Roboto+Slab:400,700|Days+One' rel='stylesheet' type='text/css'>
+
+    <!-- Google Fonts: Open Sans -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Roboto+Slab:400,700|Days+One' rel='stylesheet' type='text/css'>
+
+    <!-- Google Maps v3 -->
+    <script type="text/javascript"
+            src="https://maps.google.com/maps/api/js"></script>
+
+    <!-- Google Maps v3 Angularjs bindings -->
+    <script type="text/javascript"
+            src="https://rawgit.com/allenhwkim/angularjs-google-maps/v1.17.8/build/scripts/ng-map.min.js"></script>
 
 		<script>
 	        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

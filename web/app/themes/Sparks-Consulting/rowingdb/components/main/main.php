@@ -16,21 +16,17 @@
       </div>
     </header>
     <div class="rowing-map map">
-      <!-- Start Debugging -->
-<!--      <div style="border: 2px white dotted;">
-        <h4>filters</h4>
-        <pre>{{ filter.filters | json }}</pre>
-      </div>
-      <div style="border: 2px white inset;"
-           ng-repeat="college in colleges | limitTo:1">
-        <h4>college</h4>
-        <pre>{{ college | json }}</pre>
-      </div>-->
-      <!-- End Debugging -->
-
+      <!-- Link to listing results -->
       <a ui-sref="listing">View Results</a>
 
       <h1>{{filtered.length}} Colleges</h1>
+
+      <!-- Dynamic map -->
+      <ng-map zoom="14" center="[41.850033, -87.6500523]">
+        <marker ng-repeat="college in colleges | filter:masterFilter as filtered"
+                position="college.acf.school_zip"></marker>
+      </ng-map>
+
       <table class="hover">
         <thead>
           <tr>
