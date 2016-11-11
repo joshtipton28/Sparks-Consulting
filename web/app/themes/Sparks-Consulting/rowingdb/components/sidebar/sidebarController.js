@@ -15,9 +15,6 @@ app.controller('SidebarController', ['$scope', 'Filter', function($scope, Filter
 	$scope.filter = Filter;
 
   $scope.reset = function() {
-    $scope.filter.wProgram = '';
-    $scope.filter.mProgram = '';
-    $scope.filter.enrollment = '';
-    $scope.filter.religion = '';
+    $scope.filter.filter = {};
   };
 }]);
