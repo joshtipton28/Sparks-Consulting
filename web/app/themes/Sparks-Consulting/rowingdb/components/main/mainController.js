@@ -60,7 +60,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
 
   $scope.resetFilters = function() {
     $scope.priority = ["", "", ""];
-    $filter.filters = {};
+    $$scope.filter.filters = {};
   };
 
   // Load the sidebar
