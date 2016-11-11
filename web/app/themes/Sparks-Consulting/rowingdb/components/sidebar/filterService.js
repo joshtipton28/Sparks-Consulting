@@ -110,7 +110,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.enrollment_count);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id === 1 && val >= 2500 )
             return false;
@@ -147,7 +147,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.tuition);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id === 1 && val >= 10000 )
             return false;
@@ -186,7 +186,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.financial_aid_score);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id === 1 && val < 95 )
             return false;
@@ -222,12 +222,12 @@ app.factory('Filter', ['$filter', function($filter) {
           count = parseInt(acf.st_ratio);
           if( !isNaN(count) )
             return count + ':1';
-          return acf.st_ratio;
+          return '';
         },
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.st_ratio);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id === 1 && val >= 8 )
             return false;
@@ -270,12 +270,12 @@ app.factory('Filter', ['$filter', function($filter) {
             if( item )
               return item.name;
           }
-          return acf.environment;
+          return '';
         },
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.environment);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id !== val )
             return false;
@@ -305,7 +305,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.academic_intensity);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id === 1 && val >= 70 )
             return false;
@@ -341,7 +341,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.school_privacy);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id !== val )
             return false;
@@ -371,7 +371,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, spec) {
           var val = parseInt(college.acf.housing_alcohol);
           var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return true;
+          if( isNaN(val) || !item ) return false;
           // Filter
           if( item.id !== val )
             return false;
