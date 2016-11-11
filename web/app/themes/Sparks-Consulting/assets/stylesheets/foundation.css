@@ -6458,6 +6458,9 @@ p {
   margin-top: 20px;
   padding: 30px; }
 
+.colleges-list > table tr {
+  border-top: 1px white outset; }
+
 /* Rowing priorities bar */
 .rowing-priorities-header {
   background: rgba(2, 23, 50, 0.78);
