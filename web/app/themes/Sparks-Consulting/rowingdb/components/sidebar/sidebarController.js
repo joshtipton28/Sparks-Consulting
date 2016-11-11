@@ -15,6 +15,6 @@ app.controller('SidebarController', ['$scope', 'Filter', function($scope, Filter
 	$scope.filter = Filter;
 
   $scope.reset = function() {
-    $scope.filter.filter = {};
+    $scope.filter.filters = {};
   };
 }]);
