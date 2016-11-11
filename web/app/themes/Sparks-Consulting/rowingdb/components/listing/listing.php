@@ -10,12 +10,12 @@
                 style="margin-right: 10px;"
                 ng-click="go('home')">
           Modify Filters
-        </a>
+        </button>
         <button type="button"
                 class="button"
                 ng-click="resetFilters(); go('home')">
           Start Over
-        </button>type="button"
+        </button>
 
       </div>
     </header>
