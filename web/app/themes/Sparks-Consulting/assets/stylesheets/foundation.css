@@ -6464,7 +6464,7 @@ p {
 .colleges-list table > tbody > tr:first-child {
   border-top: 2px white outset; }
 
-.colleges-list table > tbody > tr > td {
+.colleges-list table td {
   padding: 5px 0px; }
 
 /* Rowing priorities bar */
