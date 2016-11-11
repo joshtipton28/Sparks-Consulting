@@ -96,8 +96,11 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     if( !college.hasOwnProperty('acf') ||
         !college.acf.hasOwnProperty('school_zip') ||
         !angular.isString(college.acf.school_zip) ||
-        college.acf.school_zip === "" )
+        college.acf.school_zip === "" ) {
+      console.error(college.acf.school_zip);
       return false;
+    }
+    console.debug(college.acf.school_zip);
     return true;
   };
 
