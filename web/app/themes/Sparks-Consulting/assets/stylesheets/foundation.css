@@ -6413,6 +6413,9 @@ p {
   font-weight: bold; }
 
 /* College dynamic map */
+#colleges-map {
+  border-radius: 14px; }
+
 #colleges-map > div {
   -webkit-transform: translate3d(0px, 0px, 0px);
   -webkit-mask-image: -webkit-radial-gradient(white, black); }
