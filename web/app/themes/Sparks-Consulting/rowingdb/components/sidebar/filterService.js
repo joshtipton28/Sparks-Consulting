@@ -73,8 +73,11 @@ app.factory('Filter', ['$filter', function($filter) {
   };
 
 	return {
+    // List column specifiers
 		priority: ["", "", ""],
+    // Actual list filter
     filters: {},
+    // Filters and priorities data and helpers
     types_map: {
       "enrollment_count": {
         "type": "dropdown",
@@ -92,6 +95,16 @@ app.factory('Filter', ['$filter', function($filter) {
         }],
         "render_text": function(acf, data) {
           return $filter('number')(acf.enrollment_count);
+        },
+        "filter": function(self, college, spec) {
+          var ret = false;
+          angular.forEach(self.items, function(item) {
+            if( item.name === spec ) {
+              ret = true;
+              return;
+            }
+          });
+          return ret;
         }
       },
       "tuition": {
@@ -116,6 +129,16 @@ app.factory('Filter', ['$filter', function($filter) {
           if( isNaN(tuition) || !tuition )
             return 'Full Scholarship';
           return $filter('currency')(acf.tuition);
+        },
+        "filter": function(self, college, spec) {
+          var ret = false;
+          angular.forEach(self.items, function(item) {
+            if( item.name === spec ) {
+              ret = true;
+              return;
+            }
+          });
+          return ret;
         }
       },
       "financial_aid_score": {
@@ -266,7 +289,6 @@ app.factory('Filter', ['$filter', function($filter) {
           return sstr + acf.school_state;
         }
       }
-    },
-    "states": states
+    }
 	};
 }]);

@@ -74,6 +74,18 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     };
   };
 
+  // Filter of filters...
+  $scope.masterFilter = function(college) {
+    ret = true;
+    angular.forEach($scope.filter.filters, function(spec, type_id) {
+      var type = $scope.filter.types_map[type_id];
+      if( type && angular.isFunction(type.filter) ) {
+        ret = type.filter(type, college, spec);
+      }
+    });
+    return ret;
+  };
+
   // Find a priority by id
   $scope.get_priority_by_id = function(pid) {
     var prio = null;

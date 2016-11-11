@@ -22,14 +22,13 @@
         <pre>{{ filter.filters | json }}</pre>
       </div>
       <div style="border: 2px white inset;"
-           ng-repeat="college in colleges | limitTo:3">
+           ng-repeat="college in colleges | limitTo:1">
         <h4>college</h4>
         <pre>{{ college | json }}</pre>
       </div>
       <!-- End Debugging -->
 
       <h1>{{filtered.length}} Colleges</h1>
-      <!-- <a ui-sref="listing">Show Schools</a> -->
       <table class="hover">
         <thead>
           <tr>
@@ -40,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="college in colleges | filter:filter.religion | filter:query as filtered">
+          <tr ng-repeat="college in colleges | filter:masterFilter as filtered">
             <td ng-bind-html="trustHtml(college.title.rendered)"></td>
             <td ng-repeat="priority in get_priorities()">
               {{ render_acf_text(priority, college.acf) }}
