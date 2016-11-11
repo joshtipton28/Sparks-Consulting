@@ -1,7 +1,9 @@
 <div class="rowing-priorities-wrapper">
   <div class="map large-12 columns college-results">
-    <header class="rowing-priorities-header">
-      <h5>Results(Showing {{filtered.length}} colleges)</h5>
+    <header class="colleges-list-header">
+      <h5>
+        Results(Showing {{filtered.length}} colleges)
+      </h5>
       <div style="float: right;">
         <a ui-sref="home" class="button">Modify Filters</a>
         <a ui-sref="home" class="button">Start Over</a>

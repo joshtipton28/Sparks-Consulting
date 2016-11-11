@@ -6440,7 +6440,18 @@ p {
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   border-radius: 14px; }
 
-/* Rowing map area */
+/* Colleges list */
+.colleges-list-header {
+  height: 90px;
+  background: rgba(2, 23, 50, 0.78);
+  border-radius: 15px;
+  padding: 10px 10px 0px 10px; }
+
+.colleges-list-header > h5 {
+  line-height: 60px;
+  font-size: 2.0rem;
+  float: left; }
+
 .colleges-list {
   background: rgba(2, 23, 50, 0.78);
   border-radius: 15px;
