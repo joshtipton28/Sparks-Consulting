@@ -1,12 +1,13 @@
 app.controller('MainController', [
   '$scope',
+  '$state',
   '$filter',
   '$sce',
   'CollegeFactory',
   'Filter',
   MainController]);
 
-function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
+function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
   $scope.map_options = {
     scrollwheel: false,
@@ -52,6 +53,14 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
   });
+
+  $scope.go = function(ref) {
+    $state.go(ref);
+  };
+
+  $scope.resetFilters = function() {
+    $filter.filters = {};
+  };
 
   // Load the sidebar
   $scope.getSidebar = function () {

@@ -5,12 +5,18 @@
         Results (Showing {{filtered.length}} colleges)
       </h5>
       <div style="float: right; padding-top: 15px;">
-        <a ui-sref="home" class="button" style="margin-right: 10px;">
+        <button type="button"
+                class="button"
+                style="margin-right: 10px;"
+                ng-click="go('home')">
           Modify Filters
         </a>
-        <a ui-sref="home" class="button">
+        <button type="button"
+                class="button"
+                ng-click="resetFilters(); go('home')">
           Start Over
-        </a>
+        </button>type="button"
+
       </div>
     </header>
     <div class="colleges-list">
