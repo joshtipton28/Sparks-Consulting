@@ -59,7 +59,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   };
 
   $scope.resetFilters = function() {
-    $scope.priority = ["", "", ""];
+    $scope.filter.priority = ["", "", ""];
     $scope.filter.filters = {};
   };
 
