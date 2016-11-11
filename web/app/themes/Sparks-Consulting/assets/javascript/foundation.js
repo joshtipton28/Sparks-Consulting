@@ -9788,7 +9788,6 @@ angular.module('ngMap', []);
       address = markerOptions.position;
     }
     var marker = getMarker(markerOptions, markerEvents);
-    console.debug('address, marker, markerOptions', address, marker, markerOptions);
     mapController.addObject('markers', marker);
     if (address) {
       NgMap.getGeoLocation(address).then(function(latlng) {
@@ -11107,7 +11106,6 @@ angular.module('ngMap', []);
    */
   var getGeoLocation = function(string, options) {
     var deferred = $q.defer();
-    console.debug('getGeoLocation("' + string + '" (' + typeof string + '), options)', options);
     if (!string || string.match(/^current/i)) { // current location
       NavigatorGeolocation.getCurrentPosition(options).then(
         function(position) {
