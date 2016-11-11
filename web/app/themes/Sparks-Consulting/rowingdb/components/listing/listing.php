@@ -1,10 +1,10 @@
 <div class="rowing-priorities-wrapper">
   <div class="map large-12 columns college-results">
-    <header>
+    <header class="rowing-priorities-header">
       <h2>Results(Showing {{filtered.length}} colleges)</h2>
       <a ui-sref="home">Modify Filters</a>
     </header>
-    <div class="rowing-map map">
+    <div class="colleges-list map">
       <!-- Start Debugging -->
       <div style="border: 2px white dotted;">
         <h4>filters</h4>
@@ -39,4 +39,3 @@
     </div>
   </div>
 </div>
-
