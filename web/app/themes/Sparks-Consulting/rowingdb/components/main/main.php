@@ -23,7 +23,7 @@
 
       <!-- Dynamic map -->
       <ng-map zoom="6" center="[41.850033, -87.6500523]">
-        <marker ng-repeat="college in colleges | filter:masterFilter"
+        <marker ng-repeat="college in colleges | filter:masterFilter | filter:hasZipFilter"
                 position="{{college.acf.school_zip}}"></marker>
       </ng-map>
 

@@ -91,6 +91,16 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     return ret;
   };
 
+  // Filter out colleges without well-formatted ZIP codes
+  $scope.hasZipFilter = function(college) {
+    if( !college.hasOwnProperty('acf') ||
+        !college.acf.hasOwnProperty('school_zip') ||
+        !angular.isString(college.acf.school_zip) ||
+        college.acf.school_zip === "" )
+      return false;
+    return true;
+  };
+
   // Find a priority by id
   $scope.get_priority_by_id = function(pid) {
     var prio = null;
