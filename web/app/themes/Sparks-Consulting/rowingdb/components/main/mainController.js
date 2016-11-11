@@ -8,6 +8,14 @@ app.controller('MainController', [
 
 function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
+  $scope.map_options = {
+    scrollwheel: false,
+    zoomControl: false,
+    panControl: false,
+    draggable: false,
+    disableDefaultUI: true,
+    zoom: 4
+  };
   $scope.colleges = [];
   $scope.priorities = [
     {

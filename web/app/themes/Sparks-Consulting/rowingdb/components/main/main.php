@@ -23,11 +23,8 @@
 
       <!-- Dynamic map -->
       <div style="height: 400px;">
-        <ng-map zoom="4"
-                center="[39.095962936305476, -94.8779296875]"
-                disable-default-u-i="true"
-                pan-control="false"
-                map-type-control="false"
+        <ng-map center="[39.095962936305476, -94.8779296875]"
+                options="map_options"
                 style="height:100%;">
           <marker ng-repeat="college in colleges | filter:masterFilter | filter:hasLocationFilter"
                   position="{{college.acf.school_city}}, {{college.acf.school_state}}"></marker>
