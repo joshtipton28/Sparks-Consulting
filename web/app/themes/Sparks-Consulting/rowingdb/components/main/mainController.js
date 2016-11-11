@@ -105,6 +105,11 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     return true;
   };
 
+  // Force String() cast
+  $scope.forceString = function(str) {
+    return String(str);
+  };
+
   // Find a priority by id
   $scope.get_priority_by_id = function(pid) {
     var prio = null;
