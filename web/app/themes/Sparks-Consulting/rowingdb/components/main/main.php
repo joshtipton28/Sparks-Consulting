@@ -15,32 +15,26 @@
         </select>
       </div>
     </header>
-    <div class="rowing-map map">
-      <!-- Link to listing results -->
-      <a ui-sref="listing">View Results</a>
-
-      <h1>{{filtered.length}} Colleges</h1>
-
-      <!-- Dynamic map -->
-      <div class="colleges-map-wrapper">
-        <div class="map-overlay">
-          <p>{{filtered.length}} Colleges</p>
-          <a ui-sref="listing" class="success large button">
-            Show Schools
-          </a>
-        </div>
-        <ng-map class="map"
-                zoom="4"
-                center="[39.095962936305476, -94.8779296875]"
-                disable-default-u-i="true"
-                draggable="false"
-                dragging-cursor="move"
-                keyboard-shortcuts="false"
-                style="height:100%;">
-          <marker ng-repeat="college in colleges | filter:masterFilter | filter:hasLocationFilter as filtered"
-                  position="{{college.acf.school_city}}, {{college.acf.school_state}}"></marker>
-        </ng-map>
+    <!-- Dynamic map -->
+    <div class="colleges-map-wrapper">
+      <div class="map-overlay">
+        <p>{{filtered.length}} Colleges</p>
+        <!-- Link to listing results -->
+        <a ui-sref="listing" class="success large button">
+          Show Schools
+        </a>
       </div>
+      <ng-map class="map"
+              zoom="4"
+              center="[39.095962936305476, -94.8779296875]"
+              disable-default-u-i="true"
+              draggable="false"
+              dragging-cursor="move"
+              keyboard-shortcuts="false"
+              style="height:100%;">
+        <marker ng-repeat="college in colleges | filter:masterFilter | filter:hasLocationFilter as filtered"
+                position="{{college.acf.school_city}}, {{college.acf.school_state}}"></marker>
+      </ng-map>
     </div>
   </div>
 </div>

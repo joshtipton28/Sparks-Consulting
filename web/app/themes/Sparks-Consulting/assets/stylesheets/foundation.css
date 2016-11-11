@@ -6454,14 +6454,6 @@ p {
   padding-left: 20px;
   padding-right: 20px; }
 
-/* Rowing map area */
-.rowing-map {
-  background: rgba(2, 23, 50, 0.78);
-  border-radius: 15px;
-  margin-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px; }
-
 /* Styles for Foundation Tabs used in:
   - About Us
   - Working With Us
