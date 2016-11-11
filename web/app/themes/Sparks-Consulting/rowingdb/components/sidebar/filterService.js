@@ -182,6 +182,23 @@ app.factory('Filter', ['$filter', function($filter) {
         }],
         "render_text": function(acf, data) {
           return $filter('number')(acf.financial_aid_score);
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.financial_aid_score);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id === 1 && val < 95 )
+            return false;
+          if( item.id === 2 && val < 90 )
+            return false;
+          if( item.id === 3 && val < 85 )
+            return false;
+          if( item.id === 4 && val < 75 )
+            return false;
+          if( item.id === 5 && val < 60 )
+            return false;
+          return true;
         }
       },
       "st_ratio": {
@@ -206,6 +223,21 @@ app.factory('Filter', ['$filter', function($filter) {
           if( !isNaN(count) )
             return count + ':1';
           return acf.st_ratio;
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.st_ratio);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id === 1 && val >= 8 )
+            return false;
+          if( item.id === 2 && (val < 8 || val >= 11) )
+            return false;
+          if( item.id === 3 && (val < 11 || val >= 14) )
+            return false;
+          if( item.id === 4 && val < 14 )
+            return false;
+          return true;
         }
       },
       "environment": {
@@ -239,6 +271,15 @@ app.factory('Filter', ['$filter', function($filter) {
               return item.name;
           }
           return acf.environment;
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.environment);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id !== val )
+            return false;
+          return true;
         }
       },
       "academic_intensity": {
@@ -260,6 +301,21 @@ app.factory('Filter', ['$filter', function($filter) {
         }],
         "render_text": function(acf, data) {
           return $filter('number')(acf.academic_intensity) + '%';
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.academic_intensity);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id === 1 && val >= 70 )
+            return false;
+          if( item.id === 2 && (val < 70 || val >= 80) )
+            return false;
+          if( item.id === 3 && (val < 80 || val >= 90) )
+            return false;
+          if( item.id === 4 && val < 90 )
+            return false;
+          return true;
         }
       },
       "school_privacy": {
@@ -281,6 +337,15 @@ app.factory('Filter', ['$filter', function($filter) {
               return item.name;
           }
           return '';
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.school_privacy);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id !== val )
+            return false;
+          return true;
         }
       },
       "housing_alcohol": {
@@ -293,7 +358,25 @@ app.factory('Filter', ['$filter', function($filter) {
         }, {
           "id": 2,
           "name": "Not Allowed"
-        }]
+        }],
+        "render_text": function(acf, data) {
+          var priv = parseInt(acf.housing_alcohol);
+          if( !isNaN(priv) ) {
+            item = get_item_by_id(data, priv);
+            if( item )
+              return item.name;
+          }
+          return '';
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.housing_alcohol);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return true;
+          // Filter
+          if( item.id !== val )
+            return false;
+          return true;
+        }
       },
       "location": {
         "type": "zip_distance",

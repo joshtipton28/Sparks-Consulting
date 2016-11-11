@@ -78,11 +78,13 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
   $scope.masterFilter = function(college) {
     ret = true;
     angular.forEach($scope.filter.filters, function(spec, type_id) {
-      var type = $scope.filter.types_map[type_id];
-      if( type && angular.isFunction(type.filter) ) {
-        if( !type.filter(type, college, spec) ) {
-          ret = false;
-          return ret;
+      if( spec && type_id ) {
+        var type = $scope.filter.types_map[type_id];
+        if( type && angular.isFunction(type.filter) ) {
+          if( !type.filter(type, college, spec) ) {
+            ret = false;
+            return ret;
+          }
         }
       }
     });
