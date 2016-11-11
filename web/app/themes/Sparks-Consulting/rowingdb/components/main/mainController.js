@@ -91,23 +91,19 @@ function MainController($scope, $filter, $sce, CollegeFactory, Filter) {
     return ret;
   };
 
-  // Filter out colleges without well-formatted ZIP codes
-  $scope.hasZipFilter = function(college) {
+  // Filter out colleges without well-formatted city/state parts
+  $scope.hasLocationFilter = function(college) {
     if( !college.hasOwnProperty('acf') ||
-        !college.acf.hasOwnProperty('school_zip') ||
-        !angular.isString(college.acf.school_zip) ||
-        (college.acf.school_zip.length === 0 ||
-         !college.acf.school_zip.trim()) ) {
-      console.error('"' + college.acf.school_zip + '", ' + typeof college.acf.school_zip);
+        !college.acf.hasOwnProperty('school_city') ||
+        !college.acf.hasOwnProperty('school_state') ||
+        !angular.isString(college.acf.school_city) ||
+        !angular.isString(college.acf.school_state) ||
+        (college.acf.school_city.length === 0 ||
+         !college.acf.school_city.trim()) ||
+        (college.acf.school_state.length === 0 ||
+         !college.acf.school_state.trim()))
       return false;
-    }
-    console.debug('"' + college.acf.school_zip + '", ' + typeof college.acf.school_zip);
     return true;
-  };
-
-  // Force String() cast
-  $scope.forceString = function(str) {
-    return String(str);
   };
 
   // Find a priority by id
