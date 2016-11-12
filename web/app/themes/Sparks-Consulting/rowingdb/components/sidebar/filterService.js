@@ -409,14 +409,7 @@ app.factory('Filter', ['$filter', function($filter) {
           console.debug('self, college, specs, types', self, college, specs, types);
           if( angular.isArray(specs) && angular.isArray(types) )
             angular.forEach(specs, function(spec) {
-              var has_spec = false;
-              angular.forEach(types, function(type) {
-                if( this === type ) {
-                  has_spec = true;
-                  return;
-                }
-              }, spec);
-              if( !has_spec ) {
+              if( types.indexOf(spec) === -1 ) {
                 ret = false;
                 return;
               }
