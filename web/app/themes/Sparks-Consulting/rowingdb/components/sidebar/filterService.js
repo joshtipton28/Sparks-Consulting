@@ -408,12 +408,17 @@ app.factory('Filter', ['$filter', function($filter) {
           var types = college.acf.housing_types;
           if( angular.isArray(specs) && angular.isArray(types) )
             angular.forEach(specs, function(spec) {
+              var has_spec = false;
               angular.forEach(types, function(type) {
-                if( this !== type ) {
-                  ret = false;
+                if( this === type ) {
+                  has_spec = true;
                   return;
                 }
               }, spec);
+              if( !has_spec ) {
+                ret = false;
+                return;
+              }
             });
           return ret;
         }
