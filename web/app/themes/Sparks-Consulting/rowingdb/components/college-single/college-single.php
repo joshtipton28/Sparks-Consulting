@@ -107,7 +107,7 @@
           <tr>
             <td>Housing Types:</td>
             <td>
-              PLACEHOLDER
+              {{ render_acf_text('housing_types', college.acf) }}
             </td>
           </tr>
           <tr ng-if="college.acf.housing_alcohol">
