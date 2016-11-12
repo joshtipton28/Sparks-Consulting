@@ -95,7 +95,7 @@
           <tr>
             <td>Religious Affiliation:</td>
             <td>
-              PLACEHOLDER
+              {{ render_acf_text('religion', college.acf) }}
             </td>
           </tr>
           <tr>
