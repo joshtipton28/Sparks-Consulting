@@ -1,4 +1,4 @@
-<div class="college-single-wrapper">
+<div class="row college-single-wrapper">
   <div class="large-12 columns">
     <header class="college-single-header">
       <h5 ng-bind-html="trustHtml(college.title.rendered)"></h5>
