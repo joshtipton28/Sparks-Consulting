@@ -1,16 +1,16 @@
 app.controller('CollegeSingleCtrl', [
   '$scope',
   '$state',
-  '$routeParams',
+  '$stateParams',
   '$filter',
   '$sce',
   'CollegeFactory',
   'Filter',
   CollegeSingleCtrl]);
 
-function CollegeSingleCtrl($scope, $state, $routeParams, $filter, $sce, CollegeFactory, Filter) {
+function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
-  $scope.slug = $routeParams.collegeSlug || null;
+  $scope.slug = $stateParams.collegeSlug || null;
   $scope.college = {};
   $scope.colleges = [];
   // Load college data from external source
