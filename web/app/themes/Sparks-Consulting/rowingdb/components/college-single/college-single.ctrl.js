@@ -16,6 +16,9 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeF
   // Load college data from external source
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
+    $scope.college = $scope.get_college_by_slug($scope.slug);
+    console.debug('slug', $scope.slug);
+    console.debug('college', $scope.college);
   });
 
   $scope.get_college_by_slug = function(slug) {
@@ -41,7 +44,5 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeF
   // Maybe the user got lost...
   if( !$scope.slug ) {
     $scope.go('home');
-  } else {
-    $scope.college = $scope.get_college_by_slug($scope.slug);
   }
 }
