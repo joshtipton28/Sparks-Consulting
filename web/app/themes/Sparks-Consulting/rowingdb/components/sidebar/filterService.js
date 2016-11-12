@@ -122,6 +122,7 @@ app.factory('Filter', ['$filter', function($filter) {
     filters: {},
     // Filters and priorities data and helpers
     types_map: {
+
       "enrollment_count": {
         "type": "dropdown",
         "title": "Enrollment",
