@@ -18,14 +18,14 @@
     <div class="college-single-stats-list">
       <table>
         <tbody>
-          <tr>
+          <tr ng-if="college.acf.womens_program_url">
             <td>Women's Program(s):</td>
             <td>
               <a ng-href="{{college.acf.womens_program_url}}">
                 Women's Rowing Program Website
               </a>
             </td>
-          </tr>
+          </tr ng-if="college.acf.mens_program_url">
           <tr>
             <td>Men's Program(s):</td>
             <td>
@@ -34,7 +34,7 @@
               </a>
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.acf.sparks_report_url">
             <td>Sparks Report:</td>
             <td>
               <a ng-href="{{college.acf.sparks_report_url}}">
@@ -50,7 +50,7 @@
               </a>
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.acf.enrollment_count">
             <td>Enrollment:</td>
             <td>
               {{ render_acf_text('enrollment_count', college.acf) }}
@@ -60,6 +60,66 @@
             <td>Tuition:</td>
             <td>
               {{ render_acf_text('tuition', college.acf) }}
+            </td>
+          </tr>
+          <tr ng-if="college.acf.st_ratio">
+            <td>Classroom Ratio:</td>
+            <td>
+              {{ render_acf_text('st_ratio', college.acf) }}
+            </td>
+          </tr>
+          <tr ng-if="college.acf.environment">
+            <td>Environment:</td>
+            <td>
+              {{ render_acf_text('environment', college.acf) }}
+            </td>
+          </tr>
+          <tr>
+            <td>Selectivity:</td>
+            <td>
+              PLACEHOLDER
+            </td>
+          </tr>
+          <tr ng-if="college.acf.financial_aid_score">
+            <td>Financial Aid Score:</td>
+            <td>
+              {{ render_acf_text('financial_aid_score', college.acf) }}
+            </td>
+          </tr>
+          <tr ng-if="college.acf.school_privacy">
+            <td>Private/Public:</td>
+            <td>
+              {{ render_acf_text('school_privacy', college.acf) }}
+            </td>
+          </tr>
+          <tr>
+            <td>Religious Affiliation:</td>
+            <td>
+              PLACEHOLDER
+            </td>
+          </tr>
+          <tr>
+            <td>Food Services:</td>
+            <td>
+              PLACEHOLDER
+            </td>
+          </tr>
+          <tr>
+            <td>Housing Types:</td>
+            <td>
+              PLACEHOLDER
+            </td>
+          </tr>
+          <tr ng-if="college.acf.housing_alcohol">
+            <td>Housing Alcohol:</td>
+            <td>
+              {{ render_acf_text('housing_alcohol', college.acf) }}
+            </td>
+          </tr>
+          <tr>
+            <td>Housing Sub-types:</td>
+            <td>
+              PLACEHOLDER
             </td>
           </tr>
         </tbody>
