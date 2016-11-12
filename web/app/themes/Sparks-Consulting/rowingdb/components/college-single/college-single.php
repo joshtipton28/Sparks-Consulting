@@ -101,7 +101,7 @@
           <tr>
             <td>Food Services:</td>
             <td>
-              PLACEHOLDER
+              {{ render_acf_text('food_services', college.acf) }}
             </td>
           </tr>
           <tr>
@@ -119,7 +119,7 @@
           <tr>
             <td>Housing Sub-types:</td>
             <td>
-              PLACEHOLDER
+              {{ render_acf_text('housing_sub_types', college.acf) }}
             </td>
           </tr>
         </tbody>

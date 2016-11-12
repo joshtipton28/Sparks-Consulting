@@ -348,34 +348,42 @@ app.factory('Filter', ['$filter', function($filter) {
           return true;
         }
       },
-      "housing_alcohol": {
-        "type": "dropdown",
-        "title": "Housing, Alcohol",
-        "content": "Make a selection - this information is based on school policy, though the reality can vary.",
+      "food_services": {
+        "type": "checklist",
+        "title": "Food Service",
+        "content": "Make a selection of as many (or as few) options as you'd like.",
         "items": [{
           "id": 1,
-          "name": "Allowed"
+          "name": "Dining Hall(s)"
         }, {
           "id": 2,
-          "name": "Not Allowed"
+          "name": "In-dorm"
+        }, {
+          "id": 3,
+          "name": "On Campus Restaurants"
         }],
         "render_text": function(acf, data) {
-          var priv = parseInt(acf.housing_alcohol);
-          if( !isNaN(priv) ) {
-            item = get_item_by_id(data, priv);
-            if( item )
-              return item.name;
-          }
-          return '';
+          var types = acf.food_services;
+          var names = [];
+          if( angular.isArray(types) )
+            angular.forEach(types, function(type) {
+              item = get_item_by_id(data, type);
+              if( item )
+                names.push(item.name);
+            });
+          return names.join(', ');
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.housing_alcohol);
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
-          // Filter
-          if( item.id !== val )
-            return false;
-          return true;
+        "filter": function(self, college, specs) {
+          var ret = true;
+          var types = college.acf.food_services;
+          if( angular.isArray(specs) && angular.isArray(types) )
+            angular.forEach(specs, function(spec) {
+              if( types.indexOf(spec) === -1 ) {
+                ret = false;
+                return;
+              }
+            });
+          return ret;
         }
       },
       "housing_types": {
@@ -461,6 +469,36 @@ app.factory('Filter', ['$filter', function($filter) {
               }
             });
           return ret;
+        }
+      },
+      "housing_alcohol": {
+        "type": "dropdown",
+        "title": "Housing, Alcohol",
+        "content": "Make a selection - this information is based on school policy, though the reality can vary.",
+        "items": [{
+          "id": 1,
+          "name": "Allowed"
+        }, {
+          "id": 2,
+          "name": "Not Allowed"
+        }],
+        "render_text": function(acf, data) {
+          var priv = parseInt(acf.housing_alcohol);
+          if( !isNaN(priv) ) {
+            item = get_item_by_id(data, priv);
+            if( item )
+              return item.name;
+          }
+          return '';
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.housing_alcohol);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return false;
+          // Filter
+          if( item.id !== val )
+            return false;
+          return true;
         }
       },
       "location": {
