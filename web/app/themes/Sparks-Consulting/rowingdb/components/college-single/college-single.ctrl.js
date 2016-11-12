@@ -32,6 +32,11 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeF
     return ret;
   };
 
+  // Allow for HTML rendering / unescaping
+  $scope.trustHtml = function(html) {
+    return $sce.trustAsHtml(html);
+  };
+
   $scope.go = function(ref) {
     $state.go(ref);
   };
