@@ -21,6 +21,31 @@ app.factory('Filter', ['$filter', function($filter) {
     return res;
   }
 
+  function generic_multi_id_render(acf, data) {
+    var types = acf[data.id];
+    var names = [];
+    if( angular.isArray(types) )
+      angular.forEach(types, function(type) {
+        item = get_item_by_id(data, type);
+        if( item )
+          names.push(item.name);
+      });
+    return names.join(', ');
+  }
+
+  function generic_multi_id_filter(self, college, specs) {
+    var ret = true;
+    var types = college.acf[self.id];
+    if( angular.isArray(specs) && angular.isArray(types) )
+      angular.forEach(specs, function(spec) {
+        if( types.indexOf(spec) === -1 ) {
+          ret = false;
+          return;
+        }
+      });
+    return ret;
+  }
+
   var states = {
     "alabama": "al",
     "alaska": "ak",
@@ -362,29 +387,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 3,
           "name": "On Campus Restaurants"
         }],
-        "render_text": function(acf, data) {
-          var types = acf.food_services;
-          var names = [];
-          if( angular.isArray(types) )
-            angular.forEach(types, function(type) {
-              item = get_item_by_id(data, type);
-              if( item )
-                names.push(item.name);
-            });
-          return names.join(', ');
-        },
-        "filter": function(self, college, specs) {
-          var ret = true;
-          var types = college.acf.food_services;
-          if( angular.isArray(specs) && angular.isArray(types) )
-            angular.forEach(specs, function(spec) {
-              if( types.indexOf(spec) === -1 ) {
-                ret = false;
-                return;
-              }
-            });
-          return ret;
-        }
+        "render_text": generic_multi_id_render,
+        "filter": generic_multi_id_filter
       },
       "housing_types": {
         "type": "checklist",
@@ -400,29 +404,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 3,
           "name": "Greek"
         }],
-        "render_text": function(acf, data) {
-          var types = acf.housing_types;
-          var names = [];
-          if( angular.isArray(types) )
-            angular.forEach(types, function(type) {
-              item = get_item_by_id(data, type);
-              if( item )
-                names.push(item.name);
-            });
-          return names.join(', ');
-        },
-        "filter": function(self, college, specs) {
-          var ret = true;
-          var types = college.acf.housing_types;
-          if( angular.isArray(specs) && angular.isArray(types) )
-            angular.forEach(specs, function(spec) {
-              if( types.indexOf(spec) === -1 ) {
-                ret = false;
-                return;
-              }
-            });
-          return ret;
-        }
+        "render_text": generic_multi_id_render,
+        "filter": generic_multi_id_filter
       },
       "housing_sub_types": {
         "type": "checklist",
@@ -447,29 +430,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 6,
           "name": "Substance Free"
         }],
-        "render_text": function(acf, data) {
-          var types = acf.housing_sub_types;
-          var names = [];
-          if( angular.isArray(types) )
-            angular.forEach(types, function(type) {
-              item = get_item_by_id(data, type);
-              if( item )
-                names.push(item.name);
-            });
-          return names.join(', ');
-        },
-        "filter": function(self, college, specs) {
-          var ret = true;
-          var types = college.acf.housing_sub_types;
-          if( angular.isArray(specs) && angular.isArray(types) )
-            angular.forEach(specs, function(spec) {
-              if( types.indexOf(spec) === -1 ) {
-                ret = false;
-                return;
-              }
-            });
-          return ret;
-        }
+        "render_text": generic_multi_id_render,
+        "filter": generic_multi_id_filter
       },
       "housing_alcohol": {
         "type": "dropdown",
