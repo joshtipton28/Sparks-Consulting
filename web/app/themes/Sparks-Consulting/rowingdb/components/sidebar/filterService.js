@@ -384,28 +384,38 @@ app.factory('Filter', ['$filter', function($filter) {
         "content": "Make a selection of as many (or as few) options as you'd like.",
         "items": [{
           "id": 1,
-          "name": "Allowed"
+          "name": "Dorms"
         }, {
           "id": 2,
-          "name": "Not Allowed"
+          "name": "Apartments"
+        }, {
+          "id": 3,
+          "name": "Greek"
         }],
         "render_text": function(acf, data) {
-          var priv = parseInt(acf.housing_alcohol);
-          if( !isNaN(priv) ) {
-            item = get_item_by_id(data, priv);
-            if( item )
-              return item.name;
-          }
-          return '';
+          var types = acf.housing_types;
+          var names = [];
+          if( angular.isArray(types) )
+            angular.forEach(types, function(type) {
+              item = get_item_by_id(data, type);
+              if( item )
+                names.push(item.name);
+            });
+          return names.join(', ');
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.housing_alcohol);
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
-          // Filter
-          if( item.id !== val )
-            return false;
-          return true;
+        "filter": function(self, college, specs) {
+          var ret = true;
+          var types = acf.housing_types;
+          if( angular.isArray(specs) && angular.isArray(types) )
+            angular.forEach(spec, function(spec) {
+              angular.forEach(types, function(type) {
+                if( this !== type ) {
+                  ret = false;
+                  return;
+                }
+              }, spec);
+            });
+          return ret;
         }
       },
       "location": {
