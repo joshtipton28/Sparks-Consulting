@@ -20,6 +20,7 @@ var stylesheet_directory_uri = "<?php echo get_stylesheet_directory_uri(); ?>";
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/filterService.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/main/mainService.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/main/mainController.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/college-single/college-single.ctrl.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/sidebarController.js"></script>
 
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/program-type/programController.js"></script>

@@ -14,8 +14,8 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	});
 
   $stateProvider.state('college',{
-		url: '/rowing-teams/:collegeId',
+		url: '/rowing-teams/:collegeSlug',
 		templateUrl: stylesheet_directory_uri + '/rowingdb/components/college-single/college-single.php',
-		controller: 'MainController'
+		controller: 'CollegeSingleCtrl'
 	});
 });
