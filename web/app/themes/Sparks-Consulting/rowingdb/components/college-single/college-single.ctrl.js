@@ -32,6 +32,11 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeF
     return ret;
   };
 
+  // Allow for HTML rendering / unescaping
+  $scope.trustHtml = function(html) {
+    return $sce.trustAsHtml(html);
+  };
+
   // Find a type's corresponding data
   function get_type_data(type) {
     var res = null;
@@ -45,20 +50,15 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeF
     return res;
   }
 
-  // Allow for HTML rendering / unescaping
-  $scope.trustHtml = function(html) {
-    return $sce.trustAsHtml(html);
-  };
-
   // Render text intelligently
   $scope.render_acf_text = function(priority, acf) {
-    if( !acf || acf[priority.id] === 'false' )
+    if( !acf || acf[priority] === 'false' )
       return '';
 
-    data = get_type_data(priority.id);
+    data = get_type_data(priority);
     if( data && angular.isFunction(data.render_text) )
-      return $scope.filter.types_map[priority.id].render_text(acf, data);
-    return acf[priority.id];
+      return $scope.filter.types_map[priority].render_text(acf, data);
+    return acf[priority];
   };
 
   $scope.go = function(ref) {
