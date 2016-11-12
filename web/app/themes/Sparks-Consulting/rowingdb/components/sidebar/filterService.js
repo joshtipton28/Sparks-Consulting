@@ -24,18 +24,25 @@ app.factory('Filter', ['$filter', function($filter) {
   function generic_multi_id_render(acf, data) {
     var types = acf[data.id];
     var names = [];
-    if( angular.isArray(types) )
-      angular.forEach(types, function(type) {
-        item = get_item_by_id(data, type);
-        if( item )
-          names.push(item.name);
-      });
+    if( types === null )
+      types = [];
+    if( !angular.isArray(types) )
+      types = [types];
+    angular.forEach(types, function(type) {
+      item = get_item_by_id(data, type);
+      if( item )
+        names.push(item.name);
+    });
     return names.join(', ');
   }
 
   function generic_multi_id_filter(self, college, specs) {
     var ret = true;
     var types = college.acf[self.id];
+    if( types === null )
+      types = [];
+    if( !angular.isArray(types) )
+      types = [types];
     if( angular.isArray(specs) && angular.isArray(types) )
       angular.forEach(specs, function(spec) {
         if( types.indexOf(spec) === -1 ) {
@@ -371,6 +378,46 @@ app.factory('Filter', ['$filter', function($filter) {
           if( item.id !== val )
             return false;
           return true;
+        }
+      },
+      "religion": {
+        "type": "checklist",
+        "title": "Religious Affiliation",
+        "content": "Please make a selection. Religious Affiliation doesn't exclude folks of different faiths, but is based in what faith the school was founded upon.",
+        "items": [{
+          "id": 1,
+          "name": "Free Methodist"
+        }, {
+          "id": 2,
+          "name": "Jesuit"
+        }, {
+          "id": 3,
+          "name": "Lutheran"
+        }, {
+          "id": 4,
+          "name": "Methodist"
+        }, {
+          "id": 5,
+          "name": "Presbyterian"
+        }, {
+          "id": 6,
+          "name": "Roman Catholic"
+        }, {
+          "id": 7,
+          "name": "None"
+        }, {
+          "id": 8,
+          "name": "Catholic"
+        }],
+        "render_text": generic_multi_id_render,
+        "filter": function(self, college, specs) {
+          // Workaround for dirty data
+          if( college.acf[self.id] === null ) {
+            var item = get_item_by_name(self, 'None');
+            if( item )
+              college.acf[self.id] = [item.id];
+          }
+          return generic_multi_id_filter(self, college, specs);
         }
       },
       "food_services": {
