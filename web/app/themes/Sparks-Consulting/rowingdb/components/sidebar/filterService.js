@@ -416,6 +416,53 @@ app.factory('Filter', ['$filter', function($filter) {
           return ret;
         }
       },
+      "housing_sub_types": {
+        "type": "checklist",
+        "title": "Housing, Sub-types",
+        "content": "Make a selection of as many (or as few) options as you'd like.",
+        "items": [{
+          "id": 1,
+          "name": "Co-ed"
+        }, {
+          "id": 2,
+          "name": "Male"
+        }, {
+          "id": 3,
+          "name": "Female"
+        }, {
+          "id": 4,
+          "name": "Disabled"
+        }, {
+          "id": 5,
+          "name": "International"
+        }, {
+          "id": 6,
+          "name": "Substance Free"
+        }],
+        "render_text": function(acf, data) {
+          var types = acf.housing_sub_types;
+          var names = [];
+          if( angular.isArray(types) )
+            angular.forEach(types, function(type) {
+              item = get_item_by_id(data, type);
+              if( item )
+                names.push(item.name);
+            });
+          return names.join(', ');
+        },
+        "filter": function(self, college, specs) {
+          var ret = true;
+          var types = college.acf.housing_sub_types;
+          if( angular.isArray(specs) && angular.isArray(types) )
+            angular.forEach(specs, function(spec) {
+              if( types.indexOf(spec) === -1 ) {
+                ret = false;
+                return;
+              }
+            });
+          return ret;
+        }
+      },
       "location": {
         "type": "zip_distance",
         "title": "Location",
