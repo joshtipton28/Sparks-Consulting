@@ -45,12 +45,12 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
 
-    angular.forEach(data, function(college) {
-      if( college.religion )
-        if( !angular.isArray(college.religion) ||
-            (angular.isArray(college.religion) && college.religion.length > 0) )
-          console.debug('college', college);
-    });
+    //angular.forEach(data, function(college) {
+    //  if( college.religion )
+    //    if( !angular.isArray(college.religion) ||
+    //        (angular.isArray(college.religion) && college.religion.length > 0) )
+    //      console.debug('college', college);
+    //});
   });
 
   $scope.go = function(ref) {
