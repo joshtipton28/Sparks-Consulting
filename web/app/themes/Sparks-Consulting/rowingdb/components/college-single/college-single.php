@@ -20,47 +20,47 @@
         <tbody>
           <tr>
             <td>Women's Program(s):</td>
-            <tr>
+            <td>
               <a ng-href="{{college.acf.womens_program_url}}">
                 Women's Rowing Program Website
               </a>
-            </tr>
+            </td>
           </tr>
           <tr>
             <td>Men's Program(s):</td>
-            <tr>
+            <td>
               <a ng-href="{{college.acf.mens_program_url}}">
                 Men's Rowing Program Website
               </a>
-            </tr>
+            </td>
           </tr>
           <tr>
             <td>Sparks Report:</td>
-            <tr>
+            <td>
               <a ng-href="{{college.acf.sparks_report_url}}">
                 Click Here
               </a>
-            </tr>
+            </td>
           </tr>
           <tr>
             <td>Location:</td>
-            <tr>
+            <td>
               <a ng-href="http://maps.google.com/maps?q={{trustHtml(college.title.rendered)}},+{{render_acf_text('location', college.acf)}}">
                 {{ render_acf_text('location', college.acf) }}
               </a>
-            </tr>
+            </td>
           </tr>
           <tr>
             <td>Enrollment:</td>
-            <tr>
+            <td>
               {{ render_acf_text('enrollment_count', college.acf) }}
-            </tr>
+            </td>
           </tr>
           <tr>
             <td>Tuition:</td>
-            <tr>
+            <td>
               {{ render_acf_text('tuition', college.acf) }}
-            </tr>
+            </td>
           </tr>
         </tbody>
       </table>
