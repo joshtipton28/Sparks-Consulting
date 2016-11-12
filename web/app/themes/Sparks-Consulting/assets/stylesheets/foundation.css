@@ -6506,7 +6506,10 @@ p {
 .college-single-stats-list table > tbody > tr > td:first-child {
   font-weight: bold;
   text-align: right;
-  padding-right: 20px; }
+  padding-right: 20px;
+  /* Slim down the left column */
+  white-space: nowrap;
+  width: 1px; }
 
 /* Styles for Foundation Tabs used in:
   - About Us

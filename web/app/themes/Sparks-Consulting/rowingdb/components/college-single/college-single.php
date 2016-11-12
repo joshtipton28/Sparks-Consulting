@@ -154,13 +154,5 @@
         </tbody>
       </table>
     </div>
-
-    <div class="college-single-related-info">
-      Related Info goes here
-    </div>
-
-    <div class="college-single-majors">
-      Majors goes here
-    </div>
   </div>
 </div>

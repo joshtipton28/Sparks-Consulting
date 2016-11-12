@@ -54,6 +54,7 @@ add_filter('json_prepare_post', 'json_api_encode_acf');
 function json_api_encode_acf($post) {
 
     $acf = get_fields($post['ID']);
+    $acf['school_featured_image'] = get_the_post_thumbnail($post['ID']);
 
     if (isset($post)) {
       $post['acf'] = $acf;
