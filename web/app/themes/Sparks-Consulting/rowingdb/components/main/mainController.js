@@ -44,6 +44,12 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   // Load college data from external source
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
+
+    angular.forEach(data, function(college) {
+      if( college.featured_media ) {
+        console.debug('college', college);
+      }
+    });
   });
 
   $scope.go = function(ref) {
