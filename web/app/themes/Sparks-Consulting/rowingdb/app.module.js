@@ -1,1 +1,1 @@
-var app = angular.module('app', ['ui.router', 'ngSanitize', 'mm.foundation', 'ngMap']);
+var app = angular.module('app', ['ui.router', 'ngSanitize', 'mm.foundation', 'ngMap', 'checklist-model']);

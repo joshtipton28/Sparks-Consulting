@@ -11,6 +11,14 @@
     </option>
   </select>
 
+
+  <label ng-if="data.type === 'checklist'"
+         ng-repeat="item in data.items">
+    <input type="checkbox"
+           checklist-model="data.model"
+           checklist-value="item.id"> {{item.name}}
+  </label>
+
   <button class="button" ng-click='cancel()'>Clear</button>
   <button class="button" ng-click='ok()' type="button">Save</button>
 </script>

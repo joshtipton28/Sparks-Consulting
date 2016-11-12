@@ -378,6 +378,36 @@ app.factory('Filter', ['$filter', function($filter) {
           return true;
         }
       },
+      "housing_types": {
+        "type": "checklist",
+        "title": "Housing, Types",
+        "content": "Make a selection of as many (or as few) options as you'd like.",
+        "items": [{
+          "id": 1,
+          "name": "Allowed"
+        }, {
+          "id": 2,
+          "name": "Not Allowed"
+        }],
+        "render_text": function(acf, data) {
+          var priv = parseInt(acf.housing_alcohol);
+          if( !isNaN(priv) ) {
+            item = get_item_by_id(data, priv);
+            if( item )
+              return item.name;
+          }
+          return '';
+        },
+        "filter": function(self, college, spec) {
+          var val = parseInt(college.acf.housing_alcohol);
+          var item = get_item_by_name(self, spec);
+          if( isNaN(val) || !item ) return false;
+          // Filter
+          if( item.id !== val )
+            return false;
+          return true;
+        }
+      },
       "location": {
         "type": "zip_distance",
         "title": "Location",

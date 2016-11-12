@@ -57,6 +57,9 @@ var PATHS = {
     // Google Maps
     'assets/components/ngmap/build/scripts/ng-map.js',
 
+    // AngularJS Checklist-model
+    'assets/components/checklist-model/checklist-model.js',
+
     // Motion UI
     'assets/components/motion-ui/motion-ui.js',
 
