@@ -22,7 +22,7 @@
 
     <div class="colleges-list">
       <!-- Start Debugging -->
-      <div style="border: 2px white dotted;">
+      <!--<div style="border: 2px white dotted;">
         <h4>filters</h4>
         <pre>{{ filter.filters | json }}</pre>
       </div>
@@ -30,7 +30,7 @@
            ng-repeat="college in colleges | limitTo:2">
         <h4>college</h4>
         <pre>{{ college | json }}</pre>
-      </div>
+      </div>-->
       <!-- End Debugging -->
 
       <table class="hover">
