@@ -7,7 +7,7 @@
         <button type="button"
                 class="button"
                 style="margin-right: 10px;"
-                ng-click="go('home')">
+                ng-click="go('listing')">
           Back to Search Results
         </button>
       </div>
@@ -130,6 +130,29 @@
   <div class="large-6 columns">
     <div class="college-single-image">
       Image goes here
+    </div>
+
+    <div class="college-single-stats-list">
+      <table>
+        <tbody>
+          <tr>
+            <td>Related Info:</td>
+            <td>
+              <a ng-href="{{college.acf.row2k_url}}">
+                Row2k
+              </a>
+            </td>
+          </tr>
+          <tr ng-if="college.acf.school_majors">
+            <td>Majors:</td>
+            <td>
+              <span ng-repeat="major in college.acf.school_majors">
+                {{ major }}<span ng-if="!$last">, </span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="college-single-related-info">
