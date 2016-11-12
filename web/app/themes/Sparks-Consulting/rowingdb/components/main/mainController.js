@@ -46,9 +46,10 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
     $scope.colleges = data;
 
     angular.forEach(data, function(college) {
-      if( college.religion ) {
-        console.debug('college', college);
-      }
+      if( college.religion )
+        if( !angular.isArray(college.religion) ||
+            (angular.isArray(college.religion) && college.religion.length > 0) )
+          console.debug('college', college);
     });
   });
 
