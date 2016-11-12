@@ -314,6 +314,26 @@ app.factory('Filter', ['$filter', function($filter) {
           return true;
         }
       },
+      "selectivity": {
+        "type": "checklist",
+        "title": "Selectivity",
+        "content": "Select a level of selectivity - keep in mind more selective schools are not necessarily better.",
+        "items": [{
+          "id": 1,
+          "name": "Most Selective"
+        }, {
+          "id": 2,
+          "name": "More Selective"
+        }, {
+          "id": 3,
+          "name": "Selective"
+        }, {
+          "id": 4,
+          "name": "Less Selective"
+        }],
+        "render_text": generic_multi_id_render,
+        "filter": generic_multi_id_filter
+      },
       "academic_intensity": {
         "type": "dropdown",
         "title": "Academic Intensity",

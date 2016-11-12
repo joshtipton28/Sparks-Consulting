@@ -77,7 +77,7 @@
           <tr>
             <td>Selectivity:</td>
             <td>
-              PLACEHOLDER
+              {{ render_acf_text('selectivity', college.acf) }}
             </td>
           </tr>
           <tr ng-if="college.acf.financial_aid_score">
