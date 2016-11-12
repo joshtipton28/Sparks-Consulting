@@ -1258,7 +1258,7 @@ Foundation.Motion = Motion;
         timer;
 
     this.isPaused = false;
-
+    
     this.restart = function(){
       remain = -1;
       clearTimeout(timer);
@@ -8027,19 +8027,19 @@ factory(root.angular);
  * AngularJS Google Maps Ver. 1.17.7
  *
  * The MIT License (MIT)
- *
+ * 
  * Copyright (c) 2014, 2015, 1016 Allen Kim
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
  * the Software without restriction, including without limitation the rights to
  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  * the Software, and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
  * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -8270,14 +8270,14 @@ angular.module('ngMap', []);
           $parse($attrs.mapInitialized)($scope, {map: vm.map});
         }
       });
-
+	  
 	  //add maximum zoom listeners if zoom-to-include-markers and and maximum-zoom are valid attributes
 	  if (mapOptions.zoomToIncludeMarkers && mapOptions.maximumZoom) {
 	    google.maps.event.addListener(vm.map, 'zoom_changed', function() {
           if (vm.enableMaximumZoomCheck == true) {
 			vm.enableMaximumZoomCheck = false;
-	        google.maps.event.addListenerOnce(vm.map, 'bounds_changed', function() {
-		      vm.map.setZoom(Math.min(mapOptions.maximumZoom, vm.map.getZoom()));
+	        google.maps.event.addListenerOnce(vm.map, 'bounds_changed', function() { 
+		      vm.map.setZoom(Math.min(mapOptions.maximumZoom, vm.map.getZoom())); 
 		    });
 	  	  }
 	    });
@@ -8304,7 +8304,7 @@ angular.module('ngMap', []);
 
     if (options.lazyInit) { // allows controlled initialization
       // parse angular expression for dynamic ids
-      if (!!$attrs.id &&
+      if (!!$attrs.id && 
       	  // starts with, at position 0
 	  $attrs.id.indexOf("{{", 0) === 0 &&
 	  // ends with
@@ -8547,7 +8547,7 @@ angular.module('ngMap', []);
           _this.el.style.top = y + "px";
           _this.el.style.visibility = "visible";
         };
-        if (_this.el.offsetWidth && _this.el.offsetHeight) {
+        if (_this.el.offsetWidth && _this.el.offsetHeight) { 
           setPosition();
         } else {
           //delayed left/top calculation when width/height are not set instantly
@@ -8747,7 +8747,7 @@ angular.module('ngMap', []);
     request.travelMode = request.travelMode || 'DRIVING';
     var validKeys = [
       'origin', 'destination', 'travelMode', 'transitOptions', 'unitSystem',
-      'durationInTraffic', 'waypoints', 'optimizeWaypoints',
+      'durationInTraffic', 'waypoints', 'optimizeWaypoints', 
       'provideRouteAlternatives', 'avoidHighways', 'avoidTolls', 'region'
     ];
     for(var key in request){
@@ -9314,7 +9314,7 @@ angular.module('ngMap', []);
  *
  * @attr {Url} url url of the kml layer
  * @attr {KmlLayerOptions} KmlLayerOptions
- *   (https://developers.google.com/maps/documentation/javascript/reference#KmlLayerOptions)
+ *   (https://developers.google.com/maps/documentation/javascript/reference#KmlLayerOptions) 
  * @attr {String} &lt;KmlLayerEvent> Any KmlLayer events,
  *   https://developers.google.com/maps/documentation/javascript/reference
  * @example
@@ -9534,7 +9534,7 @@ angular.module('ngMap', []);
 /**
  * @ngdoc directive
  * @name map-type
- * @param Attr2MapOptions {service}
+ * @param Attr2MapOptions {service} 
  *   convert html attribute to Google map api options
  * @description
  *   Requires:  map directive
@@ -9919,14 +9919,14 @@ angular.module('ngMap', []);
           autocomplete.setTypes(optionValue);
         }
       });
-
+	  
 	  attrs.$observe('componentRestrictions', function (val) {
 		 if (val) {
 		   autocomplete.setComponentRestrictions(scope.$eval(val));
 		 }
 	   });
     };
-
+	
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -10031,7 +10031,7 @@ angular.module('ngMap', []);
       case "circle":
         if (!(options.center instanceof google.maps.LatLng)) {
           options.center = new google.maps.LatLng(0,0);
-        }
+        } 
         shape = new google.maps.Circle(options);
         break;
       case "polygon":
@@ -10624,7 +10624,7 @@ angular.module('ngMap', []);
     };
 
     /**
-     * converts attributes hash to scope-specific event function
+     * converts attributes hash to scope-specific event function 
      * @memberof Attr2MapOptions
      * @param {scope} scope angularjs scope
      * @param {Hash} attrs tag attributes
@@ -10817,7 +10817,7 @@ angular.module('ngMap', []);
    * @memberof NavigatorGeolocation
    * @param {Object} geoLocationOptions the navigator geolocations options.
    *  i.e. { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }.
-   *  If none specified, { timeout: 5000 }.
+   *  If none specified, { timeout: 5000 }. 
    *  If timeout not specified, timeout: 5000 added
    * @param {function} success success callback function
    * @param {function} failure failure callback function
@@ -10949,13 +10949,13 @@ angular.module('ngMap', []);
    * @memberof NgMapPool
    * @function returnMapInstance
    * @param {Map} an instance of google.maps.Map
-   * @desc sets the flag inUse of the given map instance to false, so that it
+   * @desc sets the flag inUse of the given map instance to false, so that it 
    * can be reused later
    */
   var returnMapInstance = function(map) {
     map.inUse = false;
   };
-
+  
   /**
    * @memberof NgMapPool
    * @function resetMapInstances
@@ -12437,7 +12437,7 @@ $(document).ready(function(){
 $(".nano").nanoScroller({ alwaysVisible: true });
 });
 
-$(".scroll").click(function(event){
+$(".scroll").click(function(event){   
     event.preventDefault();
     $('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
   });
