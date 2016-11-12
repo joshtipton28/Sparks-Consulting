@@ -47,7 +47,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
 
     angular.forEach(data, function(college) {
       if( college.featured_media ) {
-        console.debug('college', college);
+        // console.debug('college', college);
       }
     });
   });

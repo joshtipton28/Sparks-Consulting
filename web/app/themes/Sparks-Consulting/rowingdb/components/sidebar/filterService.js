@@ -406,7 +406,6 @@ app.factory('Filter', ['$filter', function($filter) {
         "filter": function(self, college, specs) {
           var ret = true;
           var types = college.acf.housing_types;
-          console.debug('self, college, specs, types', self, college, specs, types);
           if( angular.isArray(specs) && angular.isArray(types) )
             angular.forEach(specs, function(spec) {
               if( types.indexOf(spec) === -1 ) {
