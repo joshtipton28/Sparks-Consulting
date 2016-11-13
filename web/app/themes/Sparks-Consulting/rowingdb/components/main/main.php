@@ -17,16 +17,13 @@
     </header>
     <!-- Dynamic map -->
     <div class="colleges-map-wrapper">
-      <div class="counter"
+      <div class="map-overlay">
+        <p counter
            to="counter.to"
            value="counter.from"
            duration="counter.duration"
            effect="counter.effect">
-        {{ counter.to }}
-      </div>
-      <div class="map-overlay">
-        <p>
-           <span ng-bind="counter.from"></span> Colleges
+           {{ counter.from | number:0 }} Colleges
         </p>
         <!-- Link to listing results -->
         <a ui-sref="listing" class="success large button">
