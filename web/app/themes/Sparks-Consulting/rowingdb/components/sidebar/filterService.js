@@ -1,15 +1,4 @@
 app.factory('Filter', ['$filter', function($filter) {
-  function get_item_by_id(data, iid) {
-    var res = null;
-    angular.forEach(data.items, function(val) {
-      if( iid === val.id  ) {
-        res = val;
-        return;
-      }
-    });
-    return res;
-  }
-
   function get_item_by_name(data, name) {
     var res = null;
     angular.forEach(data.items, function(val) {
@@ -26,7 +15,6 @@ app.factory('Filter', ['$filter', function($filter) {
   }
 
   function generic_name_filter(self, val, spec) {
-    console.debug('self, val, spec', self, val, spec);
     if( spec !== val )
       return false;
     return true;

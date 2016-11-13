@@ -24,11 +24,11 @@
         <h4>priority</h4>
         <pre>{{ filter.priority | json }}</pre>
       </div>
-      <div style="border: 2px white inset;"
+      <!--<div style="border: 2px white inset;"
            ng-repeat="college in colleges | limitTo:2">
         <h4>college</h4>
         <pre>{{ college | json }}</pre>
-      </div>
+      </div>-->
       <!-- End Debugging -->
     </header>
     <!-- Dynamic map -->

@@ -21,22 +21,6 @@
     </header>
 
     <div class="colleges-list">
-      <!-- Start Debugging -->
-      <div style="border: 2px white dotted;">
-        <h4>filters</h4>
-        <pre>{{ filter.filters | json }}</pre>
-      </div>
-      <div style="border: 2px white dotted;">
-        <h4>sort</h4>
-        <pre>{{ sort | json }}</pre>
-      </div>
-      <!--<div style="border: 2px white inset;"
-           ng-repeat="college in colleges | limitTo:2">
-        <h4>college</h4>
-        <pre>{{ college | json }}</pre>
-      </div>-->
-      <!-- End Debugging -->
-
       <table class="hover">
         <thead>
           <tr>
@@ -55,8 +39,8 @@
                 {{ priority.name }}
                 <span ng-show="sort.priority == 'norm.' + priority.id"
                       class="fa"
-                      ng-class="{'fa-caret-up': sort.direction,
-                                 'fa-caret-down': !sort.direction}">
+                      ng-class="{'fa-caret-down': sort.direction,
+                                 'fa-caret-up': !sort.direction}">
                 </span>
               </a>
             </th>
