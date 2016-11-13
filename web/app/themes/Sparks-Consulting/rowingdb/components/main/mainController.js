@@ -54,46 +54,13 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
 
   // Load college data from external source
   CollegeFactory.getData(function(data) {
-    $scope.colleges = data;
+    $scope.colleges = [];
     var flag = false;
-    angular.forEach($scope.colleges, function(college, key) {
-      $scope.colleges[key].norm = {};
-      // Normalize and isolate data
-      // Normalize from string
-      angular.forEach([
-        'tuition', 'enrollment_count', 'financial_aid_score',
-        'academic_intensity', 'st_ratio', 'school_privacy'
-      ], function(cat) {
-        $scope.colleges[this].norm[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
-      }, key);
-      // Normalize from object (value key)
-      angular.forEach([
-        'environment', 'selectivity', 'religion'
-      ], function(cat) {
-        $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].label;
-      }, key);
-      // Normalize from "string array...ish"
-      angular.forEach([
-        'housing_types', 'housing_sub_types', 'food_services',
-      ], function(cat) {
-        $scope.colleges[this].norm[cat] = [];
-        angular.forEach($scope.colleges[this].acf[cat], function(val) {
-          $scope.colleges[this].norm[cat].push(val.label);
-        }, this);
-      }, key);
-      // Normalize school_privacy
-      if( $scope.colleges[key].norm.school_privacy === 1 )
-        $scope.colleges[key].norm.school_privacy = 'Public';
-      else if( $scope.colleges[key].norm.school_privacy === 2 )
-        $scope.colleges[key].norm.school_privacy = 'Private';
-      else $scope.colleges[key].norm.school_privacy = '';
-      // Normalize location
-      $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
-      // Copy housing_alcohol
-      $scope.colleges[key].norm.housing_alcohol = $scope.colleges[key].acf.housing_alcohol;
+    angular.forEach(data, function(college) {
+      $scope.colleges.push($scope.filter.normalizeCollege(college));
 
       if( !flag ) {
-        console.debug('college', $scope.colleges[key]);
+        console.debug('colleges', $scope.colleges);
         flag = true;
       }
     });

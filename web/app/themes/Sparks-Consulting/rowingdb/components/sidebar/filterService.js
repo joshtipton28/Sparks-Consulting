@@ -423,6 +423,43 @@ app.factory('Filter', ['$filter', function($filter) {
         "content": "Please enter a location.",
         "items": [25, 50, 100, 300, 750, 1500, 3000, 7000]
       }
+    },
+    "normalizeCollege": function(college) {
+      college.norm = {};
+      // Normalize and isolate data
+      // Normalize from string
+      angular.forEach([
+        'tuition', 'enrollment_count', 'financial_aid_score',
+        'academic_intensity', 'st_ratio', 'school_privacy'
+      ], function(cat) {
+        college.norm[cat] = parseInt(college.acf[cat]) || 0;
+      });
+      // Normalize from object (value key)
+      angular.forEach([
+        'environment', 'selectivity', 'religion'
+      ], function(cat) {
+        college.norm[cat] = college.acf[cat].label;
+      });
+      // Normalize from "string array...ish"
+      angular.forEach([
+        'housing_types', 'housing_sub_types', 'food_services',
+      ], function(cat) {
+        college.norm[cat] = [];
+        angular.forEach(college.acf[cat], function(val) {
+          college.norm[cat].push(val.label);
+        });
+      });
+      // Normalize school_privacy
+      if( college.norm.school_privacy === 1 )
+        college.norm.school_privacy = 'Public';
+      else if( college.norm.school_privacy === 2 )
+        college.norm.school_privacy = 'Private';
+      else college.norm.school_privacy = '';
+      // Normalize location
+      college.norm.location = college.acf.school_city + ', ' + college.acf.school_state;
+      // Copy housing_alcohol
+      college.norm.housing_alcohol = colleges.acf.housing_alcohol;
+      return college;
     }
 	};
 }]);

@@ -45,81 +45,81 @@
           <tr>
             <td>Location:</td>
             <td>
-              <a ng-href="http://maps.google.com/maps?q={{trustHtml(college.title.rendered)}},+{{render_acf_text('location', college.acf)}}">
-                {{ render_acf_text('location', college.acf) }}
+              <a ng-href="http://maps.google.com/maps?q={{trustHtml(college.title.rendered)}},+{{render_acf_text('location', college)}}">
+                {{ render_acf_text('location', college) }}
               </a>
             </td>
           </tr>
           <tr ng-if="college.acf.enrollment_count">
             <td>Enrollment:</td>
             <td>
-              {{ render_acf_text('enrollment_count', college.acf) }}
+              {{ render_acf_text('enrollment_count', college) }}
             </td>
           </tr>
           <tr>
             <td>Tuition:</td>
             <td>
-              {{ render_acf_text('tuition', college.acf) }}
+              {{ render_acf_text('tuition', college) }}
             </td>
           </tr>
           <tr ng-if="college.acf.st_ratio">
             <td>Classroom Ratio:</td>
             <td>
-              {{ render_acf_text('st_ratio', college.acf) }}
+              {{ render_acf_text('st_ratio', college) }}
             </td>
           </tr>
           <tr ng-if="college.acf.environment">
             <td>Environment:</td>
             <td>
-              {{ render_acf_text('environment', college.acf) }}
+              {{ render_acf_text('environment', college) }}
             </td>
           </tr>
           <tr>
             <td>Selectivity:</td>
             <td>
-              {{ render_acf_text('selectivity', college.acf) }}
+              {{ render_acf_text('selectivity', college) }}
             </td>
           </tr>
-          <tr ng-if="college.acf.financial_aid_score">
+          <tr ng-if="college.norm.financial_aid_score">
             <td>Financial Aid Score:</td>
             <td>
-              {{ render_acf_text('financial_aid_score', college.acf) }}
+              {{ render_acf_text('financial_aid_score', college) }}
             </td>
           </tr>
           <tr ng-if="college.acf.school_privacy">
             <td>Private/Public:</td>
             <td>
-              {{ render_acf_text('school_privacy', college.acf) }}
+              {{ render_acf_text('school_privacy', college) }}
             </td>
           </tr>
           <tr>
             <td>Religious Affiliation:</td>
             <td>
-              {{ render_acf_text('religion', college.acf) || 'None' }}
+              {{ render_acf_text('religion', college) || 'None' }}
             </td>
           </tr>
           <tr>
             <td>Food Services:</td>
             <td>
-              {{ render_acf_text('food_services', college.acf) }}
+              {{ render_acf_text('food_services', college) }}
             </td>
           </tr>
           <tr>
             <td>Housing Types:</td>
             <td>
-              {{ render_acf_text('housing_types', college.acf) }}
+              {{ render_acf_text('housing_types', college) }}
             </td>
           </tr>
           <tr ng-if="college.acf.housing_alcohol">
             <td>Housing Alcohol:</td>
             <td>
-              {{ render_acf_text('housing_alcohol', college.acf) }}
+              {{ render_acf_text('housing_alcohol', college) }}
             </td>
           </tr>
           <tr>
             <td>Housing Sub-types:</td>
             <td>
-              {{ render_acf_text('housing_sub_types', college.acf) }}
+              {{ render_acf_text('housing_sub_types', college) }}
             </td>
           </tr>
         </tbody>
@@ -128,9 +128,9 @@
   </div>
 
   <div class="large-6 columns">
-    <div ng-if="college.featured_image_source"
+    <div ng-if="college.norm.featured_image"
          class="college-single-image">
-      <img ng-src="{{college.featured_image_source}}">
+      <img ng-src="{{college.norm.featured_image}}">
     </div>
 
     <div class="college-single-stats-list">

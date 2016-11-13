@@ -16,25 +16,31 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
   $scope.colleges = [];
   // Load college data from external source
   CollegeFactory.getData(function(data) {
-    $scope.colleges = data;
-    $scope.college = $scope.get_college_by_slug($scope.slug);
+    $scope.college = {};
+    angular.forEach(data, function(college) {
+      if( college.slug === $scope.slug ) {
+        $scope.college = $scope.filter.normalizeCollege(college);
+        return;
+      }
+    });
+
     console.debug('slug', $scope.slug);
     console.debug('college', $scope.college);
 
-    if( !$scope.college || !$scope.college.acf ) {
+    if( !$scope.college || !$scope.college.norm ) {
       console.error('Invalid college specified', $scope.slug);
       $scope.go('home');
       return;
     }
 
     // Load the featured image URL
-    $scope.college.featured_image_source = null;
+    $scope.college.norm.featured_image = null;
     if( $scope.college.featured_media ) {
       $http.get(
         '/wp-json/wp/v2/media/' + $scope.college.featured_media
       ).then(function successCallback(res) {
         if( res && res.hasOwnProperty('data') )
-          $scope.college.featured_image_source = res.data.source_url;
+          $scope.college.norm.featured_image = res.data.source_url;
         else
           console.error('Unexpected featured image format', res);
       }, function errorCallback(res) {
@@ -43,44 +49,20 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
     }
   });
 
-  $scope.get_college_by_slug = function(slug) {
-    var ret = null;
-    angular.forEach($scope.colleges, function(college) {
-      if( college.slug === slug ) {
-        ret = college;
-        return;
-      }
-    });
-    return ret;
-  };
-
   // Allow for HTML rendering / unescaping
   $scope.trustHtml = function(html) {
     return $sce.trustAsHtml(html);
   };
 
-  // Find a type's corresponding data
-  function get_type_data(type) {
-    var res = null;
-    angular.forEach($scope.filter.types_map, function(val, key) {
-      if( type === key ) {
-        val.id = key;
-        res = val;
-        return;
-      }
-    });
-    return res;
-  }
-
   // Render text intelligently
-  $scope.render_acf_text = function(priority, acf) {
-    if( !acf || acf[priority] === 'false' )
+  $scope.render_acf_text = function(priority, college) {
+    if( !college || !college.norm || college.norm[priority.id] === 'false' )
       return '';
 
-    data = get_type_data(priority);
-    if( data && angular.isFunction(data.render_text) )
-      return $scope.filter.types_map[priority].render_text(acf, data);
-    return acf[priority];
+    if( $scope.filter.types_map[priority.id] &&
+        angular.isFunction($scope.filter.types_map[priority.id].render_text) )
+      return $scope.filter.types_map[priority.id].render_text(college.norm[priority.id]);
+    return college.norm[priority.id];
   };
 
   $scope.go = function(ref) {
