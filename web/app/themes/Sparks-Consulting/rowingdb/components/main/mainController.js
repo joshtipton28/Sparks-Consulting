@@ -84,7 +84,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       angular.forEach([
         'housing_types', 'housing_sub_types', 'food_services',
       ], function(cat) {
-        $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].split('||');
+        $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].value.split('||');
         $scope.colleges[this].norm[cat] = $scope.render_acf_text(
           {'id': cat}, $scope.colleges[this].norm);
       }, key);
