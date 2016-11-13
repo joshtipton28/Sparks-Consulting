@@ -275,8 +275,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Less Selective"
         }],
-        "render_text": generic_multi_name_render,
-        "filter": generic_multi_name_filter
+        "filter": generic_name_filter
       },
       "academic_intensity": {
         "type": "dropdown",
@@ -348,8 +347,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 8,
           "name": "Catholic"
         }],
-        "render_text": generic_multi_name_render,
-        "filter": generic_multi_name_filter
+        "filter": generic_name_filter
       },
       "food_services": {
         "type": "checklist",
