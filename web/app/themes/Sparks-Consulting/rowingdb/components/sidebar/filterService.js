@@ -458,7 +458,7 @@ app.factory('Filter', ['$filter', function($filter) {
       // Normalize location
       college.norm.location = college.acf.school_city + ', ' + college.acf.school_state;
       // Copy housing_alcohol
-      college.norm.housing_alcohol = colleges.acf.housing_alcohol;
+      college.norm.housing_alcohol = college.acf.housing_alcohol;
       return college;
     }
 	};
