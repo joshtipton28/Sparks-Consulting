@@ -39,7 +39,7 @@
             <th>
               <a href="#" ng-click="setSort('name')">
                 School Name
-                <span ng-show="sort.priority == 'name'"
+                <span ng-show="sort.priority == 'title.slug'"
                       class="fa"
                       ng-class="{'fa-caret-up': sort.direction,
                                  'fa-caret-down': !sort.direction}">
@@ -47,9 +47,9 @@
               </a>
             </th>
             <th ng-repeat="priority in get_priorities()">
-              <a href="#" ng-click="setSort(priority)">
+              <a href="#" ng-click="setSort('acf.{{priority.id}}')">
                 {{ priority.name }}
-                <span ng-show="sort.priority == priority"
+                <span ng-show="sort.priority == 'acf.{{priority.id}}'"
                       class="fa"
                       ng-class="{'fa-caret-up': sort.direction,
                                  'fa-caret-down': !sort.direction}">
@@ -59,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="college in colleges | filter:masterFilter as filtered">
+          <tr ng-repeat="college in colleges | filter:masterFilter as filtered | orderBy:sort.priority:sort.direction">
             <td>
               <a ng-href="rowing-teams/{{college.slug}}"
                  ng-bind-html="trustHtml(college.title.rendered)">
