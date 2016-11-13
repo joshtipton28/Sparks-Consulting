@@ -83,9 +83,9 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       }, key);
       // Normalize school_privacy
       if( $scope.colleges[key].norm.school_privacy === 1 )
-        $scope.colleges[key].norm.school_privacy = 'Allowed';
+        $scope.colleges[key].norm.school_privacy = 'Public';
       else if( $scope.colleges[key].norm.school_privacy === 2 )
-        $scope.colleges[key].norm.school_privacy = 'Not Allowed';
+        $scope.colleges[key].norm.school_privacy = 'Private';
       else $scope.colleges[key].norm.school_privacy = '';
       // Normalize location
       $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
