@@ -77,17 +77,17 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       angular.forEach([
         'school_privacy', 'environment', 'selectivity'
       ], function(cat) {
-        $scope.colleges[this].norm[cat] = $scope.render_acf_text(
-          {'id': cat}, $scope.colleges[this].acf);
+        $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].label;
       }, key);
       // Normalize from "string array...ish"
       console.debug('college', $scope.colleges[key]);
       angular.forEach([
         'housing_types', 'housing_sub_types', 'food_services',
       ], function(cat) {
-        $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].value.split('||');
-        $scope.colleges[this].norm[cat] = $scope.render_acf_text(
-          {'id': cat}, $scope.colleges[this].norm);
+        $scope.colleges[this].norm[cat] = [];
+        angular.forEach($scope.colleges[this].acf[cat], function(val) {
+          $scope.colleges[this].norm[cat].push(val.label);
+        }, this);
       }, key);
       $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
 
