@@ -91,7 +91,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       }, key);
       $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
 
-      console.debug('college', college);
+      console.debug('college', $scope.colleges[key]);
       return;
     });
   });
