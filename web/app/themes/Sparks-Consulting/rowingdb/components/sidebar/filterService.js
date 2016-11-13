@@ -30,10 +30,11 @@ app.factory('Filter', ['$filter', function($filter) {
       types = [types];
     angular.forEach(types, function(type) {
       if( angular.isObject(type) &&
-          type.hasOwnProperty('value') )
+          type.hasOwnProperty('value') ) {
         item = get_item_by_id(data, type.value);
-      else item = get_item_by_id(data, type);
-
+      } else {
+        item = get_item_by_id(data, type);
+      }
       if( item )
         names.push(item.name);
     });
@@ -49,12 +50,6 @@ app.factory('Filter', ['$filter', function($filter) {
       types = [types];
     if( angular.isArray(specs) && angular.isArray(types) )
       angular.forEach(specs, function(spec) {
-        var spec_val = null;
-        if( angular.isObject(spec) &&
-            spec.hasOwnProperty('value') )
-          spec_val = spec.value;
-        else spec_val = spec;
-
         if( types.indexOf(spec) === -1 ) {
           ret = false;
           return;

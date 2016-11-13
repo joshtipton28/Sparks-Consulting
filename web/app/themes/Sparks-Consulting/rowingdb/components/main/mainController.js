@@ -56,6 +56,8 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
     angular.forEach($scope.colleges, function(college, key) {
+      $scope.college[key].norm = {};
+      // Convert integer-strings to integers in-place
       angular.forEach([
         'tuition', 'enrollment_count', 'financial_aid_score',
         'academic_intensity', 'school_privacy', 'st_ratio'
@@ -63,9 +65,33 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
         $scope.colleges[this].acf[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
       }, key);
 
-      $scope.colleges[key].acf.location = college.acf.school_city + ', ' + college.acf.school_state;
+      // Normalize and isolate data
+      // Normalize from string
+      angular.forEach([
+        'tuition', 'enrollment_count', 'financial_aid_score',
+        'academic_intensity', 'st_ratio'
+      ], function(cat) {
+        $scope.colleges[this].norm[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
+      }, key);
+      // Normalize from object (value key)
+      angular.forEach([
+        'school_privacy', 'environment', 'selectivity'
+      ], function(cat) {
+        $scope.colleges[this].norm[cat] = $scope.render_acf_text(
+          {'id': cat}, $scope.colleges[this].acf);
+      }, key);
+      // Normalize from "string array...ish"
+      angular.forEach([
+        'housing_types', 'housing_sub_types', 'food_services',
+      ], function(cat) {
+        $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].split('||');
+        $scope.colleges[this].norm[cat] = $scope.render_acf_text(
+          {'id': cat}, $scope.colleges[this].norm);
+      }, key);
+      $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
 
       console.debug('college', college);
+      return;
     });
   });
 
