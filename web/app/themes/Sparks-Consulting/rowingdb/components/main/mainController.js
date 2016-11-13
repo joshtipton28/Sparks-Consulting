@@ -81,6 +81,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
           {'id': cat}, $scope.colleges[this].acf);
       }, key);
       // Normalize from "string array...ish"
+      console.debug('college', $scope.colleges[key]);
       angular.forEach([
         'housing_types', 'housing_sub_types', 'food_services',
       ], function(cat) {
