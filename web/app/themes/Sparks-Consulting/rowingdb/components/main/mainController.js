@@ -142,15 +142,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
 
   // Filter out colleges without well-formatted city/state parts
   $scope.hasLocationFilter = function(college) {
-    if( !college.hasOwnProperty('acf') ||
-        !college.acf.hasOwnProperty('school_city') ||
-        !college.acf.hasOwnProperty('school_state') ||
-        !angular.isString(college.acf.school_city) ||
-        !angular.isString(college.acf.school_state) ||
-        (college.acf.school_city.length === 0 ||
-         !college.acf.school_city.trim()) ||
-        (college.acf.school_state.length === 0 ||
-         !college.acf.school_state.trim()))
+    if( !college.norm.position )
       return false;
     return true;
   };

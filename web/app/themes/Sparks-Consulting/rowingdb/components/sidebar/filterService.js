@@ -464,6 +464,14 @@ app.factory('Filter', ['$filter', function($filter) {
       college.norm.location = college.acf.school_city + ', ' + college.acf.school_state;
       // Copy housing_alcohol
       college.norm.housing_alcohol = college.acf.housing_alcohol;
+      // Create LatLng position for map
+      college.norm.position = null;
+      if( college.acf.latitude && college.acf.longitude ) {
+        var lat = parseFloat(college.acf.latitude);
+        var lng = parseFloat(college.acf.longitude);
+        if( !isNaN(lat) && !isNaN(lng) )
+          college.norm.position = [lat, lng];
+      }
       return college;
     }
 	};
