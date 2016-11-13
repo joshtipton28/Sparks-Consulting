@@ -29,16 +29,15 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
 
     // Load the featured image URL
     $scope.college.featured_image_source = null;
-    if( angular.isArray($scope.college._links) ) {
+    if( $scope.college.acf.featured_media ) {
       $http.get(
-        $scope.college._links['wp:featuredmedia']
+        '/wp-json/wp/v2/media/' + $scope.college.acf.featured_media
       ).then(function successCallback(res) {
         $scope.college.featured_image_source = res.source_url;
       }, function errorCallback(res) {
         console.error('Error getting featured image', res);
       });
     }
-
   });
 
   $scope.get_college_by_slug = function(slug) {
