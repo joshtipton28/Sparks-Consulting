@@ -56,12 +56,13 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
 
-    //angular.forEach(data, function(college) {
-    //  if( college.mens_programs )
-    //    if( !angular.isArray(college.mens_programs) ||
-    //        (angular.isArray(college.mens_programs) && college.mens_programs.length > 0) )
-    //      console.debug('college', college);
-    //});
+    var limit = 2;
+    angular.forEach(data, function(college) {
+      console.debug('college', college);
+      if( !--limit ) {
+        return;
+      }
+    });
   });
 
   $scope.go = function(ref) {
