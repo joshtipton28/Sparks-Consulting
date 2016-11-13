@@ -70,7 +70,6 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   };
 
   $scope.$watch('filtered.length', function(nval, oval) {
-    console.log('filtered.length changed', nval, oval);
     $scope.counter.from = oval;
     $scope.counter.to = nval;
   });

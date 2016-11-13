@@ -33,17 +33,19 @@
       </div>-->
       <!-- End Debugging -->
 
-      <table class="hover">
+      <table class="hover" ts-wrapper>
         <thead>
           <tr>
-            <th>School Name</th>
-            <th ng-repeat="priority in get_priorities()">
+            <th ts-criteria="title.rendered">School Name</th>
+            <th ng-repeat="priority in get_priorities()"
+                ts-criteria="{{acf[priority.id]}}">
               {{ priority.name }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="college in colleges | filter:masterFilter as filtered">
+          <tr ng-repeat="college in colleges | filter:masterFilter as filtered"
+              ts-repeat>
             <td>
               <a ng-href="rowing-teams/{{college.slug}}"
                  ng-bind-html="trustHtml(college.title.rendered)">
