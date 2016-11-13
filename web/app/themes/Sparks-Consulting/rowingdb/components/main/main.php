@@ -17,7 +17,13 @@
     </header>
     <!-- Dynamic map -->
     <div class="colleges-map-wrapper">
-      <div to="filtered.length" value="0" duration="2" effect="swing"></div>
+      <div class="counter"
+           to="filtered.length"
+           value="0"
+           duration="2"
+           effect="swing">
+        {{ filtered.length }}
+      </div>
       <div class="map-overlay">
         <p>
            <span ng-bind="filtered.length"></span> Colleges
