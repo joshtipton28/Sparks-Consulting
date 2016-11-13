@@ -29,8 +29,8 @@
                 School Name
                 <span ng-show="sort.priority == 'title.slug'"
                       class="fa"
-                      ng-class="{'fa-caret-up': sort.direction,
-                                 'fa-caret-down': !sort.direction}">
+                      ng-class="{'fa-caret-down': sort.direction,
+                                 'fa-caret-up': !sort.direction}">
                 </span>
               </a>
             </th>
