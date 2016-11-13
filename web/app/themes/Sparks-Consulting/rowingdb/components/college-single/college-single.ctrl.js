@@ -29,9 +29,9 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
 
     // Load the featured image URL
     $scope.college.featured_image_source = null;
-    if( $scope.college.acf.featured_media ) {
+    if( $scope.college.featured_media ) {
       $http.get(
-        '/wp-json/wp/v2/media/' + $scope.college.acf.featured_media
+        '/wp-json/wp/v2/media/' + $scope.college.featured_media
       ).then(function successCallback(res) {
         $scope.college.featured_image_source = res.source_url;
       }, function errorCallback(res) {
