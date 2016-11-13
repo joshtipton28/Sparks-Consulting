@@ -9,6 +9,11 @@ app.controller('MainController', [
 
 function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
+  $scope.filtered = [];
+  $scope.counter = {
+    'from': 0,
+    'to': 0
+  };
   $scope.colleges = [];
   $scope.priorities = [
     {
@@ -61,6 +66,14 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
     $scope.filter.priority = ["enrollment_count", "tuition", "location"];
     $scope.filter.filters = {};
   };
+
+  $scope.$watch('filtered.length', function(nval, oval) {
+    console.log('filtered.length changed', nval, oval);
+    $scope.counter = {
+      'from': oval,
+      'to': nval
+    };
+  });
 
   // Load the sidebar
   $scope.getSidebar = function () {

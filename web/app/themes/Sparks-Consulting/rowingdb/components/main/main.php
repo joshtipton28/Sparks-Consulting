@@ -18,15 +18,15 @@
     <!-- Dynamic map -->
     <div class="colleges-map-wrapper">
       <div class="counter"
-           to="filtered.length"
-           value="0"
+           to="counter.to"
+           value="counter.from"
            duration="2"
            effect="swing">
-        {{ filtered.length }}
+        {{ counter.to }}
       </div>
       <div class="map-overlay">
         <p>
-           <span ng-bind="filtered.length"></span> Colleges
+           <span ng-bind="counter.to"></span> Colleges
         </p>
         <!-- Link to listing results -->
         <a ui-sref="listing" class="success large button">
