@@ -25,6 +25,12 @@ app.factory('Filter', ['$filter', function($filter) {
     return names.join(', ');
   }
 
+  function generic_name_filter(self, val, spec) {
+    if( spec !== val )
+      return false;
+    return true;
+  }
+
   function generic_multi_name_filter(self, names, specs) {
     var ret = {val: true};
     if( names === null )
@@ -280,12 +286,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 6,
           "name": "Small Town"
         }],
-        "filter": function(self, val, spec) {
-          // Filter
-          if( spec !== val )
-            return false;
-          return true;
-        }
+        "filter": generic_name_filter
       },
       "selectivity": {
         "type": "checklist",
@@ -353,11 +354,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 2,
           "name": "Private"
         }],
-        "filter": function(self, val, spec) {
-          if( spec !== val )
-            return false;
-          return true;
-        }
+        "filter": generic_name_filter
       },
       "religion": {
         "type": "checklist",
@@ -462,37 +459,13 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 2,
           "name": "Not Allowed"
         }],
-        "render_text": function(acf, data) {
-          var priv = parseInt(acf.housing_alcohol);
-          if( !isNaN(priv) ) {
-            item = get_item_by_id(data, priv);
-            if( item )
-              return item.name;
-          }
-          return '';
-        },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.housing_alcohol);
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
-          // Filter
-          if( item.id !== val )
-            return false;
-          return true;
-        }
+        "filter": generic_name_filter
       },
       "location": {
         "type": "zip_distance",
         "title": "Location",
         "content": "Please enter a location.",
-        "items": [25, 50, 100, 300, 750, 1500, 3000, 7000],
-        "render_text": function(acf, data) {
-          var state = (acf.school_state || '').toLowerCase();
-          var sstr = acf.school_city + ', ';
-          if( states.hasOwnProperty(state) )
-            return sstr + states[state].toUpperCase();
-          return sstr + acf.school_state;
-        }
+        "items": [25, 50, 100, 300, 750, 1500, 3000, 7000]
       }
     }
 	};
