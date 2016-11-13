@@ -56,13 +56,13 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
 
   // Render text intelligently
   $scope.render_acf_text = function(priority, college) {
-    if( !college || !college.norm || college.norm[priority.id] === 'false' )
+    if( !college || !college.norm || college.norm[priority] === 'false' )
       return '';
 
-    if( $scope.filter.types_map[priority.id] &&
-        angular.isFunction($scope.filter.types_map[priority.id].render_text) )
-      return $scope.filter.types_map[priority.id].render_text(college.norm[priority.id]);
-    return college.norm[priority.id];
+    if( $scope.filter.types_map[priority] &&
+        angular.isFunction($scope.filter.types_map[priority].render_text) )
+      return $scope.filter.types_map[priority].render_text(college.norm[priority]);
+    return college.norm[priority];
   };
 
   $scope.go = function(ref) {
