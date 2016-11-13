@@ -21,41 +21,26 @@ app.factory('Filter', ['$filter', function($filter) {
     return res;
   }
 
-  function generic_multi_id_render(acf, data) {
-    var types = acf[data.id];
-    var names = [];
-    if( types === null )
-      types = [];
-    if( !angular.isArray(types) )
-      types = [types];
-    angular.forEach(types, function(type) {
-      if( angular.isObject(type) &&
-          type.hasOwnProperty('value') ) {
-        item = get_item_by_id(data, type.value);
-      } else {
-        item = get_item_by_id(data, type);
-      }
-      if( item )
-        names.push(item.name);
-    });
+  function generic_multi_name_render(names) {
     return names.join(', ');
   }
 
-  function generic_multi_id_filter(self, college, specs) {
-    var ret = true;
-    var types = college.acf[self.id];
-    if( types === null )
-      types = [];
-    if( !angular.isArray(types) )
-      types = [types];
-    if( angular.isArray(specs) && angular.isArray(types) )
+  function generic_multi_name_filter(self, names, specs) {
+    var ret = {val: true};
+    if( names === null )
+      names = [];
+    if( !angular.isArray(names) )
+      names = [names];
+    if( angular.isArray(specs) && angular.isArray(names) )
       angular.forEach(specs, function(spec) {
-        if( types.indexOf(spec) === -1 ) {
-          ret = false;
-          return;
-        }
-      });
-    return ret;
+        angular.forEach(names, function(name) {
+          if( name !== spec ) {
+            this.val = false;
+            return;
+          }
+        }, ret);
+      }, ret);
+    return ret.val;
   }
 
   var states = {
@@ -142,11 +127,10 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 3,
           "name": "Large (10,000 or more)"
         }],
-        "render_text": function(acf, data) {
-          return $filter('number')(acf.enrollment_count);
+        "render_text": function(val) {
+          return $filter('number')(val);
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.enrollment_count);
+        "filter": function(self, val, spec) {
           var item = get_item_by_name(self, spec);
           if( isNaN(val) || !item ) return false;
           // Filter
@@ -176,14 +160,12 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "High ($40,001 or more)"
         }],
-        "render_text": function(acf, data) {
-          var tuition = parseInt(acf.tuition);
-          if( isNaN(tuition) || !tuition )
+        "render_text": function(val) {
+          if( isNaN(val) || !val )
             return 'Full Scholarship';
-          return $filter('currency')(acf.tuition);
+          return $filter('currency')(val);
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.tuition);
+        "filter": function(self, val, spec) {
           var item = get_item_by_name(self, spec);
           if( isNaN(val) || !item ) return false;
           // Filter
@@ -218,11 +200,10 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 5,
           "name": "Moderate, Top 40%"
         }],
-        "render_text": function(acf, data) {
-          return $filter('number')(acf.financial_aid_score);
+        "render_text": function(val) {
+          return $filter('number')(val);
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.financial_aid_score);
+        "filter": function(self, val, spec) {
           var item = get_item_by_name(self, spec);
           if( isNaN(val) || !item ) return false;
           // Filter
@@ -256,14 +237,12 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Average (14:1 or larger)"
         }],
-        "render_text": function(acf, data) {
-          count = parseInt(acf.st_ratio);
-          if( !isNaN(count) )
-            return count + ':1';
+        "render_text": function(val) {
+          if( !isNaN(val) )
+            return val + ':1';
           return '';
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.st_ratio);
+        "filter": function(self, val, spec) {
           var item = get_item_by_name(self, spec);
           if( isNaN(val) || !item ) return false;
           // Filter
@@ -301,21 +280,9 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 6,
           "name": "Small Town"
         }],
-        "render_text": function(acf, data) {
-          var count = parseInt(acf.environment);
-          if( !isNaN(count) ) {
-            item = get_item_by_id(data, count);
-            if( item )
-              return item.name;
-          }
-          return '';
-        },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.environment);
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
+        "filter": function(self, val, spec) {
           // Filter
-          if( item.id !== val )
+          if( spec !== val )
             return false;
           return true;
         }
@@ -337,8 +304,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Less Selective"
         }],
-        "render_text": generic_multi_id_render,
-        "filter": generic_multi_id_filter
+        "render_text": generic_multi_name_render,
+        "filter": generic_multi_name_filter
       },
       "academic_intensity": {
         "type": "dropdown",
@@ -357,11 +324,10 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Intense"
         }],
-        "render_text": function(acf, data) {
-          return $filter('number')(acf.academic_intensity) + '%';
+        "render_text": function(val) {
+          return $filter('number')(val) + '%';
         },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.academic_intensity);
+        "filter": function(self, val, spec) {
           var item = get_item_by_name(self, spec);
           if( isNaN(val) || !item ) return false;
           // Filter
@@ -387,21 +353,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 2,
           "name": "Private"
         }],
-        "render_text": function(acf, data) {
-          var priv = parseInt(acf.school_privacy);
-          if( !isNaN(priv) ) {
-            item = get_item_by_id(data, priv);
-            if( item )
-              return item.name;
-          }
-          return '';
-        },
-        "filter": function(self, college, spec) {
-          var val = parseInt(college.acf.school_privacy);
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
-          // Filter
-          if( item.id !== val )
+        "filter": function(self, val, spec) {
+          if( spec !== val )
             return false;
           return true;
         }
@@ -435,16 +388,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 8,
           "name": "Catholic"
         }],
-        "render_text": generic_multi_id_render,
-        "filter": function(self, college, specs) {
-          // Workaround for dirty data
-          if( college.acf[self.id] === null ) {
-            var item = get_item_by_name(self, 'None');
-            if( item )
-              college.acf[self.id] = [item.id];
-          }
-          return generic_multi_id_filter(self, college, specs);
-        }
+        "render_text": generic_multi_name_render,
+        "filter": generic_multi_name_filter
       },
       "food_services": {
         "type": "checklist",
@@ -460,8 +405,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 3,
           "name": "On Campus Restaurants"
         }],
-        "render_text": generic_multi_id_render,
-        "filter": generic_multi_id_filter
+        "render_text": generic_multi_name_render,
+        "filter": generic_multi_name_filter
       },
       "housing_types": {
         "type": "checklist",
@@ -477,8 +422,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 3,
           "name": "Greek"
         }],
-        "render_text": generic_multi_id_render,
-        "filter": generic_multi_id_filter
+        "render_text": generic_multi_name_render,
+        "filter": generic_multi_name_filter
       },
       "housing_sub_types": {
         "type": "checklist",
@@ -503,8 +448,8 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 6,
           "name": "Substance Free"
         }],
-        "render_text": generic_multi_id_render,
-        "filter": generic_multi_id_filter
+        "render_text": generic_multi_name_render,
+        "filter": generic_multi_name_filter
       },
       "housing_alcohol": {
         "type": "dropdown",

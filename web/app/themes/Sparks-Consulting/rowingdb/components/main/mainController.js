@@ -67,12 +67,11 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       }, key);
       // Normalize from object (value key)
       angular.forEach([
-        'school_privacy', 'environment', 'selectivity'
+        'school_privacy', 'environment', 'selectivity', 'religion'
       ], function(cat) {
         $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].label;
       }, key);
       // Normalize from "string array...ish"
-      console.debug('college', $scope.colleges[key]);
       angular.forEach([
         'housing_types', 'housing_sub_types', 'food_services',
       ], function(cat) {
@@ -86,6 +85,8 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
           {'id': 'school_privacy'}, $scope.colleges[key].acf);
       // Normalize location
       $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
+      // Copy housing_alcohol
+      $scope.colleges[key].norm.housing_alcohol = $scope.colleges[key].acf.housing_alcohol;
 
       console.debug('college', $scope.colleges[key]);
       return;
@@ -153,7 +154,10 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
         var type = $scope.filter.types_map[type_id];
         if( type && angular.isFunction(type.filter) ) {
           type.id = type_id;
-          if( !type.filter(type, college, spec) ) {
+          // "type" is the types_map[id]
+          // "val" is the college normalized data value
+          // "spec" is the filter value to be applied
+          if( !type.filter(type, college.norm[type.id], spec) ) {
             ret = false;
             return ret;
           }
@@ -204,32 +208,19 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
     return prios;
   };
 
-  // Find a type's corresponding data
-  function get_type_data(type) {
-    var res = null;
-    angular.forEach($scope.filter.types_map, function(val, key) {
-      if( type === key ) {
-        val.id = key;
-        res = val;
-        return;
-      }
-    });
-    return res;
-  }
-
   // Allow for HTML rendering / unescaping
   $scope.trustHtml = function(html) {
     return $sce.trustAsHtml(html);
   };
 
   // Render text intelligently
-  $scope.render_acf_text = function(priority, acf) {
-    if( !acf || acf[priority.id] === 'false' )
+  $scope.render_acf_text = function(priority, college) {
+    if( !college || !college.norm || college.norm[priority.id] === 'false' )
       return '';
 
-    data = get_type_data(priority.id);
-    if( data && angular.isFunction(data.render_text) )
-      return $scope.filter.types_map[priority.id].render_text(acf, data);
-    return acf[priority.id];
+    if( $scope.filter.types_map[priority.id] &&
+        angular.isFunction($scope.filter.types_map[priority.id].render_text) )
+      return $scope.filter.types_map[priority.id].render_text(college.norm[piority.id]);
+    return college.norm[piority.id];
   };
 }
