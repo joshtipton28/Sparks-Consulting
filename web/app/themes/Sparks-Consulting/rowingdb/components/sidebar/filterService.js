@@ -117,7 +117,7 @@ app.factory('Filter', ['$filter', function($filter) {
 
 	return {
     // List column specifiers
-		priority: ["", "", ""],
+		priority: ["enrollment_count", "tuition", "location"],
     // Actual list filter
     filters: {},
     // Filters and priorities data and helpers
