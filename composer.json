@@ -39,18 +39,19 @@
     "johnpbloch/wordpress": "4.6.1",
     "oscarotero/env": "^1.0",
     "roots/wp-password-bcrypt": "1.0.0",
-    "wpackagist-plugin/all-in-one-seo-pack": "2.3.10.2",
+    "wpackagist-plugin/all-in-one-seo-pack": "2.3.11",
     "wpackagist-plugin/all-in-one-schemaorg-rich-snippets": "1.4.0",
     "wpackagist-plugin/coming-soon": "5.0.4",
     "wpackagist-plugin/google-sitemap-plugin": "3.0.7",
     "wpackagist-plugin/gravity-forms-to-excel-addon": "0.1.5.2",
     "wpackagist-plugin/quick-pagepost-redirect-plugin": "5.1.8",
     "wpackagist-plugin/simple-301-redirects": "1.07",
-    "wpackagist-plugin/updraftplus": "1.12.23",
-    "wpackagist-plugin/wordfence": "6.2.3",
+    "wpackagist-plugin/updraftplus": "1.12.25",
+    "wpackagist-plugin/wordfence": "6.2.5",
     "wpackagist-plugin/xml-sitemap-feed": "4.7.4",
     "wpackagist-plugin/acf-to-rest-api": "2.2.1",
-    "wpackagist-plugin/rest-api": "2.0-beta13"
+    "wpackagist-plugin/rest-api": "2.0-beta13",
+    "wpackagist-plugin/better-rest-api-featured-images": "1.2.1"
 
   },
   "require-dev": {

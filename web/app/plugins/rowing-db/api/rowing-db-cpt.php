@@ -41,10 +41,6 @@ function rowdb_register_post_type() {
 		'hierarchical'      	=> true,
 		'has_archive'       	=> false,
 		'capability_type'		=> 'post',
-		'rewrite'           	=> array(
-			'slug' 		 => 'rowingdb/rowing-teams',
-			'with_front' => 'true'
-		),
 		'supports'          	=> array(
 			'title',
 			'thumbnail',

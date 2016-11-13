@@ -158,7 +158,7 @@
             "key": "field_57bf59b9f6250",
             "label": "Women's Programs",
             "name": "womens_programs",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -175,14 +175,22 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "womens-division",
-            "field_type": "multi_select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "multiple": 0
+            "choices": {
+                "1": "Division I",
+                "2": "Division II",
+                "3": "Division III",
+                "4": "Lightweight",
+                "5": "Club",
+                "6": "Openweight",
+                "7": "LWT Club"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5a0af6251",
@@ -245,7 +253,7 @@
             "key": "field_57e03184a06b5",
             "label": "Men's Programs",
             "name": "mens_programs",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -262,14 +270,22 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "mens-division",
-            "field_type": "multi_select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "multiple": 0
+            "choices": {
+                "1": "Division I",
+                "2": "Division II",
+                "3": "Division III",
+                "4": "Lightweight",
+                "5": "Club",
+                "6": "Openweight",
+                "7": "LWT Club"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5a70f6253",
@@ -593,7 +609,7 @@
             "key": "field_57bf5c58d3a1d",
             "label": "Selectivity",
             "name": "selectivity",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -602,14 +618,19 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "selectivity",
-            "field_type": "select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "multiple": 0
+            "choices": {
+                "1": "Less Selective",
+                "2": "Selective",
+                "3": "More Selective",
+                "4": "Most Selective"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5c7bd3a1e",
@@ -629,7 +650,7 @@
                 "2": "Private"
             },
             "default_value": [],
-            "allow_null": 0,
+            "allow_null": 1,
             "multiple": 0,
             "ui": 0,
             "ajax": 0,
@@ -640,7 +661,7 @@
             "key": "field_57bf5cafd3a1f",
             "label": "Environment",
             "name": "environment",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -649,20 +670,27 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "environment",
-            "field_type": "select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "multiple": 0
+            "choices": {
+                "1": "Rural",
+                "2": "Suburban",
+                "3": "Small Town",
+                "4": "Small City",
+                "5": "Mid-Sized City",
+                "6": "Large City"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5cc8d3a20",
             "label": "Religious Affiliation",
             "name": "religion",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -671,20 +699,29 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "religion",
-            "field_type": "select",
+            "choices": {
+                "1": "None",
+                "2": "Catholic",
+                "3": "Roman Catholic",
+                "4": "Jesuit",
+                "5": "Lutheran",
+                "6": "Methodist",
+                "7": "Free Methodist",
+                "8": "Presbyterian"
+            },
+            "default_value": [],
             "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "object",
-            "multiple": 0
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5d0ad3a23",
             "label": "Housing Types",
             "name": "housing_types",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -693,20 +730,24 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "housing-type",
-            "field_type": "multi_select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "multiple": 0
+            "choices": {
+                "1": "Apartments",
+                "2": "Dorms",
+                "3": "Greek"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5d3ad3a24",
             "label": "Housing, Sub-Types",
             "name": "housing_sub_types",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -715,14 +756,21 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "housing-sub-type",
-            "field_type": "multi_select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "multiple": 0
+            "choices": {
+                "1": "Co-ed",
+                "2": "Female",
+                "3": "Male",
+                "4": "Substance-Free",
+                "5": "Disabled",
+                "6": "International"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5d5cd3a25",
@@ -746,14 +794,14 @@
             "multiple": 0,
             "ui": 0,
             "ajax": 0,
-            "return_format": "value",
+            "return_format": "label",
             "placeholder": ""
         },
         {
             "key": "field_57bf5d85d3a26",
             "label": "Food Services",
             "name": "food_services",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -762,14 +810,18 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "food",
-            "field_type": "multi_select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "multiple": 0
+            "choices": {
+                "1": "Dining Hall(s)",
+                "2": "In-dorm",
+                "3": "On Campus Restaurants"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_57bf5f1ba107d",
@@ -820,9 +872,9 @@
             "field_type": "multi_select",
             "allow_null": 0,
             "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
             "multiple": 0
         }
     ],
@@ -847,5 +899,5 @@
     "active": 1,
     "description": "",
     "local": "php",
-    "modified": 1474588979
+    "modified": 1479004858
 }

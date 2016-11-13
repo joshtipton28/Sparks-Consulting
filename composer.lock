@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5fa96ecc0db4a15f4c3a8a6cb1e6d91b",
-    "content-hash": "0222b15bb8353951db053b6ca7b198f1",
+    "hash": "c13af7c5eecac62c480310cf2b0e6121",
+    "content-hash": "d3a69d94a42d9876b5e358427cf5d1c9",
     "packages": [
         {
             "name": "composer/installers",
@@ -383,15 +383,15 @@
         },
         {
             "name": "wpackagist-plugin/all-in-one-seo-pack",
-            "version": "2.3.10.2",
+            "version": "2.3.11",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/all-in-one-seo-pack/",
-                "reference": "tags/2.3.10.2"
+                "reference": "tags/2.3.11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/all-in-one-seo-pack.2.3.10.2.zip",
+                "url": "https://downloads.wordpress.org/plugin/all-in-one-seo-pack.2.3.11.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -400,6 +400,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/all-in-one-seo-pack/"
+        },
+        {
+            "name": "wpackagist-plugin/better-rest-api-featured-images",
+            "version": "1.2.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/better-rest-api-featured-images/",
+                "reference": "tags/1.2.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/better-rest-api-featured-images.1.2.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/better-rest-api-featured-images/"
         },
         {
             "name": "wpackagist-plugin/coming-soon",
@@ -523,15 +543,15 @@
         },
         {
             "name": "wpackagist-plugin/updraftplus",
-            "version": "1.12.23",
+            "version": "1.12.25",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/updraftplus/",
-                "reference": "tags/1.12.23"
+                "reference": "tags/1.12.25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/updraftplus.1.12.23.zip",
+                "url": "https://downloads.wordpress.org/plugin/updraftplus.1.12.25.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -543,15 +563,15 @@
         },
         {
             "name": "wpackagist-plugin/wordfence",
-            "version": "6.2.3",
+            "version": "6.2.5",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordfence/",
-                "reference": "tags/6.2.3"
+                "reference": "tags/6.2.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordfence.6.2.3.zip",
+                "url": "https://downloads.wordpress.org/plugin/wordfence.6.2.5.zip",
                 "reference": null,
                 "shasum": null
             },

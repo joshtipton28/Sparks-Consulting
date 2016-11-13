@@ -4,7 +4,7 @@
  **/
 
 function rowdb_register_taxonomies() {
-
+/**
 	$singular = 'Men\'s Division';
 	$plural = 'Men\'s Divisions';
 
@@ -157,6 +157,7 @@ function rowdb_register_taxonomies() {
 	);
 
 	register_taxonomy( 'religion', array( 'school' ), $args );
+	**/
 
 	// College Majors Taxonomy
 
@@ -185,10 +186,13 @@ function rowdb_register_taxonomies() {
 		'show_admin_column' => true,
 		'query_var'         => true,
 		'rewrite'           => array( 'slug' => 'rowingdb/major' ),
+		'show_in_rest'       => true,
+  		'rest_base'          => 'major',
+  		'rest_controller_class' => 'WP_REST_Terms_Controller',
 	);
 
 	register_taxonomy( 'major', array( 'school' ), $args );
-
+/*
 	// Food Services Taxonomy
 
 	$singular = 'Food Service';
@@ -283,7 +287,7 @@ function rowdb_register_taxonomies() {
 	register_taxonomy( 'housing-sub-type', array( 'school' ), $args );
 
 
+*/
 }
-
 // hook into the init action and call rowdb_register_taxonomies when it fires
 add_action( 'init', 'rowdb_register_taxonomies', 0 );

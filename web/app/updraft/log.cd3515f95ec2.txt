@@ -1,0 +1,258 @@
+0000.001 (0) Opened log file at time: Sun, 13 Nov 2016 02:40:20 +0000 on http://sparksconsult.dev/wp
+0000.034 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.23 WP: 4.6.1 PHP: 5.6.19 (apache2handler, Windows NT JOSH-PC 10.0 build 14393 (Windows 10) AMD64) MySQL: 5.7.11 WPLANG: en_US Server: Apache/2.4.18 (Win64) PHP/5.6.19 safe_mode: 0 max_execution_time: 900 memory_limit: 268435456 (used: 44.9M | 45.5M) multisite: N openssl: OpenSSL 1.0.1s  1 Mar 2016 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0000.083 (0) Free space on disk containing Updraft's temporary directory: 450086.8 MB
+0000.123 (0) Tasks: Backup files:  (schedule: weekly) Backup DB: 1 (schedule: every4hours)
+0000.150 (0) Processed schedules. Tasks now: Backup files:  Backup DB: 1
+0000.219 (0) Requesting semaphore lock (d) (apparently via scheduler: last_scheduled_action_called_at=1478996588, seconds_ago=8232)
+0000.333 (0) Set semaphore last lock (d) time to 2016-11-13 02:40:21
+0000.367 (0) Semaphore lock (d) complete
+0000.492 (0) Backup run: resumption=0, nonce=cd3515f95ec2, begun at=1479004820 (1s ago), job type=backup
+0000.575 (0) Scheduling a resumption (1) after 300 seconds (1479005121) in case this run gets aborted
+0000.713 (0) This backup run is not intended for files - skipping
+0000.775 (0) Beginning creation of database dump (WordPress DB)
+0000.959 (0) Table wp_options: Total expected rows (approximate): 378
+0001.021 (0) Table wp_options: Total rows added: 384 in 0.03 seconds
+0001.050 (0) Table wp_options: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_options.table.gz - 68.3 KB)
+0001.172 (0) Table wp_users: Total expected rows (approximate): 23
+0001.205 (0) Table wp_users: Total rows added: 23 in 0.01 seconds
+0001.252 (0) Table wp_users: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_users.table.gz - 2.1 KB)
+0001.411 (0) Table wp_usermeta: Total expected rows (approximate): 434
+0001.457 (0) Table wp_usermeta: Total rows added: 434 in 0.02 seconds
+0001.536 (0) Table wp_usermeta: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_usermeta.table.gz - 8 KB)
+0001.691 (0) Table wp_commentmeta: Total expected rows (approximate): 2
+0001.784 (0) Table wp_commentmeta: Total rows added: 2 in 0.05 seconds
+0001.961 (0) Table wp_commentmeta: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_commentmeta.table.gz - 0.4 KB)
+0002.120 (0) Table wp_comments: Total expected rows (approximate): 3
+0002.181 (0) Table wp_comments: Total rows added: 3 in 0.02 seconds
+0002.228 (0) Table wp_comments: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_comments.table.gz - 1.1 KB)
+0002.327 (0) Table wp_links: Total expected rows (approximate): 0
+0002.384 (0) Table wp_links: Total rows added: 0 in 0.02 seconds
+0002.425 (0) Table wp_links: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_links.table.gz - 0.4 KB)
+0002.536 (0) Table wp_postmeta: Total expected rows (approximate): 149344
+0029.734 (0) Table wp_postmeta: Total rows added: 147220 in 27.16 seconds
+0029.834 (0) Table wp_postmeta: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_postmeta.table.gz - 2989.8 KB)
+0030.203 (0) Table wp_posts: Total expected rows (approximate): 4047
+0031.213 (0) Table wp_posts: Total rows added: 4111 in 0.98 seconds
+0031.293 (0) Table wp_posts: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_posts.table.gz - 886.9 KB)
+0031.454 (0) Table wp_term_relationships: Total expected rows (approximate): 1074
+0031.553 (0) Table wp_term_relationships: Total rows added: 1081 in 0.07 seconds
+0031.581 (0) Table wp_term_relationships: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_term_relationships.table.gz - 3.2 KB)
+0031.719 (0) Table wp_term_taxonomy: Total expected rows (approximate): 52
+0031.786 (0) Table wp_term_taxonomy: Total rows added: 58 in 0.04 seconds
+0031.891 (0) Table wp_term_taxonomy: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_term_taxonomy.table.gz - 0.9 KB)
+0032.113 (0) Table wp_termmeta: Total expected rows (approximate): 0
+0032.148 (0) Table wp_termmeta: Total rows added: 0 in 0.01 seconds
+0032.198 (0) Table wp_termmeta: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_termmeta.table.gz - 0.4 KB)
+0032.368 (0) Table wp_terms: Total expected rows (approximate): 52
+0032.409 (0) Table wp_terms: Total rows added: 58 in 0.02 seconds
+0032.449 (0) Table wp_terms: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_terms.table.gz - 1.1 KB)
+0032.533 (0) Table wp_cpk_wpcsv_export_queue: Total expected rows (approximate): 0
+0032.569 (0) Table wp_cpk_wpcsv_export_queue: Total rows added: 0 in 0.00 seconds
+0032.599 (0) Table wp_cpk_wpcsv_export_queue: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_cpk_wpcsv_export_queue.table.gz - 0.3 KB)
+0032.691 (0) Table wp_cpk_wpcsv_log: Total expected rows (approximate): 4
+0032.726 (0) Table wp_cpk_wpcsv_log: Total rows added: 4 in 0.00 seconds
+0032.758 (0) Table wp_cpk_wpcsv_log: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_cpk_wpcsv_log.table.gz - 0.6 KB)
+0032.935 (0) Table wp_essb3_click_stats: Total expected rows (approximate): 61
+0033.056 (0) Table wp_essb3_click_stats: Total rows added: 61 in 0.08 seconds
+0033.107 (0) Table wp_essb3_click_stats: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_essb3_click_stats.table.gz - 1.3 KB)
+0033.252 (0) Table wp_ewwwio_images: Total expected rows (approximate): 0
+0033.321 (0) Table wp_ewwwio_images: Total rows added: 0 in 0.02 seconds
+0033.375 (0) Table wp_ewwwio_images: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_ewwwio_images.table.gz - 0.4 KB)
+0033.678 (0) Table wp_pmxi_files: Total expected rows (approximate): 2
+0033.709 (0) Table wp_pmxi_files: Total rows added: 2 in 0.00 seconds
+0033.740 (0) Table wp_pmxi_files: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_files.table.gz - 0.5 KB)
+0033.845 (0) Table wp_pmxi_history: Total expected rows (approximate): 2
+0033.987 (0) Table wp_pmxi_history: Total rows added: 2 in 0.02 seconds
+0034.016 (0) Table wp_pmxi_history: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_history.table.gz - 0.5 KB)
+0034.170 (0) Table wp_pmxi_imports: Total expected rows (approximate): 2
+0034.210 (0) Table wp_pmxi_imports: Total rows added: 2 in 0.01 seconds
+0034.241 (0) Table wp_pmxi_imports: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_imports.table.gz - 3.1 KB)
+0034.398 (0) Table wp_pmxi_posts: Total expected rows (approximate): 0
+0034.451 (0) Table wp_pmxi_posts: Total rows added: 0 in 0.00 seconds
+0034.534 (0) Table wp_pmxi_posts: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_posts.table.gz - 0.4 KB)
+0034.650 (0) Table wp_pmxi_templates: Total expected rows (approximate): 0
+0034.683 (0) Table wp_pmxi_templates: Total rows added: 0 in 0.00 seconds
+0034.715 (0) Table wp_pmxi_templates: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_templates.table.gz - 0.4 KB)
+0034.826 (0) Table wp_rg_form: Total expected rows (approximate): 45
+0034.985 (0) Table wp_rg_form: Total rows added: 45 in 0.13 seconds
+0035.015 (0) Table wp_rg_form: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_form.table.gz - 1.1 KB)
+0035.117 (0) Table wp_rg_form_meta: Total expected rows (approximate): 42
+0035.180 (0) Table wp_rg_form_meta: Total rows added: 45 in 0.03 seconds
+0035.206 (0) Table wp_rg_form_meta: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_form_meta.table.gz - 27 KB)
+0035.306 (0) Table wp_rg_form_view: Total expected rows (approximate): 3353
+0035.499 (0) Table wp_rg_form_view: Total rows added: 3353 in 0.16 seconds
+0035.523 (0) Table wp_rg_form_view: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_form_view.table.gz - 30.6 KB)
+0035.622 (0) Table wp_rg_incomplete_submissions: Total expected rows (approximate): 0
+0035.690 (0) Table wp_rg_incomplete_submissions: Total rows added: 1 in 0.01 seconds
+0035.732 (0) Table wp_rg_incomplete_submissions: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_incomplete_submissions.table.gz - 0.9 KB)
+0036.169 (0) Table wp_rg_lead: Total expected rows (approximate): 628
+0036.379 (0) Table wp_rg_lead: Total rows added: 627 in 0.13 seconds
+0036.472 (0) Table wp_rg_lead: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead.table.gz - 15 KB)
+0036.632 (0) Table wp_rg_lead_detail: Total expected rows (approximate): 6288
+0037.253 (0) Table wp_rg_lead_detail: Total rows added: 5979 in 0.56 seconds
+0037.325 (0) Table wp_rg_lead_detail: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_detail.table.gz - 114.8 KB)
+0037.537 (0) Table wp_rg_lead_detail_long: Total expected rows (approximate): 0
+0037.645 (0) Table wp_rg_lead_detail_long: Total rows added: 0 in 0.06 seconds
+0037.724 (0) Table wp_rg_lead_detail_long: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_detail_long.table.gz - 0.3 KB)
+0038.023 (0) Table wp_rg_lead_meta: Total expected rows (approximate): 10
+0038.190 (0) Table wp_rg_lead_meta: Total rows added: 10 in 0.07 seconds
+0038.351 (0) Table wp_rg_lead_meta: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_meta.table.gz - 0.6 KB)
+0038.618 (0) Table wp_rg_lead_notes: Total expected rows (approximate): 0
+0038.799 (0) Table wp_rg_lead_notes: Total rows added: 0 in 0.10 seconds
+0038.856 (0) Table wp_rg_lead_notes: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_notes.table.gz - 0.4 KB)
+0039.188 (0) Table wp_rg_zapier: Total expected rows (approximate): 0
+0039.324 (0) Table wp_rg_zapier: Total rows added: 1 in 0.07 seconds
+0039.373 (0) Table wp_rg_zapier: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_zapier.table.gz - 0.5 KB)
+0039.543 (0) Table wp_seopressor_link: Total expected rows (approximate): 8
+0039.701 (0) Table wp_seopressor_link: Total rows added: 8 in 0.11 seconds
+0039.758 (0) Table wp_seopressor_link: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_link.table.gz - 0.7 KB)
+0040.032 (0) Table wp_seopressor_logs: Total expected rows (approximate): 0
+0040.135 (0) Table wp_seopressor_logs: Total rows added: 0 in 0.05 seconds
+0040.214 (0) Table wp_seopressor_logs: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_logs.table.gz - 0.3 KB)
+0040.367 (0) Table wp_seopressor_roles_capabilities: Total expected rows (approximate): 4
+0040.499 (0) Table wp_seopressor_roles_capabilities: Total rows added: 4 in 0.08 seconds
+0040.523 (0) Table wp_seopressor_roles_capabilities: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_roles_capabilities.table.gz - 0.5 KB)
+0040.830 (0) Table wp_seopressor_site_audit: Total expected rows (approximate): 0
+0040.974 (0) Table wp_seopressor_site_audit: Total rows added: 1 in 0.08 seconds
+0041.208 (0) Table wp_seopressor_site_audit: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_site_audit.table.gz - 0.6 KB)
+0041.394 (0) Table wp_seopressor_site_audit_crawler: Total expected rows (approximate): 21
+0041.566 (0) Table wp_seopressor_site_audit_crawler: Total rows added: 21 in 0.10 seconds
+0041.589 (0) Table wp_seopressor_site_audit_crawler: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_site_audit_crawler.table.gz - 1.1 KB)
+0041.808 (0) Table wp_seopressor_smart_linking: Total expected rows (approximate): 0
+0041.997 (0) Table wp_seopressor_smart_linking: Total rows added: 0 in 0.11 seconds
+0042.022 (0) Table wp_seopressor_smart_linking: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_smart_linking.table.gz - 0.3 KB)
+0042.235 (0) Table wp_seopressor_users_custom_roles: Total expected rows (approximate): 0
+0042.375 (0) Table wp_seopressor_users_custom_roles: Total rows added: 0 in 0.07 seconds
+0042.415 (0) Table wp_seopressor_users_custom_roles: finishing file (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_users_custom_roles.table.gz - 0.3 KB)
+0042.659 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_options.table.gz (1/38): adding to final database dump
+0042.750 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_users.table.gz (2/38): adding to final database dump
+0042.816 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_usermeta.table.gz (3/38): adding to final database dump
+0042.882 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_commentmeta.table.gz (4/38): adding to final database dump
+0042.958 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_comments.table.gz (5/38): adding to final database dump
+0043.049 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_links.table.gz (6/38): adding to final database dump
+0043.233 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_postmeta.table.gz (7/38): adding to final database dump
+0045.199 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_posts.table.gz (8/38): adding to final database dump
+0045.482 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_term_relationships.table.gz (9/38): adding to final database dump
+0045.517 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_term_taxonomy.table.gz (10/38): adding to final database dump
+0045.550 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_termmeta.table.gz (11/38): adding to final database dump
+0045.582 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_terms.table.gz (12/38): adding to final database dump
+0045.618 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_cpk_wpcsv_export_queue.table.gz (13/38): adding to final database dump
+0045.655 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_cpk_wpcsv_log.table.gz (14/38): adding to final database dump
+0045.740 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_essb3_click_stats.table.gz (15/38): adding to final database dump
+0045.837 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_ewwwio_images.table.gz (16/38): adding to final database dump
+0045.866 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_files.table.gz (17/38): adding to final database dump
+0045.957 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_history.table.gz (18/38): adding to final database dump
+0045.989 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_imports.table.gz (19/38): adding to final database dump
+0046.015 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_posts.table.gz (20/38): adding to final database dump
+0046.048 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_pmxi_templates.table.gz (21/38): adding to final database dump
+0046.081 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_form.table.gz (22/38): adding to final database dump
+0046.116 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_form_meta.table.gz (23/38): adding to final database dump
+0046.170 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_form_view.table.gz (24/38): adding to final database dump
+0046.226 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_incomplete_submissions.table.gz (25/38): adding to final database dump
+0046.255 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead.table.gz (26/38): adding to final database dump
+0046.287 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_detail.table.gz (27/38): adding to final database dump
+0046.370 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_detail_long.table.gz (28/38): adding to final database dump
+0046.397 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_meta.table.gz (29/38): adding to final database dump
+0046.421 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_lead_notes.table.gz (30/38): adding to final database dump
+0046.447 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_rg_zapier.table.gz (31/38): adding to final database dump
+0046.471 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_link.table.gz (32/38): adding to final database dump
+0046.497 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_logs.table.gz (33/38): adding to final database dump
+0046.573 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_roles_capabilities.table.gz (34/38): adding to final database dump
+0046.608 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_site_audit.table.gz (35/38): adding to final database dump
+0046.667 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_site_audit_crawler.table.gz (36/38): adding to final database dump
+0046.691 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_smart_linking.table.gz (37/38): adding to final database dump
+0046.723 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db-table-wp_seopressor_users_custom_roles.table.gz (38/38): adding to final database dump
+0046.757 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db.gz: finished writing out complete database file (4144 KB)
+0047.004 (0) Total database tables backed up: 38 (backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db.gz, size: 4259411, checksum (SHA1): 5c1e9bfd86fcbfdcca6a39bf360a8d0d1ec5e08a)
+0047.558 (0) backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db.gz: db: This file has not yet been successfully uploaded: will queue
+0047.627 (0) Saving backup history. Total backup size: 4.1 MB
+0047.698 (0) Requesting upload of the files that have not yet been successfully uploaded (1)
+0047.863 (0) Cloud backup selection (1/1):  (last)
+0047.939 (0) No remote despatch: user chose no remote backup service
+0048.030 (0) Recording as successfully uploaded: backup_2016-11-13-0240_Rowing_Camps_amp_Guidance_on_C_cd3515f95ec2-db.gz (0a907cea823ab06142685fce2a787a2b)
+0048.163 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=16
+0048.189 (0) Number of backup sets in history: 19; groups (db): 1
+0048.221 (0) Examining (for databases) backup set with group_id=0, nonce=cd3515f95ec2, datestamp=1479004820 (Nov 13 2016 02:40:20)
+0048.246 (0) This backup set is the backup set just made, so will not be deleted.
+0048.358 (0) Examining (for databases) backup set with group_id=0, nonce=18d2b3889be3, datestamp=1478996588 (Nov 13 2016 00:23:08)
+0048.404 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0048.471 (0) Examining (for databases) backup set with group_id=0, nonce=6f641ca9c96a, datestamp=1478975326 (Nov 12 2016 18:28:46)
+0048.505 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0048.612 (0) Examining (for databases) backup set with group_id=0, nonce=1b36960d6795, datestamp=1478915646 (Nov 12 2016 01:54:06)
+0048.730 (0) Examining (for databases) backup set with group_id=0, nonce=5dde7c7d2b21, datestamp=1478915592 (Nov 12 2016 01:53:12)
+0048.763 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0048.787 (0) Examining (for databases) backup set with group_id=0, nonce=aa9358867fa3, datestamp=1478793218 (Nov 10 2016 15:53:38)
+0048.813 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0048.837 (0) Examining (for databases) backup set with group_id=0, nonce=7a2e0ca6962b, datestamp=1478729368 (Nov 09 2016 22:09:28)
+0048.863 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0048.888 (0) Examining (for databases) backup set with group_id=0, nonce=31487e06d119, datestamp=1478714945 (Nov 09 2016 18:09:05)
+0048.953 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0048.988 (0) Examining (for databases) backup set with group_id=0, nonce=ac90ee012a60, datestamp=1478700714 (Nov 09 2016 14:11:54)
+0049.013 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.038 (0) Examining (for databases) backup set with group_id=0, nonce=6ed646c1f833, datestamp=1478686152 (Nov 09 2016 10:09:12)
+0049.063 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.088 (0) Examining (for databases) backup set with group_id=0, nonce=a3a1fb860d2e, datestamp=1478671806 (Nov 09 2016 06:10:06)
+0049.113 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.138 (0) Examining (for databases) backup set with group_id=0, nonce=9da584bef34b, datestamp=1478657360 (Nov 09 2016 02:09:20)
+0049.163 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.188 (0) Examining (for databases) backup set with group_id=0, nonce=a0f6a6643ba7, datestamp=1478642977 (Nov 08 2016 22:09:37)
+0049.213 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.237 (0) Examining (for databases) backup set with group_id=0, nonce=7c67529b5260, datestamp=1478628563 (Nov 08 2016 18:09:23)
+0049.263 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.288 (0) Examining (for databases) backup set with group_id=0, nonce=e26f13c5320b, datestamp=1478614154 (Nov 08 2016 14:09:14)
+0049.313 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.338 (0) Examining (for databases) backup set with group_id=0, nonce=d1880b9af8f8, datestamp=1478599827 (Nov 08 2016 10:10:27)
+0049.363 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.388 (0) Examining (for databases) backup set with group_id=0, nonce=49b8d6a21a03, datestamp=1478585345 (Nov 08 2016 06:09:05)
+0049.412 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0049.437 (0) Examining (for databases) backup set with group_id=0, nonce=407246559518, datestamp=1478570967 (Nov 08 2016 02:09:27)
+0049.512 (0) 1478570967: db: this set includes a database (backup_2016-11-08-0209_Rowing_Camps_amp_Guidance_on_C_407246559518-db.gz); db count is now 16
+0049.565 (0) 1478570967: db: over retain limit (16); will delete this database
+0049.681 (0) Delete file: backup_2016-11-08-0209_Rowing_Camps_amp_Guidance_on_C_407246559518-db.gz, service=none
+0049.814 (0) This backup set is now empty; will remove from history
+0049.847 (0) Corresponding log file (log.407246559518.txt) not found - must have already been deleted
+0049.907 (0) Examining (for databases) backup set with group_id=0, nonce=3fba8f07026d, datestamp=1478225381 (Nov 04 2016 02:09:41)
+0050.055 (0) Number of backup sets in history: 18; groups (files): 1
+0050.114 (0) Examining (for files) backup set with nonce=cd3515f95ec2, datestamp=1479004820 (Nov 13 2016 02:40:20)
+0050.196 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.264 (0) Examining (for files) backup set with nonce=18d2b3889be3, datestamp=1478996588 (Nov 13 2016 00:23:08)
+0050.312 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.388 (0) Examining (for files) backup set with nonce=6f641ca9c96a, datestamp=1478975326 (Nov 12 2016 18:28:46)
+0050.412 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.438 (0) Examining (for files) backup set with nonce=1b36960d6795, datestamp=1478915646 (Nov 12 2016 01:54:06)
+0050.462 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0050.512 (0) Examining (for files) backup set with nonce=5dde7c7d2b21, datestamp=1478915592 (Nov 12 2016 01:53:12)
+0050.537 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.588 (0) Examining (for files) backup set with nonce=aa9358867fa3, datestamp=1478793218 (Nov 10 2016 15:53:38)
+0050.638 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.663 (0) Examining (for files) backup set with nonce=7a2e0ca6962b, datestamp=1478729368 (Nov 09 2016 22:09:28)
+0050.687 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.712 (0) Examining (for files) backup set with nonce=31487e06d119, datestamp=1478714945 (Nov 09 2016 18:09:05)
+0050.744 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.770 (0) Examining (for files) backup set with nonce=ac90ee012a60, datestamp=1478700714 (Nov 09 2016 14:11:54)
+0050.795 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.821 (0) Examining (for files) backup set with nonce=6ed646c1f833, datestamp=1478686152 (Nov 09 2016 10:09:12)
+0050.845 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0050.871 (0) Examining (for files) backup set with nonce=a3a1fb860d2e, datestamp=1478671806 (Nov 09 2016 06:10:06)
+0050.895 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0051.037 (0) Examining (for files) backup set with nonce=9da584bef34b, datestamp=1478657360 (Nov 09 2016 02:09:20)
+0051.088 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0051.238 (0) Examining (for files) backup set with nonce=a0f6a6643ba7, datestamp=1478642977 (Nov 08 2016 22:09:37)
+0051.279 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0051.414 (0) Examining (for files) backup set with nonce=7c67529b5260, datestamp=1478628563 (Nov 08 2016 18:09:23)
+0051.497 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0051.566 (0) Examining (for files) backup set with nonce=e26f13c5320b, datestamp=1478614154 (Nov 08 2016 14:09:14)
+0051.625 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0051.683 (0) Examining (for files) backup set with nonce=d1880b9af8f8, datestamp=1478599827 (Nov 08 2016 10:10:27)
+0051.733 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0051.796 (0) Examining (for files) backup set with nonce=49b8d6a21a03, datestamp=1478585345 (Nov 08 2016 06:09:05)
+0051.883 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0052.041 (0) Examining (for files) backup set with nonce=3fba8f07026d, datestamp=1478225381 (Nov 04 2016 02:09:41)
+0052.188 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0052.229 (0) Retain: saving new backup history (sets now: 18) and finishing retain operation
+0052.447 (0) Resume backup (cd3515f95ec2, 0): finish run
+0052.663 (0) Decremented the semaphore (d) by 1
+0052.854 (0) Semaphore (d) unlocked
+0052.888 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0053.765 (0) No email will/can be sent - the user has not configured an email address.
+0053.904 (0) The backup apparently succeeded and is now complete
