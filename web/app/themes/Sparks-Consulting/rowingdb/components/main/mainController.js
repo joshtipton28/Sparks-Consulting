@@ -56,7 +56,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
     angular.forEach($scope.colleges, function(college, key) {
-      $scope.college[key].norm = {};
+      $scope.colleges[key].norm = {};
       // Convert integer-strings to integers in-place
       angular.forEach([
         'tuition', 'enrollment_count', 'financial_aid_score',
