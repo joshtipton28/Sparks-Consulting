@@ -220,7 +220,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
 
     if( $scope.filter.types_map[priority.id] &&
         angular.isFunction($scope.filter.types_map[priority.id].render_text) )
-      return $scope.filter.types_map[priority.id].render_text(college.norm[piority.id]);
-    return college.norm[piority.id];
+      return $scope.filter.types_map[priority.id].render_text(college.norm[priority.id]);
+    return college.norm[priority.id];
   };
 }
