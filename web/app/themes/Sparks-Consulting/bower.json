@@ -10,6 +10,7 @@
     "motion-ui" : "~1.1.0",
     "fontawesome": "~4.4.0",
     "ngmap": "1.x",
-    "checklist-model": "0.x"
+    "checklist-model": "0.x",
+    "angular-counter-animation": "0.x"
   }
 }
