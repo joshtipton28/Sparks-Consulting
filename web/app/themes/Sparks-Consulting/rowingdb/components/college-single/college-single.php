@@ -128,8 +128,9 @@
   </div>
 
   <div class="large-6 columns">
-    <div class="college-single-image">
-      Image goes here
+    <div ng-if="college.featured_image_source"
+         class="college-single-image">
+      <img ng-src="{{college.featured_image_source}}">
     </div>
 
     <div class="college-single-stats-list">
@@ -147,7 +148,7 @@
             <td>Majors:</td>
             <td>
               <span ng-repeat="major in college.acf.school_majors">
-                {{ major }}<span ng-if="!$last">, </span>
+                {{ major.name }}<span ng-if="!$last">, </span>
               </span>
             </td>
           </tr>

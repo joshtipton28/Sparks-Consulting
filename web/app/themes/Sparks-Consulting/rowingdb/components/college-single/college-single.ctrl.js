@@ -2,13 +2,14 @@ app.controller('CollegeSingleCtrl', [
   '$scope',
   '$state',
   '$stateParams',
+  '$http',
   '$filter',
   '$sce',
   'CollegeFactory',
   'Filter',
   CollegeSingleCtrl]);
 
-function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeFactory, Filter) {
+function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
   $scope.slug = $stateParams.collegeSlug || null;
   $scope.college = {};
@@ -19,6 +20,19 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $filter, $sce, CollegeF
     $scope.college = $scope.get_college_by_slug($scope.slug);
     console.debug('slug', $scope.slug);
     console.debug('college', $scope.college);
+
+    // Load the featured image URL
+    $scope.college.featured_image_source = null;
+    if( angular.isArray($scope.college._links) ) {
+      $http.get(
+        $scope.college._links['wp:featuredmedia']
+      ).then(function successCallback(res) {
+        $scope.college.featured_image_source = res.source_url;
+      }, function errorCallback(res) {
+        console.error('Error getting featured image', res);
+      });
+    }
+
   });
 
   $scope.get_college_by_slug = function(slug) {
