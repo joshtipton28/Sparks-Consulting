@@ -62,13 +62,13 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       // Normalize from string
       angular.forEach([
         'tuition', 'enrollment_count', 'financial_aid_score',
-        'academic_intensity', 'st_ratio'
+        'academic_intensity', 'st_ratio', 'school_privacy'
       ], function(cat) {
         $scope.colleges[this].norm[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
       }, key);
       // Normalize from object (value key)
       angular.forEach([
-        'school_privacy', 'environment', 'selectivity', 'religion'
+        'environment', 'selectivity', 'religion'
       ], function(cat) {
         $scope.colleges[this].norm[cat] = $scope.colleges[this].acf[cat].label;
       }, key);
