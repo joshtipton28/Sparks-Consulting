@@ -32,7 +32,7 @@ if ( ! function_exists( 'foundationpress_scripts' ) ) :
 // Angular "count-to" directive
   wp_enqueue_script( 'angular-count-to',
                      '//rawgit.com/sparkalow/angular-count-to/master/build/angular-count-to.min.js',
-                     array('foundation') );
+                     array('foundation', 'jquery') );
 
 	// Add the comment-reply library on pages where it is necessary
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
