@@ -59,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="college in colleges | filter:masterFilter | orderBy:sort.priority:sort.direction  as filtered">
+          <tr ng-repeat="college in colleges | filter:masterFilter | orderBy:sort.priority:sort.direction as filtered">
             <td>
               <a ng-href="rowing-teams/{{college.slug}}"
                  ng-bind-html="trustHtml(college.title.rendered)">
@@ -67,7 +67,7 @@
               </a>
             </td>
             <td ng-repeat="priority in get_priorities()">
-              {{ render_acf_text(priority, college.acf) }}
+              {{ college.acf[priority.id] }} {{ render_acf_text(priority, college.acf) }}
             </td>
           </tr>
         </tbody>
