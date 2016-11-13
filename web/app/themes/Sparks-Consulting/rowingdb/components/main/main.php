@@ -17,9 +17,10 @@
     </header>
     <!-- Dynamic map -->
     <div class="colleges-map-wrapper">
+      <div to="filtered.length" value="0" duration="2" effect="swing"></div>
       <div class="map-overlay">
         <p>
-          <span count-to="{{filtered.length}}" value="0" duration="4"></span> Colleges
+           <span ng-bind="filtered.length"></span> Colleges
         </p>
         <!-- Link to listing results -->
         <a ui-sref="listing" class="success large button">
