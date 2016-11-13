@@ -71,7 +71,7 @@ function MainController($scope, $state, $http, $filter, $sce, CollegeFactory, Fi
       $http.get(
         'https://maps.googleapis.com/maps/api/geocode/json?' +
         'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
-        'address=' + $scope.trustHtml(college.title.rendered) +
+        'address=' + college.title.rendered +
         ', ' + college.acf.school_city + ', ' + college.acf.school_state
       ).then(function successCallback(res) {
         if( res && res.hasOwnProperty('data') ) {
@@ -83,7 +83,7 @@ function MainController($scope, $state, $http, $filter, $sce, CollegeFactory, Fi
           csv.push({
             'id': college.id,
             'slug': college.slug,
-            'title': $scope.trustHtml(college.title.rendered),
+            'title': college.title.rendered,
             'city': college.acf.school_city,
             'state': college.acf.school_state,
             'latitude': res.data.results[0].geometry.location.lat,
