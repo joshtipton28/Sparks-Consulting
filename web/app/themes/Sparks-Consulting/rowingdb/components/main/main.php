@@ -37,7 +37,7 @@
               keyboard-shortcuts="false"
               style="height:100%;">
         <marker ng-repeat="college in colleges | filter:masterFilter | filter:hasLocationFilter as filtered"
-                position="{{college.acf.school_city}}, {{college.acf.school_state}}"></marker>
+                position="{{trustHtml(college.title.rendered)}}, {{college.acf.school_city}}, {{college.acf.school_state}}"></marker>
       </ng-map>
     </div>
   </div>
