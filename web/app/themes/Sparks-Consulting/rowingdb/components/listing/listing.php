@@ -47,9 +47,9 @@
               </a>
             </th>
             <th ng-repeat="priority in get_priorities()">
-              <a href="#" ng-click="setSort('acf.{{priority.id}}')">
+              <a href="#" ng-click="setSort('acf.' + priority.id)">
                 {{ priority.name }}
-                <span ng-show="sort.priority == 'acf.{{priority.id}}'"
+                <span ng-show="sort.priority == 'acf.' + priority.id"
                       class="fa"
                       ng-class="{'fa-caret-up': sort.direction,
                                  'fa-caret-down': !sort.direction}">
