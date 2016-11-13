@@ -430,13 +430,18 @@ app.factory('Filter', ['$filter', function($filter) {
         'tuition', 'enrollment_count', 'financial_aid_score',
         'academic_intensity', 'st_ratio', 'school_privacy'
       ], function(cat) {
-        college.norm[cat] = parseInt(college.acf[cat]) || 0;
+        var val = parseInt(college.acf[cat]);
+        if( isNaN(val) )
+          college.norm[cat] = null;
+        else college.norm[cat] = val;
       });
       // Normalize from object (value key)
       angular.forEach([
         'environment', 'selectivity', 'religion'
       ], function(cat) {
-        college.norm[cat] = college.acf[cat].label;
+        if( college.acf[cat] && college.acf[cat].hasOwnProperty('label') )
+          college.norm[cat] = college.acf[cat].label;
+        else college.norm[cat] = null;
       });
       // Normalize from "string array...ish"
       angular.forEach([
@@ -446,13 +451,15 @@ app.factory('Filter', ['$filter', function($filter) {
         angular.forEach(college.acf[cat], function(val) {
           college.norm[cat].push(val.label);
         });
+        if( college.norm[cat].length <= 0 )
+          college.norm[cat] = null;
       });
       // Normalize school_privacy
       if( college.norm.school_privacy === 1 )
         college.norm.school_privacy = 'Public';
       else if( college.norm.school_privacy === 2 )
         college.norm.school_privacy = 'Private';
-      else college.norm.school_privacy = '';
+      else college.norm.school_privacy = null;
       // Normalize location
       college.norm.location = college.acf.school_city + ', ' + college.acf.school_state;
       // Copy housing_alcohol
