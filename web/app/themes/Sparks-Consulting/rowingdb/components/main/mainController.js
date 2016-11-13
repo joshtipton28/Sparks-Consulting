@@ -2,13 +2,14 @@ app.controller('MainController', [
   '$scope',
   '$state',
   '$http',
+  '$timeout',
   '$filter',
   '$sce',
   'CollegeFactory',
   'Filter',
   MainController]);
 
-function MainController($scope, $state, $http, $filter, $sce, CollegeFactory, Filter) {
+function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
   $scope.filtered = [];
   $scope.sort = {
@@ -68,35 +69,37 @@ function MainController($scope, $state, $http, $filter, $sce, CollegeFactory, Fi
 
     var csv = [];
     angular.forEach($scope.colleges, function(college, key) {
-      $http.get(
-        'https://maps.googleapis.com/maps/api/geocode/json?' +
-        'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
-        'address=' + college.title.rendered +
-        ', ' + college.acf.school_city + ', ' + college.acf.school_state
-      ).then(function successCallback(res) {
-        if( res && res.hasOwnProperty('data') ) {
-          console.log('Geocoding', college, res);
-          $scope.colleges[key].norm.position = [
-            res.data.results[0].geometry.location.lat,
-            res.data.results[0].geometry.location.lng
-          ];
+      $timeout(function() {
+        $http.get(
+          'https://maps.googleapis.com/maps/api/geocode/json?' +
+          'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
+          'address=' + college.title.rendered +
+          ', ' + college.acf.school_city + ', ' + college.acf.school_state
+        ).then(function successCallback(res) {
+          if( res && res.hasOwnProperty('data') ) {
+            console.log('Geocoding', college, res);
+            $scope.colleges[key].norm.position = [
+              res.data.results[0].geometry.location.lat,
+              res.data.results[0].geometry.location.lng
+            ];
 
-          csv.push({
-            'id': college.id,
-            'slug': college.slug,
-            'title': college.title.rendered,
-            'city': college.acf.school_city,
-            'state': college.acf.school_state,
-            'latitude': res.data.results[0].geometry.location.lat,
-            'longitude': res.data.results[0].geometry.location.lng
-          });
+            csv.push({
+              'id': college.id,
+              'slug': college.slug,
+              'title': college.title.rendered,
+              'city': college.acf.school_city,
+              'state': college.acf.school_state,
+              'latitude': res.data.results[0].geometry.location.lat,
+              'longitude': res.data.results[0].geometry.location.lng
+            });
 
-          console.debug('csv', csv);
-        }
-        else
-          console.error('Unexpected featured image format', res);
-      }, function errorCallback(res) {
-        console.error('Error getting featured image', res);
+            console.debug('csv', csv);
+          }
+          else
+            console.error('Unexpected featured image format', res);
+        }, function errorCallback(res) {
+          console.error('Error getting featured image', res);
+        }, 500);
       });
     });
   });
