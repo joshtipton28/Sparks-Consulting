@@ -21,6 +21,12 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
     console.debug('slug', $scope.slug);
     console.debug('college', $scope.college);
 
+    if( !$scope.college || !$scope.college.acf ) {
+      console.error('Invalid college specified', $scope.slug);
+      $scope.go('home');
+      return;
+    }
+
     // Load the featured image URL
     $scope.college.featured_image_source = null;
     if( angular.isArray($scope.college._links) ) {
