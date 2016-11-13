@@ -18,7 +18,9 @@
     <!-- Dynamic map -->
     <div class="colleges-map-wrapper">
       <div class="map-overlay">
-        <p>{{filtered.length}} Colleges</p>
+        <p>
+          <span count-to="{{filtered.length}}" value="0" duration="4"></span> Colleges
+        </p>
         <!-- Link to listing results -->
         <a ui-sref="listing" class="success large button">
           Show Schools
