@@ -33,6 +33,7 @@ function CollegeSingleCtrl($scope, $state, $stateParams, $http, $filter, $sce, C
       $http.get(
         '/wp-json/wp/v2/media/' + $scope.college.featured_media
       ).then(function successCallback(res) {
+        console.debug('Featured image', res);
         $scope.college.featured_image_source = res.source_url;
       }, function errorCallback(res) {
         console.error('Error getting featured image', res);
