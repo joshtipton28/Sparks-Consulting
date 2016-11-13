@@ -20,6 +20,10 @@
         <h4>filters</h4>
         <pre>{{ filter.filters | json }}</pre>
       </div>
+      <div style="border: 2px white dotted;">
+        <h4>priority</h4>
+        <pre>{{ filter.priority | json }}</pre>
+      </div>
       <div style="border: 2px white inset;"
            ng-repeat="college in colleges | limitTo:2">
         <h4>college</h4>

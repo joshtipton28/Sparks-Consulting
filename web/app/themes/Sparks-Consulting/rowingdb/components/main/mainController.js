@@ -55,6 +55,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   // Load college data from external source
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
+    var flag = false;
     angular.forEach($scope.colleges, function(college, key) {
       $scope.colleges[key].norm = {};
       // Normalize and isolate data
@@ -91,8 +92,10 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
       // Copy housing_alcohol
       $scope.colleges[key].norm.housing_alcohol = $scope.colleges[key].acf.housing_alcohol;
 
-      console.debug('college', $scope.colleges[key]);
-      return;
+      if( !flag ) {
+        console.debug('college', $scope.colleges[key]);
+        flag = true;
+      }
     });
   });
 
@@ -153,6 +156,7 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.masterFilter = function(college) {
     ret = true;
     angular.forEach($scope.filter.filters, function(spec, type_id) {
+      console.debug('spec, type_id', spec, type_id);
       if( spec && type_id ) {
         var type = $scope.filter.types_map[type_id];
         if( type && angular.isFunction(type.filter) ) {
