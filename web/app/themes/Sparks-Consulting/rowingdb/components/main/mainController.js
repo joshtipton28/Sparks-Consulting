@@ -123,7 +123,6 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.masterFilter = function(college) {
     ret = true;
     angular.forEach($scope.filter.filters, function(spec, type_id) {
-      console.debug('spec, type_id', spec, type_id);
       if( spec && type_id ) {
         var type = $scope.filter.types_map[type_id];
         if( type && angular.isFunction(type.filter) ) {

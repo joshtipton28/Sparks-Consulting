@@ -50,7 +50,7 @@
               </a>
             </td>
           </tr>
-          <tr ng-if="college.acf.enrollment_count">
+          <tr ng-if="college.norm.enrollment_count">
             <td>Enrollment:</td>
             <td>
               {{ render_acf_text('enrollment_count', college) }}
@@ -62,19 +62,19 @@
               {{ render_acf_text('tuition', college) }}
             </td>
           </tr>
-          <tr ng-if="college.acf.st_ratio">
+          <tr ng-if="college.norm.st_ratio">
             <td>Classroom Ratio:</td>
             <td>
               {{ render_acf_text('st_ratio', college) }}
             </td>
           </tr>
-          <tr ng-if="college.acf.environment">
+          <tr ng-if="college.norm.environment">
             <td>Environment:</td>
             <td>
               {{ render_acf_text('environment', college) }}
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.norm.selectivity">
             <td>Selectivity:</td>
             <td>
               {{ render_acf_text('selectivity', college) }}
@@ -92,31 +92,31 @@
               {{ render_acf_text('school_privacy', college) }}
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.norm.religion">
             <td>Religious Affiliation:</td>
             <td>
               {{ render_acf_text('religion', college) || 'None' }}
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.norm.food_services">
             <td>Food Services:</td>
             <td>
               {{ render_acf_text('food_services', college) }}
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.norm.housing_types">
             <td>Housing Types:</td>
             <td>
               {{ render_acf_text('housing_types', college) }}
             </td>
           </tr>
-          <tr ng-if="college.acf.housing_alcohol">
+          <tr ng-if="college.norm.housing_alcohol">
             <td>Housing Alcohol:</td>
             <td>
               {{ render_acf_text('housing_alcohol', college) }}
             </td>
           </tr>
-          <tr>
+          <tr ng-if="college.norm.housing_sub_types">
             <td>Housing Sub-types:</td>
             <td>
               {{ render_acf_text('housing_sub_types', college) }}
