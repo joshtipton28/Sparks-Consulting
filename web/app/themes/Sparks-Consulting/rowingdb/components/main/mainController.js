@@ -55,14 +55,15 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   // Load college data from external source
   CollegeFactory.getData(function(data) {
     $scope.colleges = data;
+    angular.forEach($scope.colleges, function(college, key) {
+      angular.forEach([
+        'tuition', 'enrollment_count', 'financial_aid_score',
+        'academic_intensity', 'school_privacy', 'st_ratio'
+      ], function(cat) {
+        $scope.colleges[this].acf[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
+      }, key);
 
-    var limit = 2;
-    angular.forEach(data, function(college) {
       console.debug('college', college);
-      if( limit <= 0) {
-        return;
-      }
-      limit = limit - 1;
     });
   });
 
