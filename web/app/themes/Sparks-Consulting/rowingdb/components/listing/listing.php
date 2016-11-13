@@ -59,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="college in colleges | filter:masterFilter as filtered | orderBy:sort.priority:sort.direction">
+          <tr ng-repeat="college in colleges | filter:masterFilter | orderBy:sort.priority:sort.direction  as filtered">
             <td>
               <a ng-href="rowing-teams/{{college.slug}}"
                  ng-bind-html="trustHtml(college.title.rendered)">
