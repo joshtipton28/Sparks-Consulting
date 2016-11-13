@@ -10,6 +10,10 @@ app.controller('MainController', [
 function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.filter = Filter;
   $scope.filtered = [];
+  $scope.sort = {
+    priority: {},
+    direction: false
+  };
   $scope.counter = {
     'from': 0,
     'to': 0,
@@ -78,6 +82,16 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.getSidebar = function () {
 	  return stylesheet_directory_uri + '/rowingdb/components/sidebar/sidebar.php';
 	};
+
+  // Set the table sort
+  $scope.setSort = function(priority) {
+    if( $scope.sort.priority === priority ) {
+      $scope.sort.direction = !$scope.sort.direction;
+    } else {
+      $scope.sort.priority = priority;
+      $scope.sort.direction = false;
+    }
+  };
 
   // Priorities options filter
   $scope.prioritiesFilter = function(current_idx) {

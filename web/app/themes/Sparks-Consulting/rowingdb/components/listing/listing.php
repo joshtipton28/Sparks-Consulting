@@ -37,15 +37,23 @@
         <thead>
           <tr>
             <th>
-              <a href="#" ng-click="sortType = 'name'">
-                <span ng-show="sortType == 'name'" class="fa fa-caret-down"></span>
+              <a href="#" ng-click="setSort('name')">
                 School Name
+                <span ng-show="sort.priority == 'name'"
+                      class="fa"
+                      ng-class="{'fa-caret-up': sort.direction,
+                                 'fa-caret-down': !sort.direction}">
+                </span>
               </a>
             </th>
             <th ng-repeat="priority in get_priorities()">
-              <a href="#" ng-click="sortType = priority">
-                <span ng-show="sortType == priority" class="fa fa-caret-down"></span>
+              <a href="#" ng-click="setSort(priority)">
                 {{ priority.name }}
+                <span ng-show="sort.priority == priority"
+                      class="fa"
+                      ng-class="{'fa-caret-up': sort.direction,
+                                 'fa-caret-down': !sort.direction}">
+                </span>
               </a>
             </th>
           </tr>
