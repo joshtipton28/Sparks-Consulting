@@ -26,7 +26,7 @@
       </div>
       <div class="map-overlay">
         <p>
-           <span ng-bind="counter.to"></span> Colleges
+           <span ng-bind="counter.from"></span> Colleges
         </p>
         <!-- Link to listing results -->
         <a ui-sref="listing" class="success large button">
