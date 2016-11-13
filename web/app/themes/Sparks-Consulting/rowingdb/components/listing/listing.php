@@ -67,7 +67,7 @@
               </a>
             </td>
             <td ng-repeat="priority in get_priorities()">
-              {{ college.acf[priority.id] }} {{ render_acf_text(priority, college.acf) }}
+              {{ render_acf_text(priority, college.acf) }}
             </td>
           </tr>
         </tbody>

@@ -63,6 +63,8 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
         $scope.colleges[this].acf[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
       }, key);
 
+      $scope.colleges[key].acf.location = college.acf.school_city + ', ' + college.acf.school_state;
+
       console.debug('college', college);
     });
   });
