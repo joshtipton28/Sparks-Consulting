@@ -26,6 +26,7 @@ app.factory('Filter', ['$filter', function($filter) {
   }
 
   function generic_name_filter(self, val, spec) {
+    console.debug('self, val, spec', self, val, spec);
     if( spec !== val )
       return false;
     return true;
