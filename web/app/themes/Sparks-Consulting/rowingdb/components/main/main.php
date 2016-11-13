@@ -19,10 +19,8 @@
     <div class="colleges-map-wrapper">
       <div class="map-overlay">
         <p counter
-           to="counter.to"
            value="counter.from"
-           duration="counter.duration"
-           effect="counter.effect">
+           to="counter.to">
            {{ counter.from | number:0 }} Colleges
         </p>
         <!-- Link to listing results -->

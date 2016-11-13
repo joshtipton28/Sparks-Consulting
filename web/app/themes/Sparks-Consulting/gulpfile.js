@@ -61,7 +61,8 @@ var PATHS = {
     'assets/components/checklist-model/checklist-model.js',
 
     // AngularJS counter directive
-    'assets/components/angular-counter-animation/js/angular-counter.js',
+    'assets/components/angular-counter-animation/js/jquery.easing.min.js',
+    'assets/components/angular-counter-animation/js/angular-counter-with-easing.min.js',
 
     // Motion UI
     'assets/components/motion-ui/motion-ui.js',
