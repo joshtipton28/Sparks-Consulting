@@ -75,6 +75,7 @@ function MainController($scope, $state, $http, $filter, $sce, CollegeFactory, Fi
         ', ' + college.acf.school_city + ', ' + college.acf.school_state
       ).then(function successCallback(res) {
         if( res && res.hasOwnProperty('data') ) {
+          console.log('Geocoding', college, res);
           $scope.colleges[key].norm.position = [
             res.data.results[0].geometry.location.lat,
             res.data.results[0].geometry.location.lng
