@@ -12,7 +12,9 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
   $scope.filtered = [];
   $scope.counter = {
     'from': 0,
-    'to': 0
+    'to': 0,
+    'effect': 'swing',
+    'duration': 2
   };
   $scope.colleges = [];
   $scope.priorities = [
@@ -69,10 +71,8 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
 
   $scope.$watch('filtered.length', function(nval, oval) {
     console.log('filtered.length changed', nval, oval);
-    $scope.counter = {
-      'from': oval,
-      'to': nval
-    };
+    $scope.counter.from = oval;
+    $scope.counter.to = nval;
   });
 
   // Load the sidebar

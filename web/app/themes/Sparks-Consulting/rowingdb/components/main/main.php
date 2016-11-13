@@ -20,8 +20,8 @@
       <div class="counter"
            to="counter.to"
            value="counter.from"
-           duration="2"
-           effect="swing">
+           duration="counter.duration"
+           effect="counter.effect">
         {{ counter.to }}
       </div>
       <div class="map-overlay">
