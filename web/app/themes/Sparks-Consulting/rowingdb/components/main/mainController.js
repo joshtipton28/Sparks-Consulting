@@ -81,8 +81,11 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
         }, this);
       }, key);
       // Normalize school_privacy
-      $scope.colleges[key].norm.school_privacy = $scope.render_acf_text(
-          {'id': 'school_privacy'}, $scope.colleges[key].acf);
+      if( $scope.colleges[key].norm.school_privacy === 1 )
+        $scope.colleges[key].norm.school_privacy = 'Allowed';
+      else if( $scope.colleges[key].norm.school_privacy === 2 )
+        $scope.colleges[key].norm.school_privacy = 'Not Allowed';
+      else $scope.colleges[key].norm.school_privacy = '';
       // Normalize location
       $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
       // Copy housing_alcohol

@@ -267,25 +267,6 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Environment",
         "content": "Prefer the city? Maybe you need to be around the woods. Select an environment you'd like to goto school in.",
-        "items": [{
-          "id": 1,
-          "name": "Large City"
-        }, {
-          "id": 2,
-          "name": "Mid-sized City"
-        }, {
-          "id": 3,
-          "name": "Small City"
-        }, {
-          "id": 4,
-          "name": "Suburban"
-        }, {
-          "id": 5,
-          "name": "Urban"
-        }, {
-          "id": 6,
-          "name": "Small Town"
-        }],
         "filter": generic_name_filter
       },
       "selectivity": {
@@ -347,13 +328,6 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Private/Public",
         "content": "Please make a selection.",
-        "items": [{
-          "id": 1,
-          "name": "Public"
-        }, {
-          "id": 2,
-          "name": "Private"
-        }],
         "filter": generic_name_filter
       },
       "religion": {
@@ -452,13 +426,6 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Housing, Alcohol",
         "content": "Make a selection - this information is based on school policy, though the reality can vary.",
-        "items": [{
-          "id": 1,
-          "name": "Allowed"
-        }, {
-          "id": 2,
-          "name": "Not Allowed"
-        }],
         "filter": generic_name_filter
       },
       "location": {
