@@ -57,14 +57,6 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
     $scope.colleges = data;
     angular.forEach($scope.colleges, function(college, key) {
       $scope.colleges[key].norm = {};
-      // Convert integer-strings to integers in-place
-      angular.forEach([
-        'tuition', 'enrollment_count', 'financial_aid_score',
-        'academic_intensity', 'school_privacy', 'st_ratio'
-      ], function(cat) {
-        $scope.colleges[this].acf[cat] = parseInt($scope.colleges[this].acf[cat]) || 0;
-      }, key);
-
       // Normalize and isolate data
       // Normalize from string
       angular.forEach([
@@ -89,6 +81,10 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
           $scope.colleges[this].norm[cat].push(val.label);
         }, this);
       }, key);
+      // Normalize school_privacy
+      $scope.colleges[key].norm.school_privacy = $scope.render_acf_text(
+          {'id': 'school_privacy'}, $scope.colleges[key].acf);
+      // Normalize location
       $scope.colleges[key].norm.location = college.acf.school_city + ', ' + college.acf.school_state;
 
       console.debug('college', $scope.colleges[key]);
