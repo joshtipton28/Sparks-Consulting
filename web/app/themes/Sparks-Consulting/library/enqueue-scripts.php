@@ -29,11 +29,6 @@ if ( ! function_exists( 'foundationpress_scripts' ) ) :
 	// It's a good idea to do this, performance-wise. No need to load everything if you're just going to use the grid anyway, you know :)
 	wp_enqueue_script( 'foundation', get_template_directory_uri() . '/assets/javascript/foundation.js', array('jquery'), '2.3.0', true );
 
-// Angular "count-to" directive
-  wp_enqueue_script( 'angular-count-to',
-                     '//rawgit.com/sparkalow/angular-count-to/master/build/angular-count-to.min.js',
-                     array('foundation', 'jquery') );
-
 	// Add the comment-reply library on pages where it is necessary
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
