@@ -59,10 +59,10 @@ function MainController($scope, $state, $filter, $sce, CollegeFactory, Filter) {
     var limit = 2;
     angular.forEach(data, function(college) {
       console.debug('college', college);
-      limit = limit - 1;
-      if( limit > 0) {
+      if( limit <= 0) {
         return;
       }
+      limit = limit - 1;
     });
   });
 
