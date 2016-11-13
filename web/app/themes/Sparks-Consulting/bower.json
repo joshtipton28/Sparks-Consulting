@@ -11,7 +11,6 @@
     "fontawesome": "~4.4.0",
     "ngmap": "1.x",
     "checklist-model": "0.x",
-    "angular-counter-animation": "0.x",
-    "angular-tablesort": "1.x"
+    "angular-counter-animation": "0.x"
   }
 }

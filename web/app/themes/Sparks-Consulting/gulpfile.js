@@ -64,9 +64,6 @@ var PATHS = {
     'assets/components/angular-counter-animation/js/jquery.easing.min.js',
     'assets/components/angular-counter-animation/js/angular-counter-with-easing.min.js',
 
-    // AngularJS tableSort
-    'assets/components/angular-tablesort/js/angular-tablesort.js',
-
     // Motion UI
     'assets/components/motion-ui/motion-ui.js',
 

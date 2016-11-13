@@ -33,19 +33,25 @@
       </div>-->
       <!-- End Debugging -->
 
-      <table class="hover" ts-wrapper>
+      <table class="hover">
         <thead>
           <tr>
-            <th ts-criteria="title.rendered">School Name</th>
-            <th ng-repeat="priority in get_priorities()"
-                ts-criteria="{{acf[priority.id]}}">
-              {{ priority.name }}
+            <th>
+              <a href="#" ng-click="sortType = 'name'">
+                <span ng-show="sortType == 'name'" class="fa fa-caret-down"></span>
+                School Name
+              </a>
+            </th>
+            <th ng-repeat="priority in get_priorities()">
+              <a href="#" ng-click="sortType = priority">
+                <span ng-show="sortType == priority" class="fa fa-caret-down"></span>
+                {{ priority.name }}
+              </a>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="college in colleges | filter:masterFilter as filtered"
-              ts-repeat>
+          <tr ng-repeat="college in colleges | filter:masterFilter as filtered">
             <td>
               <a ng-href="rowing-teams/{{college.slug}}"
                  ng-bind-html="trustHtml(college.title.rendered)">
