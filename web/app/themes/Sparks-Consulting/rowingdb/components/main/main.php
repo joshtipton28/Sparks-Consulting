@@ -17,8 +17,8 @@
 
       <!-- Start Debugging -->
       <div style="border: 2px white dotted;">
-        <h4>filters</h4>
-        <pre>{{ filter.filters | json }}</pre>
+        <h4>csv</h4>
+        <pre>{{ csv | json }}</pre>
       </div>
       <div style="border: 2px white dotted;">
         <h4>priority</h4>

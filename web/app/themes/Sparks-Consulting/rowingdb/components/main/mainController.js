@@ -67,7 +67,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
       }
     });
 
-    var csv = [];
+    $scope.csv = [];
     angular.forEach($scope.colleges, function(college, key) {
       $timeout(function() {
         $http.get(
@@ -83,7 +83,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
               res.data.results[0].geometry.location.lng
             ];
 
-            csv.push({
+            $scope.push({
               'id': college.id,
               'slug': college.slug,
               'title': college.title.rendered,
@@ -92,8 +92,6 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
               'latitude': res.data.results[0].geometry.location.lat,
               'longitude': res.data.results[0].geometry.location.lng
             });
-
-            console.debug('csv', csv);
           }
           else
             console.error('Unexpected featured image format', res);
