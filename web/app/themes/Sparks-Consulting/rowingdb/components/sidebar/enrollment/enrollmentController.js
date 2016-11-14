@@ -63,19 +63,19 @@ function FilterCtrl($scope, $modal, $http, Filter) {
       console.debug('Modal closed callback', data);
       $scope.filter.filters[data.name] = data.model;
 
-      $http.get('https://maps.googleapis.com/maps/api/geocode/json?' +
-                'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
-                'address=' + data.model.zip
-      ).then(function(res) {
-        $scope.filter.filters[data.name].position = [
-          res.data.results[0].geometry.location.lat,
-          res.data.results[0].geometry.location.lng
-        ];
-      }, function(res) {
-        console.error('Error getting coordinates for Zip code', res);
-      });
-
-
+      if( data.type === 'location' && data.model && data.model.zip ) {
+        $http.get('https://maps.googleapis.com/maps/api/geocode/json?' +
+                  'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
+                  'address=' + data.model.zip
+        ).then(function(res) {
+          $scope.filter.filters[data.name].position = [
+            res.data.results[0].geometry.location.lat,
+            res.data.results[0].geometry.location.lng
+          ];
+        }, function(res) {
+          console.error('Error getting coordinates for Zip code', res);
+        });
+      }
     });
   };
 }
