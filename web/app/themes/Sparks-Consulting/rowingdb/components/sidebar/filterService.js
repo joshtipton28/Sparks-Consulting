@@ -21,21 +21,19 @@ app.factory('Filter', ['$filter', function($filter) {
   }
 
   function generic_multi_name_filter(self, names, specs) {
-    var ret = {val: true};
+    var ret = true;
     if( names === null )
       names = [];
     if( !angular.isArray(names) )
       names = [names];
     if( angular.isArray(specs) && angular.isArray(names) )
       angular.forEach(specs, function(spec) {
-        angular.forEach(names, function(name) {
-          if( name !== spec ) {
-            this.val = false;
-            return;
-          }
-        }, ret);
-      }, ret);
-    return ret.val;
+        if( names.indexOf(spec) === -1 ) {
+          ret = false;
+          return;
+        }
+      });
+    return ret;
   }
 
   var states = {
