@@ -1,9 +1,9 @@
 app.factory('Filter', ['$filter', function($filter) {
   function get_item_by_name(data, name) {
     var res = null;
-    angular.forEach(data.items, function(val) {
-      if( name === val.name  ) {
-        res = val;
+    angular.forEach(data.items, function(val, key) {
+      if( name === val  ) {
+        res = key;
         return;
       }
     });
@@ -126,28 +126,23 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Enrollment",
         "content": "Select the size of school you're interested in. Numbers pertain to undergraduate enrollment.",
-        "items": [{
-          "id": 1,
-          "name": "Small (less than 2500)"
-        }, {
-          "id": 2,
-          "name": "Medium (2500 - 10,000)"
-        }, {
-          "id": 3,
-          "name": "Large (10,000 or more)"
-        }],
+        "items": [
+          "Small (less than 2500)",
+          "Medium (2500 - 10,000)",
+          "Large (10,000 or more)"
+        ],
         "render_text": function(val) {
           return $filter('number')(val);
         },
         "filter": function(self, val, spec) {
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
+          var iid = get_item_by_name(self, spec);
+          if( isNaN(val) || iid === null ) return false;
           // Filter
-          if( item.id === 1 && val >= 2500 )
+          if( iid === 0 && val >= 2500 )
             return false;
-          if( item.id === 2 && (val < 2500 || val >= 10000) )
+          if( iid === 1 && (val < 2500 || val >= 10000) )
             return false;
-          if( item.id === 3 && val < 10000 )
+          if( iid === 2 && val < 10000 )
             return false;
           return true;
         }
@@ -156,35 +151,26 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Tuition",
         "content": "Select the amount of expense your family will be able to manage.",
-        "items": [{
-          "id": 1,
-          "name": "Very Low (less than $10,000)"
-        }, {
-          "id": 2,
-          "name": "Low ($10,001 - $25,000)"
-        }, {
-          "id": 3,
-          "name": "Normal ($25,001 - $40,000)"
-        }, {
-          "id": 4,
-          "name": "High ($40,001 or more)"
-        }],
+        "items": [
+          "Very Low (less than $10,000)", "Low ($10,001 - $25,000)",
+          "Normal ($25,001 - $40,000)", "High ($40,001 or more)"
+        ],
         "render_text": function(val) {
           if( isNaN(val) || !val )
             return 'Full Scholarship';
           return $filter('currency')(val);
         },
         "filter": function(self, val, spec) {
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
+          var iid = get_item_by_name(self, spec);
+          if( isNaN(val) || iid === null ) return false;
           // Filter
-          if( item.id === 1 && val >= 10000 )
+          if( iid === 0 && val >= 10000 )
             return false;
-          if( item.id === 2 && (val < 10000 || val >= 25000) )
+          if( iid === 1 && (val < 10000 || val >= 25000) )
             return false;
-          if( item.id === 3 && (val < 25000 || val >= 40000) )
+          if( iid === 2 && (val < 25000 || val >= 40000) )
             return false;
-          if( item.id === 4 && val < 40000 )
+          if( iid === 3 && val < 40000 )
             return false;
           return true;
         }
@@ -193,38 +179,27 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Financial Aid Score",
         "content": "Select the level of financial aid you believe you'll need.",
-        "items": [{
-          "id": 1,
-          "name": "Outstanding, Top 5%"
-        }, {
-          "id": 2,
-          "name": "Excellent, Top 10%"
-        }, {
-          "id": 3,
-          "name": "Very Good, Top 15%"
-        }, {
-          "id": 4,
-          "name": "Average, Top 25%"
-        }, {
-          "id": 5,
-          "name": "Moderate, Top 40%"
-        }],
+        "items": [
+          "Outstanding, Top 5%", "Excellent, Top 10%",
+          "Very Good, Top 15%", "Average, Top 25%",
+          "Moderate, Top 40%"
+        ],
         "render_text": function(val) {
           return $filter('number')(val);
         },
         "filter": function(self, val, spec) {
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
+          var iid = get_item_by_name(self, spec);
+          if( isNaN(val) || iid === null ) return false;
           // Filter
-          if( item.id === 1 && val < 95 )
+          if( iid === 0 && val < 95 )
             return false;
-          if( item.id === 2 && val < 90 )
+          if( iid === 1 && val < 90 )
             return false;
-          if( item.id === 3 && val < 85 )
+          if( iid === 2 && val < 85 )
             return false;
-          if( item.id === 4 && val < 75 )
+          if( iid === 3 && val < 75 )
             return false;
-          if( item.id === 5 && val < 60 )
+          if( iid === 4 && val < 60 )
             return false;
           return true;
         }
@@ -233,35 +208,26 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Classroom Ratio",
         "content": "Select the type of relationship you'd like to have with professors.",
-        "items": [{
-          "id": 1,
-          "name": "Intimate (smaller than 8:1)"
-        }, {
-          "id": 2,
-          "name": "Close (8:1 - 11:1)"
-        }, {
-          "id": 3,
-          "name": "Decent (11:1 - 14:1)"
-        }, {
-          "id": 4,
-          "name": "Average (14:1 or larger)"
-        }],
+        "items": [
+          "Intimate (smaller than 8:1)", "Close (8:1 - 11:1)",
+          "Decent (11:1 - 14:1)", "Average (14:1 or larger)"
+        ],
         "render_text": function(val) {
           if( !isNaN(val) )
             return val + ':1';
           return '';
         },
         "filter": function(self, val, spec) {
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
+          var iid = get_item_by_name(self, spec);
+          if( isNaN(val) || iid === null ) return false;
           // Filter
-          if( item.id === 1 && val >= 8 )
+          if( iid === 0 && val >= 8 )
             return false;
-          if( item.id === 2 && (val < 8 || val >= 11) )
+          if( iid === 1 && (val < 8 || val >= 11) )
             return false;
-          if( item.id === 3 && (val < 11 || val >= 14) )
+          if( iid === 2 && (val < 11 || val >= 14) )
             return false;
-          if( item.id === 4 && val < 14 )
+          if( iid === 3 && val < 14 )
             return false;
           return true;
         }
@@ -270,58 +236,42 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Environment",
         "content": "Prefer the city? Maybe you need to be around the woods. Select an environment you'd like to goto school in.",
+        "items": [
+          "Large City", "Mid-sized City", "Small City", "Suburban",
+          "Rural", "Small Town"
+        ],
         "filter": generic_name_filter
       },
       "selectivity": {
         "type": "checklist",
         "title": "Selectivity",
         "content": "Select a level of selectivity - keep in mind more selective schools are not necessarily better.",
-        "items": [{
-          "id": 1,
-          "name": "Most Selective"
-        }, {
-          "id": 2,
-          "name": "More Selective"
-        }, {
-          "id": 3,
-          "name": "Selective"
-        }, {
-          "id": 4,
-          "name": "Less Selective"
-        }],
+        "items": [
+          "Most Selective", "More Selective", "Selective", "Less Selective"
+        ],
         "filter": generic_multi_name_filter_or
       },
       "academic_intensity": {
         "type": "dropdown",
         "title": "Academic Intensity",
         "content": "Select a level of academic intensity.",
-        "items": [{
-          "id": 1,
-          "name": "Moderate"
-        }, {
-          "id": 2,
-          "name": "Demanding"
-        }, {
-          "id": 3,
-          "name": "Strenuous"
-        }, {
-          "id": 4,
-          "name": "Intense"
-        }],
+        "items": [
+          "Moderate", "Demanding", "Strenuous", "Intense"
+        ],
         "render_text": function(val) {
           return $filter('number')(val) + '%';
         },
         "filter": function(self, val, spec) {
-          var item = get_item_by_name(self, spec);
-          if( isNaN(val) || !item ) return false;
+          var iid = get_item_by_name(self, spec);
+          if( isNaN(val) || iid === null ) return false;
           // Filter
-          if( item.id === 1 && val >= 70 )
+          if( iid === 0 && val >= 70 )
             return false;
-          if( item.id === 2 && (val < 70 || val >= 80) )
+          if( iid === 1 && (val < 70 || val >= 80) )
             return false;
-          if( item.id === 3 && (val < 80 || val >= 90) )
+          if( iid === 2 && (val < 80 || val >= 90) )
             return false;
-          if( item.id === 4 && val < 90 )
+          if( iid === 3 && val < 90 )
             return false;
           return true;
         }
@@ -330,53 +280,26 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Private/Public",
         "content": "Please make a selection.",
+        "items": ["Public", "Private"],
         "filter": generic_name_filter
       },
       "religion": {
         "type": "checklist",
         "title": "Religious Affiliation",
         "content": "Please make a selection. Religious Affiliation doesn't exclude folks of different faiths, but is based in what faith the school was founded upon.",
-        "items": [{
-          "id": 1,
-          "name": "Free Methodist"
-        }, {
-          "id": 2,
-          "name": "Jesuit"
-        }, {
-          "id": 3,
-          "name": "Lutheran"
-        }, {
-          "id": 4,
-          "name": "Methodist"
-        }, {
-          "id": 5,
-          "name": "Presbyterian"
-        }, {
-          "id": 6,
-          "name": "Roman Catholic"
-        }, {
-          "id": 7,
-          "name": "None"
-        }, {
-          "id": 8,
-          "name": "Catholic"
-        }],
+        "items": [
+          "Free Methodist", "Jesuit", "Lutheran", "Methodist",
+          "Presbyterian", "Roman Catholic", "None", "Catholic"
+        ],
         "filter": generic_name_filter
       },
       "food_services": {
         "type": "checklist",
         "title": "Food Service",
         "content": "Make a selection of as many (or as few) options as you'd like.",
-        "items": [{
-          "id": 1,
-          "name": "Dining Hall(s)"
-        }, {
-          "id": 2,
-          "name": "In-dorm"
-        }, {
-          "id": 3,
-          "name": "On Campus Restaurants"
-        }],
+        "items": [
+          "Dining Hall(s)", "In-dorm", "On Campus Restaurants"
+        ],
         "render_text": generic_multi_name_render,
         "filter": generic_multi_name_filter_and
       },
@@ -384,16 +307,9 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "checklist",
         "title": "Housing, Types",
         "content": "Make a selection of as many (or as few) options as you'd like.",
-        "items": [{
-          "id": 1,
-          "name": "Dorms"
-        }, {
-          "id": 2,
-          "name": "Apartments"
-        }, {
-          "id": 3,
-          "name": "Greek"
-        }],
+        "items": [
+          "Dorms", "Apartments", "Greek"
+        ],
         "render_text": generic_multi_name_render,
         "filter": generic_multi_name_filter_and
       },
@@ -401,25 +317,10 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "checklist",
         "title": "Housing, Sub-types",
         "content": "Make a selection of as many (or as few) options as you'd like.",
-        "items": [{
-          "id": 1,
-          "name": "Co-ed"
-        }, {
-          "id": 2,
-          "name": "Male"
-        }, {
-          "id": 3,
-          "name": "Female"
-        }, {
-          "id": 4,
-          "name": "Disabled"
-        }, {
-          "id": 5,
-          "name": "International"
-        }, {
-          "id": 6,
-          "name": "Substance Free"
-        }],
+        "items": [
+          "Co-ed", "Male", "Female", "Disabled",
+          "International", "Substance Free"
+        ],
         "render_text": generic_multi_name_render,
         "filter": generic_multi_name_filter_and
       },
@@ -427,6 +328,7 @@ app.factory('Filter', ['$filter', function($filter) {
         "type": "dropdown",
         "title": "Housing, Alcohol",
         "content": "Make a selection - this information is based on school policy, though the reality can vary.",
+        "items": ["Allowed", "Not Allowed"],
         "filter": generic_name_filter
       },
       "location": {
