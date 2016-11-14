@@ -61,7 +61,6 @@ app.factory('Filter', ['$filter', function($filter) {
       college_position[0],
       college_position[1]);
     var max_distance = parseInt(filter.distance);
-    console.debug('distance, max', distance, max_distance);
     if( !distance || isNaN(distance) )
       return true;
     if( !max_distance || isNaN(max_distance) )
