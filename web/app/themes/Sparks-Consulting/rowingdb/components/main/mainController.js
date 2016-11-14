@@ -74,7 +74,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
           'https://maps.googleapis.com/maps/api/geocode/json?' +
           'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
           'address=' + college.title.rendered +
-          ', ' + college.acf.school_city + ', ' + college.acf.school_state
+          ', ' + college.acf.school_state
         ).then(function successCallback(res) {
           if( res && res.hasOwnProperty('data') ) {
             console.log('Geocoding', college, res);
