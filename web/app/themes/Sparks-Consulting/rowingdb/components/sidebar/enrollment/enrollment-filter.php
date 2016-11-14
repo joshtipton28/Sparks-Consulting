@@ -3,9 +3,9 @@
   <p>{{ data.content }}</p>
 
   <select ng-model="data.model" ng-if="data.type === 'dropdown'">
-    <option id="{{item.id}}"
-            value="{{item.name}}"
-            name="{{item.name}}"
+    <option id="{{item}}"
+            value="{{item}}"
+            name="{{item}}"
             ng-repeat="item in data.items">
       {{ item.name }}
     </option>
@@ -16,7 +16,7 @@
          ng-repeat="item in data.items">
     <input type="checkbox"
            checklist-model="data.model"
-           checklist-value="item.name"> {{item.name}}
+           checklist-value="item"> {{item}}
   </label>
 
   <button class="button" ng-click='cancel()'>Clear</button>
