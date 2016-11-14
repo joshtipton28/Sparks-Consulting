@@ -1,10 +1,11 @@
 app.controller('FilterCtrl', [
   '$scope',
   '$modal',
+  '$http',
   'Filter',
   FilterCtrl]);
 
-function FilterCtrl($scope, $modal, Filter) {
+function FilterCtrl($scope, $modal, $http, Filter) {
   $scope.filter = Filter;
 
   // Find a type's corresponding data
@@ -61,6 +62,20 @@ function FilterCtrl($scope, $modal, Filter) {
     modalInstance.result.then(function(data) {
       console.debug('Modal closed callback', data);
       $scope.filter.filters[data.name] = data.model;
+
+      $http.get('https://maps.googleapis.com/maps/api/geocode/json?' +
+                'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
+                'address=' + data.model.zip
+      ).then(function(res) {
+        $scope.filter.filters[data.name].position = [
+          res.data.results[0].geometry.location.lat,
+          res.data.results[0].geometry.location.lng
+        ];
+      }, function(res) {
+        console.error('Error getting coordinates for Zip code', res);
+      });
+
+
     });
   };
 }
