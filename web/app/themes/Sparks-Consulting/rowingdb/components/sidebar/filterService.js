@@ -53,9 +53,7 @@ app.factory('Filter', ['$filter', function($filter) {
   }
 
   function position_distance_filter(self, college_position, filter) {
-    console.debug('college_position, filter.position',
-                  college_position, filter.position);
-    if( !college_position || !filter )
+    if( !college_position || !filter || !filter.position )
       return true;
     var distance = calcATCF(
       filter.position[0],
