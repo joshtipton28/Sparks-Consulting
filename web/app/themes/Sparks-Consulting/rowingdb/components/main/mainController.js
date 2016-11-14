@@ -60,6 +60,19 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
     }
   ];
 
+  // Load majors
+  if( !$scope.filter.majors ) {
+    $scope.filter.types_map.majors = [];
+    $http.get('/wp-json/wp/v2/major').then(function(res) {
+      if( res && res.hasOwnProperty('data') )
+        angular.forEach(res.data, function(major) {
+          $scope.filter.types_map.majors.push(major.name);
+        });
+      console.log('Loaded majors', $scope.filter.types_map.majors);
+    }, function(res) {
+      console.error('Error loading majors', res);
+    });
+  }
   // Load college data from external source
   CollegeFactory.getData(function(data) {
     $scope.colleges = [];
