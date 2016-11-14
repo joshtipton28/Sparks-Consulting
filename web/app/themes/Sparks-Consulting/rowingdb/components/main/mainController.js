@@ -69,35 +69,33 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
 
     $scope.csv = [];
     angular.forEach($scope.colleges, function(college, key) {
-      $timeout(function() {
-        $http.get(
-          'https://maps.googleapis.com/maps/api/geocode/json?' +
-          'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
-          'address=' + college.title.rendered +
-          ', ' + college.acf.school_state
-        ).then(function successCallback(res) {
-          if( res && res.hasOwnProperty('data') ) {
-            console.log('Geocoding', college, res);
-            $scope.colleges[key].norm.position = [
-              res.data.results[0].geometry.location.lat,
-              res.data.results[0].geometry.location.lng
-            ];
+      $http.get(
+        'https://maps.googleapis.com/maps/api/geocode/json?' +
+        'key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o&' +
+        'address=' + college.title.rendered +
+        ', ' + college.acf.school_state
+      ).then(function successCallback(res) {
+        if( res && res.hasOwnProperty('data') ) {
+          console.log('Geocoding', college, res);
+          $scope.colleges[key].norm.position = [
+            res.data.results[0].geometry.location.lat,
+            res.data.results[0].geometry.location.lng
+          ];
 
-            $scope.csv.push({
-              'id': college.id,
-              'slug': college.slug,
-              'title': college.title.rendered,
-              'city': college.acf.school_city,
-              'state': college.acf.school_state,
-              'latitude': res.data.results[0].geometry.location.lat,
-              'longitude': res.data.results[0].geometry.location.lng
-            });
-          }
-          else
-            console.error('Unexpected featured image format', res);
-        }, function errorCallback(res) {
-          console.error('Error getting featured image', res);
-        }, 500);
+          $scope.csv.push({
+            'id': college.id,
+            'slug': college.slug,
+            'title': college.title.rendered,
+            'city': college.acf.school_city,
+            'state': college.acf.school_state,
+            'latitude': res.data.results[0].geometry.location.lat,
+            'longitude': res.data.results[0].geometry.location.lng
+          });
+        }
+        else
+          console.error('Unexpected featured image format', res);
+      }, function errorCallback(res) {
+        console.error('Error getting featured image', res);
       });
     });
   });
