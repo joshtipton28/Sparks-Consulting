@@ -40,7 +40,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
       "id": "st_ratio",
       "name": "Classroom Ratio"
     }, {
-      "id": "position",
+      "id": "location",
       "name": "Location"
     }, {
       "id": "financial_aid_score",
