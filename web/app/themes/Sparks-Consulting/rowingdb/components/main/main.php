@@ -51,6 +51,9 @@
               draggable="false"
               dragging-cursor="move"
               keyboard-shortcuts="false"
+              max-zoom="4"
+              min-zoom="4"
+              zoom-control="false"
               style="height:100%;">
         <marker ng-repeat="college in colleges | filter:masterFilter | filter:hasLocationFilter as filtered"
                 no-watcher="true"
