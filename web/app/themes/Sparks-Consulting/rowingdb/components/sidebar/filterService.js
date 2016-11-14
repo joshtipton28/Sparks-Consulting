@@ -20,7 +20,23 @@ app.factory('Filter', ['$filter', function($filter) {
     return true;
   }
 
-  function generic_multi_name_filter(self, names, specs) {
+  function generic_multi_name_filter_or(self, names, specs) {
+    var ret = true;
+    if( names === null )
+      names = [];
+    if( !angular.isArray(names) )
+      names = [names];
+    if( angular.isArray(specs) && angular.isArray(names) )
+      angular.forEach(names, function(name) {
+        if( specs.indexOf(name) === -1 ) {
+          ret = false;
+          return;
+        }
+      });
+    return ret;
+  }
+
+  function generic_multi_name_filter_and(self, names, specs) {
     var ret = true;
     if( names === null )
       names = [];
@@ -273,7 +289,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Less Selective"
         }],
-        "filter": generic_multi_name_filter
+        "filter": generic_multi_name_filter_or
       },
       "academic_intensity": {
         "type": "dropdown",
@@ -362,7 +378,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "name": "On Campus Restaurants"
         }],
         "render_text": generic_multi_name_render,
-        "filter": generic_multi_name_filter
+        "filter": generic_multi_name_filter_and
       },
       "housing_types": {
         "type": "checklist",
@@ -379,7 +395,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "name": "Greek"
         }],
         "render_text": generic_multi_name_render,
-        "filter": generic_multi_name_filter
+        "filter": generic_multi_name_filter_and
       },
       "housing_sub_types": {
         "type": "checklist",
@@ -405,7 +421,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "name": "Substance Free"
         }],
         "render_text": generic_multi_name_render,
-        "filter": generic_multi_name_filter
+        "filter": generic_multi_name_filter_and
       },
       "housing_alcohol": {
         "type": "dropdown",
