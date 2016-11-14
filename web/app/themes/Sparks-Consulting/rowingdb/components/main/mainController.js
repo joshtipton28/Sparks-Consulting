@@ -51,6 +51,12 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
     }, {
       "id": "school_privacy",
       "name": "Private/Public"
+    }, {
+      "id": "religion",
+      "name": "Religious Affiliation"
+    }, {
+      "id": "selectivity",
+      "name": "Selectivity"
     }
   ];
 
