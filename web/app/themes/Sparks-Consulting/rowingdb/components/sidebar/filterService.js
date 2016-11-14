@@ -52,6 +52,22 @@ app.factory('Filter', ['$filter', function($filter) {
     return ret;
   }
 
+  function position_distance_filter(self, college_position, filter) {
+    console.debug('college_position, filter.position', college_position, filter.position);
+    var distance = calcCrow(
+      filter.position[0],
+      filter.position[1],
+      college_position[0],
+      college_position[1]);
+    var max_distance = parseInt(filter.distance);
+    console.debug('distance, max', distance, max_distance);
+    if( !distance || isNaN(distance) )
+      return true;
+    if( !max_distance || isNaN(max_distance) )
+      return true;
+    return distance <= max_distance;
+  }
+
   // This function takes in latitude and longitude of two
   // location and returns the distance between them as
   // the crow flies (in km)
@@ -361,11 +377,12 @@ app.factory('Filter', ['$filter', function($filter) {
         "items": [],
         "filter": generic_multi_name_filter_and
       },
-      "location": {
+      "position": {
         "type": "location",
         "title": "Location",
         "content": "Please enter a location.",
-        "items": [25, 50, 100, 300, 750, 1500, 3000, 7000]
+        "items": [25, 50, 100, 300, 750, 1500, 3000, 7000],
+        "filter": position_distance_filter
       }
     },
     // Normalize college data
