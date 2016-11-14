@@ -92,7 +92,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
   };
 
   $scope.resetFilters = function() {
-    $scope.filter.priority = ["enrollment_count", "tuition", "location"];
+    $scope.filter.priority = ["enrollment_count", "tuition", "position"];
     $scope.filter.filters = {};
   };
 
