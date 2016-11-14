@@ -101,6 +101,7 @@ app.factory('Filter', ['$filter', function($filter) {
   };
 
 	return {
+    states: states,
     // List column specifiers
 		priority: ["enrollment_count", "tuition", "location"],
     // Actual list filter
