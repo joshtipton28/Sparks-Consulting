@@ -291,7 +291,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "Free Methodist", "Jesuit", "Lutheran", "Methodist",
           "Presbyterian", "Roman Catholic", "None", "Catholic"
         ],
-        "filter": generic_name_filter
+        "filter": generic_multi_name_filter_or
       },
       "food_services": {
         "type": "checklist",
