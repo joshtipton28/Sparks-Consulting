@@ -53,7 +53,8 @@ app.factory('Filter', ['$filter', function($filter) {
   }
 
   function position_distance_filter(self, college_position, filter) {
-    console.debug('college_position, filter.position', college_position, filter);
+    console.debug('college_position, filter.position',
+                  college_position, filter.position);
     if( !college_position || !filter )
       return true;
     var distance = calcCrow(
