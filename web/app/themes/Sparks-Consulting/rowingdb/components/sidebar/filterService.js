@@ -275,7 +275,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "id": 4,
           "name": "Less Selective"
         }],
-        "filter": generic_name_filter
+        "filter": generic_multi_name_filter
       },
       "academic_intensity": {
         "type": "dropdown",
