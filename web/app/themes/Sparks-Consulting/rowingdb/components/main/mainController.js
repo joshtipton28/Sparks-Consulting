@@ -144,8 +144,8 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
 
   // Filter out colleges without well-formatted city/state parts
   $scope.hasLocationFilter = function(college) {
-    if( !college.norm.position )
-      return false;
+    /*if( !college.norm.position )
+      return false;*/
     return true;
   };
 
