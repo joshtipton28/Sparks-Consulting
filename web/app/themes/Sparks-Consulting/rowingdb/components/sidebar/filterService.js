@@ -57,7 +57,7 @@ app.factory('Filter', ['$filter', function($filter) {
                   college_position, filter.position);
     if( !college_position || !filter )
       return true;
-    var distance = calcCrow(
+    var distance = calcATCF(
       filter.position[0],
       filter.position[1],
       college_position[0],
@@ -71,26 +71,22 @@ app.factory('Filter', ['$filter', function($filter) {
     return distance <= max_distance;
   }
 
-  // This function takes in latitude and longitude of two
-  // location and returns the distance between them as
-  // the crow flies (in km)
-  function calcCrow(lat1, lon1, lat2, lon2) {
-    var R = 6371; // km
-    var dLat = toRad(lat2-lat1);
-    var dLon = toRad(lon2-lon1);
-    lat1 = toRad(lat1);
-    lat2 = toRad(lat2);
-
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c;
-    return d;
+  // Calculate the distance (ATCF) between coordinates
+  // Source - http://stackoverflow.com/a/21623206
+  function calcATCF(lat1, lon1, lat2, lon2) {
+    // Math.PI / 180
+    var p = 0.017453292519943295;
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p)/2 +
+            c(lat1 * p) * c(lat2 * p) *
+            (1 - c((lon2 - lon1) * p))/2;
+    // 2 * R; R = 6371 km
+    return km2mi(12742 * Math.asin(Math.sqrt(a)));
   }
 
-  // Converts numeric degrees to radians
-  function toRad(Value) {
-      return Value * Math.PI / 180;
+  // Convert approx from km to mi
+  function km2mi(km) {
+    return km * 0.621371;
   }
 
   var states = {
