@@ -40,7 +40,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
       "id": "st_ratio",
       "name": "Classroom Ratio"
     }, {
-      "id": "location",
+      "id": "position",
       "name": "Location"
     }, {
       "id": "financial_aid_score",
@@ -163,7 +163,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
 
   // Filter out colleges without well-formatted city/state parts
   $scope.hasLocationFilter = function(college) {
-    /*if( !college.norm.position )
+    /*if( !college.norm.location )
       return false;*/
     return true;
   };
