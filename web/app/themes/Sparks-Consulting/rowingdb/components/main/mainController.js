@@ -83,7 +83,7 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
               res.data.results[0].geometry.location.lng
             ];
 
-            $scope.push({
+            $scope.csv.push({
               'id': college.id,
               'slug': college.slug,
               'title': college.title.rendered,
