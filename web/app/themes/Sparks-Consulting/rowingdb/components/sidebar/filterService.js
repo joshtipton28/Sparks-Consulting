@@ -108,7 +108,6 @@ app.factory('Filter', ['$filter', function($filter) {
     filters: {},
     // Filters and priorities data and helpers
     types_map: {
-
       "enrollment_count": {
         "type": "dropdown",
         "title": "Enrollment",
@@ -423,7 +422,8 @@ app.factory('Filter', ['$filter', function($filter) {
         "items": [25, 50, 100, 300, 750, 1500, 3000, 7000]
       }
     },
-    "normalizeCollege": function(college) {
+    // Normalize college data
+    normalizeCollege: function(college) {
       college.norm = {};
       // Normalize and isolate data
       // Normalize from string

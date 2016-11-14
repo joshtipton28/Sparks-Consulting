@@ -16,7 +16,7 @@
          ng-repeat="item in data.items">
     <input type="checkbox"
            checklist-model="data.model"
-           checklist-value="item.id"> {{item.name}}
+           checklist-value="item.name"> {{item.name}}
   </label>
 
   <button class="button" ng-click='cancel()'>Clear</button>
