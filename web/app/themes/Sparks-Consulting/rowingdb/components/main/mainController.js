@@ -62,13 +62,13 @@ function MainController($scope, $state, $http, $timeout, $filter, $sce, CollegeF
 
   // Load majors
   if( !$scope.filter.majors ) {
-    $scope.filter.types_map.majors = [];
+    $scope.filter.types_map.majors.items = [];
     $http.get('/wp-json/wp/v2/major').then(function(res) {
       if( res && res.hasOwnProperty('data') )
         angular.forEach(res.data, function(major) {
-          $scope.filter.types_map.majors.push(major.name);
+          $scope.filter.types_map.majors.items.push(major.name);
         });
-      console.log('Loaded majors', $scope.filter.types_map.majors);
+      console.log('Loaded majors', $scope.filter.types_map.majors.items);
     }, function(res) {
       console.error('Error loading majors', res);
     });
