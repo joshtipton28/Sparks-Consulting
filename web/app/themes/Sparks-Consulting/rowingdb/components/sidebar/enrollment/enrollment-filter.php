@@ -7,7 +7,7 @@
             value="{{item}}"
             name="{{item}}"
             ng-repeat="item in data.items">
-      {{ item.name }}
+      {{ item }}
     </option>
   </select>
 
