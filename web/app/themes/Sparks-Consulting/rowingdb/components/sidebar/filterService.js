@@ -156,6 +156,29 @@ app.factory('Filter', ['$filter', function($filter) {
     filters: {},
     // Filters and priorities data and helpers
     types_map: {
+      "program_type": {
+        "type": "checklist",
+        "title": "Program Type",
+        "content": "Select the Division you'd like to search. Currently, we're only working with varsity programs and a smattering of clubs, though we'd like to be complete in the near future.",
+        "items": [
+          "Women's Division I",
+          "Women's Division II",
+          "Women's Division III",
+          "Women's Openweight",
+          "Women's Lightweight",
+          "Women's LWT Club",
+          "Women's Club",
+          "Men's Division I",
+          "Men's Division II",
+          "Men's Division III",
+          "Men's Openweight",
+          "Men's Lightweight",
+          "Men's LWT Club",
+          "Men's Club"
+        ],
+        "filter": generic_multi_name_filter_or
+      },
+
       "enrollment_count": {
         "type": "dropdown",
         "title": "Enrollment",
@@ -413,6 +436,14 @@ app.factory('Filter', ['$filter', function($filter) {
         });
         if( college.norm[cat].length <= 0 )
           college.norm[cat] = null;
+      });
+      // Normalize program types
+      college.norm.program_type = [];
+      angular.forEach(college.acf.mens_programs || [], function(cat) {
+        college.norm.program_type.push("Men's " + cat.label);
+      });
+      angular.forEach(college.acf.womens_programs || [], function(cat) {
+        college.norm.program_type.push("Women's " + cat.label);
       });
       // Normalize school_privacy
       if( college.norm.school_privacy === 1 )
