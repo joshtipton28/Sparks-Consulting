@@ -19,6 +19,25 @@
            checklist-value="item"> {{item}}
   </label>
 
+  <div class="row" ng-if="data.type === 'checklist_program_type'">
+    <div class="large-6">
+      <label ng-repeat="item in data.items">
+        <input type="checkbox"
+               ng-if="item.startsWith('Women')"
+               checklist-model="data.model"
+               checklist-value="item"> {{item}}
+      </label>
+    </div>
+    <div class="large-6">
+      <label ng-repeat="item in data.items">
+        <input type="checkbox"
+               ng-if="item.startsWith('Men')"
+               checklist-model="data.model"
+               checklist-value="item"> {{item}}
+      </label>
+    </div>
+  </div>
+
   <div ng-if="data.type === 'location'">
     Within
     <select ng-model="data.model.distance">

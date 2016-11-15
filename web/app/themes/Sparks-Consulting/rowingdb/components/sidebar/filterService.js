@@ -157,7 +157,7 @@ app.factory('Filter', ['$filter', function($filter) {
     // Filters and priorities data and helpers
     types_map: {
       "program_type": {
-        "type": "checklist",
+        "type": "checklist_program_type",
         "title": "Program Type",
         "content": "Select the Division you'd like to search. Currently, we're only working with varsity programs and a smattering of clubs, though we'd like to be complete in the near future.",
         "items": [
