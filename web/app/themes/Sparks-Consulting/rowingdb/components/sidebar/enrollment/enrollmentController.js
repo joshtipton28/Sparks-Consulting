@@ -20,14 +20,6 @@ function FilterCtrl($scope, $modal, $http, Filter) {
     return res;
   }
 
-  // programTypeMen filter
-  $scope.programTypeWomen = function(item) {
-    return item.startsWith('Women');
-  };
-  $scope.programTypeMen = function(item) {
-    return item.startsWith('Men');
-  };
-
   $scope.open = function(type) {
     // Get the filter data
     var data = get_type_data(type);
@@ -53,6 +45,13 @@ function FilterCtrl($scope, $modal, $http, Filter) {
       controller: function($scope, $modalInstance, data, Filter) {
         $scope.data = data;
         $scope.filters = Filter.filters;
+        // Program Type filters
+        $scope.programTypeWomen = function(item) {
+          return item.startsWith('Women');
+        };
+        $scope.programTypeMen = function(item) {
+          return item.startsWith('Men');
+        };
         // OK, accept button callback (store state)
         $scope.ok = function() {
           console.debug('Modal closed', $scope.data);
