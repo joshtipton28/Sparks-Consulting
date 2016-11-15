@@ -176,7 +176,7 @@ app.factory('Filter', ['$filter', function($filter) {
           "Men's LWT Club",
           "Men's Club"
         ],
-        "filter": generic_multi_name_filter_or
+        "filter": generic_multi_name_filter_and
       },
 
       "enrollment_count": {
