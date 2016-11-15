@@ -20,18 +20,16 @@
   </label>
 
   <div class="row" ng-if="data.type === 'checklist_program_type'">
-    <div class="large-6">
-      <label ng-repeat="item in data.items">
+    <div class="large-6 columns">
+      <label ng-repeat="item in data.items | filter:programTypeMen">
         <input type="checkbox"
-               ng-if="item.startsWith('Women')"
                checklist-model="data.model"
                checklist-value="item"> {{item}}
       </label>
     </div>
-    <div class="large-6">
-      <label ng-repeat="item in data.items">
+    <div class="large-6 columns">
+      <label ng-repeat="item in data.items | filter:programTypeWomen">
         <input type="checkbox"
-               ng-if="item.startsWith('Men')"
                checklist-model="data.model"
                checklist-value="item"> {{item}}
       </label>

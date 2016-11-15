@@ -20,6 +20,18 @@ function FilterCtrl($scope, $modal, $http, Filter) {
     return res;
   }
 
+  // programTypeMen filter
+  $scope.programTypeWomen = function() {
+    return function(item) {
+      return item.startsWith('Women');
+    };
+  };
+  $scope.programTypeMen = function() {
+    return function(item) {
+      return item.startsWith('Men');
+    };
+  };
+
   $scope.open = function(type) {
     // Get the filter data
     var data = get_type_data(type);
