@@ -21,15 +21,11 @@ function FilterCtrl($scope, $modal, $http, Filter) {
   }
 
   // programTypeMen filter
-  $scope.programTypeWomen = function() {
-    return function(item) {
-      return item.startsWith('Women');
-    };
+  $scope.programTypeWomen = function(item) {
+    return item.startsWith('Women');
   };
-  $scope.programTypeMen = function() {
-    return function(item) {
-      return item.startsWith('Men');
-    };
+  $scope.programTypeMen = function(item) {
+    return item.startsWith('Men');
   };
 
   $scope.open = function(type) {
