@@ -3,10 +3,22 @@
 Template Name: Rowing DB
 */
 get_header(); ?>
-<base href="/rowingdb/">
+<div class="full-bg">
 
-<div class="row" ng-app="app" style="background: #ffffff; margin-top: 150px; padding: 30px;">
-	<div ui-view></div>
+	<?php
+    $smallsrc = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large' );
+    $largesrc = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full-bg-img' );
+	?>
+
+	<img src="<?php $smallsrc[0]; ?>" data-interchange="[<?php echo $smallsrc[0]; ?>, small], [<?php echo $largesrc[0]; ?>, medium]">
+
+</div>
+
+<base href="/rowingdb/">
+<div class="rowingdb">
+	<div class="row" ng-app="app">
+		<div ui-view></div>
+	</div>
 </div>
 <script type="text/javascript">
 var stylesheet_directory_uri = "<?php echo get_stylesheet_directory_uri(); ?>";

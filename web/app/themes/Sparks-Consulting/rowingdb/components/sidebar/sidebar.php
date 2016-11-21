@@ -1,10 +1,10 @@
 <div class="filter-bar-wrapper">
   <div class="filter-bar large-4 columns" ng-controller="SidebarController">
     <h3>Filters:</h3>
-    <a ng-click='reset()'>Reset</a>
+    <a class="rdb-reset" ng-click='reset()'>Reset</a>
     <ul ng-controller="FilterCtrl">
       <li ng-repeat="(type_id, type) in filter.types_map">
-        <a ng-click='open(type_id)'
+        <a class="filter-link" ng-click='open(type_id)'
            ng-class="{'sidebar-filter-active': filterIsActive(filter.filters[type_id])}">
           {{ type.title }}
         </a>

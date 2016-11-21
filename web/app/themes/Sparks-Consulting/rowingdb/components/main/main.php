@@ -40,7 +40,7 @@
            {{ counter.from | number:0 }} Colleges
         </p>
         <!-- Link to listing results -->
-        <a ui-sref="listing" class="success large button">
+        <a ui-sref="listing" class="btn-success">
           Show Schools
         </a>
       </div>

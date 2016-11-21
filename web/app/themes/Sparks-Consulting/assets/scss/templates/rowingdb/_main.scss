@@ -1,0 +1,98 @@
+// RowingDB Colors
+$mirror: rgba(2, 23, 50, 0.78);
+$rdb-gray: #818d9b;
+$rdb-lime: #6fb60a;
+
+//Header Styles
+.rowingdb-header{
+	background: $mirror;
+	position: absolute;
+	.top-bar{
+		padding:20px;
+	}
+	.rowingdb-sparks-logo, .rowingdb-logo{
+		height: 42px;
+		&:hover{
+			opacity: 0.5;
+		}
+	}
+	.rowingdb-sparks-logo{
+		width: 100px;
+	}
+	.rowingdb-logo{
+		width: 145px;
+		transition: opacity ease 0.1s;
+	}
+}
+
+.rowingdb{
+	position: relative;
+	@include breakpoint(medium) {
+	    padding-top:150px;
+	}
+
+	.filter-bar{
+		padding: 30px 27px 35px 0px;
+		h3{
+			text-shadow: 1px 1px 1px $black;
+			display: inline-block;
+			font-size: rem-calc(18);
+			margin-left: 27px;
+			font-weight: bold;
+			letter-spacing: 0;
+			margin-bottom: 0;
+		}
+		.rdb-reset{
+			float: right;
+			color: $rdb-gray;
+		}
+		ul{
+			list-style: none;
+			margin-left: 0;
+		}
+		.filter-link{
+			margin-left: 27px;
+			font-size: rem-calc(16);
+			line-height: rem-calc(28);
+			color: $rdb-gray;
+		}
+		.sidebar-filter-active{
+			margin-left: 0;
+			color: $white;
+
+			&:before{
+				background: url(../images/check.png) no-repeat center center;
+				content: "";
+				background-size: cover;
+				height: 14px;
+				width: 17px;
+				display: inline-block;
+				margin-right: 5px;
+			}
+		}
+	}
+	.btn-success{
+			font-size: rem-calc(25);
+			font-weight: bold;
+			padding: 10px 20px;
+			color: $white;
+			box-shadow: 0px 3px 10px #2e466b;
+			border-radius: 15px;
+			border: 2px solid #6ea02a;
+			background-color: $rdb-lime;
+			background: -webkit-linear-gradient(top, #a7d565, #6fb60a);
+			background: -moz-linear-gradient(top, #a7d565, #6fb60a);
+			background: -ms-linear-gradient(top, #a7d565, #6fb60a);
+			background: -o-linear-gradient(top, #a7d565, #6fb60a);
+
+			&:hover{
+				background-color: $white;
+				background: -webkit-linear-gradient(top, #fafafa, #d0d0d0);
+				background: -moz-linear-gradient(top, #fafafa, #d0d0d0);
+				background: -ms-linear-gradient(top, #fafafa, #d0d0d0);
+				background: -o-linear-gradient(top, #fafafa, #d0d0d0);
+				border-color: #b2aea9;
+				color: $charc;
+			}
+		}
+}
