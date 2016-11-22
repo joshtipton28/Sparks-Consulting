@@ -53,7 +53,8 @@
            ng-model="data.model.zip" />
   </div>
 
-
-  <button class="button" ng-click='cancel()'>Clear</button>
-  <button class="button" ng-click='ok()' type="button">Save</button>
+  <div class="filter-controls" align="center">
+    <button class="btn btn-info" ng-click='cancel()'>Clear</button>
+    <button class="btn btn-save" ng-click='ok()' type="button">Save</button>
+  </div>
 </script>

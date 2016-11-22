@@ -1,0 +1,10 @@
+//Encapsulating Rowing DB Styles into Rowing DB Page Template
+.page-template-rowing-db{
+	@import "templates/rowingdb/settings";
+	@import "templates/rowingdb/navigation";
+	@import "templates/rowingdb/sidebar";
+	@import "templates/rowingdb/priorities-header";
+	@import "templates/rowingdb/map";
+	@import "templates/rowingdb/listing";
+	@import "templates/rowingdb/single";
+}

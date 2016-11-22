@@ -1,0 +1,68 @@
+.college-single-wrapper{
+	background: $mirror;
+	border-radius: 15px;
+	padding: 30px;
+	font-size: rem-calc(14);
+
+	a{
+		color: #13baef;
+		transition: all ease 0.2s;
+		font-size: rem-calc(14);
+		&:hover{
+			color: #ccc;
+		}
+	}
+
+}
+.college-single-header{
+	@include grid-column(12);
+
+	h1{
+		font-weight: 600;
+		font-size: rem-calc(44);
+		line-height: rem-calc(44);
+		display: inline-block;
+	}
+
+	.back-button{
+		float: right;
+	}
+
+	a{
+		display: block;
+	}
+}
+.college-single-stats-list{
+	@include grid-column(6);
+
+	.programs-available{
+		margin-bottom: 0;
+		line-height: rem-calc(14);
+	}
+	tr{
+		border-bottom: 1px solid #777;
+		height: 60px;
+	}
+	th{
+		text-align: right;
+		padding-right: 30px;
+	}
+	.related-info{
+		th{
+			min-width: 126px;
+		}
+		h4{
+			font-weight: bold;
+			font-size: rem-calc(15);
+			margin-bottom: 0;
+		}
+		td{
+			vertical-align: bottom;
+		}
+	}
+	.majors-list{
+		td{
+			color: #ccc;
+		}
+	}
+}

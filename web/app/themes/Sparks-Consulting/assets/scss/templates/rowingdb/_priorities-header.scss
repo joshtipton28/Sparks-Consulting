@@ -1,0 +1,29 @@
+.rowing-priorities-header{
+	@include grid-column(8);
+	background: $mirror;
+	border-radius: 15px;
+	padding: 30px 0px;
+
+	h5{
+		font-size: rem-calc(17);
+		font-weight: normal;
+		padding-top:5px;
+		margin: 0 20px 0 30px;
+		display: inline-block;
+	}
+	.rowing-priorities{
+		display: inline-block;
+		select{
+			display: inline-block;
+			width: 175px;
+			height: 37px;
+			outline: none;
+			border-radius: 7px;
+			color: #777777;
+			margin: 0 10px;
+			font-weight: bold;
+			padding-left: 5px;
+			font-size: rem-calc(14);
+		}
+	}
+}

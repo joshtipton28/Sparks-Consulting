@@ -1,0 +1,169 @@
+// RowingDB Colors
+$mirror: rgba(2, 23, 50, 0.78);
+$rdb-gray: #818d9b;
+$rdb-lgray: #999999;
+$rdb-lime: #6fb60a;
+$rdb-lgreen: #a7d565;
+$rdb-charcoal: #444444;
+
+//Rowing DB Style Overrides
+.container{
+	min-height: 96vh;
+}
+
+.rowingdb{
+	position: relative;
+	@include breakpoint(medium) {
+	    padding-top:125px;
+	}
+}
+
+//Buttons
+	.btn-success{
+		font-size: rem-calc(25);
+		font-weight: bold;
+		padding: 10px 20px;
+		color: $white;
+		box-shadow: 0px 3px 10px #2e466b;
+		border-radius: 15px;
+		border: 2px solid #6ea02a;
+		background-color: $rdb-lime;
+	    background: -webkit-linear-gradient($rdb-lgreen, $rdb-lime); /* For Safari 5.1 to 6.0 */
+	    background: -o-linear-gradient($rdb-lgreen, $rdb-lime); /* For Opera 11.1 to 12.0 */
+	    background: -moz-linear-gradient($rdb-lgreen, $rdb-lime); /* For Firefox 3.6 to 15 */
+	    background: linear-gradient($rdb-lgreen, $rdb-lime); /* Standard syntax */
+
+		&:hover{
+			background-color: $white;
+			background: -webkit-linear-gradient($white, #d0d0d0);
+			background: -moz-linear-gradient($white, #d0d0d0);
+			background: -ms-linear-gradient($white, #d0d0d0);
+			background: -o-linear-gradient($white, #d0d0d0);
+			background: linear-gradient($white, #d0d0d0);
+			border-color: #b2aea9;
+			color: #333;
+		}
+	}
+
+	.btn{
+		font-size: rem-calc(14);
+		font-weight: bold;
+		padding: 12px 30px;
+		border-radius: 10px;
+
+	}
+	.btn-save{
+
+		background-color: $rdb-lime;
+	    background: -webkit-linear-gradient($rdb-lgreen, $rdb-lime); /* For Safari 5.1 to 6.0 */
+	    background: -o-linear-gradient($rdb-lgreen, $rdb-lime); /* For Opera 11.1 to 12.0 */
+	    background: -moz-linear-gradient($rdb-lgreen, $rdb-lime); /* For Firefox 3.6 to 15 */
+	    background: linear-gradient($rdb-lgreen, $rdb-lime); /* Standard syntax */
+	}
+	.btn-info{
+		color: #333;
+		background-color: #fafafa;
+	    background: -webkit-linear-gradient(#fafafa, #d0d0d0); /* For Safari 5.1 to 6.0 */
+	    background: -o-linear-gradient(#fafafa, #d0d0d0); /* For Opera 11.1 to 12.0 */
+	    background: -moz-linear-gradient(#fafafa, #d0d0d0); /* For Firefox 3.6 to 15 */
+	    background: linear-gradient(#fafafa, #d0d0d0); /* Standard syntax */
+
+	    &:hover{
+	    	color: $rdb-gray;
+	    }
+	}
+
+	//Modal Styles
+	.reveal{
+		background: $white;
+		min-height: auto;
+		width: 452px;
+		position: absolute !important;
+		right: 0;
+		top: 20%;
+		padding: 30px;
+		font-size: rem-calc(14);
+		border-radius: 15px;
+
+		h4{
+			color: $rdb-charcoal;
+			font-size: rem-calc(24);
+			margin: 0 0 10px;
+			text-shadow: 0;
+		}
+		p{
+			color: $rdb-lgray;
+		}
+		select{
+			width: 225px;
+			display: block;
+			margin: 0 auto;
+		}
+
+		label{
+			color: $black;
+			input{
+				margin: 0 !important;
+			}
+		}
+
+		.filter-controls{
+			margin-top: 15px;
+		}
+
+	}
+
+
+/* Tooltip container */
+.rdb-tooltip {
+    position: relative;
+
+    .rdb-tooltip-link{
+    	background: #999;
+    	border-radius: 100%;
+    	color: $mirror;
+    	font-size: rem-calc(10);
+    	padding: 0 5px 1px;
+    	font-weight: bold;
+    	cursor: help;
+    }
+
+    /* Tooltip text */
+    .tooltiptext {
+	    visibility: hidden;
+	    width: 300px;
+	    background-color: $mirror;
+	    color: #fff;
+	    text-align: center;
+	    padding: 10px 16px;
+	    border-radius: 10px;
+	    position: absolute;
+	    z-index: 1;
+	    left: 20px;
+	    font-size: rem-calc(14);
+	    text-align: left;
+	}
+	.tooltiptext::after{
+    	content: " ";
+	    position: absolute;
+	    top: 12px;
+	    right: 100%; /* To the left of the tooltip */
+	    margin-top: -5px;
+	    border-width: 5px;
+	    border-style: solid;
+	    border-color: transparent $mirror transparent transparent;
+    }
+}
+
+.rdb-tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+//Pipe Separator
+.pipe{
+	display: inline-block;
+	font-weight: bold;
+	font-size: rem-calc(18);
+	padding: 0 5px 20px 5px;
+	color: #ccc;
+}

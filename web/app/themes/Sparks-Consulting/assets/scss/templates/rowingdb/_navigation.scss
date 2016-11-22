@@ -1,0 +1,26 @@
+// Main Nav Styles
+.rowingdb-header{
+	background: $mirror;
+	position: absolute;
+	.top-bar{
+		padding:20px;
+	}
+	.rowingdb-sparks-logo, .rowingdb-logo{
+		height: 42px;
+		&:hover{
+			opacity: 0.5;
+		}
+	}
+	.rowingdb-sparks-logo{
+		width: 100px;
+	}
+	.rowingdb-logo{
+		width: 145px;
+		transition: opacity ease 0.1s;
+	}
+}
+
+//Footer Styles
+#footer-container{
+	position: relative;
+}

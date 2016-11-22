@@ -4,15 +4,14 @@
       <h5>
         Results (Showing {{filtered.length}} colleges)
       </h5>
-      <div style="float: right; padding-top: 15px;">
+      <div class="listing-controls">
         <button type="button"
-                class="button"
-                style="margin-right: 10px;"
+                class="btn btn-info"
                 ng-click="go('home')">
           Modify Filters
         </button>
         <button type="button"
-                class="button"
+                class="btn btn-info"
                 ng-click="resetFilters(); go('home')">
           Start Over
         </button>

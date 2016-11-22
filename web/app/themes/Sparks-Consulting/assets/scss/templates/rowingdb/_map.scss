@@ -1,0 +1,33 @@
+//Map Styles
+.colleges-map-wrapper {
+	@include grid-column(8, 0);
+	height: 425px;
+	position: relative;
+	padding-bottom: 20px;
+	margin-top: 20px;
+
+  	.map-overlay{
+  		z-index: 10;
+		position: absolute;
+		top: 20%;
+		left: 0;
+		width: 100%;
+		text-align: center;
+
+		p{
+	  		font-size: 75px;
+			font-weight: bold;
+			text-shadow: 1px 3px 6px black;
+			margin-bottom: 80px;
+	  	}
+  	}
+
+  	.map{
+  		border-radius: 14px;
+
+  		div{
+	  		-webkit-transform: translate3d(0px, 0px, 0px);
+			border-radius: 14px;
+	  	}
+  	}
+}

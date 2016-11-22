@@ -1,5 +1,5 @@
 <div class="filter-bar-wrapper">
-  <div class="filter-bar large-4 columns" ng-controller="SidebarController">
+  <div class="filter-bar" ng-controller="SidebarController">
     <h3>Filters:</h3>
     <a class="rdb-reset" ng-click='reset()'>Reset</a>
     <ul ng-controller="FilterCtrl">
