@@ -26,7 +26,16 @@ var stylesheet_directory_uri = "<?php echo get_stylesheet_directory_uri(); ?>";
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.js"></script>
+
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/angular-foundation.min.js"></script>
+
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/ng-map.min.js"></script>
+
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/checklist-model.js"></script>
+
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/angular-counter-with-easing.min"></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/jquery.easing.min.js"></script>
+
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/app.module.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/app.routes.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/components/sidebar/filterService.js"></script>
