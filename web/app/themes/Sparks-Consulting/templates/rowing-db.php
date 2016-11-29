@@ -33,7 +33,7 @@ var stylesheet_directory_uri = "<?php echo get_stylesheet_directory_uri(); ?>";
 
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/checklist-model.js"></script>
 
-<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/angular-counter-with-easing.min"></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/angular-counter-with-easing.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/assets/jquery.easing.min.js"></script>
 
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/rowingdb/app.module.js"></script>
