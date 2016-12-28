@@ -53,8 +53,6 @@
 				get_template_part( 'parts/journal-nav' );
 			elseif (is_page_template('templates/journal-category.php'))
 				get_template_part( 'parts/journal-nav' );
-			elseif (is_page_template('templates/rowing-db.php'))
-				get_template_part( 'parts/rowingdb-nav' );
 			else
 				get_template_part( 'parts/main-nav' );?>
 
