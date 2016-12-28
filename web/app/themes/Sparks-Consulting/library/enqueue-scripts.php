@@ -22,9 +22,6 @@ if ( ! function_exists( 'foundationpress_scripts' ) ) :
 	// CDN hosted jQuery placed in the header, as some plugins require that jQuery is loaded in the header.
 	wp_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js', array(), '2.1.0', false );
 
-	// Google Maps v3
-	wp_enqueue_script( 'googlemaps', '//maps.google.com/maps/api/js?key=AIzaSyDO7gncwOeigq77yzyzSREllCQic3-oC2o', array() );
-
 	// If you'd like to cherry-pick the foundation components you need in your project, head over to gulpfile.js and see lines 35-54.
 	// It's a good idea to do this, performance-wise. No need to load everything if you're just going to use the grid anyway, you know :)
 	wp_enqueue_script( 'foundation', get_template_directory_uri() . '/assets/javascript/foundation.js', array('jquery'), '2.3.0', true );

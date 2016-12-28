@@ -54,16 +54,6 @@ var PATHS = {
     'assets/components/foundation-sites/js/foundation.toggler.js',
     'assets/components/foundation-sites/js/foundation.tooltip.js',
 
-    // Google Maps
-    //'assets/components/ngmap/build/scripts/ng-map.js',
-
-    // AngularJS Checklist-model
-    //'assets/components/checklist-model/checklist-model.js',
-
-    // AngularJS counter directive
-    //'assets/components/angular-counter-animation/js/jquery.easing.min.js',
-    //'assets/components/angular-counter-animation/js/angular-counter-with-easing.min.js',
-
     // Motion UI
     'assets/components/motion-ui/motion-ui.js',
 

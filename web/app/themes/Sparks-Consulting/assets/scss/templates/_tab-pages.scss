@@ -189,8 +189,7 @@ li.tabs-title{
   display: block;
   margin:0 auto;
   margin-top:20px;
-  border: 0px solid !important;
-
+ 
   .horizontal {
     text-align: center;
     a{
@@ -236,4 +235,8 @@ li.tabs-title{
       margin-top:rem-calc(1.49);
     }
   }
+}
+
+.tabs{
+  border: 0 !important;
 }
