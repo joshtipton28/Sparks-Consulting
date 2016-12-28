@@ -45,6 +45,11 @@ if ($reset_settings == 'true') {
 	update_option ( ESSB3_OPTIONS_NAME, $essb_admin_options );
 }
 
+$full_counter_update = isset($_REQUEST['essb_clear_cached_counters']) ? $_REQUEST['essb_clear_cached_counters'] : '';
+if ($full_counter_update == 'true') {
+	delete_post_meta_by_key('essb_cache_expire');
+}
+
 global $essb_admin_options_fanscounter;
 $essb_admin_options_fanscounter = get_option ( ESSB3_OPTIONS_NAME_FANSCOUNTER );
 
@@ -127,7 +132,12 @@ if ($general_cache_active_static || $general_cache_active_static_js) {
 }
 
 ?>
+<!--  sweet alerts -->
+<script src="<?php echo ESSB3_PLUGIN_URL?>/assets/admin/sweetalert.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="<?php echo ESSB3_PLUGIN_URL?>/assets/admin/sweetalert.css">
 <!--  code mirror include -->
+
+
 <link rel=stylesheet
 	href="<?php echo ESSB3_PLUGIN_URL?>/assets/admin/codemirror/codemirror.css">
 <script
@@ -179,7 +189,10 @@ if (class_exists ( 'ESSBAdminActivate' )) {
 	
 	ESSBAdminActivate::notice_manager();
 	
-	ESSBAdminActivate::notice_new_addons();
+	$deactivate_appscreo = essb_options_bool_value('deactivate_appscreo');
+	if (!$deactivate_appscreo) {
+		ESSBAdminActivate::notice_new_addons();
+	}
 }
 
 if (class_exists('ESSBAddonsHelper')) {
@@ -298,12 +311,13 @@ if (function_exists('essb3_apply_readymade_style')) {
 				<div class="essb-logo essb-logo32"></div>
 				<div class="essb-text-afterlogo">
 					<h3>Easy Social Share Buttons for WordPress</h3>
-					<p>
+					<p class="essb-tabs-control">
 						Version <strong><?php echo ESSB3_VERSION;?></strong>. &nbsp;<strong><a
-							href="http://socialsharingplugin.com/version-changes/" target="_blank">See
-								what's new in this version</a></strong>&nbsp;&nbsp;&nbsp;<strong><a
+							href="<?php echo admin_url ("admin.php?page=essb_about"); ?>" class="essb-tab-button">What's new in this version</a></strong>&nbsp;&nbsp;<strong><a
 							href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo"
-							target="_blank">Easy Social Share Buttons plugin homepage</a></strong>
+							target="_blank" class="essb-tab-button">Plugin Homepage</a></strong>&nbsp;&nbsp;<strong><a
+							href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo"
+							target="_blank" class="essb-tab-button" id="essb-check-forupdate">Check for update</a></strong>
 					</p>
 					
 				</div>
@@ -311,7 +325,7 @@ if (function_exists('essb3_apply_readymade_style')) {
 			<div class="essb-title-panel-buttons">
 	<?php if (ESSB3_ADDONS_ACTIVE) { ?>
 		<?php echo '<a href="'.admin_url ("admin.php?page=essb_addons").'"  text="' . __ ( 'Extensions', 'essb' ) . '" class="essb-btn essb-btn-orange" style="margin-right: 5px;"><i class="fa fa-gear"></i>&nbsp;' . __ ( 'Extensions', 'essb' ) . '</a>'; ?>
-	<?php } ?>
+	<?php  } ?>
 	<?php echo '<a href="'.admin_url ("admin.php?page=essb_redirect_quick&tab=quick").'"  text="' . __ ( 'Quick Setup Wizard', 'essb' ) . '" class="essb-btn essb-btn-red" style="margin-right: 5px;"><i class="fa fa-bolt"></i>&nbsp;' . __ ( 'Quick Setup Wizard', 'essb' ) . '</a>'; ?>
 	<?php echo '<a href="'.admin_url ("admin.php?page=essb_redirect_readymade&tab=readymade").'"  text="' . __ ( 'Ready Made Styles', 'essb' ) . '" class="essb-btn essb-btn-green" style="margin-right: 5px;"><i class="fa fa-bolt"></i>&nbsp;' . __ ( 'Apply Ready Made Styles', 'essb' ) . '</a>'; ?>
 	<?php echo '<a href="http://support.creoworx.com" target="_blank" text="' . __ ( 'Need Help? Click here to visit our support center', 'essb' ) . '" class="essb-btn essb-btn-light float_right"><i class="fa fa-question"></i>&nbsp;' . __ ( 'Get Support', 'essb' ) . '</a>'; ?>
@@ -336,7 +350,7 @@ if (function_exists('essb3_apply_readymade_style')) {
 					echo '<li '.($align == 'right' ? 'class="tab-right"' : '').'><a href="' . admin_url ( 'admin.php?page=' . $options_handler . '&tab=' . $name ) . '" class="essb-nav-tab ';
 					if ($current_tab == $name)
 						echo 'active';
-					echo '">' . ($icon != '' ? '<i class="' . $icon . '"></i>' : '') . $label . '</a></li>';
+					echo '" title="'.$label.'">' . ($icon != '' ? '<i class="' . $icon . '"></i>' : '') . '<span>'.$label . '</span></a></li>';
 					$is_first = false;
 					
 					if ($current_tab == $name) {
@@ -378,3 +392,200 @@ if (function_exists('essb3_apply_readymade_style')) {
 	?>
 	
 </div>
+
+<?php 
+
+if (!essb_options_bool_value('deactivate_ajaxsubmit')) {
+
+?>
+
+<style type="text/css">
+.preloader {
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  border: 6px solid #fff;
+  border-radius: 100%;
+}
+.preloader:before,
+.preloader:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -0.2rem 0 0 -0.2rem;
+  border-bottom: 6px solid #fff;
+  border-radius: 10px;
+  -webkit-transform-origin: 3px center;
+}
+.preloader:before {
+/* hour hand */
+  width: 30%;
+  -webkit-animation: hour 10s linear infinite;
+}
+.preloader:after {
+/* minute hand */
+  width: 40%;
+  background-color: #2085e6;
+  -webkit-animation: minute 1s linear infinite;
+}
+@-webkit-keyframes hour {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes minute {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+/* for demo purposes only — not required */
+.preloader {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.preloader-holder {
+	position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+.preloader-message {
+	position: fixed;
+	font-size: 32px;
+	line-height: 32px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	top: calc(50% + 56px);
+	bottom: 0;
+	left: 0;
+	margin: 0;
+	text-align: center;
+	margin: auto;
+	width: 400px;
+	right: 0;
+	color: #fff;
+}
+
+.preloader-holder { display: none; }
+.sweet-alert h2 {
+	letter-spacing: -0.5px;
+	color: #303133;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.sweet-alert p {
+	font-size: 14px;
+	color: #303133;
+	font-weight: 400;
+}
+
+.sweet-alert button {
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.sweet-overlay { 
+background-color: rgba(0, 0, 0, 0.7);
+}
+</style>
+
+<div class="preloader-holder">
+<div class="preloader"></div>
+<div class="preloader-message">Please Wait a Moment ...</div>
+</div>
+<script type="text/javascript">
+
+	// assign ajax submit on form
+jQuery(document).ready(function($){
+	if ($('#essb-btn-update').length && $('#essb_options_form').length) {
+		$('#essb-btn-update').click(function(e) {
+			$('.preloader-holder').fadeIn(100);
+			var frmSettings = $('#essb_options_form');
+
+			frmSettings.submit(function (e) {
+				if (typeof(essb_disable_ajax_submit) == "undefined") essb_disable_ajax_submit = false;
+				
+				if (!essb_disable_ajax_submit) {
+					$.ajax({
+			            type: frmSettings.attr('method'),
+			            url: frmSettings.attr('action'),
+			            data: frmSettings.serialize(),
+			            success: function (data) {
+			                $('.preloader-holder').fadeOut(400);
+			                swal("Your settings are saved!", "Your new setup is ready to use. If you use cache plugin (example: W3 Total Cache, WP Super Cache, WP Rocket) or optimization plugin (example: Autoptimize, BWP Minify) it is highly recommended to clear cache or you may not see the changes.", "success")
+			            }
+			        });
+
+			        e.preventDefault();
+				}
+			    });
+		});
+	}
+
+	if ($('#essb-check-forupdate').length) {
+		$('#essb-check-forupdate').click(function(e) {
+			e.preventDefault();
+
+			$('.preloader-holder').fadeIn(100);
+			var plugin_is_activated = <?php if (ESSBActivationManager::isActivated()) { echo 'true'; } else { echo 'false'; }?>;
+			var version_api = '<?php echo ESSBActivationManager::getApiUrl('api')?>version.php'; 
+			$.ajax({
+				type: "GET",
+		        url: version_api,
+		        data: {},
+		        success: function (data) {
+		        	$('.preloader-holder').fadeOut(400);
+	                console.log(data);
+	                if (typeof(data) == "string")
+	                	data = JSON.parse(data);
+	                
+	                var code = data['code'] || '';
+	                var version = data['version'] || '';
+
+	                if (code == '200') {
+	                	$.ajax({
+	    		            type: "POST",
+	    		            url: "<?php echo admin_url("admin-ajax.php");?>",
+	    		            data: { 'action': 'essb_process_activation', 'activation_state': 'version_check', 'version': version},
+	    		            success: function (data) {
+	    		            	console.log(data);
+	    		            	 if (typeof(data) == "string")
+	    			                	data = JSON.parse(data);
+
+	 			                var code = data['code'] || '';
+	 			                if (code != '') {
+		 			                if (plugin_is_activated) {
+		 			                	swal("New version " + code + " is available!", "Visit updates screen to proceed with plugin update", "success");
+		 			                }
+		 			                else {
+	 			                		swal("New version " + code + " is available!", "Activate plugin to unlock automatic updates", "success");
+		 			                }
+	 			                }
+	 			                else {
+	 			                	swal("", "You are running latest version of plugin!", "");
+	 			                }
+	    		            }
+	                	});
+	                }
+		        },
+		        error: function() {
+		        	$('.preloader-holder').fadeOut(400);
+		        	swal("Connection Error!", "A problem occured when connection to update server. Please try again later or check the what is new page for our latest release", "error");
+		        }
+			});
+		});
+	}
+});
+	
+</script>
+<?php } ?>

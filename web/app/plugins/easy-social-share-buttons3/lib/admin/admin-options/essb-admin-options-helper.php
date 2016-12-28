@@ -77,7 +77,7 @@ class ESSBOptionsStructureHelper {
 
 	}
 
-	public static function field_switch ($tab_id, $menu_id, $id, $title, $description, $recommended = '', $on_label = '', $off_label = '', $default_value = '', $col_width = '') {
+	public static function field_switch ($tab_id, $menu_id, $id, $title, $description, $recommended = '', $on_label = '', $off_label = '', $default_value = '', $col_width = '', $switch_sumbit = '') {
 		global $essb_navigation_tabs, $essb_sidebar_sections, $essb_section_options;
 		$essb_section_options[$tab_id][$menu_id][] = array(
 				'id' => $id,
@@ -88,7 +88,8 @@ class ESSBOptionsStructureHelper {
 				'on_label' => $on_label,
 				'off_label' => $off_label,
 				'default_value' => $default_value,
-				'col_width' => $col_width
+				'col_width' => $col_width,
+				'class' => $switch_sumbit
 		);
 	}
 

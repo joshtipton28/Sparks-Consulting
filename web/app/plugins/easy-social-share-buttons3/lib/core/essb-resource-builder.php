@@ -116,7 +116,7 @@ class ESSBResourceBuilder {
 	public function footer() {
 		// since version 4 we introduce new mail form code added here
 		if ($this->is_activated('mail')) {
-			essb_depend_load_function('essb_rs_css_build_fullwidth_buttons', 'lib/core/resource-snippets/essb_rs_code_mailform.php');				
+			essb_depend_load_function('essb_rs_mailform_build', 'lib/core/resource-snippets/essb_rs_code_mailform.php');				
 		}
 		
 		do_action('essb_rs_footer');

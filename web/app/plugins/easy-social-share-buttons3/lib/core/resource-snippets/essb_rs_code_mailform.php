@@ -3,6 +3,7 @@ if (!function_exists('essb_rs_mailform_build')) {
 	add_action('essb_rs_footer', 'essb_rs_mailform_build');
 	
 	function essb_rs_mailform_build() {
+		global $post;
 		
 		$mail_salt_check = get_option(ESSB3_MAIL_SALT);
 		
@@ -11,14 +12,19 @@ if (!function_exists('essb_rs_mailform_build')) {
 		$translate_mail_recipient = essb_option_value('translate_mail_recipient');
 		$translate_mail_cancel = essb_option_value('translate_mail_cancel');
 		$translate_mail_send = essb_option_value('translate_mail_send');
+		$translate_mail_custom = essb_option_value('translate_mail_custom');
+		
+		$mail_popup_preview = essb_option_bool_value('mail_popup_preview');
 		
 		if ($translate_mail_title == '') $translate_mail_title = __('Send this to friend', 'essb');
 		if ($translate_mail_email == '') $translate_mail_email = __('Your email', 'essb');
 		if ($translate_mail_recipient == '') $translate_mail_recipient = __('Recipient email', 'essb');
 		if ($translate_mail_cancel == '') $translate_mail_cancel = __('Cancel', 'essb');
 		if ($translate_mail_send == '') $translate_mail_send = __('Send', 'essb');
+		if ($translate_mail_custom == '') $translate_mail_custom = __('Your message', 'essb');
 		
 		$mail_captcha = essb_option_value('mail_captcha');
+		$mail_popup_edit = essb_option_bool_value('mail_popup_edit');
 		
 		$code = '';
 		
@@ -30,9 +36,48 @@ if (!function_exists('essb_rs_mailform_build')) {
 		$code .= '<label class="essb_mailform_content_label">'.$translate_mail_recipient.'</label>';
 		$code .= '<input type="text" id="essb_mailform_to" class="essb_mailform_content_input" placeholder="'.$translate_mail_recipient.'"/>';
 		
+		if ($mail_popup_edit) {
+			$code .= '<label class="essb_mailform_content_label">'.$translate_mail_custom.'</label>';
+			$code .= '<textarea id="essb_mailform_custom" class="essb_mailform_content_input" placeholder="'.$translate_mail_custom.'"></textarea>';
+				
+		}
+ 		
 		if ($mail_captcha != '') {
 			$code .= '<label class="essb_mailform_content_label">'.$mail_captcha.'</label>';
 			$code .= '<input type="text" id="essb_mailform_c" class="essb_mailform_content_input" placeholder="'.__('Fill captcha code', 'essb').'"/>';
+		}
+		
+		if ($mail_popup_preview && isset($post)) {
+			$message_body = essb_option_value('mail_body');
+			$message_body = stripslashes($message_body);
+				
+			$url = get_permalink($post->ID);
+			
+			$base_post_url = $url;
+				
+			$site_url = get_site_url();
+				
+			$base_site_url = $site_url;
+				
+			$site_url = '<a href="'.$site_url.'">'.$site_url.'</a>';
+			$url = '<a href="'.$url.'">'.$url.'</a>';
+				
+			$title = $post->post_title;
+			$image = essb_core_get_post_featured_image($post->ID);
+			$description = $post->post_excerpt;
+				
+			if ($image != '') {
+				$image = '<img src="'.$image.'" />';
+			}
+			
+			
+			$parsed_address = parse_url($base_site_url);
+				
+			$message_body = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#', '#%%image%%#'), array($title, $site_url, $url, $image), $message_body);
+				
+			$message_body = str_replace("\r\n", "<br />", $message_body);
+			
+			$code .= '<div class="essb_mailform_preview">'.$message_body.'</div>';
 		}
 		
 		$code .= '<div class="essb_mailform_content_buttons">';
@@ -53,7 +98,7 @@ if (!function_exists('essb_rs_mailform_build')) {
 }
 
 if (!function_exists('essb_rs_mailform_code')) {
-	add_filter('essb_js_buffer_footer', essb_rs_mailform_code);
+	add_filter('essb_js_buffer_footer', 'essb_rs_mailform_code');
 	
 	function essb_rs_mailform_code($buffer) {
 		$code = "";
@@ -128,6 +173,7 @@ function essb_mailform_send() {
 	var recepient_email = jQuery("#essb_mailform_to").val();
 	var captcha_validate = jQuery("#essb_mailform_c").length ? true : false;
 	var captcha = captcha_validate ? jQuery("#essb_mailform_c").val() : "";
+	var custom_message = jQuery("#essb_mailform_custom").length ? jQuery("#essb_mailform_custom").val() : "";
 	
 	if (sender_email == "" || recepient_email == "" || (captcha == "" && captcha_validate)) {
 		alert("Please fill all fields in form!");
@@ -146,6 +192,7 @@ function essb_mailform_send() {
 			"from": sender_email,
 			"to": recepient_email,
 			"c": captcha,
+			"cu": custom_message,
 			"salt": mail_salt,
 			"nonce": essb_settings.essb3_nonce
 			}, function (data) { if (data) {

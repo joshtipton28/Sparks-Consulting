@@ -48,6 +48,15 @@ class ESSBSocialFollowersCounterUpdater {
 		return $request;
 	}
 	
+	public function remote_get($url, $json = true, $args = array( 'timeout' => 18 , 'sslverify' => false )) {
+		$get_request = wp_remote_get ( $url, $args );
+		$request = wp_remote_retrieve_body ( $get_request );
+		if ($json)
+			$request = @json_decode ( $request, true );
+		return $request;
+		
+	}
+	
 	public function update_love() {
 		$result = 0;
 		
@@ -141,7 +150,8 @@ class ESSBSocialFollowersCounterUpdater {
 	
 	private function update_facebook_page() {
 		try {
-			$response = $this->remote_update ( 'https://graph.facebook.com/v2.7/' . ESSBSocialFollowersCounterHelper::get_option ( 'facebook_id' ) . '?fields=fan_count&access_token=' . ESSBSocialFollowersCounterHelper::get_option ( 'facebook_access_token' ) );				
+			$response = $this->remote_update ( 'https://graph.facebook.com/v2.7/' . ESSBSocialFollowersCounterHelper::get_option ( 'facebook_id' ) . '?fields=fan_count&access_token=' . ESSBSocialFollowersCounterHelper::get_option ( 'facebook_access_token' ) );
+
 			if (isset ( $response ['fan_count'] )) {
 				return $response ['fan_count'];
 			}
@@ -231,9 +241,62 @@ class ESSBSocialFollowersCounterUpdater {
 		}
 	}
 	
+	/**
+	 * update_linkedin_token
+	 * 
+	 * Update of LinkedIn followers counter will work from now on with token only
+	 * 
+	 * @since 4.1
+	 */
+	public function update_linkedin_token() {
+		$id = ESSBSocialFollowersCounterHelper::get_option ( 'linkedin_id' );
+		$token = ESSBSocialFollowersCounterHelper::get_option ( 'linkedin_token' );
+		$type = ESSBSocialFollowersCounterHelper::get_option ( 'linkedin_type' );
+		
+		$result = 0;
+		
+		if( ! empty( $type ) && !empty( $token )){
+		
+			$args  = array(
+					'headers' => array('Authorization' => sprintf('Bearer %s', $token))
+			);
+		
+			if( $type == 'profile' && ! empty( $id )){
+		
+				try {
+					$data   = $this->remote_get('https://api.linkedin.com/v1/people/~:(num-connections)?format=json', true, $args);
+					$result = (int) $data['numConnections'];
+				}
+				catch (Exception $e) {
+					$result = 0;
+				}
+		
+			}
+			elseif( $type == 'company' && ! empty( $id )){
+		
+				$page_id = sprintf('https://api.linkedin.com/v1/companies/%s/num-followers?format=json', $id );
+		
+				try {
+					$data = $this->remote_get( $page_id, true, $args);
+					
+					if( !is_array( $data )){
+						$result = $data;
+					}
+				}
+				catch (Exception $e) {
+					$result = 0;
+				}
+			}		
+		}
+		
+		return $result;
+		
+	}
+	
 	public function update_linkedin() {
 		
 		$id = ESSBSocialFollowersCounterHelper::get_option ( 'linkedin_id' );
+
 		
 		if (empty ( $id )) {
 			return 0;

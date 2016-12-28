@@ -18,18 +18,28 @@ $essb_options = essb_options();
 
 ESSBOptionsStructureHelper::init();
 ESSBOptionsStructureHelper::tab('social', __('Social Sharing', 'essb'), __('Social Sharing', 'essb'), 'ti-sharethis');
+ESSBOptionsStructureHelper::tab('where', __('Where to Display', 'essb'), __('Where to Display', 'essb'), 'ti-layout');
 ESSBOptionsStructureHelper::tab('display', __('Like, Follow & Subscribe', 'essb'), __('Like, Follow & Subscribe', 'essb'), 'ti-heart');
 ESSBOptionsStructureHelper::tab('advanced', __('Advanced Settings', 'essb'), __('Advanced Settings', 'essb'), 'ti-settings');
 ESSBOptionsStructureHelper::tab('style', __('Style Settings', 'essb'), __('Style Settings', 'essb'), 'ti-palette');
 ESSBOptionsStructureHelper::tab('shortcode', __('Shortcode Generator', 'essb'), __('Shortcode Generator', 'essb'), 'ti-shortcode', '', true);
 ESSBOptionsStructureHelper::tab('analytics', __('Analytics', 'essb'), __('Analytics', 'essb'), 'ti-stats-up', '', true);
-ESSBOptionsStructureHelper::tab('import', __('Import/Export', 'essb'), __('Import/Export Plugin Configuration', 'essb'), 'ti-reload', 'right', true);
-ESSBOptionsStructureHelper::tab('update', __('Activate', 'essb'), __('Activate', 'essb'), 'ti-lock', 'right', false, false, false, true);
+ESSBOptionsStructureHelper::tab('import', __('Import / Export', 'essb'), __('Import / Export Plugin Configuration', 'essb'), 'ti-reload', 'right', true);
+
+if (defined('ESSB3_ACTIVATION')) {
+	ESSBOptionsStructureHelper::tab('update', __('Activate', 'essb'), __('Activate Easy Social Share Buttons for WordPress', 'essb'), 'ti-lock', 'right', true, false, false, true);
+}
+else {
+	ESSBOptionsStructureHelper::tab('update', __('Activate', 'essb'), __('Activate Easy Social Share Buttons for WordPress', 'essb'), 'ti-lock', 'right', false, false, false, true);
+}
 
 ESSBOptionsStructureHelper::tab('quick', __('Quick Setup', 'essb'), __('Quick Setup Wizard', 'essb'), 'fa fa-cog', '', false, true, true);
 ESSBOptionsStructureHelper::tab('readymade', __('Ready Made Styles', 'essb'), __('Apply Ready Made Styles', 'essb'), 'fa fa-cog', '', true, true, true, true);
 
 ESSBOptionsStructureHelper::tab('status', __('System Status', 'essb'), __('System Status', 'essb'), 'fa fa-cog', '', true, true, true, true);
+if (essb_installed_wpml() || essb_installed_polylang()) {
+	ESSBOptionsStructureHelper::tab('translate', __('Multilingual Translate', 'essb'), __('Multilingual Translate', 'essb'), 'fa fa-globe', '', !ESSBActivationManager::isActivated(), true, false, true);	
+}
 
 //-- menu
 $user_active_tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : '';
@@ -51,8 +61,10 @@ if ($user_active_tab == "readymade") {
 	include_once (ESSB3_PLUGIN_ROOT . 'lib/admin/admin-options/essb-options-structure-readymade.php');
 }
 
-
 include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/admin-options/essb-admin-options-social.php');
 include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/admin-options/essb-admin-options-follow.php');
 include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/admin-options/essb-admin-options-legacy.php');
 
+if ($user_active_tab == "translate") {
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/admin/admin-options/essb-admin-options-wpml.php');
+}

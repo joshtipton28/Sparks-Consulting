@@ -1,8 +1,9 @@
 <?php
 
 // inialize plugin options
-global $essb_options, $essb_networks;
+global $essb_options, $essb_networks, $essb_translate_options;
 $essb_options = get_option(ESSB3_OPTIONS_NAME);
+$essb_translate_options = get_option(ESSB3_WPML_OPTIONS_NAME);
 $essb_networks = essb_available_social_networks();
 
 if (has_filter('essb4_options_extender')) {
@@ -25,6 +26,9 @@ if ($easymode_state) {
 //print_r($essb_options);
 // end: initialize plugin working options
 */
+
+//@since 4.1 including activation manager
+include_once (ESSB3_PLUGIN_ROOT . 'lib/core/essb-activation-manager.php');
 
 // include options helper functions
 include_once (ESSB3_PLUGIN_ROOT . 'lib/core/options/essb-options-helper.php');
@@ -211,6 +215,16 @@ if (!essb_options_bool_value('deactivate_ctt')) {
 // visual composer element bridge
 if (function_exists('vc_map')) {
 	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/visual-composer/essb-visual-composer-map.php');
+}
+
+// WPML Bridge
+if (essb_installed_wpml() || essb_installed_polylang()) {
+	include_once(ESSB3_PLUGIN_ROOT . 'lib/core/essb-wpml-bridge.php');
+	if (!is_admin()) {
+		if (has_filter('essb4_options_multilanguage')) {
+			$essb_options = apply_filters('essb4_options_multilanguage', $essb_options);
+		}
+	}
 }
 
 

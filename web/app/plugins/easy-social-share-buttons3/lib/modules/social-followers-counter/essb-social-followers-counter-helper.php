@@ -153,6 +153,8 @@ class ESSBSocialFollowersCounterHelper {
 		$socials['mymail'] = 'myMail';
 		$socials['spotify'] = 'Spotify';
 		$socials['twitch'] = 'Twitch';
+		$socials['telegram'] = 'Telegram';
+		$socials['mailerlite'] = 'MailerLite';
 			
 		if ($display_total) {
 			$socials['total'] = 'Total Followers Counter';
@@ -217,7 +219,9 @@ class ESSBSocialFollowersCounterHelper {
 		$settings['pinterest']['text'] = array('type' => 'textbox', 'text' => 'Fans text', 'default' => 'Followers');
 		$settings['pinterest']['uservalue'] = array('type' => 'textbox', 'text' => 'Manual user value of followers');
 		
-		$settings['linkedin']['id'] = array('type' => 'textbox', 'text' => 'LinkedIn Company Page URL', "description" => "Enter your full LinkedIn address - example: https://www.linkedin.com/company/appscreo");
+		$settings['linkedin']['id'] = array('type' => 'textbox', 'text' => 'LinkedIn Company ID or Profile URL', "description" => "Enter your company ID or full LinkedIn personal profile address depends on what is the type of value that you will display - example: company id: 4835320 or profile url: https://www.linkedin.com/in/applications-creo-bb06a29a");
+		$settings['linkedin']['token'] = array('type' => 'textbox', 'text' => 'Access Token Key', 'authfield' => true, 'description' => 'Token is required to get data since latest LinkedIn update. Please follow instructions at http://tools.creoworx.com/linkedin/ on how to generate your token.');
+		$settings['linkedin']['type'] = array('type' => 'select', 'text' => 'Value type', 'values' => array("company" => "Company Followers - please fill in field Company ID", "profile" => "Personal Profile Connections (Please fill URL of your personal profile)"), 'description' => 'Please choose type that represents value that you wish to display.');
 		$settings['linkedin']['text'] = array('type' => 'textbox', 'text' => 'Text below number', 'description' => 'Text that will appear below number of followers (fans, likes, subscribers, followers and etc.)', 'default' => 'Followers');
 		$settings['linkedin']['uservalue'] = array('type' => 'textbox', 'text' => 'Manual user value of followers');
 		
@@ -385,6 +389,14 @@ class ESSBSocialFollowersCounterHelper {
 		$settings['mailpoet']['text'] = array('type' => 'textbox', 'text' => 'Text below number', 'description' => 'Text that will appear below number of followers (fans, likes, subscribers, followers and etc.)', 'default' => 'Followers');
 		$settings['mailpoet']['uservalue'] = array('type' => 'textbox', 'text' => 'Manual user value of followers');
 				
+		$settings['telegram']['id'] = array('type' => 'textbox', 'text' => 'URL when button is clicked');
+		$settings['telegram']['text'] = array('type' => 'textbox', 'text' => 'Text below number', 'description' => 'Text that will appear below number of followers (fans, likes, subscribers, followers and etc.)','default' => 'Followers');
+		$settings['telegram']['uservalue'] = array('type' => 'textbox', 'text' => 'Manual user value of followers');
+		
+		$settings['mailerlite']['id'] = array('type' => 'textbox', 'text' => 'URL when button is clicked');
+		$settings['mailerlite']['text'] = array('type' => 'textbox', 'text' => 'Text below number', 'description' => 'Text that will appear below number of followers (fans, likes, subscribers, followers and etc.)','default' => 'Followers');
+		$settings['mailerlite']['uservalue'] = array('type' => 'textbox', 'text' => 'Manual user value of followers');
+		
 		
 		return $settings;
 	}

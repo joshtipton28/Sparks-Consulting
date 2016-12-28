@@ -68,12 +68,11 @@ var essb_ajax_subscribe = function(key, event) {
 		jQuery(formContainer).find('.submit').prop('disabled', true);
 		jQuery(formContainer).hide();
 		jQuery('.essb-subscribe-form-' + key).find('.essb-subscribe-loader').show();
-		console.log(formContainer.attr('action'));
-		console.log(user_mail+"," + user_name);
-		jQuery.post(formContainer.attr('action'), { mailchimp_email: user_mail, mailchimp_name: user_name}, 
+		var submitapi_call = formContainer.attr('action') + '&mailchimp_email='+user_mail+'&mailchimp_name='+user_name;
+			
+		jQuery.post(submitapi_call, { mailchimp_email1: user_mail, mailchimp_name1: user_name}, 
 				function (data) {
-					console.log('result is ');
-					console.log(data);
+
 					if (data) {
 					
 					console.log(data);

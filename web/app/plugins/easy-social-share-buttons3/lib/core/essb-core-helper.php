@@ -186,7 +186,17 @@ function essb_template_folder ($template_id) {
 		$folder = "round-retina essb_template_modern-light-retina";
 	}
 	
+	if ($template_id == 54) {
+		$folder = "default4-retina essb_template_tiny-color-circles-retina";
+	}
 	
+	if ($template_id == 55) {
+		$folder = "clear-retina essb_template_lollipop-retina";
+	}
+	
+	if (has_filter('essb4_templates_class')) {
+		$folder = apply_filters('essb4_templates_class', $folder, $template_id);
+	}
 
 	// fix when using template_slug instead of template_id
 	if (intval($template_id) == 0 && $template_id != '') {
@@ -243,6 +253,53 @@ function essb_core_helper_generate_list_networks($all_networks = false) {
 	}
 
 	return $networks;
+}
+
+function essb_core_helper_generate_list_networks_with_more($all_networks = false) {
+	global $essb_networks, $essb_options;
+	$networks = array();
+
+	$listOfNetworks = ($all_networks) ? essb_core_helper_generate_network_list() : essb_options_value( 'networks');
+
+	foreach ($listOfNetworks as $single) {
+		
+		$networks[] = $single;
+		
+	}
+
+	return $networks;
+}
+
+function essb_core_helper_networks_without_more($networks) {
+	$more_appear = false;
+	$new_list = array();
+
+	foreach ($networks as $network) {
+
+		if ($network != 'more' && $network != 'share') {
+			$new_list[] = $network;
+		}
+	}
+
+	return $new_list;
+}
+
+function essb_core_helper_networks_after_more($networks) {
+	$more_appear = false;
+	$new_list = array();
+	
+	foreach ($networks as $network) {
+		
+		if ($more_appear) {
+			$new_list[] = $network;
+		}
+		
+		if ($network == 'more' || $network == 'share') {
+			$more_appear = true;
+		}
+	}
+	
+	return $new_list;
 }
 
 function essb_core_helper_generate_network_list() {
@@ -316,7 +373,7 @@ function essb_get_post_share_details($position) {
 	}
 
 	if (essb_option_bool_value('force_wp_fullurl')) {
-		$url = essb_get_current_page_url();
+		$url = essb_get_current_page_url();		
 	}
 
 	if (essb_option_bool_value('always_use_http')) {

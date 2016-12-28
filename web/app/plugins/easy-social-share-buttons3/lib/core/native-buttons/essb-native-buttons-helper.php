@@ -371,6 +371,12 @@ class ESSBNativeButtonsHelper {
 		$facebook_height = ESSBOptionValuesHelper::options_value($essb_options, 'facebook_like_button_height');
 		$facebook_width = ESSBOptionValuesHelper::options_value($essb_options, 'facebook_like_button_width');
 		
+		$facebook_share_button = essb_option_bool_value('facebook_like_button_share');
+		$fb_share_tag = "false";
+		if ($facebook_share_button) {
+			$fb_share_tag = "true";
+		}
+		
 		if (trim($facebook_width) != "") {
 			$facebook_width = "width:".$facebook_width.'px;';
 		}
@@ -378,7 +384,7 @@ class ESSBNativeButtonsHelper {
 		$code = '<div style="'.self::facebook_button_css_fixer('display: inline-block; height: 24px; max-height: 24px; '.$facebook_width.'vertical-align: top;', $facebook_height, $facebook_margin_top).'">';				
 		
 		if ($facebook_type == "like") {
-			$code .= '<div class="fb-like" data-href="'.$facebook_url.'" data-layout="'.($counters ? "button_count" : "button").'" data-action="like" data-show-faces="false" data-share="false" data-width="292" style="vertical-align: top; zoom: 1;display: inline;"></div>';
+			$code .= '<div class="fb-like" data-href="'.$facebook_url.'" data-layout="'.($counters ? "button_count" : "button").'" data-action="like" data-show-faces="false" data-share="'.$fb_share_tag.'" data-width="292" style="vertical-align: top; zoom: 1;display: inline;"></div>';
 		}
 		else {
 			$code .= '<div class="fb-follow" data-href="'.$facebook_url.'" data-layout="'.($counters ? "button_count" : "button").'" data-show-faces="false"></div>';

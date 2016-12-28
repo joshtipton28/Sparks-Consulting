@@ -148,6 +148,10 @@ class ESSBSocialFollowersCounter {
 		return $this->updater_instance;
 	}
 	
+	public function update_manual_value($social) {
+		return ESSBSocialFollowersCounterHelper::get_option($social.'_uservalue');
+	}
+	
 	/**
 	 * update_all_followers
 	 * 
@@ -174,7 +178,7 @@ class ESSBSocialFollowersCounter {
 					$count = $this->updater()->update_pinterest ();
 					break;
 				case 'linkedin' :
-					$count = $this->updater()->update_linkedin ();
+					$count = $this->updater()->update_linkedin_token ();
 					break;
 				case 'vimeo' :
 					$count = $this->updater()->update_vimeo ();
@@ -269,6 +273,10 @@ class ESSBSocialFollowersCounter {
 					break;
 				case 'mailpoet':
 					$count = $this->updater()->update_mailpoet();
+					break;
+				case 'mailerlite':
+				case 'telegram': 
+					$count = $this->update_manual_value($social);
 					break;
 				default :
 					$count = 0;
@@ -409,7 +417,14 @@ class ESSBSocialFollowersCounter {
 				return 'https://www.pinterest.com/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
 				break;
 			case 'linkedin' :
-				return ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
+				
+				$type =  ESSBSocialFollowersCounterHelper::get_option ( $social . '_type' );
+				if ($type == 'profile') {				
+					return ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
+				}
+				else {
+					return 'https://www.linkedin.com/company/'.ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
+				}
 				break;
 			case 'github' :
 				return 'http://github.com/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
@@ -537,6 +552,10 @@ class ESSBSocialFollowersCounter {
 				return 'http://www.twitch.tv/' . ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' ).'/profile';
 				break;
 			case 'spotify' :
+				return ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
+				break;
+			case 'mailerlite':
+			case 'telegram':
 				return ESSBSocialFollowersCounterHelper::get_option ( $social . '_id' );
 				break;
 		}

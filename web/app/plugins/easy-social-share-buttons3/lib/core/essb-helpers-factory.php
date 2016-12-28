@@ -163,7 +163,7 @@ if (!function_exists('essb_option_value')) {
 	function essb_option_value($param, $options = null) {
 		global $essb_options;
 
-		if (!$options || is_array($options)) {
+		if (!$options || !is_array($options)) {
 			$options = $essb_options;
 		}
 
@@ -174,6 +174,18 @@ if (!function_exists('essb_option_value')) {
 if (!function_exists('essb_object_value')) {
 	function essb_object_value($object, $param, $default = '') {
 		return isset($object[$param]) ? $object[$param] : ($default != '' ? $default : '');
+	}
+}
+
+if (!function_exists('essb_is_test')) {
+	function essb_is_test() {
+		$automated_test = isset($_REQUEST['P3_NOCACHE']) ? $_REQUEST['P3_NOCACHE'] : '';
+		if ($automated_test != '') {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 
@@ -189,6 +201,26 @@ if (!function_exists('essb_depend_load_class')) {
 	function essb_depend_load_class($class, $path) {
 		if (!class_exists($class)) {
 			include_once ESSB3_PLUGIN_ROOT.$path;
+		}
+	}
+}
+
+if (!function_exists('essb_installed_wpml')) {
+	function essb_installed_wpml() {
+		if (class_exists ( "SitePress" ))
+			return (true);
+		else
+			return (false);
+	}
+}
+
+if (!function_exists('essb_installed_polylang')) {
+	function essb_installed_polylang() {
+		if (function_exists('pll_languages_list')) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 }

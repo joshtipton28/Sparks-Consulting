@@ -47,6 +47,20 @@ if (!function_exists('essb_shortcode_map_shareoptions')) {
 				$post_share_details['twitter_tweet'] = $shortcode_options['title'];
 			}
 		}
+		
+		if (isset($shortcode_options['email_subject'])) {
+			if ($shortcode_options['email_subject'] != '') {
+				$post_share_details['mail_subject'] = $shortcode_options['email_subject'];
+				$post_share_details['customized_mail'] = true;
+			}
+		}
+		
+		if (isset($shortcode_options['email_message'])) {
+			if ($shortcode_options['email_message'] != '') {
+				$post_share_details['mail_body'] = $shortcode_options['email_message'];
+				$post_share_details['customized_mail'] = true;
+			}
+		}
 			
 		$affwp_active_shortcode = essb_option_bool_value('affwp_active_shortcode');
 		if ($affwp_active_shortcode) {

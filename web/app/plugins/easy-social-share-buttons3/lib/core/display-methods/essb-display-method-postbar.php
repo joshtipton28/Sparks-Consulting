@@ -125,16 +125,16 @@ class ESSBDisplayMethodPostBar {
 		$output .= '<div class="essb-postbar-right">';
 			
 		$one_icon = false;
-		$output .= '<div class="essb-posbar-icons-container">';
+		$output .= '<div class="essb-superposbar-icons-container">';
 			
 		if ($postbar_activate_total) {
-			$output .= '<span class="essb-postbar-totalshares"><i class="essb_icon_share"></i><span class="essb-postbar-number">'.$total_shares_code.'</span></span>';
+			$output .= '<span class="essb-superpostbar-totalshares"><i class="essb_icon_share"></i><span class="essb-postbar-number">'.$total_shares_code.'</span></span>';
 			$one_icon = true;
 		}
 		if ($postbar_activate_comments) {
 			$comment_count = get_post_field( 'comment_count', $post->ID );
 		
-			$output .= '<span class="essb-postbar-comments"><i class="essb_icon_comments"></i><span class="essb-postbar-number">'.$comment_count.'</span></span>';
+			$output .= '<span class="essb-superpostbar-comments"><i class="essb_icon_comments"></i><span class="essb-postbar-number">'.$comment_count.'</span></span>';
 			$one_icon = true;
 		}
 		if ($postbar_activate_time) {

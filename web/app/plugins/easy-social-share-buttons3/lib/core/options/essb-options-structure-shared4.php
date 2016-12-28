@@ -247,23 +247,25 @@ class ESSBOptionsStructureHelperShared4 {
 		);
 	}
 
-	public function field_color ($tab_id, $menu_id, $id, $title, $description, $recommended = '') {
+	public function field_color ($tab_id, $menu_id, $id, $title, $description, $recommended = '', $alpha = 'false') {
 		$this->sidebar_section_options[$tab_id][$menu_id][] = array(
 				'id' => $id,
 				'type' => 'color',
 				'title' => $title,
 				'description' => $description,
-				'recommeded' => $recommended
+				'recommeded' => $recommended,
+				'alpha' => $alpha
 		);
 	}
 
-	public function field_color_panel ($tab_id, $menu_id, $id, $title, $description, $recommended = '') {
+	public function field_color_panel ($tab_id, $menu_id, $id, $title, $description, $recommended = '', $alpha = 'false') {
 		$this->sidebar_section_options[$tab_id][$menu_id][] = array(
 				'id' => $id,
 				'type' => 'color-in-panel',
 				'title' => $title,
 				'description' => $description,
-				'recommeded' => $recommended
+				'recommeded' => $recommended,
+				'alpha' => $alpha
 		);
 	}
 

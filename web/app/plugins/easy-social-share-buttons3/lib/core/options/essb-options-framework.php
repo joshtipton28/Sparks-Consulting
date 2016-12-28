@@ -16,7 +16,7 @@ class ESSBOptionsFramework {
 	}
 	
 	public static function draw_options_field($option, $custom = false, $user_settings = array()) {
-		global $essb_admin_options, $essb_admin_options_fanscounter;
+		global $essb_admin_options, $essb_admin_options_fanscounter, $essb_translate_options;
 		
 		
 		$type = $option['type'];
@@ -43,6 +43,7 @@ class ESSBOptionsFramework {
 		$element_options = isset($option['element_options']) ? $option['element_options']: array();
 		$col_width = isset($option['col_width']) ? $option['col_width'] : '';
 		$shortcode = isset($option['shortcode']) ? $option['shortcode'] : '';
+		$alpha = isset($option['alpha']) ? $option['alpha'] : '';
 		
 		//$settings_group = "essb_options";
 		$settings_group = self::$default_settings_group;
@@ -51,6 +52,9 @@ class ESSBOptionsFramework {
 			$option_value = isset($essb_admin_options_fanscounter[$id]) ? $essb_admin_options_fanscounter[$id] : '';
 			$settings_group = "essb_options_fans";
 			$is_fans_counter = true;
+		}
+		else if(strpos($id, 'wpml_') !== false) {
+			$option_value = isset($essb_translate_options[$id]) ? $essb_translate_options[$id] : '';
 		}
 		else {
 			$option_value = isset($essb_admin_options[$id]) ? $essb_admin_options[$id] : '';
@@ -78,7 +82,7 @@ class ESSBOptionsFramework {
 				break;		
 			case "switch":
 				self::draw_options_row_start($title, $description, $recommended, $col_width);
-				self::draw_switch_field($id, $settings_group, $option_value, $on_text, $off_text);
+				self::draw_switch_field($id, $settings_group, $option_value, $on_text, $off_text, $class);
 				self::draw_options_row_end();
 				break;		
 			case "switch-in-panel":
@@ -138,10 +142,16 @@ class ESSBOptionsFramework {
 							if (!in_array('twitch|Twitch', $listOfValues)) {
 								$listOfValues[] = 'twitch|Twitch';
 							}
+							
+							if (!in_array('telegram|Telegram', $listOfValues)) {
+								$listOfValues[] = 'telegram|Telegram';
+							}
+							if (!in_array('mailerlite|MailerLite', $listOfValues)) {
+								$listOfValues[] = 'mailerlite|MailerLite';
+							}
 						}
 						else {
-							
-							if (strpos($id, "profiles_") === false) {
+							if (strpos($id, "profile_") === false) {								
 								if (!in_array('sms|SMS', $listOfValues)) {
 									$listOfValues[] = 'sms|SMS';
 								}
@@ -168,6 +178,12 @@ class ESSBOptionsFramework {
 								}
 								if (!in_array('livejournal|LiveJournal', $listOfValues)) {
 									$listOfValues[] = 'livejournal|LiveJournal';
+								}
+							}
+							
+							if (strpos($id, "profile_") > -1) {
+								if (!in_array('xing|Xing', $listOfValues)) {
+									$listOfValues[] = 'xing|Xing';
 								}
 							}
 						}
@@ -206,12 +222,22 @@ class ESSBOptionsFramework {
 				break;
 			case "color":
 				self::draw_options_row_start($title, $description, $recommended, $col_width);
-				self::draw_color_field($id, $settings_group, $option_value);
+				if ($alpha == 'true') {
+					self::draw_acolor_field($id, $settings_group, $option_value);
+				}
+				else {
+					self::draw_color_field($id, $settings_group, $option_value);
+				}
 				self::draw_options_row_end();
 				break;
 			case "color-in-panel":
 				self::draw_settings_panel_start($title);
-				self::draw_color_field($id, $settings_group, $option_value);
+				if ($alpha == 'true') {
+					self::draw_acolor_field($id, $settings_group, $option_value);
+				}
+				else {
+					self::draw_color_field($id, $settings_group, $option_value);
+				}
 				self::draw_settings_panel_end($description, $recommended);
 				break;
 			case "image_checkbox":
@@ -768,11 +794,15 @@ class ESSBOptionsFramework {
 						</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $active_state, $active_element, $field);
 			}
 			else {
-			printf('<div class="essb_checkbox"><div class="essb_image_checkbox%6$s" data-field="%8$s_%3$s">
-					<span class="checkbox-image"><img src="%1$s/%2$s"/></span>
-					<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
-					<input type="checkbox" id="essb_options_%8$s_%3$s" name="%4$s[%8$s][]" value="%3$s"%7$s/>					
-					</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $active_state, $active_element, $field);
+				$pathToImages = ESSB3_PLUGIN_URL.'/';
+				if (strpos($singleValue['image'], 'http://') !== false || strpos($singleValue['image'], 'https://') != false) {
+					$pathToImages = '';
+				}
+				printf('<div class="essb_checkbox"><div class="essb_image_checkbox%6$s" data-field="%8$s_%3$s">
+						<span class="checkbox-image"><img src="%1$s%2$s"/></span>
+						<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
+						<input type="checkbox" id="essb_options_%8$s_%3$s" name="%4$s[%8$s][]" value="%3$s"%7$s/>					
+						</div>%5$s</div>', $pathToImages, $singleValue['image'], $singleValueCode, $settings_group, $label, $active_state, $active_element, $field);
 			}
 		}	
 		echo '</div>';
@@ -826,11 +856,17 @@ class ESSBOptionsFramework {
 						</div></div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $field, $position, $active_state, $active_element);
 			}
 			else {
+				
+				$pathToImages = ESSB3_PLUGIN_URL.'/';
+				if (strpos($singleValue['image'], 'http://') !== false || strpos($singleValue['image'], 'https://') != false) {
+					$pathToImages = '';
+				}
+				
 				printf('<div class="essb_radio"><div class="essb_image_radio%8$s" data-field="%6$s_%7$s">
-						<span class="checkbox-image"><img src="%1$s/%2$s"/></span>
+						<span class="checkbox-image"><img src="%1$s%2$s"/></span>
 						<span class="checkbox-state"><i class="fa fa-lg fa-check-circle"></i></span>
 						<input type="radio" id="essb_options_%6$s_%7$s" name="%4$s[%6$s]" value="%3$s"%9$s/>
-						</div>%5$s</div>', ESSB3_PLUGIN_URL, $singleValue['image'], $singleValueCode, $settings_group, $label, $field, $position, $active_state, $active_element);
+						</div>%5$s</div>', $pathToImages, $singleValue['image'], $singleValueCode, $settings_group, $label, $field, $position, $active_state, $active_element);
 			}
 			$position++;
 		}
@@ -885,7 +921,7 @@ class ESSBOptionsFramework {
 	}
 	
 	
-	public static function draw_switch_field($field, $settings_group = 'essb_options', $value = '', $on_text = '', $off_text = '') {
+	public static function draw_switch_field($field, $settings_group = 'essb_options', $value = '', $on_text = '', $off_text = '', $switch_submit = '') {
 		if ($settings_group == '') { $settings_group = "essb_options"; }
 		
 		if ($on_text == "") { $on_text = __('On', ESSB3_TEXT_DOMAIN); }
@@ -900,9 +936,9 @@ class ESSBOptionsFramework {
 			$on_switch = "";
 		}
 		$is_checked = ($value == 'true') ? ' checked="checked"' : '';
-		printf('<div class="essb-switch">
-				<label class="cb-enable%6$s"><span>%4$s</span></label>
-				<label class="cb-disable%7$s"><span>%5$s</span></label>
+		printf('<div class="essb-switch'.($switch_submit == 'true' ? ' essb-switch-submit' : '').'">
+				<label class="cb-enable%6$s'.($switch_submit == 'true' ? ' essb-switch-submit' : '').'"><span>%4$s</span></label>
+				<label class="cb-disable%7$s'.($switch_submit == 'true' ? ' essb-switch-submit' : '').'"><span>%5$s</span></label>
 				<input id="essb_options_%1$s" type="checkbox" name="%2$s[%1$s]" value="true" class="input-element checkbox" %3$s />
 				</div>', $field, $settings_group, $is_checked, $on_text, $off_text, $on_switch, $off_switch);
 	}
@@ -1071,6 +1107,15 @@ class ESSBOptionsFramework {
 		
 		echo '<input id="essb_options_' . $field . '" type="text" name="' . $group . '[' . $field . ']" value="' . $value . '" class="input-element stretched" data-default-color="' . $value . '" />';
 		
+		array_push ( self::$color_fields, 'essb_options_' . $field );
+	}
+	
+	public static function draw_acolor_field($field, $group = 'essb_options', $value = '') {
+	
+		$value = stripslashes ( $value );
+	
+		echo '<input id="essb_options_' . $field . '" type="text" name="' . $group . '[' . $field . ']" value="' . $value . '" class="input-element stretched" data-default-color="' . $value . '" data-alpha="true" />';
+	
 		array_push ( self::$color_fields, 'essb_options_' . $field );
 	}
 	

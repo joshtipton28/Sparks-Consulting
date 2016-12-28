@@ -27,10 +27,11 @@ class ESSBNetworks_SubscribeActions {
 		
 		$user_email = isset ( $_REQUEST ['mailchimp_email'] ) ? $_REQUEST ['mailchimp_email'] : '';
 		$user_name = isset ($_REQUEST['mailchimp_name']) ? $_REQUEST['mailchimp_name'] : '';
+		$output['request_mail'] = $user_email;
 		
 		if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
 			$output['code'] = "99";
-			$output['message'] = __('Invalid email address', 'essb');
+			$output['message'] = __('Invalid email address:', 'essb').$user_email;
 		}
 		else {
 			$output = self::subscribe($user_email, $user_name);
@@ -70,6 +71,16 @@ class ESSBNetworks_SubscribeActions {
 		$cm_api = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_cm_api' );
 		$cm_list = ESSBOptionValuesHelper::options_value ( $essb_options, 'subscribe_cm_list' );
 		
+		
+		$external_connectors = array();
+		if (has_filter('essb_external_subscribe_connectors')) {
+			$external_connectors_base = array();
+			$external_connectors_base = apply_filters('essb_external_subscribe_connectors', $external_connectors_base);
+			
+			foreach($external_connectors_base as $excon => $exname) {
+				$external_connectors[] = $excon;
+			}
+		}		
 		
 		$output = array();
 		$output['name'] = $user_name;
@@ -119,6 +130,17 @@ class ESSBNetworks_SubscribeActions {
 				break;
 			case "campaignmonitor":
 				$output = self::subscribe_campaignmonitor($cm_api, $cm_list, $user_email, $user_name);
+				break;
+			default:								
+				$output['code'] = '99';
+				$output['message'] = __('Service is not supported', 'essb');
+				
+				if (in_array($connector, $external_connectors)) {
+					$output['external_connector'] = $connector;
+					
+					$output = apply_filters("essb_subscribe_{$connector}", $user_email, $user_name, $output);
+				}
+				
 				break;
 		}
 		
@@ -304,18 +326,11 @@ class ESSBNetworks_SubscribeActions {
 		$response = array();
 	
 	
-		if (function_exists('mymail_subscribe') || function_exists('mymail')) {
-			$response ['code'] = '1';
-			$response ['message'] = 'Thank you';
-				
-			if (function_exists('mymail')) {
-				$list = mymail('lists')->get($list_id);
-			} else {
-				$list = get_term_by('id', $list_id, 'newsletter_lists');
-			}
 				
 			if (class_exists('WYSIJA')) {
 				try {
+					$response ['code'] = '1';
+					$response ['message'] = 'Thank you';
 					$user_data = array(
 							'email' => $email,
 							'firstname' => $name,
@@ -328,13 +343,9 @@ class ESSBNetworks_SubscribeActions {
 					$helper_user->addSubscriber($data_subscriber);
 				} catch (Exception $e) {
 					$response['code'] = '99';
+					$response ['message'] = __ ( 'Missing connection', 'essb' );
 				}
 			}
-		}
-		else {
-			$response ['code'] = "99";
-			$response ['message'] = __ ( 'Missing connection', 'essb' );
-		}
 	
 		return $response;
 	}

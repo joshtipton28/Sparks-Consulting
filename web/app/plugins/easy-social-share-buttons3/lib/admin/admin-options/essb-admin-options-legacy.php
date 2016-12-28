@@ -1,10 +1,14 @@
 <?php
 
 //---- automatic updates
-ESSBOptionsStructureHelper::menu_item('update', 'automatic', __('Activate Plugin', 'essb'), 'refresh');
-ESSBOptionsStructureHelper::field_textbox_stretched('update', 'automatic', 'purchase_code', __('Purchase code', 'essb'), __('To activate automatic plugin updates you need to fill your purchase code.', 'essb'));
-ESSBOptionsStructureHelper::field_func('update', 'automatic', 'essb3_text_automatic_updates', '', '');
-
+if (!defined('ESSB3_ACTIVATION')) {
+	ESSBOptionsStructureHelper::menu_item('update', 'automatic', __('Activate Plugin', 'essb'), 'refresh');
+	ESSBOptionsStructureHelper::field_textbox_stretched('update', 'automatic', 'purchase_code', __('Purchase code', 'essb'), __('To activate automatic plugin updates you need to fill your purchase code.', 'essb'));
+	ESSBOptionsStructureHelper::field_func('update', 'automatic', 'essb3_text_automatic_updates', '', '');
+}
+else {
+	include_once (ESSB3_PLUGIN_ROOT . 'lib/admin/admin-options/essb-admin-options-activation.php');
+}
 
 //---- import export
 ESSBOptionsStructureHelper::menu_item('import', 'backup', __('Export Settings', 'essb'), 'database');
@@ -171,6 +175,8 @@ if (ESSBCacheDetector::is_cache_plugin_detected()) {
 
 ESSBOptionsStructureHelper::field_heading('advanced', 'optimization', 'heading5', __('Build in cache', 'essb'));
 
+ESSBOptionsStructureHelper::hint('advanced', 'optimization', __('', 'essb'), __('For a blazing fast loading site we recommend usage of cache plugin like <a href="http://wp-rocket.me" target="_blank">WP Rocket</a>. <a href="http://wp-rocket.me" target="_blank">WP Rocket</a> is simple to setup, works out of the box and has full mobile caching support.', 'essb'), '');
+
 ESSBOptionsStructureHelper::field_section_start('advanced', 'optimization', __('Build in cache', 'essb'), __('Activate build in cache functions to improve speed of load. If you use a site cache plugin activation of those options is not needed as that plugin will do the cache work.'.$cache_plugin_detected, 'essb'));
 ESSBOptionsStructureHelper::field_switch('advanced', 'optimization', 'essb_cache_runtime', __('Activate WordPress cache', 'essb'), __('Activating WordPress cache function usage will cache button generation via default WordPress cache or via the persistant cache plugin if you use such (like W3 Total Cache)', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 ESSBOptionsStructureHelper::field_switch('advanced', 'optimization', 'essb_cache', __('Activate cache', 'essb'), __('This option is in beta and if you find any problems using it please report at our <a href="http://support.creoworx.com" target="_blank">support portal</a>. To clear cache you can simply press Update Settings button in Main Settings (cache expiration time is 1 hour)', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
@@ -216,6 +222,9 @@ ESSBOptionsStructureHelper::panel_end('advanced', 'advanced');
 //$admin_style = array ("" => "Dark", "light" => "Light" );
 //ESSBOptionsStructureHelper::field_select('advanced', 'administrative', 'admin_template', __('Plugin Settings Style', 'essb'), __('Change plugin default options style', 'essb'), $admin_style);
 
+ESSBOptionsStructureHelper::field_switch('advanced', 'administrative', 'deactivate_appscreo', __('Deactivate checks for news and extensions', 'essb'), __('Plugin has build in option to display latest useful tips from our blogs and notifcations for add-ons that we release. If your server is located in zone that prevents access from specific country hosted servers than you may see delay in load of WordPress admin or strange notice messages. If that happens activate this option to turn off those checks.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch('advanced', 'administrative', 'deactivate_ajaxsubmit', __('Deactivate AJAX submit of settings', 'essb'), __('Activate this option if for some reason your settings inside plugin do not save.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'), '', '', 'true');
+
 
 ESSBOptionsStructureHelper::field_section_start('advanced', 'administrative', __('Advanced Display Options', 'essb'), __('Activate additional advanced options for customization and sharing', 'essb'));
 //ESSBOptionsStructureHelper::field_switch('advanced', 'administrative', 'advanced_by_post_category', __('Activate custom style settings for post category', 'essb'), __('Activation of this option will add additional menu settings for each post category that you have which will allow to change style of buttons.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
@@ -242,6 +251,7 @@ ESSBOptionsStructureHelper::field_func('advanced', 'administrative', 'essb3_rese
 
 ESSBOptionsStructureHelper::field_section_start('advanced', 'deactivate', __('Modules', 'essb'), __('Turn off build in modules that does not have option in their settings', 'essb'));
 ESSBOptionsStructureHelper::field_switch('advanced', 'deactivate', 'deactivate_ctt', __('Deactivate Sharable Quotes module', 'essb'), __('This option will deactivate and remove code used by click to tweet module', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch('advanced', 'deactivate', 'deactivate_module_aftershare', __('Deactivate After Share module', 'essb'), __('This option will deactivate and remove code used by after share module', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 ESSBOptionsStructureHelper::field_section_end('advanced', 'deactivate');
 
 ESSBOptionsStructureHelper::field_section_start_panels('advanced', 'deactivate', __('Display methods', 'essb'), __('Easy Social Share Buttons has so many display methods but we suppose you will not use all at same time (or at least we hope so). As an advice from us to speed up work you can deactivate display methods that you will not use (you can activate them again at any time).', 'essb'));
@@ -303,7 +313,7 @@ ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_email', __('Your Email', 'essb'), __('', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_recipient', __('Recipient Email', 'essb'), __('', 'essb'));
 //ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_subject', __('Subject', 'essb'), __('', 'essb'));
-//ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_message', __('Message', 'essb'), __('', 'essb'));
+ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_custom', __('Custom user message', 'essb'), __('', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_cancel', __('Cancel', 'essb'), __('', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_send', __('Send', 'essb'), __('', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_stretched('advanced', 'localization', 'translate_mail_message_sent', __('Message sent!', 'essb'), __('', 'essb'));
@@ -406,14 +416,14 @@ function essb3_register_settings_by_posttypes() {
 		}
 		ESSBOptionsStructureHelper::submenu_item ( 'advanced', 'advancedpost-' . $key, $wp_post_types [$pt]->label );
 
-		ESSBOptionsStructureHelper::field_heading('advanced', 'advancedpost-' . $key, 'heading1', __('Advanced settings for post type: '.$wp_post_types [$pt]->label, 'essb'));
+		//ESSBOptionsStructureHelper::field_heading('advanced', 'advancedpost-' . $key, 'heading1', __('Advanced settings for post type: '.$wp_post_types [$pt]->label, 'essb'));
 		essb_prepare_location_advanced_customization ( 'advanced', 'advancedpost-' . $key, 'post-type-'.$pt, true );
 		$key ++;
 	}
 
 	foreach ( $cpts as $cpt ) {
 		ESSBOptionsStructureHelper::submenu_item ( 'advanced', 'advancedpost-' . $key, $wp_post_types [$cpt]->label );
-		ESSBOptionsStructureHelper::field_heading('advanced', 'advancedpost-' . $key, 'heading1', __('Advanced settings for post type: '.$wp_post_types [$cpt]->label, 'essb'));
+		//ESSBOptionsStructureHelper::field_heading('advanced', 'advancedpost-' . $key, 'heading1', __('Advanced settings for post type: '.$wp_post_types [$cpt]->label, 'essb'));
 		essb_prepare_location_advanced_customization ( 'advanced', 'advancedpost-' . $key, 'post-type-'.$cpt, true );
 		$key ++;
 	}

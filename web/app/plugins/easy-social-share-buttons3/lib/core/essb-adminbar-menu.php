@@ -13,12 +13,19 @@ class ESSBAdminBarMenu3 {
 		} else {
 			$url = get_bloginfo ( 'url' );
 		}
+	
 		
 		// https://developers.facebook.com/tools/debug/og/object?q='.$url
 		
-		$this->add_root_menu ( "Easy Social Share Buttons", "essb", get_admin_url () . 'admin.php?page=essb_options' );
+		$not_activated_dot = "";
+		if (ESSBActivationManager::existNewVersion()) {
+			$not_activated_dot = '<span style="background-color:#e74c3c;width:10px;height:10px;border-radius:50%;margin-left:5px;display:inline-block;"></span>';
+		}
+		
+		$this->add_root_menu ( "Easy Social Share Buttons".$not_activated_dot, "essb", get_admin_url () . 'admin.php?page=essb_options' );
 		$this->add_sub_menu ( __('Settings', 'essb'), get_admin_url () . 'admin.php?page=essb_options', "essb", "essb_p1" );
 		$this->add_sub_menu ( __('Social Sharing', 'essb'), get_admin_url () . 'admin.php?page=essb_options', "essb_p1", "essb_p11" );
+		$this->add_sub_menu ( __('Where to Display', 'essb'), get_admin_url () . 'admin.php?page=essb_redirect_where', "essb_p1", "essb_p12" );
 		$this->add_sub_menu ( __('Like, Follow & Subscribe', 'essb'), get_admin_url () . 'admin.php?page=essb_redirect_display', "essb_p1", "essb_p21" );
 		$this->add_sub_menu ( __('Advanced Settings', 'essb'), get_admin_url () . 'admin.php?page=essb_redirect_advanced', "essb_p1", "essb_p51" );
 		$this->add_sub_menu ( __('Style Settings', 'essb'), get_admin_url () . 'admin.php?page=essb_redirect_style', "essb_p1", "essb_p41" );
@@ -40,10 +47,28 @@ class ESSBAdminBarMenu3 {
 		if (defined('ESSB3_CACHED_COUNTERS')) {
 			if (is_single () || is_page ()) {
 				$this->add_sub_menu ( '<b>'.__('Update cached counters', 'essb').'</b>', $url . '?essb_counter_update=true', "essb", "essb_p8" );				
+				$current_url = essb_get_current_page_url();
+				$current_url = add_query_arg('essb_clear_cached_counters', 'true', $current_url);
 			}
+			else if (is_admin()) {
+				$current_url = admin_url('admin.php?page=essb_options');
+				$current_url = add_query_arg('essb_clear_cached_counters', 'true', $current_url);
+			}
+			else {
+				$current_url = essb_get_current_page_url();
+			}
+			
+			
+			$this->add_sub_menu ( '<b>'.__('Setup update of counters on entire site', 'essb').'</b>', $current_url, "essb", "essb_p102" );
 		}
 		
 		$this->add_sub_menu ( __('Need help?', 'essb'), 'http://support.creoworx.com/', "essb", "essb_p6" );
+		$this->add_sub_menu ( __('About', 'essb'), get_admin_url () . 'admin.php?page=essb_about', "essb", "essb_p101" );
+		
+		if (!ESSBActivationManager::isActivated()) {
+			$activate_url = admin_url('admin.php?page=essb_redirect_update&tab=update');
+			$this->add_sub_menu ( '<span style="color:#EE543A;">'.__('Activate Plugin', 'essb').'</span>', $activate_url, "essb", "essb_p9" );
+		}
 		
 		if (ESSB3_ADDONS_ACTIVE) {
 			$this->add_sub_menu ( '<span style="color:#f39c12;">'.__('Extensions', 'essb').'</span>', get_admin_url () . 'admin.php?page=essb_addons', "essb", "essb_p7" );

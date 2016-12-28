@@ -365,6 +365,7 @@ jQuery.post(essb_settings.ajax_url, {
 };
 
 var essb_smart_onclose_events = function(oService, oPostID) {
+if (oService == "subscribe" || oService == "comments") return;
 if (typeof (essbasc_popup_show) == \'function\') {
 essbasc_popup_show();
 }

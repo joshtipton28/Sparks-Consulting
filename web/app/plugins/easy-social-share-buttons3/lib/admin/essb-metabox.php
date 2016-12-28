@@ -380,7 +380,12 @@ function essb_register_settings_metabox_optimize() {
 			
 			$essb_cache_expire = isset ( $custom ['essb_cache_expire'] ) ? $custom ['essb_cache_expire'] [0] : "";
 			ESSBOptionsFramework::draw_options_row_start_full();
-			ESSBOptionsFramework::draw_title('Next counter update will be at '.date(DATE_RFC822, $essb_cache_expire), 'If you wish to make a manual counter update you can use the top Easy Social Share Buttons menu where you have link when post is opened');
+			if ($essb_cache_expire != '') {
+				ESSBOptionsFramework::draw_title('Next counter update will be at '.date(DATE_RFC822, $essb_cache_expire), 'If you wish to make a manual counter update you can use the top Easy Social Share Buttons menu where you have link when post is opened');
+			}
+			else {
+				ESSBOptionsFramework::draw_title('Counter update information is not available', 'Time of counter update will appear once first time such is made when you load post. If you wish to make a manual counter update you can use the top Easy Social Share Buttons menu where you have link when post is opened');
+			}
 			ESSBOptionsFramework::draw_options_row_end();
 			
 			ESSBMetaboxInterface::draw_content_section_end();

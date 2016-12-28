@@ -344,6 +344,20 @@
 	opacity: 0.8;
 }
 
+.essbfc-template-color .essbfc-icon-telegram {
+	color: #0088cc !important
+}
+
+.essbfc-template-color .essbfc-icon-mailerlite {
+	color: #00a154 !important
+}
+
+
+.essbfc-template-color .essbfc-icon-xing {
+	color: #135a5b !important
+}
+
+
 .essbfc-template-color .essbfc-icon-mailchimp {
 	color: #2c9ab7 !important
 }
@@ -529,6 +543,19 @@
 	color: #ffffff !important;
 }
 
+.essbfc-template-roundcolor .essbfc-icon-telegram {
+	background-color: #0088cc !important
+}
+
+.essbfc-template-roundcolor .essbfc-icon-mailerlite {
+	background-color: #00a154 !important
+}
+
+
+.essbfc-template-roundcolor .essbfc-icon-xing {
+	background-color: #135a5b !important
+}
+
 .essbfc-template-roundcolor .essbfc-icon-mailchimp {
 	background-color: #2c9ab7 !important
 }
@@ -709,6 +736,19 @@
 	color: #ffffff !important;
 }
 
+.essbfc-template-outlinecolor li:hover .essbfc-icon-telegram {
+	background-color: #0088cc !important
+}
+
+.essbfc-template-outlinecolor li:hover .essbfc-icon-mailerlite {
+	background-color: #00a154 !important
+}
+
+.essbfc-template-outlinecolor li:hover .essbfc-icon-xing {
+	background-color: #135a5b !important
+}
+
+
 .essbfc-template-outlinecolor li:hover .essbfc-icon-mailchimp {
 	background-color: #2c9ab7 !important
 }
@@ -860,6 +900,24 @@
 .essbfc-template-outlinecolor li:hover .essbfc-icon-total {
 	background-color: #555555 !important
 }
+
+.essbfc-template-outlinecolor .essbfc-icon-telegram {
+	color: #0088cc !important;
+	border: 2px solid #0088cc !important;
+}
+
+
+.essbfc-template-outlinecolor .essbfc-icon-mailerlite {
+	color: #00a154 !important;
+	border: 2px solid #00a154 !important;
+}
+
+
+.essbfc-template-outlinecolor .essbfc-icon-xing {
+	color: #135a5b !important;
+	border: 2px solid #135a5b !important;
+}
+
 
 .essbfc-template-outlinecolor .essbfc-icon-mailchimp {
 	color: #2c9ab7 !important;
@@ -1069,6 +1127,18 @@
 	opacity: 0.8;
 }
 
+.essbfc-template-metro .essbfc-telegram .essbfc-network {
+	background-color: #0088cc !important
+}
+
+.essbfc-template-metro .essbfc-mailerlite .essbfc-network {
+	background-color: #00a154 !important
+}
+
+.essbfc-template-metro .essbfc-xing .essbfc-network {
+	background-color: #135a5b !important
+}
+
 .essbfc-template-metro .essbfc-mailchimp .essbfc-network {
 	background-color: #2c9ab7 !important
 }
@@ -1250,6 +1320,20 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#1a000000',
 		endColorstr='#66000000', GradientType=0 ); /* IE6-9 */
 }
+
+.essbfc-template-flat .essbfc-telegram .essbfc-network {
+	background-color: #0088cc !important;
+}
+
+
+.essbfc-template-flat .essbfc-mailerlite .essbfc-network {
+	background-color: #00a154 !important;
+}
+
+.essbfc-template-flat .essbfc-xing .essbfc-network {
+	background-color: #135a5b !important;
+}
+
 
 .essbfc-template-flat .essbfc-mailchimp .essbfc-network {
 	background-color: #2c9ab7 !important;
@@ -1446,6 +1530,18 @@
 	-moz-opacity: 0.8;
 	-khtml-opacity: 0.8;
 	opacity: 0.8;
+}
+
+.essbfc-template-tinycolor .essbfc-telegram .essbfc-network {
+	background-color: #0088cc !important;
+}
+
+.essbfc-template-tinycolor .essbfc-mailerlite .essbfc-network {
+	background-color: #00a154 !important;
+}
+
+.essbfc-template-tinycolor .essbfc-xing .essbfc-network {
+	background-color: #135a5b !important;
 }
 
 .essbfc-template-tinycolor .essbfc-mailchimp .essbfc-network {
@@ -1702,6 +1798,45 @@
 .essbfc-template-modern li:hover .essbfc-network, .essbfc-template-modern li:hover .essbfc-network i {
 	color: #ffffff !important;
 }
+
+.essbfc-template-modern .essbfc-telegram:hover .essbfc-network {
+	background-color: #0088cc !important;
+}
+
+.essbfc-template-modern .essbfc-telegram .essbfc-network {
+	border-bottom: 3px solid #0088cc !important
+}
+
+.essbfc-template-modern .essbfc-telegram .essbfc-network i {
+	color: #0088cc !important;
+}
+
+
+.essbfc-template-modern .essbfc-mailerlite:hover .essbfc-network {
+	background-color: #00a154 !important;
+}
+
+.essbfc-template-modern .essbfc-mailerlite .essbfc-network {
+	border-bottom: 3px solid #00a154 !important
+}
+
+.essbfc-template-modern .essbfc-mailerlite .essbfc-network i {
+	color: #00a154 !important;
+}
+
+
+.essbfc-template-modern .essbfc-xing:hover .essbfc-network {
+	background-color: #135a5b !important;
+}
+
+.essbfc-template-modern .essbfc-xing .essbfc-network {
+	border-bottom: 3px solid #135a5b !important
+}
+
+.essbfc-template-modern .essbfc-xing .essbfc-network i {
+	color: #135a5b !important;
+}
+
 
 .essbfc-template-modern .essbfc-mailchimp:hover .essbfc-network {
 	background-color: #2c9ab7 !important;
@@ -2262,6 +2397,9 @@
 .essbfc-icon-total:before {
 	content: '\e81a';
 } /* 'о љ' */
+.essbfc-icon-mailerlite:before {
+	content: '\e808';
+} /* 'о €' */
 
 .essbfc-icon-instagram:before { content: '\e822'; } /* 'о ў' */
 .essbfc-icon-youtube-play:before { content: '\f16a'; } /* 'п…Є' */
@@ -2488,8 +2626,9 @@
 
 .essbfc-container.essbfc-container-profiles i {
 	font-size: 24px;
-	padding: 10px !important;
+	margin: 0px !important;
 	width: 24px;
+	padding: 10px 10px 10px 10px !important;
 }
 .essbfc-container.essbfc-container-profiles.essbfc-template-outlinecolor li .essbfc-network i,
 .essbfc-container.essbfc-container-profiles.essbfc-template-roundcolor li .essbfc-network i,
@@ -2501,3 +2640,25 @@
 	height: 24px;
 	line-height: 24px;
 }
+
+.essbfc-container.essbfc-container-profiles i.essb_icon_xing { font-size: 21px !important; }
+
+.essbfc-container.essbfc-container-profiles.essbfc-template-tinycolor i,
+.essbfc-container.essbfc-container-profiles.essbfc-template-tinygrey i,
+.essbfc-container.essbfc-container-profiles.essbfc-template-tinylight i {
+	font-size: 18px;
+	margin: 0px !important;
+	width: 18px;
+	padding: 8px 8px 8px 8px !important;
+}
+
+.essbfc-container.essbfc-container-profiles.essbfc-template-tinycolor i.essb_icon_xing
+ { font-size: 16px !important; }
+
+.essbfc-container i.essb_icon_telegram { font-size: 33px !important; }
+.essbfc-container.essbfc-template-tinycolor i.essb_icon_telegram,
+.essbfc-container.essbfc-template-tinygrey i.essb_icon_telegram,
+.essbfc-container.essbfc-template-tinylight i.essb_icon_telegram {
+	font-size: 16px !important;
+}
+

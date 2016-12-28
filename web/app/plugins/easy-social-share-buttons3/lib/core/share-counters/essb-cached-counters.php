@@ -272,7 +272,13 @@ class ESSBCachedCounters {
 					$cached_counters [$k] = ESSBCountersHelper::getXingCount($url);
 					break;
 				case "pocket" :
-					$cached_counters [$k] = ESSBCountersHelper::getPocketCount($url);
+					//$cached_counters [$k] = ESSBCountersHelper::getPocketCount($url);
+					if (!$recover_mode) {
+						$cached_counters [$k] = ESSBCountersHelper::getSelfPostCount($post_id, $k);
+					}
+					else {
+						$cached_counters[$k] = 0;
+					}
 					break;
 				case "comments" :
 					if (!$recover_mode) {

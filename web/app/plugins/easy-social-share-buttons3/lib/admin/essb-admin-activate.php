@@ -2,7 +2,7 @@
 
 class ESSBAdminActivate {
 	public static function is_activated() {
-		global $essb_options;
+		/*global $essb_options;
 		
 		$purchase_code = ESSBOptionValuesHelper::options_value($essb_options, 'purchase_code');
 		
@@ -11,7 +11,8 @@ class ESSBAdminActivate {
 		}
 		else {
 			return false;
-		}
+		}*/
+		return ESSBActivationManager::isActivated();
 	}
 	
 	public static function should_display_notice() {
@@ -23,6 +24,18 @@ class ESSBAdminActivate {
 		else {
 			return false;
 		}
+	}
+	
+	public static function activateToUnlock($user_message = '', $custom_style = '') {
+		if ($user_message == '') {
+			$user_message = __('Activate plugin to unlock', 'essb');
+		}
+
+		$activate_url = admin_url('admin.php?page=essb_redirect_update&tab=update');
+		
+		$code = '<a href="'.$activate_url.'" style="font-weight: 600;border-radius: 4px;padding: 0px 15px;line-height: 32px;color: #fff;font-size: 13px;background-color: #e74c3c; display: inline-block;'.$custom_style.'"><i class="fa fa-ban"></i> '.$user_message.'</a>';
+		
+		return $code;
 	}
 	
 	public static function dismiss_notice() {
@@ -48,26 +61,28 @@ class ESSBAdminActivate {
 		
 		$dismiss_subscribe = isset($_REQUEST['dismiss_subscribe']) ? $_REQUEST['dismiss_subscribe'] : '';
 		if ($dismiss_subscribe == 'true') {
-			self::dismiss_notice_subscribe();
+			//self::dismiss_notice_subscribe();
 		}
 		// notice display
 		if (self::should_display_notice_translate()) {
 			self::notice_translate();
 		}
 		if (self::should_display_notice_subscribe()) {
-			self::notice_subscribe();
+			//self::notice_subscribe();
 		}
 	}
 	
 	public static function should_display_notice_translate() {
-		$notice_dismissed = get_option('essb3-translate-notice');
+		return false;
+		
+		/*$notice_dismissed = get_option('essb3-translate-notice');
 		
 		if ($notice_dismissed === false) {
 			return true;
 		}
 		else {
 			return false;
-		}
+		}*/
 	}
 	
 	public static function dismiss_notice_translate() {
@@ -84,14 +99,15 @@ class ESSBAdminActivate {
 	}
 	
 	public static function should_display_notice_subscribe() {
-		$notice_dismissed = get_option('essb3-subscribe-notice');
+		return false;
+		/*$notice_dismissed = get_option('essb3-subscribe-notice');
 	
 		if ($notice_dismissed === false) {
 			return true;
 		}
 		else {
 			return false;
-		}
+		}*/
 	}
 	
 	public static function dismiss_notice_subscribe() {

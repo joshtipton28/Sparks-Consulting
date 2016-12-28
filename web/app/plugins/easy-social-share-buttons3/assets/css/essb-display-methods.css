@@ -661,7 +661,9 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
 
 .essb_displayed_sidebar_right .essb_links_list li.essb_totalcount_item .essb_t_l_big, .essb_links_list li.essb_totalcount_item .essb_t_r_big { margin-right: 0px; }
 
-.essb_displayed_sidebar .essb_links_list li.essb_totalcount_item .essb_t_l_big, .essb_links_list li.essb_totalcount_item .essb_t_r_big { padding-left: 2px !important; }
+.essb_displayed_sidebar .essb_links_list li.essb_totalcount_item .essb_t_l_big, .essb_links_list li.essb_totalcount_item .essb_t_r_big { 
+	padding-left: 2px !important;
+}
 
 .essb_displayed_sidebar:hover .essb_link_sidebar-close .essb_network_name, .essb_displayed_sidebar .essb-sidebar-closed-clicked .essb_network_name { display: none !important; }
 .essb_displayed_sidebar_right:hover .essb_link_sidebar-close .essb_network_name, .essb_displayed_sidebar_right .essb-sidebar-closed-clicked .essb_network_name { display: none !important; }

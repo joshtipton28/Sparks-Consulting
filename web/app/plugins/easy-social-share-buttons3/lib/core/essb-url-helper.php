@@ -51,20 +51,26 @@ function essb_get_current_url($mode = 'base') {
 
 	$url = 'http' . (is_ssl () ? 's' : '') . '://' . $_SERVER ['HTTP_HOST'] . $_SERVER ['REQUEST_URI'];
 
+	$return_url = $url;
+	
 	switch ($mode) {
 		case 'raw' :
-			return $url;
+			$return_url = $url;
 			break;
 		case 'base' :
-			return reset ( explode ( '?', $url ) );
+			$return_url = reset ( explode ( '?', $url ) );
 			break;
 		case 'uri' :
 			$exp = explode ( '?', $url );
-			return trim ( str_replace ( home_url (), '', reset ( $exp ) ), '/' );
+			$return_url = trim ( str_replace ( home_url (), '', reset ( $exp ) ), '/' );
 			break;
 		default :
-			return false;
+			$return_url = '';
 	}
+	
+	$return_url = esc_url(sanitize_text_field($return_url));
+	
+	return $return_url;
 }
 
 
@@ -91,6 +97,7 @@ function essb_get_current_page_url() {
 		$pageURL .= $_SERVER["SERVER_NAME"] . $current_request_uri;
 	}
 	
+	$pageURL = esc_url(sanitize_text_field($pageURL));
 	return $pageURL;
 }
 ?>

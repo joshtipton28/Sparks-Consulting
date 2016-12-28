@@ -88,7 +88,8 @@ class ESSBCountersHelper {
 				$count = self::getXingCount($url);
 				break;
 			case "pocket":
-				$count = self::getPocketCount($url);
+				//$count = self::getPocketCount($url);
+				$count = self::getSelfPostCount($postID, $network);
 				break;
 			case "comments":
 				$count = self::get_comments_count($postID);
@@ -129,8 +130,11 @@ class ESSBCountersHelper {
 	}
 	
 	public static function getPocketCount($url) {
+		
+		return 0;		
+		
 		//- Get Xing Shares counter from this https://www.xing-share.com/app/share?op=get_share_button;url=https://blog.xing.com/2012/01/the-shiny-new-xing-share-button-how-to-implement-it-in-your-blog-or-website/;counter=top;lang=en;type=iframe;hovercard_position=2;shape=rectangle
-		$buttonURL = sprintf('https://widgets.getpocket.com/v1/button?align=center&count=vertical&label=pocket&url=%s', urlencode($url));
+		/*$buttonURL = sprintf('https://widgets.getpocket.com/v1/button?align=center&count=vertical&label=pocket&url=%s', urlencode($url));
 		$data  = self::parse($buttonURL);
 		$shares = array();
 	
@@ -143,7 +147,7 @@ class ESSBCountersHelper {
 			$count = $current_result;
 		}
 	
-		return $count;
+		return $count;*/
 	}
 	
 	

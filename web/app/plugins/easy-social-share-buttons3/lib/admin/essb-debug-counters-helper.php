@@ -94,10 +94,7 @@ class ESSBDebugCountersHelper {
 					break;
 				case "xing" :
 					$cached_counters [$k] = self::getXingCount($url);
-					break;
-				case "pocket" :
-					$cached_counters [$k] = self::getPocketCount($url);
-					break;
+					break;				
 				case "yummly" :
 					$cached_counters [$k] = self::get_yummly($url);
 					break;

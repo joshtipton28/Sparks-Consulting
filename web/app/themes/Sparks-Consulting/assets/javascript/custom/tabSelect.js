@@ -50,7 +50,3 @@ $(".counseling-associates").on('click',changeTabHandler("#about-us","#counseling
 $(".coxing-associates").on('click',changeTabHandler("#about-us","#coxing-associates"));
 $(".international-associates").on('click',changeTabHandler("#about-us","#international-associates"));
 $(".administrative-associates").on('click',changeTabHandler("#about-us","#administrative-associates"));
-
-/*Enabling Support for Dynamic Tabs on Tab Menu Left Template*/
-$('#panel-1, #link-1').addClass('is-active');
-$('#panel-1-label').attr("aria-selected", "true");

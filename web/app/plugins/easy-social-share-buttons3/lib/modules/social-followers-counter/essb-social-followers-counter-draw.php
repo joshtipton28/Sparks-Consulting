@@ -126,6 +126,10 @@ class ESSBSocialFollowersCounterDraw {
 		foreach ( essb_followers_counter ()->active_social_networks () as $social ) {
 			$social_followers_text = ESSBSocialFollowersCounterHelper::get_option ( $social . '_text' );
 			$social_custom_icon = ESSBSocialFollowersCounterHelper::get_option($social.'_icon_type');
+			
+			if ($social == 'telegram') {
+				$social_custom_icon = ' essb_icon_telegram';
+			}
 			if ($social_custom_icon != '') {
 				$social_custom_icon = ' essbfc-icon-'.$social.'-'.$social_custom_icon;
 			}
@@ -265,6 +269,11 @@ class ESSBSocialFollowersCounterDraw {
 		foreach ( essb_followers_counter ()->active_social_networks () as $social ) {
 			$social_followers_text = ESSBSocialFollowersCounterHelper::get_option ( $social . '_text' );
 			$social_custom_icon = ESSBSocialFollowersCounterHelper::get_option($social.'_icon_type');
+			if ($social == 'telegram') {
+				$social_custom_icon = ' essb_icon_telegram';
+			}
+				
+			
 			if ($social_custom_icon != '') { $social_custom_icon = ' essbfc-icon-'.$social.'-'.$social_custom_icon; }
 			$social_followers_counter = isset ( $followers_count [$social] ) ? $followers_count [$social] : 0;
 			

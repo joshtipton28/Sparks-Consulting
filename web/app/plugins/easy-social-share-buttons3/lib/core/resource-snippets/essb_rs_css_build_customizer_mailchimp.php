@@ -6,12 +6,12 @@ if (! function_exists ( 'essb_rs_css_build_customizer_mailchimp' )) {
 		$snippet = '';
 		
 		if ($active_customizers['design1']) {
-			$global_bgcolor = isset ( $essb_options ['customizer_subscribe_bgcolor'] ) ? $essb_options ['customizer_subscribe_bgcolor'] : '';
-			$global_textcolor = isset ( $essb_options ['customizer_subscribe_textcolor'] ) ? $essb_options ['customizer_subscribe_textcolor'] : '';
-			$global_hovercolor = isset ( $essb_options ['customizer_subscribe_hovercolor'] ) ? $essb_options ['customizer_subscribe_hovercolor'] : '';
-			$global_hovertextcolor = isset ( $essb_options ['customizer_subscribe_hovertextcolor'] ) ? $essb_options ['customizer_subscribe_hovertextcolor'] : '';
-			$customizer_subscribe_emailcolor = isset($essb_options['customizer_subscribe_emailcolor']) ? $essb_options['customizer_subscribe_emailcolor'] : '';
-			$customizer_subscribe_noborder = isset($essb_options['customizer_subscribe_noborder']) ? $essb_options['customizer_subscribe_noborder'] : '';
+			$global_bgcolor = isset ( $essb_options ['customizer_subscribe_bgcolor1'] ) ? $essb_options ['customizer_subscribe_bgcolor1'] : '';
+			$global_textcolor = isset ( $essb_options ['customizer_subscribe_textcolor1'] ) ? $essb_options ['customizer_subscribe_textcolor1'] : '';
+			$global_hovercolor = isset ( $essb_options ['customizer_subscribe_hovercolor1'] ) ? $essb_options ['customizer_subscribe_hovercolor1'] : '';
+			$global_hovertextcolor = isset ( $essb_options ['customizer_subscribe_hovertextcolor1'] ) ? $essb_options ['customizer_subscribe_hovertextcolor1'] : '';
+			$customizer_subscribe_emailcolor = isset($essb_options['customizer_subscribe_emailcolor1']) ? $essb_options['customizer_subscribe_emailcolor1'] : '';
+			$customizer_subscribe_noborder = isset($essb_options['customizer_subscribe_noborder1']) ? $essb_options['customizer_subscribe_noborder1'] : '';
 			
 			
 			if ($global_bgcolor != '') {

@@ -105,7 +105,9 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 				'sharebtn_style' => 'string',
 				'sharebtn_icon' => 'string',
 				'sharebtn_counter' => 'string',
-				'vcgridpost' => '' );
+				'vcgridpost' => '',
+				'email_subject' => 'string',
+				'email_message' => 'string' );
 		$shortcode_options = array (
 				'buttons' => '', 
 				'counters' => 0, 
@@ -176,7 +178,9 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 				'sharebtn_style' => '',
 				'sharebtn_icon' => '',
 				'sharebtn_counter' => '',
-				'vcgridpost' => '' );
+				'vcgridpost' => '',
+				'email_subject' => '',
+				'email_message' => '' );
 		
 		$atts = shortcode_atts ( $shortcode_options, $atts );
 		
@@ -446,6 +450,13 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 				essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-display-methods', 'css' );
 				essb_resource_builder ()->activate_resource ( 'display_positions_style' );
 			}
+			
+			if (! essb_resource_builder ()->is_activated ( 'display_positions_script' )) {
+				$script_url = ESSB3_PLUGIN_URL . '/assets/js/essb-display-methods' . $use_minifed_js . '.js';
+				essb_resource_builder ()->add_static_resource_footer ( $script_url, 'essb-display-methods', 'js' );
+				essb_resource_builder ()->activate_resource ( 'display_positions_script' );
+					
+			}				
 		}
 		if ($shortcode_parameters ['topbar']) {
 			$display_as_key = "topbar";
@@ -475,8 +486,8 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 		if ($shortcode_parameters ['mobilebar']) {
 			$display_as_key = "sharebar";
 			if (! essb_resource_builder ()->is_activated ( 'mobile' )) {
-				$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mobile' . $use_minifed_css . '.css';
-				essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mobile', 'css' );
+				//$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mobile' . $use_minifed_css . '.css';
+				//essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mobile', 'css' );
 				
 				$script_url = ESSB3_PLUGIN_URL . '/assets/js/essb-mobile' . $use_minifed_js . '.js';
 				essb_resource_builder ()->add_static_resource_footer ( $script_url, 'essb-mobile', 'js' );
@@ -486,8 +497,8 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 		if ($shortcode_parameters ['mobilebuttons']) {
 			$display_as_key = "sharebottom";
 			if (! essb_resource_builder ()->is_activated ( 'mobile' )) {
-				$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mobile' . $use_minifed_css . '.css';
-				essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mobile', 'css' );
+				//$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mobile' . $use_minifed_css . '.css';
+				//essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mobile', 'css' );
 				
 				$script_url = ESSB3_PLUGIN_URL . '/assets/js/essb-mobile' . $use_minifed_js . '.js';
 				essb_resource_builder ()->add_static_resource_footer ( $script_url, 'essb-mobile', 'js' );
@@ -497,8 +508,8 @@ if (! function_exists ( 'essb_shortcode_share_prepare' )) {
 		if ($shortcode_parameters ['mobilepoint']) {
 			$display_as_key = "sharepoint";
 			if (! essb_resource_builder ()->is_activated ( 'mobile' )) {
-				$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mobile' . $use_minifed_css . '.css';
-				essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mobile', 'css' );
+				//$style_url = ESSB3_PLUGIN_URL . '/assets/css/essb-mobile' . $use_minifed_css . '.css';
+				//essb_resource_builder ()->add_static_resource_footer ( $style_url, 'easy-social-share-buttons-mobile', 'css' );
 				
 				$script_url = ESSB3_PLUGIN_URL . '/assets/js/essb-mobile' . $use_minifed_js . '.js';
 				essb_resource_builder ()->add_static_resource_footer ( $script_url, 'essb-mobile', 'js' );

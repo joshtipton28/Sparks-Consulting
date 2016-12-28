@@ -31,6 +31,16 @@ if (!function_exists('essb_subscribe_form_design6')) {
 		$subscribe_mc_success = ESSBOptionValuesHelper::options_value($essb_options, 'subscribe_mc_success6');
 		$subscribe_mc_error = ESSBOptionValuesHelper::options_value($essb_options, 'subscribe_mc_error6');
 		
+		$subscribe_mc_title = stripslashes($subscribe_mc_title);
+		$subscribe_mc_text = stripslashes($subscribe_mc_text);
+		$subscribe_mc_email = stripslashes($subscribe_mc_email);
+		$subscribe_mc_name = stripslashes($subscribe_mc_name);
+		$subscribe_mc_button = stripslashes($subscribe_mc_button);
+		$subscribe_mc_footer = stripslashes($subscribe_mc_footer);
+		$subscribe_mc_success = stripslashes($subscribe_mc_success);
+		$subscribe_mc_error = stripslashes($subscribe_mc_error);
+		
+		
 		$subscribe_mc_image3 = ESSBOptionValuesHelper::options_value($essb_options, 'subscribe_mc_image6');
 		$subscribe_mc_imagealign3 = ESSBOptionValuesHelper::options_value($essb_options, 'subscribe_mc_imagealign6');
 		

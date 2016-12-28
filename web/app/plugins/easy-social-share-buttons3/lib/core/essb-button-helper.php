@@ -22,6 +22,14 @@ class ESSBButtonHelper {
 		
 		$content = "";		
 		
+		if (has_filter('essb4_draw_share_details')) {
+			$share = apply_filters('essb4_draw_share_details', $share);
+		}
+		
+		if (has_filter('essb4_draw_style_details')) {
+			$style = apply_filters('essb4_draw_style_details', $style);
+		}
+		
 		$leading_width_mode_fullwidth = false;
 		$button_width_full_first = isset($style['button_width_full_first']) ? $style['button_width_full_first'] : '';
 		$button_width_full_second = isset($style['button_width_full_second']) ? $style['button_width_full_second'] : '';
@@ -29,6 +37,13 @@ class ESSBButtonHelper {
 			$leading_width_mode_fullwidth = true;
 		}
 
+		$mobile_avoid_newwindow = false;
+		$is_mobile = false;
+		if (essb_is_mobile()) {
+			$mobile_avoid_newwindow = essb_options_bool_value('mobile_avoid_newwindow');
+			$is_mobile = $mobile_avoid_newwindow ? true : false;
+		}
+		
 		//print_r($style);
 		
 		$sigle_counter_hidden_till = ESSBGlobalSettings::$button_counter_hidden_till;//ESSBOptionValuesHelper::options_value($essb_options, 'button_counter_hidden_till');
@@ -252,7 +267,7 @@ class ESSBButtonHelper {
 				}
 				
 				// get single social network commands
-				$share_details = essb_get_share_address($single_share_address, $share, $salt, $style['amp']);
+				$share_details = essb_get_share_address($single_share_address, $share, $salt, $style['amp'], $is_mobile);
 				$url = $share_details['url'];
 				$api_command = $share_details['api_command'];
 
@@ -268,6 +283,12 @@ class ESSBButtonHelper {
 				
 				if ($single_share_address == "mail" || $single_share_address == "line" || $single_share_address == "whatsapp") {
 					$link_target = "_self";
+				}
+				
+				// @since 4.1 avoid new window of mobile
+				if ($mobile_avoid_newwindow) {
+					$api_command = "";
+					$link_target = "_self";					
 				}
 				
 				$hover_text = essb_options_value('hovertext_'.$single);
@@ -354,7 +375,7 @@ class ESSBButtonHelper {
 
 }
 
-function essb_get_share_address($network, $share = array(), $salt = '', $amp_endpoint = false) {
+function essb_get_share_address($network, $share = array(), $salt = '', $amp_endpoint = false, $is_mobile = false) {
 	global $essb_networks;
 
 	// TODO: add handle of user_image_url
@@ -565,10 +586,10 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 			$api_command = "essb_print(&#39;" . $salt . "&#39;); return false;";
 			break;
 		case "mail" :
-			if (! $share['mail_subject']) {
+			if (!isset($share['mail_subject'])) {
 				$share['mail_subject'] = '';
 			}
-			if (!$share['mail_body']) {
+			if (!isset($share['mail_body'])) {
 				$share['mail_body'] = '';
 			}
 			$url = sprintf('mailto:?subject=%1$s&amp;body=%2$s', $share['mail_subject'], $share['mail_body']);
@@ -735,7 +756,7 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 		$api_command = sprintf('essb_window(&#39;%1$s&#39;,&#39;%2$s&#39;,&#39;%3$s&#39;); return false;', $url, $network, $salt);
 			
 		// @since 3.6 - commented to allow AMP work
-		if ($network == "twitter" && !$amp_endpoint) {
+		if ($network == "twitter" && !$amp_endpoint && !$is_mobile) {
 			$url = "#";
 		}
 	}
@@ -907,7 +928,12 @@ function essb_draw_buttons_start($style = array(), $position = '', $salt = '', $
 
 	$css_hide_total_counter = "";
 	if ($style ['total_counter_hidden_till'] != '') {
-		$css_hide_total_counter = ' style="display: none !important;" data-essb-hide-till="' . $style ['total_counter_hidden_till'] . '"';
+		if ($style ['total_counter_pos'] == "hidden") {
+			$css_hide_total_counter = ' style="display: none !important;"';
+		}
+		else {
+			$css_hide_total_counter = ' style="display: none !important;" data-essb-hide-till="' . $style ['total_counter_hidden_till'] . '"';
+		}
 	}
 
 	$cached_total_counter = '';
@@ -1050,6 +1076,8 @@ function essb_draw_buttons_start($style = array(), $position = '', $salt = '', $
 	// @since 3.5
 	if (defined('ESSB3_POSTVIEWS_ACTIVE')) {
 		$postviews_position = essb_postview_position($position, $style['total_counter_pos']);
+		
+		
 		if (!empty($style['postviews'])) {
 
 			$postviews_position = essb_postviews_position_from_shortcode($style['postviews'], $style['total_counter_pos']);
@@ -1184,16 +1212,31 @@ function essb_draw_share_counter_code($position, $counter, $counter_hidden) {
 		$counter_short = essb_kilomega_format($counter, 'button');
 	}
 
-	return '<span class="essb_counter'.$position.'" cnt="' .$counter. '"'.$css_hidden_negative.'>' .$counter_short. '</span>';
+	return '<span class="essb_counter'.$position.'" data-cnt="' .$counter. '"'.$css_hidden_negative.'>' .$counter_short. '</span>';
 }
 
 
 function essb_kilomega_format ( $val, $type) {
 	$value_format_type = ($type == 'total') ? essb_option_value('total_counter_format') : essb_option_value('counter_format');
 	
-	if ($value_format_type == 'full') {
+	if ($value_format_type == 'full' || $value_format_type == 'fulldot' || $value_format_type == "fullcomma" || $value_format_type == "fullspace") {
 		if ($val) {
-			return number_format(intval($val));
+			if ($value_format_type == 'full') {
+				return number_format(intval($val));
+			}
+			else if ($value_format_type == 'fulldot') {
+				return number_format(intval($val), 0, '', '.');
+			}
+			else if ($value_format_type == 'fullcomma') {
+				return number_format(intval($val), 0, '', ',');
+			}
+			else if ($value_format_type == 'fullspace') {
+				return number_format(intval($val), 0, '', ' ');
+			}
+				
+			else {
+				return number_format(intval($val));
+			}
 		}
 		else {
 			return 0;
@@ -1215,8 +1258,14 @@ function essb_kilomega( $val ) {
 				$val = intval ( $val ) / 1000;
 				return number_format ( $val, 1 ) .'K';
 			} else {
-				$val = intval ( $val ) / 1000;
-				return number_format ( $val, 1 ).'K';
+				if ($val < 1000000) {
+					$val = intval ( $val ) / 1000;
+					return number_format ( $val, 1 ).'K';
+				}
+				else {
+					$val = intval ( $val ) / 1000000;
+					return number_format ( $val, 1 ).'M';
+				}
 			}
 		}
 	} else {

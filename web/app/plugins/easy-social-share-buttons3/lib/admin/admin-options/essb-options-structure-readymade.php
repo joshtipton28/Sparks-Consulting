@@ -1,6 +1,6 @@
 <?php
 ESSBOptionsStructureHelper::menu_item('readymade', 'popular', __('Popular Styles', 'essb'), 'refresh ti-palette');
-ESSBOptionsStructureHelper::menu_item('readymade', 'new', __('New Styles', 'essb'), 'refresh ti-palette');
+ESSBOptionsStructureHelper::menu_item('readymade', 'new', __('<div class="essb-new" style="margin-right: 5px;"><span></span></div>New Styles', 'essb'), 'refresh ti-palette');
 ESSBOptionsStructureHelper::menu_item('readymade', 'width', __('Width Based Styles', 'essb'), 'refresh ti-palette');
 ESSBOptionsStructureHelper::menu_item('readymade', 'style', __('Various Button Styles', 'essb'), 'refresh ti-palette');
 ESSBOptionsStructureHelper::menu_item('readymade', 'mobile', __('Mobile Styles', 'essb'), 'refresh ti-mobile');
@@ -134,6 +134,28 @@ $ready_made['sidebar2'] = array('name' => __('Icons without space with more butt
 		'template' => true,
 		'networks' => false, 'group' => 'popular',
 		'bestfor' => 'sidebar,postfloat');
+
+$ready_made['new41_1'] = array('name' => __('New in 4.1 More button style inline icon pop', 'essb'),
+		'type' => 'style',
+		'applyon' => 'top,bottom,float,topbar,bottombar',
+		'preview' => 'ready_made/new41_1.png',
+		'template' => false,
+		'networks' => true, 'group' => 'new');
+
+$ready_made['new41_2'] = array('name' => __('New in 4.1 More button style inline names pop', 'essb'),
+		'type' => 'style',
+		'applyon' => 'top,bottom,float,topbar,bottombar',
+		'preview' => 'ready_made/new41_2.png',
+		'template' => false,
+		'networks' => true, 'group' => 'new');
+
+$ready_made['new41_3'] = array('name' => __('New in 4.1 Modern style of more pop up', 'essb'),
+		'type' => 'style',
+		'applyon' => 'top,bottom,float,topbar,bottombar',
+		'preview' => 'ready_made/new41_3.png',
+		'template' => false,
+		'networks' => true, 'group' => 'new');
+
 
 $ready_made['full1'] = array('name' => __('Fancy full width share buttons', 'essb'),
 		'type' => 'style',
@@ -515,8 +537,10 @@ function essb3_display_readymade_presents($group = '') {
 			}
 			echo '</select>';
 			
-			if (!ESSBAdminActivate::is_activated() && $group != 'popular') {
-				echo '<a href="#" class="button" disabled="disabled" style="float: right;" data-present="'.$key.'" onclick="return false;">'.__('Activate plugin to use this style', 'essb').'</a>';
+			if (!ESSBAdminActivate::is_activated()) {
+			//if (!ESSBAdminActivate::is_activated() && $group != 'popular') {
+				//echo '<a href="#" class="button" disabled="disabled" style="float: right;" data-present="'.$key.'" onclick="return false;">'.__('Activate plugin to use this style', 'essb').'</a>';
+				echo ESSBAdminActivate::activateToUnlock('', 'float:right;');
 			}
 			else {
 				echo '<a href="#" class="essb-btn essb-btn-blue" style="float: right;" data-present="'.$key.'" onclick="essb_call_apply_present(\''.$key.'\'); return false;">'.__('Apply on selected location', 'essb').'</a>';

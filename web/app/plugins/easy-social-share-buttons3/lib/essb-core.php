@@ -68,6 +68,10 @@ class ESSBCore {
 			add_action('eventon_cal_variable_action', array($this, 'eventon_deactiate_content_filters'));
 		}
 	}
+	
+	public function get_general_options() {
+		return $this->general_options;
+	}
 		
 	public function eventon_deactiate_content_filters($args) {
 		$this->temporary_deactivate_content_filters();
@@ -401,6 +405,35 @@ class ESSBCore {
 		$this->button_style['message_share_before_buttons'] = essb_option_value('message_share_before_buttons');
 		$this->button_style['message_like_buttons'] = essb_option_value('message_like_buttons');
 		
+		// message cleaner @since 4.1 missing in @4.0
+		$message_share_before_buttons_on = essb_option_value('message_share_before_buttons_on');
+		if (is_array($message_share_before_buttons_on)) {
+			if (essb_is_mobile() && !in_array('mobile', $message_share_before_buttons_on)) {
+				$this->button_style['message_share_before_buttons'] = '';
+			}
+			if (essb_is_tablet() && !in_array('tablet', $message_share_before_buttons_on)) {
+				$this->button_style['message_share_before_buttons'] = '';
+			}
+			if (!essb_is_mobile() && !essb_is_tablet() && !in_array('desktop', $message_share_before_buttons_on)) {
+				$this->button_style['message_share_before_buttons'] = '';
+			}				
+		}
+
+		// message cleaner @since 4.1 missing in @4.0
+		$message_above_share_buttons_on = essb_option_value('message_above_share_buttons_on');
+		if (is_array($message_above_share_buttons_on)) {
+			if (essb_is_mobile() && !in_array('mobile', $message_above_share_buttons_on)) {
+				$this->button_style['message_share_buttons'] = '';
+			}
+			if (essb_is_tablet() && !in_array('tablet', $message_above_share_buttons_on)) {
+				$this->button_style['message_share_buttons'] = '';
+			}
+			if (!essb_is_mobile() && !essb_is_tablet() && !in_array('desktop', $message_above_share_buttons_on)) {
+				$this->button_style['message_share_buttons'] = '';
+			}
+		}
+		
+		
 		//$this->general_options['facebooktotal'] = ESSBOptionValuesHelper::options_bool_value($this->options, 'facebooktotal');
 		//$this->general_options['force_counters_admin'] = ESSBOptionValuesHelper::options_bool_value($this->options, 'force_counters_admin');
 		//$this->general_options['admin_ajax_cache'] = essb_option_bool_value('admin_ajax_cache');
@@ -430,6 +463,7 @@ class ESSBCore {
 		
 		// post types where buttons are active
 		$this->general_options['display_in_types'] = essb_option_value('display_in_types');
+		
 		$this->general_options['display_excerpt'] = essb_option_bool_value('display_excerpt');
 		$this->general_options['display_excerpt_pos'] = essb_option_value('display_excerpt_pos');
 		$this->general_options['display_exclude_from'] = essb_option_value('display_exclude_from');
@@ -448,7 +482,7 @@ class ESSBCore {
 		if (!is_array($this->general_options['display_in_types'])) {
 			$this->general_options['display_in_types'] = array();
 		}
-		
+				
 		// administrative options
 		
 		$this->general_options['total_counter_hidden_till'] = essb_option_value('total_counter_hidden_till');
@@ -480,7 +514,7 @@ class ESSBCore {
 				
 				if (!is_array($user_set_mobile)) {
 					$user_set_mobile = array();
-				}
+				}				
 				
 				if (in_array('sharebottom', $user_set_mobile)) {
 					$this->general_options ['button_position'][] = 'sharebottom';
@@ -577,6 +611,19 @@ class ESSBCore {
 				
 				if (is_array($button_position_by_pt)) {
 					if (count($button_position_by_pt) > 0) {
+						
+						if (is_array($this->general_options['button_position'])) {
+							if (in_array('sharebottom', $this->general_options['button_position'])) {
+								$button_position_by_pt[] = 'sharebottom';
+							}
+							if (in_array('sharebar', $this->general_options['button_position'])) {
+								$button_position_by_pt[] = 'sharebar';
+							}
+							if (in_array('sharepoint', $this->general_options['button_position'])) {
+								$button_position_by_pt[] = 'sharepoint';
+							}
+						}
+						
 						$current_post_button_position = $button_position_by_pt;
 						$this->general_options['button_position'] = $button_position_by_pt;
 					}	
@@ -638,6 +685,9 @@ class ESSBCore {
 			//-- WooCommerce
 			if (essb_option_bool_value('woocommece_share')) {
 				add_action ( 'woocommerce_share', array ($this, 'handle_woocommerce_integration' ) );
+			}
+			if (essb_option_bool_value('woocommerce_after_add_to_cart_form')) {
+				add_action ( 'woocommerce_after_add_to_cart_form', array ($this, 'handle_woocommerce_integration' ) );
 			}
 			if (essb_option_bool_value('woocommece_beforeprod')) {
 				add_action ( 'woocommerce_before_single_product', array ($this, 'handle_woocommerce_integration' ) );
@@ -894,7 +944,7 @@ class ESSBCore {
 		
 		// @since 3.4.2 - check to ensure buttons will not appear in feed or search
 		if (is_search() || is_feed()) { return false; }
-		
+
 		$current_active_post_type = "";
 		if ($this->general_options['reset_posttype'] && isset($post)) {
 			$current_active_post_type = isset($post->post_type) ? $post->post_type : "";
@@ -933,7 +983,7 @@ class ESSBCore {
 				return false;
 			}
 		}
-		
+
 		//if (isset($post)) {
 		//	print " parsing post type=".$post->post_type;
 		//}
@@ -955,7 +1005,7 @@ class ESSBCore {
 			}
 		}
 		
-		
+
 		if ($this->general_options['display_exclude_from'] != "") {
 			$excule_from = explode(',', $this->general_options['display_exclude_from']);
 			
@@ -1789,6 +1839,7 @@ class ESSBCore {
 		
 		$only_share = essb_option_bool_value('only_share', $share_options);
 		$post_type = essb_option_value('post_type', $share_options);
+		$user_based_post_type = $post_type;
 		
 		// @since 3.6 AMP support 
 		$amp_sharing = essb_option_bool_value('amp', $share_options);
@@ -1810,6 +1861,10 @@ class ESSBCore {
 		
 		if (empty($post_type) && isset($post)) {
 			$post_type = $post->post_type;
+			
+			if (!empty($user_based_post_type)) {
+				$post_type = $user_based_post_type;
+			}
 		}
 		
 		// -- getting main share details based on current post
@@ -1822,7 +1877,7 @@ class ESSBCore {
 		// apply shortcode options
 		if ($is_shortcode) {
 			essb_depend_load_function('essb_shortcode_map_shareoptions', 'lib/core/extenders/essb-core-extender-shortcode.php');
-			
+						
 			$post_share_details = essb_shortcode_map_shareoptions($post_share_details, $shortcode_options);
 		}
 		else {
@@ -1881,7 +1936,7 @@ class ESSBCore {
 	    // code refactor @since 3.4.2
 		$post_share_details ['full_url'] = $post_share_details ['url'];
 		
-		if ($this->general_options['shorturl_activate']) {
+		if ($this->general_options['shorturl_activate'] && $post_share_details['full_url'] != 'http://socialsharingplugin.com') {
 			$global_provider = $this->general_options ['shorturl_type'];			
 			
 			essb_depend_load_function('essb_short_url', 'lib/core/essb-shorturl-helper.php');
@@ -1969,6 +2024,9 @@ class ESSBCore {
 				}
 			}
 			
+			if (has_filter("essb4_position_style_{$position}")) {
+				$button_style = apply_filters("essb4_position_style_{$position}", $button_style);
+			}
 		}
 		
 		// apply safe default of mobile styles to avoid miss configured display
@@ -2041,6 +2099,8 @@ class ESSBCore {
 				}
 				if (count($social_networks) > (intval($available_networks_count) - $button_count_correction_when_total)) {
 					$share_bottom_networks = $social_networks;
+					
+					$share_bottom_networks = (array_slice($social_networks, intval($available_networks_count) - 1 - $button_count_correction_when_total));
 					array_splice($social_networks, intval($available_networks_count) - 1 - $button_count_correction_when_total);
 					$social_networks[] = "more";
 					//$button_style['more_button_icon'] = "dots";
@@ -2050,6 +2110,7 @@ class ESSBCore {
 
 				
 			}
+						
 		}
 		
 		if (!is_array($social_networks)) { $social_networks = array(); }
@@ -2367,6 +2428,10 @@ class ESSBCore {
 		$style['share_button_func'] = essb_option_value('share_button_func');
 		$style['share_button_icon'] = essb_option_value('share_button_icon');		
 		$style['share_button_style'] = essb_option_value('share_button_style');
+		
+		if (has_filter('essb4_button_visual_options')) {
+			$style = apply_filters('essb4_button_visual_options', $style, $position);
+		}
 		
 		return $style;
 	}

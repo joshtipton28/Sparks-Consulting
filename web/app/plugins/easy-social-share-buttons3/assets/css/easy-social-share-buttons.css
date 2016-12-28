@@ -8,19 +8,6 @@
 	font-style: normal;
 }
 
-[data-icon]:before {
-	font-family: "essb" !important;
-	content: attr(data-icon);
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	text-transform: none !important;
-	speak: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
 [class ^="essb_icon_"]:before,[class *=" essb_icon_"]:before {
 	font-family: "essb" !important;
 	font-style: normal !important;
@@ -525,6 +512,7 @@
 
 .essb_links li a .essb_network_name {
 	margin-right: 10px;
+	font-size: 14px;
 }
 
 .essb_links li a .essb_network_name.essb_noname {
@@ -3743,10 +3731,278 @@ transition-property: background-color;
 
 }
 
-
 .essb_links.essb_template_modern-light-retina li a .essb_network_name {
 	font-size: 13px;
 	text-transform: uppercase;
+}
+
+/** Tiny Color Circles Retina **/
+.essb_links.essb_template_tiny-color-circles-retina li a {
+	border-radius: 16px;
+	-webkit-border-radius: 16px;
+}
+
+.essb_links.essb_template_tiny-color-circles-retina .essb_icon {
+	width: 32px;
+	height: 32px;
+}
+
+.essb_links.essb_template_tiny-color-circles-retina .essb_icon:before {
+	font-size: 16px !important;
+	top: 8px;
+	left: 8px;
+}
+
+.essb_links.essb_template_tiny-color-circles-retina li a .essb_network_name {
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: normal;
+}
+
+
+/** Lollipop Retina **/
+.essb_links.essb_template_lollipop-retina li a {
+	color: #565656 !important;
+	background-color: transparent !important;
+	font-weight: normal;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+
+.essb_links.essb_template_lollipop-retina li a .essb_network_name {
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+
+.essb_links.essb_template_lollipop-retina li a:hover,.essb_links.essb_template_lollipop-retina li a:focus
+	{
+	color: #D8335B !important;
+}
+
+.essb_links.essb_template_lollipop-retina a .essb_network_name {
+	margin-left: 5px;
+}
+
+.essb_links.essb_template_lollipop-retina a .essb_icon {
+	color: #fff !important;
+	border-radius: 18px;
+	-webkit-border-radius: 18px;
+}
+
+.essb_links.essb_template_lollipop-retina li a:hover .essb_icon,.essb_links.essb_template_lollipop-retina li a:focus .essb_icon
+	{
+	background-color: #eb97ab !important;
+}
+
+.essb_links.essb_template_lollipop-retina li.essb_link_more a .essb_icon,.essb_links.essb_template_lollipop-retina li.essb_link_more_dots a .essb_icon,.essb_links.essb_template_lollipop-retina li.essb_link_less a .essb_icon
+	{
+	background-color: #c2cfcd !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_meneame a .essb_icon {
+	background-color: #ffbe89 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_whatsapp a .essb_icon
+	{
+	background-color: #83f179 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_mwp a .essb_icon {
+	background-color: #72c6fb !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_flattr a .essb_icon {
+	background-color: #c5daad !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_ok a .essb_icon {
+	background-color: #f9b98d !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_xing a .essb_icon {
+	background-color: #4fd8da !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_weibo a .essb_icon {
+	background-color: #f68a8e !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_pocket a .essb_icon {
+	background-color: #f8adb6 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_tumblr a .essb_icon {
+	background-color: #82a4c7 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_print a .essb_icon {
+	background-color: #91CED7 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_del a .essb_icon {
+	background-color: #a8d3fe !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_buffer a .essb_icon {
+	background-color: #5A5A5A !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_love a .essb_icon {
+	background-color: #F7A3A2 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_twitter a .essb_icon {
+	background-color: #95E7ED !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_google a .essb_icon {
+	background-color: #FD7150 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_facebook a .essb_icon
+	{
+	background-color: #849FBB !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_pinterest a .essb_icon
+	{
+	background-color: #ED939D !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_digg a .essb_icon {
+	background-color: #80b4e7 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_linkedin a .essb_icon
+	{
+	background-color: #8BB7D9 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_stumbleupon a .essb_icon
+	{
+	background-color: #f5a290 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_vk a .essb_icon {
+	background-color: #97b1cf !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_mail a .essb_icon {
+	background-color: #F2E4F9 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_reddit a .essb_icon {
+	background-color: #D8E2EC !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_blogger a .essb_icon {
+	background-color: #fbcfa9 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_amazon a .essb_icon {
+	background-color: #AA8C91 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_yahoomail a .essb_icon
+	{
+	background-color: #af74ee !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_gmail a .essb_icon {
+	background-color: #eea79e !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_newsvine a .essb_icon
+	{
+	background-color: #45e782 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_hackernews a .essb_icon
+	{
+	background-color: #f9ccaf !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_evernote a .essb_icon
+	{
+	background-color: #bcdea3 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_aol a .essb_icon {
+	background-color: #999 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_myspace a .essb_icon {
+	background-color: #94aad6 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_mailru a .essb_icon {
+	background-color: #fdd38d !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_viadeo a .essb_icon {
+	background-color: #999 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_line a .essb_icon {
+	background-color: #8bf279 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_flipboard a .essb_icon
+	{
+	background-color: #eb6d66 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_comments a .essb_icon
+	{
+	background-color: #989898 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_yummly a .essb_icon {
+	background-color: #f0ae8f !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_sms a .essb_icon {
+	background-color: #97d091 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_viber a .essb_icon {
+	background-color: #b79ccb !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_telegram a .essb_icon
+	{
+	background-color: #55c6ff !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_subscribe a .essb_icon
+	{
+	background-color: #fac3b5 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_skype a .essb_icon {
+	background-color: #79dbff !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_messenger a .essb_icon
+	{
+	background-color: #95caff !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_kakaotalk a .essb_icon
+	{
+	background-color: #fff584 !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_sharebtn a .essb_icon
+	{
+	background-color: #E2999F !important;
+}
+
+.essb_links.essb_template_lollipop-retina .essb_link_livejournal a .essb_icon
+	{
+	background-color: #77d1f8 !important;
 }
 
 
@@ -3763,9 +4019,9 @@ transition-property: background-color;
 	z-index: 100001;
 }
 
-.essb-mobile-sharebottom .essb_morepopup_close {
+/*.essb-mobile-sharebottom .essb_morepopup_close {
 	display: none;
-}
+}*/
 
 .essb-mobile-sharebottom .essb_links li a {
 	padding-top: 10px;
@@ -3982,6 +4238,7 @@ transition-property: background-color;
 
 
 /*** More Popup ***/
+
 .essb_morepopup_shadow {
 	position: fixed;
 	_position: absolute; /* hack for IE 6*/
@@ -3992,6 +4249,10 @@ transition-property: background-color;
 	background: rgba(33, 33, 33, 0.85);
 	z-index: 1100;
 	display: none;
+}
+
+.essb_morepopup_shadow.essb_morepopup_shadow_modern {
+	background-color: rgba(0, 0, 0, 0.9);
 }
 
 .essb_morepopup {
@@ -4008,6 +4269,54 @@ transition-property: background-color;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	padding-top: 25px;
+}
+
+.essb_morepopup.essb_morepopup_modern {
+	background-color: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-ms-box-shadow: none;
+	-o-box-shadow: none;
+	box-shadow: none;
+	color: #fff;
+	overflow: hidden;
+}
+
+.essb_morepopup.essb_morepopup_modern .essb_network_name { color: #fff; }
+.essb_morepopup.essb_morepopup_modern .essb_icon {
+	width: 52px;
+	height: 52px;
+	margin-bottom: 10px;
+}
+.essb_morepopup.essb_morepopup_modern .essb_icon:before{
+	font-size: 32px !important;
+	left: 10px;
+	top: 10px;
+}
+
+.essb_morepopup.essb_morepopup_modern .essb_morepopup_close { background-color: #fff; width: 28px; height: 28px; border-radius: 50%; top: 20px; }
+.essb_morepopup.essb_morepopup_modern .essb_morepopup_close i:before {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	font-size: 18px;
+}
+
+.essb_morepopup.essb_morepopup_modern .essb_links.essb_width_columns_4 li a { width: 95% !important; margin-bottom: 10px !important; }
+
+.essb-morepopup-modern-title, .essb-morepopup-modern-link a, .essb-morepopup-modern-link a:hover, .essb-morepopup-modern-link a:visited, .essb-morepopup-modern-link a:focus {
+	color: #fff;
+	text-decoration: none;
+	font-size: 13px;
+}
+
+.essb_morepopup.essb_morepopup_modern .essb_morepopup_content {
+	width: 100%;
+	padding-right: 18px;
+}
+
+@media (max-width: 600px) {
+	.essb_morepopup.essb_morepopup_modern .essb_morepopup_content { padding: 0px; padding-right: 18px; }
 }
 
 .essb_morepopup_content {
@@ -4037,6 +4346,99 @@ transition-property: background-color;
 	line-height: 18px;
 	font-size: 18px;
 	z-index: 1001;
+}
+
+/** Inline More Popup ***/
+.essb_morepopup_inline {
+	padding: 10px !important;
+	-webkit-box-shadow: -1px 4px 6px rgba(0,0,0,0.09);
+	-moz-box-shadow: -1px 4px 6px rgba(0,0,0,0.09);
+	-ms-box-shadow: -1px 4px 6px rgba(0,0,0,0.09);
+	-o-box-shadow: -1px 4px 6px rgba(0,0,0,0.09);
+	box-shadow: -1px 4px 6px rgba(0,0,0,0.09);
+	border: 1px solid #b3b3b3;
+	max-width: 330px;
+}
+
+.essb_morepopup_inline .essb_morepopup_close {
+	display: none;
+}
+
+.essb_morepopup_inline .essb_links {
+	margin: 0 !important;
+}
+
+.essb_morepopup_inline .essb_morepopup_content {
+	padding: 0px !important;
+	text-align: left;
+}
+
+.essb_morepopup_inline .modal-pointer-down-left, .essb_morepopup_inline .modal-pointer-up-left {
+	left: 10px;
+	right: auto;
+} 
+
+.essb_morepopup_inline .modal-pointer-down-right, .essb_morepopup_inline .modal-pointer-up-right {
+	right: 10px;
+	left: auto;
+}
+
+.essb_morepopup_inline .modal-pointer-up, .essb_morepopup_inline .modal-pointer-up-left, .essb_morepopup_inline .modal-pointer-up-right {
+	width: 0px;
+	height: 0px;
+	display: inline-block;
+	border-left: 14px inset transparent;
+	border-right: 14px inset transparent;
+	border-top: 14px inset transparent;
+	border-bottom: 14px inset transparent;
+	border-bottom: 14px solid #b3b3b3;
+	top: -28px;
+}
+
+.essb_morepopup_inline .modal-pointer-down, 
+.essb_morepopup_inline .modal-pointer-down-left, 
+.essb_morepopup_inline .modal-pointer-down-right {
+	width: 0px;
+	height: 0px;
+	display: inline-block;
+	border-left: 14px inset transparent;
+	border-right: 14px inset transparent;
+	border-top: 14px inset transparent;
+	border-bottom: 14px inset transparent;
+	border-top: 14px solid #b3b3b3;
+	bottom: -28px;
+}
+
+.modal-container, .modal, .modal-pointer, .modal-pointer-conceal {
+	position: absolute;
+}
+
+.essb_morepopup_inline .modal-pointer-up .modal-pointer-conceal, 
+.essb_morepopup_inline .modal-pointer-up-left .modal-pointer-conceal, 
+.essb_morepopup_inline .modal-pointer-up-right .modal-pointer-conceal {
+	width: 0px;
+	height: 0px;
+	display: inline-block;
+	border-left: 14px inset transparent;
+	border-right: 14px inset transparent;
+	border-top: 14px inset transparent;
+	border-bottom: 14px solid #fff;
+	left: -14px;
+	top: -13px;
+}
+
+.essb_morepopup_inline .modal-pointer-down .modal-pointer-conceal, 
+.essb_morepopup_inline .modal-pointer-down-left .modal-pointer-conceal, 
+.essb_morepopup_inline .modal-pointer-down-right .modal-pointer-conceal {
+	width: 0px;
+	height: 0px;
+	display: inline-block;
+	border-left: 14px inset transparent;
+	border-right: 14px inset transparent;
+	border-top: 14px inset transparent;
+	border-top: 14px solid #fff;
+	left: -14px;
+	bottom: 1px;
 }
 
 /*** Send mail form design version 4 ***/
@@ -4124,6 +4526,11 @@ transition-property: background-color;
 
 .essb_mailform_content .essb_mailform_content_button:hover, .essb_mailform_content .essb_mailform_content_button:focus {
 	background: #34495e !important;
+}
+
+.essb_mailform_preview {
+	font-size: 12px;
+	margin-bottom: 10px;
 }
 
 /*********** Native Buttons *************/

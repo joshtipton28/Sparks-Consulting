@@ -171,12 +171,17 @@ foreach (ESSBSocialProfilesHelper::available_animations() as $key => $text) {
 		$profiles_order = essb_option_value('profile_networks_order');
 		$profiles_order = ESSBSocialProfilesHelper::simplify_order_list($profiles_order);
 		if (is_array($profiles_order)) {
+			
+			if (!in_array('xing', $profiles_order)) {
+				$profiles_order[] = 'xing';
+			} 
+			
 			$profile_networks = $profiles_order;
 		}
 		
 		$sc_network_address = array();
 		foreach ($profile_networks as $network) {
-			$value = $instance['profile_'.$network];
+			$value = isset($instance['profile_'.$network]) ? $instance['profile_'.$network] : '';
 			
 			if (!empty($value)) {
 				$sc_network_address[$network] = $value;

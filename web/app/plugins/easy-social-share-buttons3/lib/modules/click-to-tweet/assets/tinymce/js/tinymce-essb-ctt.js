@@ -51,6 +51,11 @@
 							label: 'Custom URL attached to quote:'
 						},
 						{
+							type: 'textbox',
+							name: 'image',
+							label: 'Include image(pic.twitter.com/xxxx only)'
+						},
+						{
 							type: 'listbox',
 							name: 'template',
 							label: 'Template',
@@ -65,7 +70,7 @@
 						
 					],
 					width: 620,
-					height: 325,
+					height: 355,
 					onsubmit: function( e ) {
 
 						// bail without tweet text
@@ -100,6 +105,9 @@
 						}
 						if (e.data.template != '') {
 							essbcttBuild += ' template="'+e.data.template+'"';
+						}
+						if (e.data.image != '') {
+							essbcttBuild += ' image="'+e.data.image+'"';
 						}
 						
 						// close it up

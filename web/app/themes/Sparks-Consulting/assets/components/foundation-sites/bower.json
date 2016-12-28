@@ -1,7 +1,6 @@
 {
   "name": "foundation-sites",
-  "version": "6.2.4",
-  "license": "MIT",
+  "version": "6.1.2",
   "main": [
     "scss/foundation.scss",
     "dist/foundation.js"
@@ -23,11 +22,10 @@
     ".npm",
     ".gitignore",
     ".npmignore",
-    ".versions",
-    ".babelrc"
+    ".versions"
   ],
   "dependencies": {
-    "jquery": "~2.2.0",
-    "what-input": "~2.0.0"
+    "jquery": "~2.1.0",
+    "what-input": "~1.1.2"
   }
 }

@@ -6,6 +6,22 @@ global $essb_available_button_positions, $essb_avaliable_content_positions;
 global $essb_available_button_positions_mobile, $essb_avaliable_content_positions_mobile, $essb_avaiable_total_counter_position_mobile, 
 	 $essb_available_social_profiles;
 
+if (!function_exists('essb_available_more_button_commands')) {
+	function essb_available_more_button_commands($add_default = false) {
+		$commands = array ();
+		if ($add_default) {
+			$commands[''] = __('Default value from settings', 'essb');
+		}
+		$commands['1'] = __("Display all active networks after more button", 'essb');
+		$commands['2'] = __("Display all social networks as pop up", 'essb');
+		$commands['3'] = __("Display only active social networks as pop up", 'essb');
+		$commands['4'] = __("Inline pop of all active networks after more button (icon style)", 'essb');
+		$commands['5'] = __("Inline pop of all active networks after more button (button style)", 'essb');
+		
+		return $commands;
+	}
+}
+
 if (!function_exists('essb_default_native_buttons')) {
 	function essb_default_native_buttons() {
 		$essb_default_native_buttons = array();
@@ -78,7 +94,13 @@ if (!function_exists('essb_available_tempaltes4')) {
 		$essb_available_tempaltes ['51'] = "Cut Off (Retina)";
 		$essb_available_tempaltes ['52'] = "Color Cut Off (Retina)";
 		$essb_available_tempaltes ['53'] = "Modern Light (Retina)";
+		$essb_available_tempaltes ['54'] = "Tiny Color Circles Light (Retina)";
+		$essb_available_tempaltes ['55'] = "Lollipop (Retina)";
 		
+		if (has_filter('essb4_templates')) {
+			$essb_available_tempaltes = apply_filters('essb4_templates', $essb_available_tempaltes);
+		}
+				
 		return $essb_available_tempaltes;
 	}
 }
@@ -319,6 +341,10 @@ if (!function_exists('essb_avaliable_content_positions')) {
 		$essb_avaliable_content_positions ['content_sharenative'] = array ("image" => "assets/images/display-positions-08.png", "label" => "Share buttons top, native buttons bottom" );
 		$essb_avaliable_content_positions ['content_manual'] = array ("image" => "assets/images/display-positions-09.png", "label" => "Manual display with shortcode only" );
 		
+		if (has_filter('essb4_content_positions')) {
+			$essb_avaliable_content_positions = apply_filters('essb4_content_positions', $essb_avaliable_content_positions);
+		}
+		
 		return $essb_avaliable_content_positions;
 	}
 }
@@ -346,6 +372,10 @@ if (!function_exists('essb_avaliable_content_positions_mobile')) {
 		$essb_avaliable_content_positions_mobile ['content_float'] = array ("image" => "assets/images/display-positions-05.png", "label" => "Float from content top" );
 		$essb_avaliable_content_positions_mobile ['content_manual'] = array ("image" => "assets/images/display-positions-09.png", "label" => "Manual display with shortcode only" );
 		
+		if (has_filter('essb4_content_positions_mobile')) {
+			$essb_avaliable_content_positions_mobile = apply_filters('essb4_content_positions_mobile', $essb_avaliable_content_positions_mobile);
+		}
+		
 		return $essb_avaliable_content_positions_mobile;
 	}
 }
@@ -364,6 +394,10 @@ if (!function_exists('essb_available_button_positions')) {
 		$essb_available_button_positions ['postbar'] = array ("image" => "assets/images/display-positions-23.png", "label" => "Post share bar" );
 		$essb_available_button_positions ['point'] = array ("image" => "assets/images/display-positions-24.png", "label" => "Share Point (Advanced Version)" );
 		$essb_available_button_positions ['widget'] = array ("image" => "assets/images/display-positions-25.png", "label" => "Widget" );
+		
+		if (has_filter('essb4_button_positions')) {
+			$essb_available_button_positions = apply_filters('essb4_button_positions', $essb_available_button_positions);
+		}
 		
 		return $essb_available_button_positions;
 	}
@@ -395,6 +429,10 @@ if (!function_exists('essb_available_button_positions_mobile')) {
 		$essb_available_button_positions_mobile ['sharepoint'] = array ("image" => "assets/images/display-positions-19.png", "label" => "Share point (Mobile Only Display Method)" );
 		$essb_available_button_positions_mobile ['point'] = array ("image" => "assets/images/display-positions-24.png", "label" => "Share Point (Advanced Version)" );
 		$essb_available_button_positions_mobile ['widget'] = array ("image" => "assets/images/display-positions-25.png", "label" => "Widget" );
+		
+		if (has_filter('essb4_button_positions_mobile')) {
+			$essb_available_button_positions_mobile = apply_filters('essb4_button_positions_mobile', $essb_available_button_positions_mobile);
+		}
 		
 		return $essb_available_button_positions_mobile;
 	}
@@ -471,6 +509,7 @@ if (!function_exists('essb_available_social_profiles')) {
 		$socials['mymail'] = 'myMail';
 		$socials['spotify'] = 'Spotify';
 		$socials['twitch'] = 'Twitch';
+		$socials['xing'] = 'Xing';
 		
 		return $socials;	
 	}

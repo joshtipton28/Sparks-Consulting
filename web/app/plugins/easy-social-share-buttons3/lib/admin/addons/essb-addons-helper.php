@@ -24,7 +24,6 @@ class ESSBAddonsHelper {
 	public function call_remove_addon_list_update() {
 		$url = $this->update_addons_server;
 		$result = wp_remote_get($url);
-		
 		$success_connection = true;
 		
 		if(is_wp_error($result) or (wp_remote_retrieve_response_code($result) != 200)){
@@ -76,6 +75,7 @@ class ESSBAddonsHelper {
 			}
 		}
 		
+		
 		return $list_of_new;
 	}	
 	
@@ -104,6 +104,7 @@ class ESSBAddonsHelper {
 			}
 		}
 	
+				
 		return $list_of_new;
 	}
 		

@@ -60,6 +60,7 @@ class ESSBSocialProfilesHelper {
 		$socials['mymail'] = 'myMail';
 		$socials['spotify'] = 'Spotify';
 		$socials['twitch'] = 'Twitch';
+		$socials['xing'] = 'Xing';
 		
 		return $socials;
 	}

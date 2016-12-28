@@ -19,5 +19,7 @@ if (!function_exists('essb_active_oninstall')) {
 			}
 		}
 		
+		// clear stored add-ons on activation of plugin
+		delete_option('essb3_addons');
 	}
 }

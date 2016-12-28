@@ -1,10 +1,10 @@
 <?php
 
 /*
-* Plugin Name: Easy Social Share Buttons for WordPress 4.0
+* Plugin Name: Easy Social Share Buttons for WordPress 4.1
 * Description: Easy Social Share Buttons automatically adds beautiful share buttons to all your content with support of Facebook, Twitter, Google+, LinkedIn, Pinterest, Digg, StumbleUpon, VKontakte, Tumblr, Reddit, Print, E-mail and other 40 social networks and mobile messengers. Display them in more thanb 22 automatic display locations or use powerful shortcodes. Compatible with most popular e-commerce plugins, social plugins and affiliate plugins
 * Plugin URI: http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo
-* Version: 4.0.1
+* Version: 4.1
 * Author: CreoApps
 * Author URI: http://codecanyon.net/user/appscreo/portfolio?ref=appscreo
 */
@@ -17,11 +17,12 @@ if (! defined ( 'WPINC' ))
 
 define ( 'ESSB3_SELF_ENABLED', false );
 
-define ( 'ESSB3_VERSION', '4.0.1' );
+define ( 'ESSB3_VERSION', '4.1' );
 define ( 'ESSB3_PLUGIN_ROOT', dirname ( __FILE__ ) . '/' );
 define ( 'ESSB3_PLUGIN_URL', plugins_url () . '/' . basename ( dirname ( __FILE__ ) ) );
 define ( 'ESSB3_PLUGIN_BASE_NAME', plugin_basename ( __FILE__ ) );
 define ( 'ESSB3_OPTIONS_NAME', 'easy-social-share-buttons3');
+define ( 'ESSB3_WPML_OPTIONS_NAME', 'easy-social-share-buttons3-wpml');
 define ( 'ESSB3_NETWORK_LIST', 'easy-social-share-buttons3-networks');
 define ( 'ESSB3_OPTIONS_NAME_FANSCOUNTER', 'easy-social-share-buttons3-fanscounter');
 define ( 'ESSB3_EASYMODE_NAME', 'essb3-easymode');
@@ -33,6 +34,7 @@ define ( 'ESSB3_MAIL_SALT', 'easy-social-share-buttons-mailsecurity');
 define ( 'ESSB3_DEMO_MODE', true);
 define ( 'ESSB3_ADDONS_ACTIVE', true);
 define ( 'ESSB3_EASYMODE_ASKED', 'easy3-easymode-asked');
+define ( 'ESSB3_ACTIVATION', true);
 
 /**
  * Easy Social Share Buttons manager class to access all plugin features
@@ -154,7 +156,6 @@ class ESSB_Manager {
 	 * Initialize plugin load
 	 */
 	public function init() {		
-		// activate plugin and resource builder		
 		
 		load_plugin_textdomain('essb', FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 		
@@ -248,12 +249,15 @@ class ESSB_Manager {
 		// include the main plugin required files
 		include_once (ESSB3_PLUGIN_ROOT . 'lib/essb-core-includes.php');
 
+		ESSBActivationManager::init();
+		
 		if (is_admin()) {
 				
 			global $essb_options;
 			$exist_user_purchase_code = isset($essb_options['purchase_code']) ? $essb_options['purchase_code'] : '';
 		
-			if (!empty($exist_user_purchase_code) && !$this->isInTheme()) {
+			//if (!empty($exist_user_purchase_code) && !$this->isInTheme()) {
+			if (ESSBActivationManager::isActivated() && !$this->isInTheme()) {
 		
 				include (ESSB3_PLUGIN_ROOT . 'lib/external/autoupdate/plugin-update-checker.php');
 				// @since 1.3.3
@@ -264,7 +268,8 @@ class ESSB_Manager {
 				// method
 				function addSecretKeyESSB3($query) {
 					global $exist_user_purchase_code;
-					$query ['license'] = $exist_user_purchase_code;
+					$query ['license'] = ESSBActivationManager::getActivationCode();
+					$query ['purchase_code'] = ESSBActivationManager::getPurchaseCode();
 					return $query;
 				}
 				$essb_autoupdate->addQueryArgFilter ( 'addSecretKeyESSB3' );
@@ -416,6 +421,7 @@ class ESSB_Manager {
 	 * @since 3.4
 	 */
 	protected function asAdmin() {
+		
 		include_once (ESSB3_PLUGIN_ROOT . 'lib/admin/essb-admin-includes.php');
 		$this->factoryActivate('essb_admin', 'ESSBAdminControler');
 		

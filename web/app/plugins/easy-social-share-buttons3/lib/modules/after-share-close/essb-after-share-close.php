@@ -88,12 +88,20 @@ class ESSBAfterCloseShare3 {
 		if (!$afterclose_activate_all) {
 			$post_types_run = essb_option_value('display_in_types');
 				
+			if (!is_array($post_types_run)) {
+				$post_types_run = array();
+			}
+			
 			if (!essb_core()->check_applicability($post_types_run, 'aftershare')) {
 				$is_active = false;
 			}
 		}
 		
 		//print "after share state = ".$is_active;
+		
+		if (essb_option_bool_value('afterclose_activate_sharedisable')) {
+			$is_active = true;
+		}
 		
 		if (!$is_active) {
 			remove_action ( 'wp_footer', array ($this, 'generateFollowWindow' ), 99 );
@@ -130,6 +138,10 @@ class ESSBAfterCloseShare3 {
 		
 		if ($essb_off == "true") {
 			$is_user_deactivated = true;
+		}
+		
+		if (essb_option_bool_value('afterclose_activate_sharedisable')) {
+			$is_user_deactivated = false;
 		}
 		
 		return $is_user_deactivated;

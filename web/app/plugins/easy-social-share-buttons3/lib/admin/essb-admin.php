@@ -14,6 +14,9 @@ class ESSBAdminControler {
 	} // end get_instance;
 	
 	function __construct() {
+		global $pagenow;
+		
+		$deactivate_appscreo = essb_option_bool_value('deactivate_appscreo');
 		
 		//add_action ('init',array ($this, 'essb_settings_redirect' )  );
 		add_action ( 'admin_menu', 	array ($this, 'register_menu' ) );
@@ -36,37 +39,46 @@ class ESSBAdminControler {
 			update_option('essb2_converted', 'true');
 		}
 		
-		$options_2 = get_option('easy-social-share-buttons');
+		/*$options_2 = get_option('easy-social-share-buttons');
 		if (is_array($options_2)) {
 			$converted_options_2 = get_option('essb2_converted');
 			if (empty($converted_options_2)) {
 				add_action ( 'admin_notices', array ($this, 'add_notice_import_options' ) );
 			}
-		}
+		}*/
 		
 		if (defined('ESSB_VERSION')) {
 			add_action ( 'admin_notices', array ($this, 'add_notice_essb2_running' ) );
 		}
 		
-		if (ESSB3_ADDONS_ACTIVE) {
-			include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/addons/essb-addons-helper.php');
-			ESSBAddonsHelper::get_instance();
-		}
-		
-		if (ESSB3_ADDONS_ACTIVE && class_exists('ESSBAddonsHelper')) {
-			
-			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-			
-			if (strpos($page, 'essb_') === false) {
-				
-				$addons = ESSBAddonsHelper::get_instance();
-				$new_addons = $addons->get_new_addons_count();
-			
-				if ($new_addons > 0) {
-					add_action ( 'admin_notices', array ($this, 'add_notice_new_addon' ) );
-				}
+		//if (!$deactivate_appscreo) {
+			if (ESSB3_ADDONS_ACTIVE) {
+				include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/addons/essb-addons-helper4.php');
+				ESSBAddonsHelper::get_instance();
 			}
- 		}
+		//}
+		
+		/*if (!$deactivate_appscreo) {
+			if (ESSB3_ADDONS_ACTIVE) {
+				include_once(ESSB3_PLUGIN_ROOT . 'lib/admin/addons/essb-addons-helper.php');
+				ESSBAddonsHelper::get_instance();
+			}
+			
+			if (ESSB3_ADDONS_ACTIVE && class_exists('ESSBAddonsHelper')) {
+				
+				$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+				
+				if (strpos($page, 'essb_') === false) {
+					
+					$addons = ESSBAddonsHelper::get_instance();
+					$new_addons = $addons->get_new_addons_count();
+				
+					if ($new_addons > 0) {
+						add_action ( 'admin_notices', array ($this, 'add_notice_new_addon' ) );
+					}
+				}
+	 		}
+		}*/
  		
  		$easymode = isset($_REQUEST['easymode']) ? $_REQUEST['easymode'] : '';
  		if (!empty($easymode)) {
@@ -79,7 +91,106 @@ class ESSBAdminControler {
  			
  			$this->essb_settings_redirect_after_easymode();
  		}
+ 		
+ 		if(isset($pagenow) && $pagenow == 'plugins.php' && !ESSBActivationManager::isActivated()){
+ 			add_action('admin_notices', array($this, 'add_plugins_page_notices'));
+ 		}
+ 		else {
+ 			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+ 			
+ 			if (strpos($page, 'essb_') === false) {
+ 				$this->setupReminder();
+ 			}
+ 		}
 	}
+	
+	function setupReminder() {
+		if ( ESSBActivationManager::isDevelopment() ) {
+			return;
+		}
+		
+		if ( ! ESSBActivationManager::isActivated() && ( empty( $_COOKIE['essbhideactivationmsg'] ) || version_compare( $_COOKIE['essbhideactivationmsg'],
+				ESSB3_VERSION,
+				'<' ) ) && ! (is_network_admin() )
+		) {
+			add_action( 'admin_notices',
+					array( $this, 'adminNoticeLicenseActivation', ) );
+		}
+	}
+	
+	public function adminNoticeLicenseActivation() {
+		update_option( 'essb_license_activation_notified', 'yes' );
+		$redirect = admin_url( 'admin.php?page=essb_redirect_update&tab=update');
+		?>
+			<style>
+				.vc_license-activation-notice {
+					position: relative;
+				}
+			</style>
+			<script type="text/javascript">
+				(function ( $ ) {
+					var setCookie = function ( c_name, value, exdays ) {
+						var exdate = new Date();
+						exdate.setDate( exdate.getDate() + exdays );
+						var c_value = encodeURIComponent( value ) + ((null === exdays) ? "" : "; expires=" + exdate.toUTCString());
+						document.cookie = c_name + "=" + c_value;
+					};
+					$( document ).on( 'click.essb-notice-dismiss',
+						'.essb-notice-dismiss',
+						function ( e ) {
+							e.preventDefault();
+							var $el = $( this ).closest(
+								'#essb_license-activation-notice' );
+							$el.fadeTo( 100, 0, function () {
+								$el.slideUp( 100, function () {
+									$el.remove();
+								} );
+							} );
+							setCookie( 'essbhideactivationmsg',
+								'<?php echo ESSB3_VERSION; ?>',
+								30 );
+						} );
+				})( window.jQuery );
+			</script>
+			<?php
+			echo '<div class="updated essb_license-activation-notice" id="essb_license-activation-notice" style="position: relative;"><p>' . sprintf( __( 'Hola! Would you like to receive automatic updates, access to extensions library and unlock ready made styles and premium support? Please <a href="%s">activate your copy</a> of Easy Social Share Buttons for WordPress.',
+					'essb' ),
+					wp_nonce_url( $redirect ) ) . '</p>' . '<button type="button" class="notice-dismiss essb-notice-dismiss"><span class="screen-reader-text">' . __( 'Dismiss this notice.' ) . '</span></button></div>';
+		}
+		
+	
+	public function add_plugins_page_notices(){
+		$plugins = get_plugins();
+	
+		foreach($plugins as $plugin_id => $plugin){
+	
+			$slug = dirname($plugin_id);
+			if(empty($slug)) continue;
+			if($slug !== 'easy-social-share-buttons3' && $slug !== 'easy-social-share-buttons3-ver4') continue;
+							
+			if(!ESSBActivationManager::isActivated()){ //activate for updates and support
+				add_action( "after_plugin_row_" . $plugin_id, array($this, 'show_purchase_notice'), 10, 3);
+			}
+		}
+	}
+	
+	public function show_purchase_notice(){
+		$wp_list_table = _get_list_table('WP_Plugins_List_Table');
+		$activate_url = admin_url('admin.php?page=essb_redirect_update&tab=update');
+		
+		$new_version_code = '';
+		if (ESSBActivationManager::existNewVersion()) {
+			$new_version_code = ' <b>New version '.ESSBActivationManager::getLatestVersion().' is available.</b>';
+		}
+		
+		?>
+	        <tr class="plugin-update-tr essb-plugin-update"><td colspan="<?php echo $wp_list_table->get_column_count(); ?>" class="plugin-update colspanchange">
+	            <div class="update-message notice inline notice-warning notice-alt">
+	            <p>Activate Easy Social Share Buttons for WordPress to <a href="<?php echo $activate_url; ?>"><b>unlock automatic plugin updates</b></a>. You can <a href="<?php echo $activate_url; ?>"><b>Enter an existing licence key</b></a> or <a href="http://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476?ref=appscreo&license=regular&open_purchase_for_item_id=6394476&purchasable=source" target="_blank"><b>Purchase a licence key</b></a>. <?php echo $new_version_code; ?></p>
+	            </div>
+	        </tr>
+	        <?php 
+		}
 	
 	/**
 	 * Add news dashboard widget
@@ -108,30 +219,40 @@ class ESSBAdminControler {
 	}
 	
 	public function display_news_dashboard_widget() {
+		$deactivate_appscreo = essb_option_bool_value('deactivate_appscreo');
+		
+		if (!$deactivate_appscreo) {
 		// Create two feeds, the first being just a leading article with data and summary, the second being a normal news feed
-		$feeds = array(
-				'first' => array(
-						'link'         => 'http://appscreo.com/',
-						'url'          => 'http://appscreo.com/feed/',
-						'title'        => __( 'AppsCreo News', 'essb' ),
-						'items'        => 1,
-						'show_summary' => 1,
-						'show_author'  => 0,
-						'show_date'    => 1,
-				),
-				'news' => array(
-						'link'         => 'http://appscreo.com/',
-						'url'          => 'http://appscreo.com/feed/',
-						'title'        => __( 'AppsCreo News', 'essb' ),
-						'items'        => 4,
-						'show_summary' => 0,
-						'show_author'  => 0,
-						'show_date'    => 0,
-				),
-		);
-		
-		
-		wp_dashboard_primary_output( 'appscreo_news', $feeds );
+			$feeds = array(
+					'first' => array(
+							'link'         => 'http://appscreo.com/',
+							'url'          => 'http://appscreo.com/feed/',
+							'title'        => __( 'AppsCreo News', 'essb' ),
+							'items'        => 1,
+							'show_summary' => 1,
+							'show_author'  => 0,
+							'show_date'    => 1,
+					),
+					'news' => array(
+							'link'         => 'http://appscreo.com/',
+							'url'          => 'http://appscreo.com/feed/',
+							'title'        => __( 'AppsCreo News', 'essb' ),
+							'items'        => 4,
+							'show_summary' => 0,
+							'show_author'  => 0,
+							'show_date'    => 0,
+					),
+			);
+			
+			
+			wp_dashboard_primary_output( 'appscreo_news', $feeds );
+		}
+		else {
+			print '<div class="essb-admin-widget">';
+			print '<h4><strong>AppsCreo News</strong></h4>';
+			print '<a href="http://appscreo.com/" target="_blank">Read latest news, tips and tricks in our blog at http://appscreo.com</a>';
+			print '</div>';
+		}
 		
 		//wp_dashboard_cached_rss_widget( 'appscreo_news', 'wp_dashboard_primary_output', $feeds );
 		
@@ -533,6 +654,7 @@ class ESSBAdminControler {
 			if ('essb_settings_group' == $this->getval($_POST, 'option_page' )) {
 				$this->update_optons();
 				$this->update_fanscounter_options();
+				$this->update_wpml_translations();
 				$this->restore_settings();
 				$this->apply_readymade();
 				//$this->apply_import();
@@ -1025,6 +1147,61 @@ class ESSBAdminControler {
 		}
 
 	}
+
+	public function update_wpml_translations() {
+		global $essb_navigation_tabs, $essb_sidebar_sections, $essb_section_options;
+	
+		$current_options = get_option(ESSB3_WPML_OPTIONS_NAME);
+		if (!is_array($current_options)) {
+			$current_options = array();
+		}
+	
+		$current_tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : '';
+		$user_options = isset($_REQUEST['essb_options']) ? $_REQUEST['essb_options'] : array();
+	
+		if ($current_tab == '') {
+			return;
+		}
+	
+		$options = $essb_section_options[$current_tab];
+	
+		foreach($options as $section => $fields) {
+			$section_options = $fields;
+	
+			foreach ($section_options as $option) {
+				$type = $option['type'];
+				$id = isset($option['id']) ? $option['id'] : '';
+	
+				if ($id == '') {
+					continue;
+				}
+	
+				if (strpos($id, 'wpml_') === false) {
+					continue;
+				}
+	
+	
+				switch ($type) {
+					case "checkbox_list_sortable":
+						$option_value = isset($user_options[$id]) ? $user_options[$id] : '';
+						$current_options[$id] = $option_value;
+	
+						$option_value = isset($user_options[$id.'_order']) ? $user_options[$id.'_order'] : '';
+						$current_options[$id.'_order'] = $option_value;
+						break;
+					default:
+						$option_value = isset($user_options[$id]) ? $user_options[$id] : '';
+						$current_options[$id] = $option_value;
+	
+						break;
+				}
+			}
+		}
+		//print_r($current_options);
+		update_option(ESSB3_WPML_OPTIONS_NAME, $current_options);
+	
+	}
+	
 	
 	public function update_optons() {
 		global $essb_navigation_tabs, $essb_sidebar_sections, $essb_section_options;
@@ -1045,7 +1222,8 @@ class ESSBAdminControler {
 			$this->temporary_activate_post_type_settings();
 		}
 		
-		if ($current_tab == "display") {
+		// @since 4.1 change from social to where
+		if ($current_tab == "where") {
 			$this->temporary_activate_positions_by_posttypes();
 		}
 		
@@ -1067,6 +1245,10 @@ class ESSBAdminControler {
 				if ($id == '') { continue; }
 				
 				if (strpos($id, 'essb3fans_') !== false) { continue; }
+				// handle separate WPML translations since version 4.1
+				if (strpos($id, 'wpml_') !== false) {
+					continue;
+				}
 				
 				// custom ID parser for functions
 				if ($id == 'essb3_options_template_select') {
@@ -1191,7 +1373,7 @@ class ESSBAdminControler {
 	function temporary_activate_positions_by_posttypes() {
 		global $wp_post_types;
 	
-		$pts = get_post_types ( array ('show_ui' => true, '_builtin' => true ) );
+		/*$pts = get_post_types ( array ('show_ui' => true, '_builtin' => true ) );
 		$cpts = get_post_types ( array ('show_ui' => true, '_builtin' => false ) );
 		$first_post_type = "";
 		$key = 1;
@@ -1216,7 +1398,42 @@ class ESSBAdminControler {
 			ESSBOptionsStructureHelper::field_image_radio('display', 'positionspost-' . $key, 'content_position_'.$cpt, __('Primary content display position', 'essb'), __('Choose default method that will be used to render buttons inside content', 'essb'), essb_avaliable_content_positions());
 			ESSBOptionsStructureHelper::field_image_checkbox('display', 'positionspost-' . $key, 'button_position_'.$cpt, __('Additional button display positions', 'essb'), __('Choose additional display methods that can be used to display buttons.', 'essb'), essb_available_button_positions());
 			$key ++;
+		}*/
+		ESSBOptionsStructureHelper::panel_start('where', 'display-2', __('I wish to have different button position for different post types', 'essb'), __('Activate this option if you wish to setup different positions for each post type.', 'essb'), 'fa21 fa fa-cogs', array("mode" => "switch", 'switch_id' => 'positions_by_pt', 'switch_on' => __('Yes', 'essb'), 'switch_off' => __('No', 'essb')));
+		$pts = get_post_types ( array ('show_ui' => true, '_builtin' => true ) );
+		$cpts = get_post_types ( array ('show_ui' => true, '_builtin' => false ) );
+		$first_post_type = "";
+		$key = 1;
+		foreach ( $pts as $pt ) {
+		
+			ESSBOptionsStructureHelper::field_heading('where', 'display-2', 'heading5', __('Customize button positions for: '.$wp_post_types [$pt]->label, 'essb'));
+			ESSBOptionsStructureHelper::structure_row_start('where', 'display-2');
+			ESSBOptionsStructureHelper::structure_section_start('where', 'display-2', 'c6', __('Primary content display position', 'essb'), __('Choose default in content position that will be used for that post type', 'essb'));
+			ESSBOptionsStructureHelper::field_select('where', 'display-2', 'content_position_'.$pt, '', '', essb_simplified_radio_check_list(essb_avaliable_content_positions(), true));
+			ESSBOptionsStructureHelper::structure_section_end('where', 'display-2');
+		
+			ESSBOptionsStructureHelper::structure_section_start('where', 'display-2', 'c6', __('Additional button display positions', 'essb'), __('Choose additional site display position that will be used for that post type', 'essb'));
+			ESSBOptionsStructureHelper::field_checkbox_list('where', 'display-2', 'button_position_'.$pt, '', '', essb_simplified_radio_check_list(essb_available_button_positions()));
+			ESSBOptionsStructureHelper::structure_section_end('where', 'display-2');
+			ESSBOptionsStructureHelper::structure_row_end('where', 'display-2');
 		}
+		
+		foreach ( $cpts as $cpt ) {
+		
+			ESSBOptionsStructureHelper::field_heading('where', 'display-2', 'heading5', __('Customize button positions for: '.$wp_post_types [$pt]->label, 'essb'));
+			ESSBOptionsStructureHelper::structure_row_start('where', 'display-2');
+			ESSBOptionsStructureHelper::structure_section_start('where', 'display-2', 'c6', __('Primary content display position', 'essb'), __('Choose default in content position that will be used for that post type', 'essb'));
+			ESSBOptionsStructureHelper::field_select('where', 'display-2', 'content_position_'.$cpt, '', '', essb_simplified_radio_check_list(essb_avaliable_content_positions(), true));
+			ESSBOptionsStructureHelper::structure_section_end('where', 'display-2');
+		
+			ESSBOptionsStructureHelper::structure_section_start('where', 'display-2', 'c6', __('Additional button display positions', 'essb'), __('Choose additional site display position that will be used for that post type', 'essb'));
+			ESSBOptionsStructureHelper::field_checkbox_list('where', 'display-2', 'button_position_'.$cpt, '', '', essb_simplified_radio_check_list(essb_available_button_positions()));
+			ESSBOptionsStructureHelper::structure_section_end('where', 'display-2');
+			ESSBOptionsStructureHelper::structure_row_end('where', 'display-2');
+		
+		}
+		
+		ESSBOptionsStructureHelper::panel_end('where', 'display-2');
 	}
 	
 	

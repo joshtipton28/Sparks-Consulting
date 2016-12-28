@@ -11,10 +11,11 @@ class ESSBOptionsInterface {
 		$active_section = sanitize_text_field($active_section);
 		$active_subsection = sanitize_text_field($active_subsection);
 		
-		$admin_template = ESSBOptionValuesHelper::options_value($essb_options, 'admin_template');
+		$admin_template = '';
+		/*$admin_template = ESSBOptionValuesHelper::options_value($essb_options, 'admin_template');
 		if (!empty($admin_template)) {
 			$admin_template = "essb-template-".$admin_template;
-		}
+		}*/
 		
 		echo '<div id="essb-scroll-top"></div>';
 		echo '<form id="essb_options_form" enctype="multipart/form-data" method="post" action="">';
@@ -55,7 +56,7 @@ class ESSBOptionsInterface {
 				</div>		
 				<a href="#" text="Back to top" class="essb-btn essb-btn-light essb-button-backtotop">' . __ ( 'Back To Top', 'essb' ) . '</a>
 				'.$next_prev_buttons.'
-				<input type="Submit" name="Submit" value="' . $update_button_text . '" class="essb-btn essb-btn-red" />				
+				<input type="Submit" name="Submit" value="' . $update_button_text . '" class="essb-btn essb-btn-red" id="essb-btn-update" />				
 			</div>';
 		}
 	}

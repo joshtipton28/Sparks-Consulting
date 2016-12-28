@@ -33,6 +33,11 @@ $optin_connectors = array("mailchimp" => "MailChimp",
 		"mailerlite" => "MailerLite", 
 		"activecampaign" => "ActiveCampaign",
 		"campaignmonitor" => "CampaignMonitor");
+
+if (has_filter('essb_external_subscribe_connectors')) {
+	$optin_connectors = apply_filters('essb_external_subscribe_connectors', $optin_connectors);
+}
+
 ESSBOptionsStructureHelper::field_select('display', 'optin-1', 'subscribe_connector', __('Choose your service', 'essb'), __('Select service that you wish to integrate with Easy Optin forms. Please note that for correct work you need to fill all required authorizations details for it below', 'essb'), $optin_connectors);
 ESSBOptionsStructureHelper::field_switch('display', 'optin-1', 'subscribe_widget', __('Activate subscribe widget & shortcode', 'essb'), __('Activation of this option will allow you to use subscribe widget and shortcode anywhere on your site not connected with subscribe button inside share buttons', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 
@@ -109,12 +114,12 @@ ESSBOptionsStructureHelper::field_textbox_stretched('display', 'optin-2', 'subsc
 
 ESSBOptionsStructureHelper::field_heading('display', 'optin-2', 'heading4', __('Style Customization', 'essb'));
 ESSBOptionsStructureHelper::field_switch('display', 'optin-2', 'activate_mailchimp_customizer', __('Activate color customizer', 'essb'), __('Color customizations will not be included unless you activate this option.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
-ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_bgcolor', __('Background color', 'essb'), __('Replace form background color', 'essb'));
-ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_textcolor', __('Text color', 'essb'), __('Replace form text color', 'essb'));
-ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_hovercolor', __('Accent color', 'essb'), __('Replace form accent color', 'essb'));
-ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_hovertextcolor', __('Accent text color', 'essb'), __('Replace form accent text color', 'essb'));
-ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_emailcolor', __('Email field background color', 'essb'), __('Replace email field background color', 'essb'));
-ESSBOptionsStructureHelper::field_switch('display', 'optin-2', 'customizer_subscribe_noborder', __('Remove top border of form', 'essb'), __('Activate this option if you wish to remove the tiny top border from the top of form.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_bgcolor1', __('Background color', 'essb'), __('Replace form background color', 'essb'));
+ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_textcolor1', __('Text color', 'essb'), __('Replace form text color', 'essb'));
+ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_hovercolor1', __('Accent color', 'essb'), __('Replace form accent color', 'essb'));
+ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_hovertextcolor1', __('Accent text color', 'essb'), __('Replace form accent text color', 'essb'));
+ESSBOptionsStructureHelper::field_color('display', 'optin-2', 'customizer_subscribe_emailcolor1', __('Email field background color', 'essb'), __('Replace email field background color', 'essb'));
+ESSBOptionsStructureHelper::field_switch('display', 'optin-2', 'customizer_subscribe_noborder1', __('Remove top border of form', 'essb'), __('Activate this option if you wish to remove the tiny top border from the top of form.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 
 
 ESSBOptionsStructureHelper::field_heading('display', 'optin-3', 'heading5', __('Customize Design #2', 'essb'));
@@ -271,6 +276,7 @@ ESSBOptionsStructureHelper::field_simplesort('display', 'native-1', 'native_orde
 ESSBOptionsStructureHelper::panel_start('display', 'native-1', __('Facebook button', 'essb'), __('Include Facebook native button in your site', 'essb'), 'fa21 fa fa-cogs', array("mode" => "toggle", "state" => "closed"));
 ESSBOptionsStructureHelper::field_section_start_full_panels('display', 'native-1', __('Facebook button', 'essb'), __('Include native Facebook button', 'essb'));
 ESSBOptionsStructureHelper::field_switch_panel('display', 'native-1', 'facebook_like_button', __('Include Facebook Like/Follow Button', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
+ESSBOptionsStructureHelper::field_switch_panel('display', 'native-1', 'facebook_like_button_share', __('Include also Facebook Share Button', 'essb'), __('Since latest Facebook API changes like button makes only Like action. If you wish to allow users share we can recommend to activate this option too.', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 ESSBOptionsStructureHelper::field_switch_panel('display', 'native-1', 'facebook_like_button_api', __('My site already uses Facebook Api', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 ESSBOptionsStructureHelper::field_switch_panel('display', 'native-1', 'facebook_like_button_api_async', __('Load Facebook API asynchronous', 'essb'), __('', 'essb'), '', __('Yes', 'essb'), __('No', 'essb'));
 ESSBOptionsStructureHelper::field_textbox_panel('display', 'native-1', 'facebook_like_button_width', __('Set custom width of Facebook like button to fix problem with not rendering correct. Value must be number without px in it.', 'essb'), __('', 'essb'));

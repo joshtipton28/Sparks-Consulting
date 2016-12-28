@@ -60,7 +60,7 @@ function essb_ctt_shorten($input, $length, $ellipsis = true, $strip_html = true)
 function essb_ctt_shortcode($atts) {
 	global $essb_options;
 	
-	extract ( shortcode_atts ( array ('tweet' => '', 'via' => 'yes', 'url' => 'yes', 'nofollow' => 'no', 'user' => '', 'hashtags' => '', 'usehashtags' => 'yes', 'template' => '' )
+	extract ( shortcode_atts ( array ('tweet' => '', 'via' => 'yes', 'url' => 'yes', 'nofollow' => 'no', 'user' => '', 'hashtags' => '', 'usehashtags' => 'yes', 'template' => '', 'image' => '' )
 
 	, $atts ) );
 	
@@ -168,6 +168,9 @@ function essb_ctt_shortcode($atts) {
 	}
 	
 	$link_short = $short;
+	if ($image != '') {
+		$link_short .= ' '.$image;
+	}
 	//$link_short = str_replace('#', '%23', $link_short);
 	
 	if ($nofollow != 'no') {
@@ -197,13 +200,14 @@ add_shortcode ( 'easy-tweet', 'essb_ctt_shortcode' );
 
 function essb_ctt_scripts() {
 	
-	
 		if (!essb_is_plugin_deactivated_on() && !essb_is_module_deactivated_on('ctt')) {
-		    essb_resource_builder()->add_static_resource(plugins_url ( 'assets/css/styles.css', __FILE__ ), 'essb-cct-style', 'css');
+		    //essb_resource_builder()->add_static_resource(plugins_url ( 'assets/css/styles.css', __FILE__ ), 'essb-cct-style', 'css');
+		    essb_resource_builder()->add_static_resource_footer(ESSB3_PLUGIN_URL . '/lib/modules/click-to-tweet/assets/css/styles.css', 'essb-cct-style', 'css');
+		    
 		}
 }
 
-add_action ( 'wp_enqueue_scripts', 'essb_ctt_scripts' );	
+add_action ( 'wp_enqueue_scripts', 'essb_ctt_scripts', 99 );	
 	
 
 

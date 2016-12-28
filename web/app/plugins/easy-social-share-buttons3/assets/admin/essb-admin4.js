@@ -1,3 +1,5 @@
+var essb_disable_ajax_submit = false;
+
 jQuery(document).ready(function($){
 	
 	var essb_admin_deactivate_all = function(oSender) {
@@ -131,7 +133,7 @@ jQuery(document).ready(function($){
 					first_child_id = "#essb-menu-" + first_child_id;
 				}
 								
-				for (var i=1;i<29;i++) {
+				for (var i=1;i<49;i++) {
 					var selector = "#essb-menu-"+has_field_id + "-" + i;
 					if ($(selector).length) {
 						$(selector).addClass("active-sub");		
@@ -283,12 +285,18 @@ jQuery(document).ready(function($){
 		$('.cb-disable',parent).removeClass('selected');
 		$(this).addClass('selected');
 		$('.checkbox',parent).attr('checked', true);
+		
+		if ($(parent).hasClass('essb-switch-submit'))
+			$('#essb_options_form').submit();
 	});
 	$(".essb-switch .cb-disable").click(function(){
 		var parent = $(this).parents('.essb-switch');
 		$('.cb-enable',parent).removeClass('selected');
 		$(this).addClass('selected');
 		$('.checkbox',parent).attr('checked', false);
+
+		if ($(parent).hasClass('essb-switch-submit'))
+			$('#essb_options_form').submit();
 	});
 	
 	// Image Checkbox
@@ -406,7 +414,7 @@ jQuery(document).ready(function($){
 	$('.essb-options-container').find('.essb-portlet-toggle').find('.essb-portlet-heading').each(function(){
 		$(this).click(function(e) {
 			e.preventDefault();
-			console.log('toggle click');
+			//console.log('toggle click');
 			
 			// closed
 			if ($(this).hasClass('essb-portlet-heading-closed')) {
@@ -449,11 +457,12 @@ jQuery(document).ready(function($){
 			if (!state_checkbox.length) return;
 			
 			var state = $(state_checkbox).is(':checked');
-			console.log('switch click = ' + state);
+			//console.log('switch click = ' + state);
 			
 			var parent_heading = $(this).parent().parent();
 			
 			if ($(parent_heading).hasClass('essb-portlet-submit')) {
+				essb_disable_ajax_submit = true;
 				$('#essb_options_form').submit();
 			}
 			
@@ -461,7 +470,7 @@ jQuery(document).ready(function($){
 			if (state) {
 				$(parent_heading).removeClass('essb-portlet-heading-closed');
 				var content = $(parent_heading).parent().find('.essb-portlet-content');
-				console.log(content.length);
+				//console.log(content.length);
 				if (content.length > 1) content = content[0];
 				$(content).slideDown("fast", function() {
 					$(content).removeClass('essb-portlet-content-closed');
@@ -482,7 +491,7 @@ jQuery(document).ready(function($){
 				});
 				
 				$(parent_heading).parent().find('.essb_image_checkbox').each(function() {
-					console.log('parsing checkbox image');
+					//console.log('parsing checkbox image');
 					var image = $(this).find('.checkbox-image img');
 					if (image) {
 						var width = image.width();
@@ -508,7 +517,7 @@ jQuery(document).ready(function($){
 	$('.essb-options-container').find('.essb-section-tabs').find('li').each(function(){
 		$(this).click(function(e) {
 			e.preventDefault();
-			console.log('tab click');
+			//console.log('tab click');
 			
 			var parent = $(this).parent();
 			parent.find('li').each(function(){
@@ -532,6 +541,11 @@ jQuery(document).ready(function($){
 				$('.ess-section-tab-'+data_tab).fadeIn('fast');
 				$('.ess-section-tab-'+data_tab).addClass('active');
 				
+				window.setTimeout(function() {
+					$('.CodeMirror').each(function(i, el){
+					    el.CodeMirror.refresh();
+					});
+				}, 1);
 			}
 		});
 	});

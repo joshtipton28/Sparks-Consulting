@@ -57,7 +57,15 @@ class ESSBSocialProfiles {
 		$profiles_nospace = essb_option_bool_value('profiles_nospace');
 
 		$profile_networks = ESSBSocialProfilesHelper::get_active_networks();
+		if (!is_array($profile_networks)) {
+			$profile_networks = array();
+		}
+		
 		$profile_networks_order = ESSBSocialProfilesHelper::get_active_networks_order();
+		
+		if (!is_array($profile_networks_order)) {
+			$profile_networks_order = array();
+		}
 		
 		$profiles = array();
 		foreach ($profile_networks_order as $network) {
@@ -140,6 +148,10 @@ class ESSBSocialProfiles {
 			}
 
 			$social_custom_icon = '';
+			
+			if ($social == 'xing') {
+				$social_custom_icon = ' essb_icon_xing';
+			}
 		
 			$code .= sprintf ( '<li class="essbfc-%1$s">', $social_display );
 		

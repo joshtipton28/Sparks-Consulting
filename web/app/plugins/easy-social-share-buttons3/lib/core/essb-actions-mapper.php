@@ -33,6 +33,9 @@ if (!function_exists('essb_love_logclick')) {
 
 		$post_id = isset ( $_POST ["post_id"] ) ? $_POST ["post_id"] : '';
 		$service_id = isset ( $_POST ["service"] ) ? $_POST ["service"] : '';
+		
+		$post_id = sanitize_text_field($post_id);
+		$service_id = sanitize_text_field($service_id);
 
 		$love_count = get_post_meta($post_id, '_essb_love', true);
 		if( isset($_COOKIE['essb_love_'. $post_id]) ) die( $love_count);
@@ -74,6 +77,11 @@ function essb_process_additional_ajax_requests() {
 				echo json_encode($result);
 				die();
 			}
+		}
+		
+		$full_counter_update = isset($_REQUEST['essb_clear_cached_counters']) ? $_REQUEST['essb_clear_cached_counters'] : '';
+		if ($full_counter_update == 'true') {
+			delete_post_meta_by_key('essb_cache_expire');
 		}
 	}
 
@@ -119,7 +127,12 @@ function essb_actions_update_post_count() {
 
 	$post_id = isset($_POST["post_id"]) ? $_POST["post_id"] : '';
 	$service_id = isset($_POST["service"]) ? $_POST["service"] : '';
+	
+	$post_id = sanitize_text_field($post_id);
+	$service_id = sanitize_text_field($service_id);
+	
 	$post_id = intval($post_id);
+	
 
 	if ($service_id == "print_friendly") {
 		$service_id = "print";
@@ -133,7 +146,7 @@ function essb_actions_update_post_count() {
 	// addint custom hook to execute when click on share buttons
 	do_action('essb_after_sharebutton_click');
 
-	die(json_encode(array(" post_id ".$post_id.", service = ".$service_id.", current_value = ".$current_value)));
+	die(json_encode(array("post_id" => $post_id, "service" => $service_id, "current_value" => $current_value)));
 }
 
 function essb_actions_get_share_counts() {
@@ -156,9 +169,9 @@ function essb_actions_get_share_counts() {
 
 	$list = explode(',', $networks);
 	$output = array();
-	$output['url'] = $url;
-	$output['instance'] = $instance;
-	$output['post'] = $post;
+	$output['url'] = sanitize_text_field($url);
+	$output['instance'] = sanitize_text_field($instance);
+	$output['post'] = sanitize_text_field($post);
 	$output['network'] = $networks;
 
 	if (!class_exists('ESSBCounterHelper')) {
@@ -201,6 +214,13 @@ if (!function_exists('essb_actions_sendmail')) {
 		$to = essb_object_value($_REQUEST, 'to');
 		$c = essb_object_value($_REQUEST, 'c');
 		$mail_salt = essb_object_value($_REQUEST, 'salt');
+		$cu = essb_object_value($_REQUEST, 'cu');
+		
+		$post_id = sanitize_text_field($post_id);
+		$from = sanitize_email($from);
+		$to = sanitize_email($to);
+		$c = sanitize_text_field($c);
+		$mail_salt = sanitize_text_field($mail_salt);
 		
 		$translate_mail_message_sent = essb_option_value('translate_mail_message_sent');
 		$translate_mail_message_invalid_captcha = essb_option_value('translate_mail_message_invalid_captcha');
@@ -275,6 +295,10 @@ if (!function_exists('essb_actions_sendmail')) {
 			
 			$message_subject = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#', '#%%image%%#'), array($title, $base_site_url, $base_post_url, $image), $message_subject);
 			$message_body = preg_replace(array('#%%title%%#', '#%%siteurl%%#', '#%%permalink%%#', '#%%image%%#'), array($title, $site_url, $url, $image), $message_body);
+			
+			if ($cu != '') {
+				$message_body .= $cu;
+			}
 			
 			$copy_address = essb_option_value('mail_copyaddress');
 			$message_body = str_replace("\r\n", "<br />", $message_body);

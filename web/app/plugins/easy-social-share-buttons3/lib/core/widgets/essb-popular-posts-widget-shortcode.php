@@ -45,7 +45,8 @@ if (! function_exists ( 'essb_popular_posts' )) {
 				'show_num_text' => '',
 				'same_cat' => 'false',
 				'show_thumb' => 'false',
-				'thumb_size' => '' 
+				'thumb_size' => '',
+				'nothumb' => '' 
 				), $atts );
 				
 		$title = (! empty ( $attributes ['title'] )) ? $attributes ['title'] : '';
@@ -66,7 +67,12 @@ if (! function_exists ( 'essb_popular_posts' )) {
 		
 		$show_thumb = isset($attributes['show_thumb']) ? $attributes ['show_thumb'] : 'false';
 		$thumb_size = isset($attributes['thumb_size']) ? $attributes ['thumb_size'] : 'full';
+		$nothumb = isset($attributes['nothumb']) ? $attributes['nothumb'] : '';
 		
+		if ($nothumb == 'true') {
+			$show_thumb = '';
+		}
+				
 		$sort_meta = "";
 		if ($source == "shares")
 			$sort_meta = "essb_c_total";
