@@ -10,6 +10,7 @@ web/app/plugins/*
 !web/app/plugins/gravityformszapier
 !web/app/plugins/wp-migrate-db-pro
 !web/app/plugins/wp-migrate-db-pro-media-files
+!web/app/plugins/amazon-s3-and-cloudfront-pro
 !web/app/plugins/rowing-camps
 !web/app/plugins/sparks-settings
 web/app/mu-plugins/*/
