@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2beb9335ccf1904a0d76b9bc77fe17a6",
+    "content-hash": "5e1cf8210e779cf89e173b4e65ca938f",
     "packages": [
         {
             "name": "composer/installers",
@@ -379,6 +379,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/all-in-one-seo-pack/"
+        },
+        {
+            "name": "wpackagist-plugin/amazon-web-services",
+            "version": "1.0.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/amazon-web-services/",
+                "reference": "tags/1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/amazon-web-services.1.0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/amazon-web-services/"
         },
         {
             "name": "wpackagist-plugin/coming-soon",

@@ -48,7 +48,8 @@
     "wpackagist-plugin/simple-301-redirects": "1.07",
     "wpackagist-plugin/updraftplus": "1.12.30",
     "wpackagist-plugin/wordfence": "6.2.9",
-    "wpackagist-plugin/xml-sitemap-feed": "4.7.4"
+    "wpackagist-plugin/xml-sitemap-feed": "4.7.4",
+    "wpackagist-plugin/amazon-web-services": "1.0.1"
 
   },
   "require-dev": {
