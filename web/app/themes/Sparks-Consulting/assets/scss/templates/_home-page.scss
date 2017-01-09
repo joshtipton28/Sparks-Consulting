@@ -12,6 +12,7 @@
   	letter-spacing: -0.05em;
   	text-shadow:-1px 1px 0px $black;
     text-align: center;
+    margin-top: 100px;
 
     @include breakpoint(medium) {
       font-size:rem-calc(80);
@@ -19,6 +20,7 @@
       letter-spacing: rem-calc(-6);
       margin-left:28px;
       text-align: left;
+      margin-top: 0;
     }
 
   	small{
