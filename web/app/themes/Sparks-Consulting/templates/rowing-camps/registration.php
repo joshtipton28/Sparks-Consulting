@@ -9,14 +9,18 @@
 	<h2><?php echo $campTitle . '<em> ' . $campLocation . ' ';?>Registration</em></h2>
 	<h4><?php the_field('camp_dates'); ?></h4>
 
-<?php /** If application instructions are present, display them */
+<?php /** If application instructions are present, display them */ ?>
 
-	if(get_field('application_instructions'))
-	{
-		echo get_field('application_instructions');
-	}
+	<?php if(get_field('application_instructions')) : ?>
+		
+		<p>Day campers, <a data-toggle="regDiscountCode">looking for a discount code?</a></p>
+		<div id="regDiscountCode" data-toggler=".show" data-animate="fade-in fade-out">
+	  		<p><?php echo get_field('application_instructions'); ?></p>
+		</div>
+		
 
-?>
+	<?php endif; ?>
+
 <script type="text/javascript">
 jQuery(document).ready(function() {
     jQuery(".registration table a").click(function() {
