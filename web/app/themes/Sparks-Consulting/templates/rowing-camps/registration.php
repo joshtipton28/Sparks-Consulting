@@ -12,11 +12,8 @@
 <?php /** If application instructions are present, display them */ ?>
 
 	<?php if(get_field('application_instructions')) : ?>
-		
-		<p>Day campers, <a data-toggle="regDiscountCode">looking for a discount code?</a></p>
-		<div id="regDiscountCode" data-toggler=".invisible" data-animate="fade-in fade-out">
-	  		<p><?php echo get_field('application_instructions'); ?></p>
-		</div>
+
+		<?php echo get_field('application_instructions'); ?>
 
 		<script>
 			$(document).ready(function() {
