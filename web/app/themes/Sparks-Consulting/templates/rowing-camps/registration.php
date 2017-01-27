@@ -14,11 +14,21 @@
 	<?php if(get_field('application_instructions')) : ?>
 		
 		<p>Day campers, <a data-toggle="regDiscountCode">looking for a discount code?</a></p>
-		<div id="regDiscountCode" data-toggler=".show" data-animate="fade-in fade-out">
+		<div id="regDiscountCode" data-toggler=".invisible" data-animate="fade-in fade-out">
 	  		<p><?php echo get_field('application_instructions'); ?></p>
 		</div>
-		
 
+		<script>
+			$(document).ready(function() {
+			  $('#regDiscountCode').hide();
+			  
+			  $('#button').click(function(e) {
+			      $('#regDiscountCode').slideToggle('slow');
+			      e.preventDefault();
+			  });
+			});
+		</script>
+		
 	<?php endif; ?>
 
 <script type="text/javascript">
