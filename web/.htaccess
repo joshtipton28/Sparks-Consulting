@@ -1,0 +1,417 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# Don't rewrite rails app paths
+RewriteRule ^/?rowing-camp-search - [L]
+RewriteRule ^/?rowingdb - [L]
+
+# END WordPress
+
+# Working With Us folder child page redirects
+Redirect 301 /working-with-us/our-approach http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/reports-from-the-front http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/gap-year-advising http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/coxswain-program http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/counseling-testimonials http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/coxswain-testimonials http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/college-counseling http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/rowing-camp-testimonials http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/camp-testimonials http://sparksconsult.com/working-with-us/
+Redirect 301 /working-with-us/international-applicants http://sparksconsult.com/working-with-us/
+
+
+# Individual redirects
+Redirect 301 /rowing-camps/map-of-camp-locations http://sparksconsult.com/map-of-camp-locations/
+Redirect 301 /rowing-camps/why-row-in-holland http://sparksconsult.com/why-row-in-holland/
+Redirect 301 /rowing-camps/why-row-in-new-zealand http://sparksconsult.com/why-row-in-new-zealand/
+Redirect 301 /rowing-camps/sparks-expeditions/ http://www.sparksexpeditions.com 
+Redirect 301 /rowing-camps/new-zealand-program-nelson/apply/ http://sparksconsult.com/rowing-camps/new-zealand-program-nelson/
+Redirect 301 /rowing-camps/dutch-small-boats-program/details/ http://sparksconsult.com/rowing-camps/dutch-small-boats-program/
+Redirect 301 /contact-us/schedule-call/ http://sparksconsult.com/contact-us/speak-with-us/
+
+# Camp Blog redirects 
+Redirect 301 /camp-blog/all-posts http://sparksconsult.com/camp-blog/
+Redirect 301 /camp-blog/advanced-physiology-camp http://sparksconsult.com/camp-blog/
+Redirect 301 /camp-blog/advanced-winter-camp http://sparksconsult.com/rowing-camps/advanced-winter-camp
+Redirect 301 /camp-blog/new-zealand-development-program http://sparksconsult.com/rowing-camps/new-zealand-development-program
+Redirect 301 /camp-blog/sandfly-bay-2/ http://sparksconsult.com/camp-blogs/sandfly-bay-2/
+Redirect 301 /camp-blog/road-trip/ http://sparksconsult.com/camp-blogs/road-trip/
+Redirect 301 /camp-blog/a-little-slice-of-home/ http://sparksconsult.com/camp-blogs/a-little-slice-of-home/
+Redirect 301 /camp-blog/remember-quad-hill/ http://sparksconsult.com/camp-blogs/remember-quad-hill/
+Redirect 301 /camp-blog/cadbury-adventure/ http://sparksconsult.com/camp-blogs/cadbury-adventure/
+Redirect 301 /camp-blog/we-are-invercargill/ http://sparksconsult.com/camp-blogs/we-are-invercargill/
+Redirect 301 /camp-blog/nelson-rowing/ http://sparksconsult.com/camp-blogs/nelson-rowing/
+Redirect 301 /camp-blog/the-storm-she-comes-the-storm-she-goes/ http://sparksconsult.com/camp-blogs/the-storm-she-comes-the-storm-she-goes/
+Redirect 301 /camp-blog/speights-other-dunedin-adventures/ http://sparksconsult.com/camp-blogs/speights-other-dunedin-adventures/
+Redirect 301 /camp-blog/winter-on-the-water/ http://sparksconsult.com/camp-blogs/winter-on-the-water/
+Redirect 301 /camp-blog/more-rowing-photos/  http://sparksconsult.com/camp-blogs/more-rowing-photos/
+Redirect 301 /camp-blog/a-little-more-rugy/  http://sparksconsult.com/camp-blogs/a-little-more-rugy/
+Redirect 301 /camp-blog/2014-is-coming/ http://sparksconsult.com/camp-blogs/2014-is-coming/
+Redirect 301 /camp-blog/buff-and-tough-term-1/ http://sparksconsult.com/camp-blogs/buff-and-tough-term-1/
+Redirect 301 /camp-blog/queenstown-rowing/ http://sparksconsult.com/camp-blogs/queenstown-rowing/
+Redirect 301 /camp-blog/more-water-time/ http://sparksconsult.com/camp-blogs/more-water-time/
+Redirect 301 /camp-blog/testing-the-waters/ http://sparksconsult.com/camp-blogs/testing-the-waters/
+Redirect 301 /camp-blog/milford-sound/ http://sparksconsult.com/camp-blogs/milford-sound/
+Redirect 301 /camp-blog/final-2k/ http://sparksconsult.com/camp-blogs/final-2k/
+Redirect 301 /camp-blog/water-on-the-first-morning-of-camp/ http://sparksconsult.com/camp-blogs/water-on-the-first-morning-of-camp/
+Redirect 301 /camp-blog/new-zealand-australia-test-series-queenstown/ http://sparksconsult.com/camp-blogs/new-zealand-australia-test-series-queenstown/
+Redirect 301 /camp-blog/catlins-adventures/ http://sparksconsult.com//camp-blogs/catlins-adventures/
+Redirect 301 /camp-blog/boys-beach-trip/ http://sparksconsult.com/camp-blogs/boys-beach-trip/ 
+Redirect 301 /camp-blog/uni-tour/ http://sparksconsult.com/camp-blogs/uni-tour/
+Redirect 301 /camp-blog/training-routine/ http://sparksconsult.com/camp-blogs/training-routine/
+Redirect 301 /camp-blog/pushing-past-boundaries-and-helicopters/ http://sparksconsult.com/camp-blogs/pushing-past-boundaries-and-helicopters/
+Redirect 301 /camp-blog/training-routine/ http://sparksconsult.com/camp-blogs/training-routine/
+Redirect 301 /camp-blog/dunedin-sights/ http://sparksconsult.com/camp-blogs/dunedin-sights/
+Redirect 301 /camp-blog/being-sick/	http://sparksconsult.com/camp-blogs/being-sick/
+Redirect 301 /camp-blog/weight-training-physical-and-mental/	http://sparksconsult.com/camp-blogs/weight-training-physical-and-mental/
+Redirect 301 /camp-blog/the-final-goodbye/	http://sparksconsult.com/camp-blogs/the-final-goodbye/
+Redirect 301 /camp-blog/community-service-2/	http://sparksconsult.com/camp-blogs/community-service-2/
+Redirect 301 /camp-blog/the-bottom-of-the-world-almost/ http://sparksconsult.com/camp-blogs/the-bottom-of-the-world-almost/
+
+
+# Journal redirects
+Redirect 301 /journal/category/rowing-camps/questions-to-ask-about-rowing-camps/ http://sparksconsult.com/journal/article/questions-to-ask-about-rowing-camps/
+Redirect 301 /journal/category/rowing-camps/how-rowing-camps-maximize-2k-p1/ http://sparksconsult.com/journal/article/how-rowing-camps-maximize-2k-p1/
+Redirect 301 /journal/category/rowing-camps/how-rowing-camps-maximize-2k-p2/ http://sparksconsult.com/journal/article/how-rowing-camps-maximize-2k-p2/
+Redirect 301 /journal/category/rowing-camps/getting-the-most-out-of-a-5-day-summer-rowing-camp/ http://sparksconsult.com/journal/article/getting-the-most-out-of-a-5-day-summer-rowing-camp/
+Redirect 301 /journal/category/rowing-camps/the-value-of-rowing-camp-abroad/ http://sparksconsult.com/journal/article/the-value-of-rowing-camp-abroad/
+Redirect 301 /journal/category/rowing-camps/american-rowing-camps-for-foreign-juniors/ http://sparksconsult.com/journal/article/american-rowing-camps-for-foreign-juniors/
+Redirect 301 /journal/category/rowing-camps/the-two-major-types-of-rowing-camps-for-juniors/ http://sparksconsult.com/journal/article/the-two-major-types-of-rowing-camps-for-juniors/
+Redirect 301 /journal/category/rowing-camps/rowing-coaches-and-rowing-camps/ http://sparksconsult.com/journal/article/rowing-coaches-and-rowing-camps/
+Redirect 301 /journal/category/rowing-camps/top-ten-reasons-to-attend-a-rowing-camp-outside-of-your-home-club/  http://sparksconsult.com/journal/article/top-ten-reasons-to-attend-a-rowing-camp-outside-of-your-home-club/
+Redirect 301 /journal/category/rowing-camps/whats-in-a-rowing-camp/ http://sparksconsult.com/journal/article/whats-in-a-rowing-camp/
+Redirect 301 /journal/category/rowing-camps/common-misconceptions-about-rowing-camps/ http://sparksconsult.com/journal/article/common-misconceptions-about-rowing-camps/
+Redirect 301 /journal/category/rowing-camps/who-benefits-from-rowing-camp/ http://sparksconsult.com/journal/article/who-benefits-from-rowing-camp/
+Redirect 301 /journal2013/09/dominating-the-coxswain-seat-how-good-coxswains-figure-out-what-to-fix/ http://sparksconsult.com/journal/article/dominating-the-coxswain-seat-how-good-coxswains-figure-out-what-to-fix/
+Redirect 301 /journal2011/04/objective-standards-for-coxswains-2/ http://sparksconsult.com/journal/article/objective-standards-for-coxswains-2/
+
+Redirect 301 /journal2013/05/coxswain-tips-admitting-mistakes/ http://sparksconsult.com/journal/article/coxswain-tips-admitting-mistakes/
+Redirect 301 /journal2015/07/coxswains-what-to-do-in-the-off-season-to-improve-your-skills/ http://sparksconsult.com/journal/article/coxswains-what-to-do-in-the-off-season-to-improve-your-skills/
+Redirect 301 /journal2013/07/coxswain-tips-giving-criticism/ http://sparksconsult.com/journal/article/coxswain-tips-giving-criticism/
+Redirect 301 /journal2011/04/coxswains-learn-to-teach-themselves/ http://sparksconsult.com/journal/article/coxswains-learn-to-teach-themselves/
+Redirect 301 /journal2014/05/the-point-of-summer-camps-for-coxswains/ http://sparksconsult.com/journal/article/the-point-of-summer-camps-for-coxswains/
+Redirect 301 /journal2015/03/steering-the-sdcc-and-more-coxswain-tips/ http://sparksconsult.com/journal/article/steering-the-sdcc-and-more-coxswain-tips/
+Redirect 301 /journal2013/05/lessons-in-leadership-part-1/ http://sparksconsult.com/journal/article/lessons-in-leadership-part-1/
+Redirect 301 /journal2014/01/seat-racing-coxswains/ http://sparksconsult.com/journal/article/seat-racing-coxswains/
+Redirect 301 /journal2014/10/preparing-steering-the-head-of-the-charles/ http://sparksconsult.com/journal/article/preparing-steering-the-head-of-the-charles/
+Redirect 301 /journal2013/09/coxswain-calls/ http://sparksconsult.com/journal/article/coxswain-calls/
+Redirect 301 /journal2014/01/coaching-coxswains/ http://sparksconsult.com/journal/article/coaching-coxswains/
+Redirect 301 /journal2014/04/the-independent-team-player/ http://sparksconsult.com/journal/article/the-independent-team-player/
+Redirect 301 /journal2013/09/dominating-the-coxswain-seat-behind-the-scenes/ http://sparksconsult.com/journal/article/dominating-the-coxswain-seat-behind-the-scenes/
+Redirect 301 /journal2013/06/coxswain-tips-self-evaluation/ http://sparksconsult.com/journal/article/coxswain-tips-self-evaluation/
+Redirect 301 /journal2015/04/dont-use-filler-in-a-race/ http://sparksconsult.com/journal/article/dont-use-filler-in-a-race/
+Redirect 301 /journal2015/03/steering-the-san-diego-crew-classic/ http://sparksconsult.com/journal/article/steering-the-san-diego-crew-classic/
+Redirect 301 /journal2014/01/dominating-the-coxswain-seat-how-top-coxswains-develop-razor-sharp-judgment/ http://sparksconsult.com/journal/article/dominating-the-coxswain-seat-how-top-coxswains-develop-razor-sharp-judgment/  
+Redirect 301 /journal2011/08/prepping-for-the-fall-season/ http://sparksconsult.com/journal/article/prepping-for-the-fall-season/
+Redirect 301 /journal2011/09/effective-coxing-without-coaching/ http://sparksconsult.com/journal/article/effective-coxing-without-coaching/
+Redirect 301 /journal2014/05/coxswain-recordings/ http://sparksconsult.com/journal/article/coxswain-recordings/ 
+Redirect 301 /journal2013/09/dominating-the-coxswain-seat-behind-the-scenes-part-2/ http://sparksconsult.com/journal/article/dominating-the-coxswain-seat-behind-the-scenes-part-2/
+Redirect 301 /journal2012/05/trying-something-new/ http://sparksconsult.com/journal/article/trying-something-new/
+Redirect 301 /journal2013/03/take-every-opportunity/ http://sparksconsult.com/journal/article/take-every-opportunity/
+Redirect 301 /journal2013/05/coxswain-tips-fault-vs-responsibility/ http://sparksconsult.com/journal/article/coxswain-tips-fault-vs-responsibility/
+Redirect 301 /journal2014/02/coxswain-film/ http://sparksconsult.com/journal/article/coxswain-film/
+Redirect 301 /journal2014/01/coxswains-questioning-coaches-the-no-win-situation/ http://sparksconsult.com/journal/article/coxswains-questioning-coaches-the-no-win-situation/ 
+Redirect 301 /journal2011/05/coxswains-are-you-getting-better-every-practice/ http://sparksconsult.com/journal/article/coxswains-are-you-getting-better-every-practice/
+Redirect 301 /journal2015/03/steering-tips-laura-simon/ http://sparksconsult.com/journal/article/steering-tips-laura-simon/
+Redirect 301 /journal2013/08/the-cox-files-coxswain-rivalries/	http://sparksconsult.com/journal/article/the-cox-files-coxswain-rivalries/
+Redirect 301 /journal/category/rowing-camps/pre-during-and-post-camp-how-to-maximize-your-experience/ /journal/article/pre-during-and-post-camp-how-to-maximize-your-experience/
+Redirect 301 /journal2011/06/learning-during-the-offseason/ http://sparksconsult.com/journal/article/learning-during-the-offseason/
+Redirect 301 /journal2013/07/dominating-the-coxswain-seat-secret-6-giving-criticism/ http://sparksconsult.com/journal/article/dominating-the-coxswain-seat-secret-6-giving-criticism/
+Redirect 301 /journal2013/09/dominating-the-coxswain-seat-how-the-pros-stay-on-top-of-their-rowers-without-offending-them/ http://sparksconsult.com/journal/article/dominating-the-coxswain-seat-how-the-pros-stay-on-top-of-their-rowers-without-offending-them/ 
+
+# Rowing Camps folder child page redirects
+Redirect 301 /rowing-camps/new-zealand-development-camp/program-staff http://sparksconsult.com/rowing-camps/new-zealand-development-camp/
+Redirect 301 /rowing-camps/new-zealand-development-camp/camp-overview http://sparksconsult.com/rowing-camps/new-zealand-development-camp/
+Redirect 301 /rowing-camps/new-zealand-development-camp/apply http://sparksconsult.com/rowing-camps/new-zealand-development-camp/
+Redirect 301 /rowing-camps/new-zealand-development-camp/details http://sparksconsult.com/rowing-camps/new-zealand-development-camp/
+
+Redirect 301 /rowing-camps/new-zealand-adventure-camp/apply http://sparksconsult.com/rowing-camps/new-zealand-adventure-camp/
+Redirect 301 /rowing-camps/new-zealand-adventure-camp/camp-overview http://sparksconsult.com/rowing-camps/new-zealand-adventure-camp/
+Redirect 301 /rowing-camps/new-zealand-adventure-camp/details http://sparksconsult.com/rowing-camps/new-zealand-adventure-camp/
+Redirect 301 /rowing-camps/new-zealand-adventure-camp/program-staff http://sparksconsult.com/rowing-camps/new-zealand-adventure-camp/
+
+Redirect 301 /rowing-camps/dutch-rowing-program/program-staff http://sparksconsult.com/rowing-camps/dutch-rowing-program/
+Redirect 301 /rowing-camps/dutch-rowing-program/details http://sparksconsult.com/rowing-camps/dutch-rowing-program/
+Redirect 301 /rowing-camps/dutch-rowing-program/apply http://sparksconsult.com/rowing-camps/dutch-rowing-program/
+Redirect 301 /rowing-camps/dutch-rowing-program/camp-overview http://sparksconsult.com/rowing-camps/dutch-rowing-program/
+
+Redirect 301 /rowing-camps/coxswains-only-camp/coaching-staff http://sparksconsult.com/rowing-camps/coxswains-only-camp/
+Redirect 301 /rowing-camps/coxswains-only-camp/registration http://sparksconsult.com/rowing-camps/coxswains-only-camp/
+Redirect 301 /rowing-camps/coxswains-only-camp/details http://sparksconsult.com/rowing-camps/coxswains-only-camp/
+Redirect 301 /rowing-camps/coxswains-only-camp/schedule http://sparksconsult.com/rowing-camps/coxswains-only-camp/
+Redirect 301 /rowing-camps/coxswains-only-camp/coxswains-only-rowing-camp http://sparksconsult.com/rowing-camps/coxswains-only-camp/
+
+Redirect 301 /rowing-camps/winter-advanced-rowing-camp/schedule http://sparksconsult.com/rowing-camps/winter-advanced-rowing-camp/
+Redirect 301 /rowing-camps/winter-advanced-rowing-camp/camp-overview http://sparksconsult.com/rowing-camps/winter-advanced-rowing-camp/
+Redirect 301 /rowing-camps/winter-advanced-rowing-camp/coaching-staff http://sparksconsult.com/rowing-camps/winter-advanced-rowing-camp/
+Redirect 301 /rowing-camps/winter-advanced-rowing-camp/registration http://sparksconsult.com/rowing-camps/winter-advanced-rowing-camp/
+Redirect 301 /rowing-camps/winter-advanced-rowing-camp/details http://sparksconsult.com/rowing-camps/winter-advanced-rowing-camp/
+
+Redirect 301 /rowing-camps/winter-coxswains-only-camp/details http://sparksconsult.com/rowing-camps/winter-coxswains-only-camp/
+Redirect 301 /rowing-camps/winter-coxswains-only-camp/schedule http://sparksconsult.com/rowing-camps/winter-coxswains-only-camp/
+Redirect 301 /rowing-camps/winter-coxswains-only-camp/coaching-staff http://sparksconsult.com/rowing-camps/winter-coxswains-only-camp/
+Redirect 301 /rowing-camps/winter-coxswains-only-camp/registration http://sparksconsult.com/rowing-camps/winter-coxswains-only-camp/
+Redirect 301 /rowing-camps/winter-coxswains-only-camp/camp-overview http://sparksconsult.com/rowing-camps/winter-coxswains-only-camp/
+
+Redirect 301 /rowing-camps/seattle-summer-rowing-camp/coaching-staff http://sparksconsult.com/rowing-camps/seattle-summer-rowing-camp/
+Redirect 301 /rowing-camps/seattle-summer-rowing-camp/schedule http://sparksconsult.com/rowing-camps/seattle-summer-rowing-camp/
+Redirect 301 /rowing-camps/seattle-summer-rowing-camp/details http://sparksconsult.com/rowing-camps/seattle-summer-rowing-camp/
+Redirect 301 /rowing-camps/seattle-summer-rowing-camp/camp-overview http://sparksconsult.com/rowing-camps/seattle-summer-rowing-camp/
+Redirect 301 /rowing-camps/seattle-summer-rowing-camp/registration http://sparksconsult.com/rowing-camps/seattle-summer-rowing-camp/
+
+Redirect 301 /rowing-camps/penn-summer-rowing-camp/camp-overview http://sparksconsult.com/rowing-camps/penn-summer-rowing-camp/
+Redirect 301 /rowing-camps/penn-summer-rowing-camp/coaching-staff http://sparksconsult.com/rowing-camps/penn-summer-rowing-camp/
+Redirect 301 /rowing-camps/penn-summer-rowing-camp/details http://sparksconsult.com/rowing-camps/penn-summer-rowing-camp/
+Redirect 301 /rowing-camps/penn-summer-rowing-camp/registration http://sparksconsult.com/rowing-camps/penn-summer-rowing-camp/
+Redirect 301 /rowing-camps/penn-summer-rowing-camp/schedule http://sparksconsult.com/rowing-camps/penn-summer-rowing-camp/
+
+Redirect 301 /rowing-camps/advanced-rowing-training-program/camp-overview http://sparksconsult.com/rowing-camps/advanced-rowing-training-program/
+Redirect 301 /rowing-camps/advanced-rowing-training-program/schedule http://sparksconsult.com/rowing-camps/advanced-rowing-training-program/
+Redirect 301 /rowing-camps/advanced-rowing-training-program/registration http://sparksconsult.com/rowing-camps/advanced-rowing-training-program/
+Redirect 301 /rowing-camps/advanced-rowing-training-program/details http://sparksconsult.com/rowing-camps/advanced-rowing-training-program/
+Redirect 301 /rowing-camps/advanced-rowing-training-program/program-staff http://sparksconsult.com/rowing-camps/advanced-rowing-training-program/
+
+Redirect 301 /rowing-camps/summer-rowing-camp/schedule http://sparksconsult.com/rowing-camps/summer-rowing-camp/
+Redirect 301 /rowing-camps/summer-rowing-camp/registration http://sparksconsult.com/rowing-camps/summer-rowing-camp/
+Redirect 301 /rowing-camps/summer-rowing-camp/camp-overview http://sparksconsult.com/rowing-camps/summer-rowing-camp/
+Redirect 301 /rowing-camps/summer-rowing-camp/coaching-staff http://sparksconsult.com/rowing-camps/summer-rowing-camp/
+Redirect 301 /rowing-camps/summer-rowing-camp/details http://sparksconsult.com/rowing-camps/summer-rowing-camp/
+
+Redirect 301 /rowing-camps/winter-sculling-camp/camp-overview http://sparksconsult.com/rowing-camps/winter-sculling-camp/
+Redirect 301 /rowing-camps/winter-sculling-camp/coaching-staff http://sparksconsult.com/rowing-camps/winter-sculling-camp/
+Redirect 301 /rowing-camps/winter-sculling-camp/details http://sparksconsult.com/rowing-camps/winter-sculling-camp/
+Redirect 301 /rowing-camps/winter-sculling-camp/schedule http://sparksconsult.com/rowing-camps/winter-sculling-camp/
+Redirect 301 /rowing-camps/winter-sculling-camp/registration http://sparksconsult.com/rowing-camps/winter-sculling-camp/
+
+# About Us folder child page redirects
+Redirect 301 /about-us/leadership http://sparksconsult.com/about-us/
+Redirect 301 /about-us/international-associates http://sparksconsult.com/about-us/
+Redirect 301 /about-us/administrative-associates http://sparksconsult.com/about-us/
+Redirect 301 /about-us/coxing-associates http://sparksconsult.com/about-us/
+Redirect 301 /about-us/counseling-associates http://sparksconsult.com/about-us/
+Redirect 301 /about-us/overview/ http://sparksconsult.com/about-us/
+
+# Old Sparkplug Redirects
+Redirect 301 /rowing.php /
+Redirect 301 /about-us.php /about-us
+Redirect 301 /about_us.php /about-us
+Redirect 301 /administrative.php /about-us/administrative-associates
+Redirect 301 /affiliates.php /affiliates
+Redirect 301 /camp-blog-all-posts.php /camp-blog/all-posts
+Redirect 301 /camp-blog-coxswains-only.php /camp-blog/coxswains-only
+Redirect 301 /camp-blog-san-diego.php /camp-blog/advanced-winter-camp
+Redirect 301 /camp-blog-sparks-camp.php /camp-blog/sparks-summer-camp
+Redirect 301 /camp-blog.php /camp-blog
+Redirect 301 /camp-testimonials.php /working-with-us/camp-testimonials
+Redirect 301 /campforms.php /campforms
+Redirect 301 /college-counseling.php /working-with-us/college-counseling
+Redirect 301 /compliance.php /compliance
+Redirect 301 /contact-us.php /contact-us
+Redirect 301 /counseling-associates.php /counseling-associates
+Redirect 301 /counseling-testimonials.php /counseling-testimonials
+Redirect 301 /coxing-associates.php /coxing-associates
+Redirect 301 /coxswain-program.php /working-with-us/coxswain-program
+Redirect 301 /coxswain-school.php /working-with-us/coxswain-program
+Redirect 301 /coxswain-testimonials.php /working-with-us/coxswain-testimonials
+Redirect 301 /coxswains-only-camp.php /rowing-camps/coxswains-only-camp
+Redirect 301 /coxswains-only-rowing-camp-coaching-staff.php /rowing-camps/coxswains-only-camp/coaching-staff
+Redirect 301 /coxswains-only-rowing-camp-details.php /rowing-camps/coxswains-only-camp/details
+Redirect 301 /coxswains-only-rowing-camp-registration.php /rowing-camps/coxswains-only-camp/registration
+Redirect 301 /coxswains-only-rowing-camp-schedule.php /rowing-camps/coxswains-only-camp/schedule
+Redirect 301 /coxswains-only-rowing-camp.php /rowing-camps/coxswains-only-camp
+Redirect 301 /international-rowing-camps.php /rowing-camps/new-zealand-development-camp/camp-overview
+Redirect 301 /leadership.php /about-us/leadership
+Redirect 301 /new-zealand-rowing-camp-application.php /rowing-camps/new-zealand-development-camp/apply
+Redirect 301 /new-zealand-rowing-camp-coaching-staff.php /rowing-camps/new-zealand-development-camp/program-staff
+Redirect 301 /new-zealand-rowing-camp-details.php /rowing-camps/new-zealand-development-camp/details
+Redirect 301 /new-zealand-rowing-camp.php /rowing-camps/new-zealand-development-camp/camp-overview
+Redirect 301 /our-approach.php /working-with-us/our-approach
+Redirect 301 /overview.php /about-us/overview
+Redirect 301 /reports-from-the-front.php /working-with-us/reports-from-the-front
+Redirect 301 /rowing-at-usa-university.php /working-with-us/international-applicants
+Redirect 301 /rowing-camps.php /rowing-camps
+Redirect 301 /rowing-camp.php /rowing-camps
+Redirect 301 /summer-rowing-camp-coaching-staff.php /coaching-staff
+Redirect 301 /summer-rowing-camp-details.php /details
+Redirect 301 /summer-rowing-camp-registration.php /registration
+Redirect 301 /summer-rowing-camp-schedule.php /rowing-camps/summer-rowing-camp/schedule
+Redirect 301 /summer-rowing-camp.php /rowing-camps/summer-rowing-camp/camp-overview
+Redirect 301 /uk-international-associates.php /about-us/uk-international-associates
+Redirect 301 /winter-advanced-rowing-camp-coaching-staff.php /rowing-camps/winter-advanced-rowing-camp/coaching-staff
+Redirect 301 /winter-advanced-rowing-camp-details.php /rowing-camps/winter-advanced-rowing-camp/details
+Redirect 301 /winter-advanced-rowing-camp-registration.php /rowing-camps/winter-advanced-rowing-camp/registration
+Redirect 301 /winter-advanced-rowing-camp-schedule.php /rowing-camps/winter-advanced-rowing-camp/schedule
+Redirect 301 /winter-advanced-rowing-camp.php /rowing-camps/winter-advanced-rowing-camp/camp-overview
+Redirect 301 /winter-rowing-camp.php /rowing-camps/winter-advanced-rowing-camp/camp-overview
+Redirect 301 /working-with-us.php /working-with-us
+Redirect 301 /camp-blog/2013-coxswains-only-day-one-week-one.php /camp-blogs/2013-coxswains-only-day-one-week-one
+Redirect 301 /camp-blog/ahhh-camps.php /camp-blogs/ahhh-camps
+Redirect 301 /camp-blog/alls-well-that-ends-well-and-starts-again.php /camp-blogs/alls-well-that-ends-well-and-starts-again
+Redirect 301 /camp-blog/arrival-day-at-wesleyan-week-on.php /camp-blogs/arrival-day-at-wesleyan-week-one
+Redirect 301 /camp-blog/bonding.php /camp-blogs/bonding
+Redirect 301 /camp-blog/cadence.php /camp-blogs/cadence
+Redirect 301 /camp-blog/confidence.php /camp-blogs/confidence
+Redirect 301 /camp-blog/day-3-week-one-rhythms.php /camp-blogs/day-3-week-one-rhythms
+Redirect 301 /camp-blog/feel-the-boat.php /camp-blogs/feel-the-boat
+Redirect 301 /camp-blog/first-full-day-week-one.php /camp-blogs/first-full-day-week-one
+Redirect 301 /camp-blog/focus.php /camp-blogs/focus
+Redirect 301 /camp-blog/forward.php /camp-blogs/forward
+Redirect 301 /camp-blog/goodbye-middletown.php /camp-blogs/goodbye-middletown
+Redirect 301 /camp-blog/hello-oklahoma.php /camp-blogs/hello-oklahoma
+Redirect 301 /camp-blog/index.php /camp-blog
+Redirect 301 /camp-blog/last-day-of-coxswains-only-and-camps-for-a-while.php /camp-blogs/last-day-of-coxswains-only-and-camps-for-a-while
+Redirect 301 /camp-blog/last-full-day-in-ct.php /camp-blogs/last-full-day-in-ct
+Redirect 301 /camp-blog/meaning.php /camp-blogs/meaning
+Redirect 301 /camp-blog/moving-forward.php /camp-blogs/moving-forward
+Redirect 301 /camp-blog/new-beginnings.php /camp-blogs/new-beginnings
+Redirect 301 /camp-blog/progress.php /camp-blogs/progress
+Redirect 301 /camp-blog/revolution.php /camp-blogs/revolution
+Redirect 301 /camp-blog/san-diego-day-one.php /camp-blogs/san-diego-day-one
+Redirect 301 /camp-blog/settling.php /camp-blogs/settling
+Redirect 301 /camp-blog/standards.php /camp-blogs/standards
+Redirect 301 /camp-blog/success.php /camp-blogs/success
+Redirect 301 /camp-blog/the-finish.php /camp-blogs/the-finish
+Redirect 301 /camp-blog/wrapping-up.php /camp-blogs/wrapping-up
+Redirect 301 /reports-from-the-front/bucknell-mens-rowing.php /reports-from-the-front/bucknell-mens-rowing
+Redirect 301 /reports-from-the-front/colgate-university-mens-rowing.php /reports-from-the-front/colgate-university-mens-rowing
+Redirect 301 /reports-from-the-front/fit-mens-rowing.php /reports-from-the-front/fit-mens-rowing
+Redirect 301 /reports-from-the-front/george-washington-men's-rowing.php /reports-from-the-front/george-washington-mens-rowing
+Redirect 301 /reports-from-the-front/georgetown-lightweight-rowing-team.php /reports-from-the-front/georgetown-lightweight-rowing-team
+Redirect 301 /reports-from-the-front/harvard-heavyweight-men.php /reports-from-the-front/harvard-heavyweight-men
+Redirect 301 /reports-from-the-front/index.php /working-with-us/reports-from-the-front
+Redirect 301 /reports-from-the-front/iona-college.php /reports-from-the-front/iona-college
+Redirect 301 /reports-from-the-front/iowa-women's-rowing.php /reports-from-the-front/iowa-womens-rowing
+Redirect 301 /reports-from-the-front/loyola-marymount-womens-rowing.php /reports-from-the-front/loyola-marymount-womens-rowing
+Redirect 301 /reports-from-the-front/mercyhurst-mens-rowing-lightweights.php /reports-from-the-front/mercyhurst-mens-rowing-lightweights
+Redirect 301 /reports-from-the-front/navy-lightweight-mens-rowing.php /reports-from-the-front/navy-lightweight-mens-rowing
+Redirect 301 /reports-from-the-front/oklahoma-city-university-rowing.php /reports-from-the-front/oklahoma-city-university-rowing
+Redirect 301 /reports-from-the-front/olympic-reflection-sparks-glenn-ochal.php /reports-from-the-front/olympic-reflection-sparks-glenn-ochal
+Redirect 301 /reports-from-the-front/oregon-state-university-mens-rowing.php /reports-from-the-front/oregon-state-university-mens-rowing
+Redirect 301 /reports-from-the-front/penn-state-rowing-and-pete-rosberg.php /reports-from-the-front/penn-state-rowing-and-pete-rosberg
+Redirect 301 /reports-from-the-front/peter-steenstra-and-bates-college-rowing.php /reports-from-the-front/peter-steenstra-and-bates-college-rowing
+Redirect 301 /reports-from-the-front/row-new-york.php /reports-from-the-front/row-new-york
+Redirect 301 /reports-from-the-front/schmehl-and-marietta-college-mens-rowing.php /reports-from-the-front/schmehl-and-marietta-college-mens-rowing
+Redirect 301 /reports-from-the-front/stanford-womens-rowing-openweight.php /reports-from-the-front/stanford-womens-rowing-openweight
+Redirect 301 /reports-from-the-front/trinity-college-mens-rowing.php /reports-from-the-front/trinity-college-mens-rowing
+Redirect 301 /reports-from-the-front/uc-san-diego-mens-rowing-team.php /reports-from-the-front/uc-san-diego-mens-rowing-team
+Redirect 301 /reports-from-the-front/uc-san-diego-women.php /reports-from-the-front/uc-san-diego-women
+Redirect 301 /reports-from-the-front/united-states-junior-sculling.php /reports-from-the-front/united-states-junior-sculling
+Redirect 301 /reports-from-the-front/university-of-miami-womens-rowing.php /reports-from-the-front/university-of-miami-womens-rowing
+Redirect 301 /reports-from-the-front/university-of-oklahoma-womens-rowing.php /reports-from-the-front/university-of-oklahoma-womens-rowing
+Redirect 301 /reports-from-the-front/university-of-wisconsin-lightweight-womens-rowing-team.php /reports-from-the-front/university-of-wisconsin-lightweight-womens-rowing-team
+Redirect 301 /reports-from-the-front/virginia-mens-rowing.php /reports-from-the-front/virginia-mens-rowing
+Redirect 301 /reports-from-the-front/wesleyan-mens-crew-and-phil-carney.php /reports-from-the-front/wesleyan-mens-crew-and-phil-carney
+Redirect 301 /reports-from-the-front/williams-college-womens-rowing.php /reports-from-the-front/williams-college-womens-rowing
+Redirect 301 /reports-from-the-front/yale-heavyweight-men.php /reports-from-the-front/yale-heavyweight-men
+Redirect 301 /our_camp.php /rowing-camps/
+Redirect 301 /our_reports.php /working-with-us/#reports-from-the-front
+
+#404 Redirects
+Redirect 301 /author/chelseadommert/ http://www.sparksconsult.com/
+Redirect 301 /category/social/ http://www.sparksconsult.com/
+Redirect 301 /category/advanced-physiology/ http://www.sparksconsult.com/
+Redirect 301 /category/rowing-camps-blog/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/uploads/camp/document/24/2015_nrc_brochure.pdf http://www.rowingcamps.net/rowing-camp/Northeast-Rowing-Center
+Redirect 301 /sparksconsult.com/rowing-camps/advanced-rowing-training-program/ http://sparksconsult.com/journal/article/top-ten-reasons-to-attend-a-rowing-camp-outside-of-your-home-club/
+Redirect 301 /sparksconsult.com/uploads/camp/document/5/crc_brochure_2011__2_.pdf http://sparksconsult.com/rowing-camp-search/rowing-camp/Brock-Badgers-Rowing
+Redirect 301 /sparksconsult.com/journal/article/top-ten-reasons-to-attend-a-rowing-camp-outside-of-your-home-club/www.sparksconsult.com/journal http://sparksconsult.com/journal/article/top-ten-reasons-to-attend-a-rowing-camp-outside-of-your-home-club/
+Redirect 301 /sparksconsult.com/uploads/camp/document/69/2016_camp_brochure.pdf http://sparksconsult.com/rowing-camp-search/rowing-camp/University-of-Texas-Longhorns-Rowing-Camp
+Redirect 301 /sparksconsult.com/12/ http://www.sparksconsult.com/reports-from-the-front/2012/12/
+Redirect 301 /sparksconsult.com/our-reports.php http://sparksconsult.com/
+Redirect 301 /sparksconsult.com/div http://sparksconsult.com/
+Redirect 301 /sparksconsult.com/uploads/camp/document/110/rowing_summer_camp_rev.pdf http://sparksconsult.com/rowing-camp-search/rowing-camp/Iowa-Rowing-Camp
+Redirect 301 /sparksconsult.com/uploads/camp/document/111/2014_camp_brochure_tri-fold-3.pdf http://sparksconsult.com/rowing-camp-search/rowing-camp/Indiana-University-Rowing-Camp
+Redirect 301 /sparksconsult.com/rowing-camp-search/rowing-camp/www.sparksconsult.com/winter-rowing-camp.php http://sparksconsult.com/rowing-camp-search/rowing-camp/Sparks-Advanced-Camp---Winter
+Redirect 301 /sparksconsult.com/wp-content/uploads/2016/02/Sparks-Consulting-Holland-Waiver.pdf http://sparksconsult.com/rowing-camps/dutch-rowing-program/
+Redirect 301 /sparksconsult.com/camp-blogs/final-2k/sparksconsult.com http://sparksconsult.com/camp-blogs/final-2k/
+Redirect 301 /sparksconsult.com/rowing-camps/new-zealand-program-nelson/program-staff/ http://sparksconsult.com/rowing-camps/
+Redirect 301 /sparksconsult.com/wp-content/uploads/2013/06/Sparks-US-Camps-Waiver.pdf http://sparksconsult.com/campforms/
+Redirect 301 /sparksconsult.com/camp-blog/coxswains-only/page/6/ http://sparksconsult.com/camp-blog/coxswains-only/
+Redirect 301 /sparksconsult.com/reports-from-the-front/2013/02/ http://sparksconsult.com/
+Redirect 301 /sparksconsult.com/swimming/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/working-with-us/rowing-camp.php http://www.sparksconsult.com/jobs
+Redirect 301 /sparksconsult.com/college-database/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/category/coxswains/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journalpage/2/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/swimming/affiliates.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/crc-frameset.html http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fsparksconsult.com%2Freports-from-the-front%2Fboston-university-men-winter-training%2F&format=xml http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/queenstown-fun/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/wp-content/uploads/2016/05/Wesleyan-Information-Packet.pdf http://sparksconsult.com/rowing-camps/summer-rowing-camp/schedule/
+Redirect 301 /sparksconsult.com/journal2013/01/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/pre-during-and-post-camp-how-to-maximize-your-experience/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/do-rowing-camps-maximize-2k-performance-part-2/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/swimming/reports-from-the-front/reports/swimming-and-diving-at-depauw-university/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/west-coast-sweep-orientation-day/Collett http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing/our-approach.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journal2013/09/why-coaches-dont-coach-coxswains/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/swimming/reports-from-the-front/2011/12/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camps/wesleyan/Sparks-Summer-Camp-Info-Packet-2013.pdf http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/LocationsNew.html http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing/contact-us.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/about-us/uk-international-associates/ http://www.sparksconsult.com/about-us/
+Redirect 301 /sparksconsult.com/journalauthor/chelsea/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/first-sparks-land-in-dunedin/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/focus/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/advanced-rowing-training-program/feed/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/how-rowing-camps-maximize-2k-p1/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/sandfly-bay/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/safe-and-sound-in-okc/meeting http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/just-point-at-that-tree-and-steer-straight/by http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/end-of-the-gopro-adventure/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/first-full-day-week-one/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/gallerynew.html http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/coaches.html http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/rowing-coaches-and-rowing-camps/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/working-with-us/sitemap.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/working-with-us/about-us.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journal2011/06/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journalcategory/practical/ http://www.sparksconsult.com/
+
+Redirect 301 /sparksconsult.com/journal2011/08/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/new-zealand-program-nelson/ http://www.sparksconsult.com/why-row-in-new-zealand/
+Redirect 301 /sparksconsult.com/rowing-camps/on-the-us-junior-national-team-camp-system/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journal2014/04/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journal2014/02/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/sitemap-pt-post-2012-10.xml http://www.sparksconsult.com/
+
+Redirect 301 /sparksconsult.com/reports-from-the-front/2011/06/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/tour-de-catlins/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/wp-content/uploads/2016/02/Information-Packet-for-Sparks-Coxswains-Only-Camp.pdf http://www.sparksconsult.com/ 
+Redirect 301 /sparksconsult.com/sitemap-pt-post-2012-04.xml http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journal2012/05/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/a-different-kind-of-boathouse/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/winter-sweep-camp-day-2/could http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/winter-sweep-camp-day-2/Campers http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/invercargill-adventures/Finally http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/reports-from-the-front/2013/04/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/helping-out/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/nuggets-falls-and-petrified-forests/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journalpage/3/ http://www.sparksconsult.com/
+
+Redirect 301 /sparksconsult.com/journal2015/01/why-i-love-winter-training/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blogs/into-the-fray/Tonight http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journalabout/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/sitemap.xml http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/wesleyanforms.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/rowing-camps-for-coxswains/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/reports-from-the-front/2012/12/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-at-american-university.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/coxswains-only-camp.ph http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/swimming/about-us.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/reports-from-the-front/iowa-women%E2%80%99s-rowing/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journal/category/rowing-camps/do-rowing-camps-maximize-2k-performance-part-2/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/catlins-adventuring/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/rowing-camps/our_camp.php http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/sitemap-pt-post-2015-11.xml http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/journalabout http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/m/ http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/sitemap-pt-post-2014-11.xml http://www.sparksconsult.com/
+Redirect 301 /sparksconsult.com/camp-blog/happy-2k-day/?utm_source=rss&utm_medium=rss&utm_campaign=happy-2k-day http://www.sparksconsult.com/
