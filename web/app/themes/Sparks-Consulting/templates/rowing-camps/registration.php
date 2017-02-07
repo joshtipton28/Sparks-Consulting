@@ -85,6 +85,10 @@ jQuery(document).ready(function() {
 
 		        		<?php echo $customURL; ?>
 
+		        	<?php elseif ($linkType == 3) : ?>
+
+		        		<?php echo $gravityShortcode; ?>
+
 		        	<?php endif; ?>
 				</td>
 
@@ -119,6 +123,10 @@ jQuery(document).ready(function() {
 		        	<?php elseif ($linkType == 2) : ?>
 
 		        		<?php echo $customURL; ?>
+
+		        	<?php elseif ($linkType == 3) : ?>
+
+		        		<?php echo $gravityShortcode; ?>
 
 		        	<?php endif; ?>
 				</td>
@@ -155,6 +163,10 @@ jQuery(document).ready(function() {
 
 		        		<?php echo $customURL; ?>
 
+		        	<?php elseif ($linkType == 3) : ?>
+
+		        		<?php echo $gravityShortcode; ?>
+
 		        	<?php endif; ?>
 				</td>
 
@@ -189,6 +201,10 @@ jQuery(document).ready(function() {
 		        	<?php elseif ($linkType == 2) : ?>
 
 		        		<?php echo $customURL; ?>
+
+		        	<?php elseif ($linkType == 3) : ?>
+
+		        		<?php echo $gravityShortcode; ?>
 
 		        	<?php endif; ?>
 				</td>
