@@ -44,11 +44,12 @@
     "wpackagist-plugin/coming-soon": "5.0.5",
     "wpackagist-plugin/google-sitemap-plugin": "3.0.7",
     "wpackagist-plugin/gravity-forms-to-excel-addon": "0.1.5.2",
+    "wpackagist-plugin/gravity-forms-google-analytics-event-tracking": "^2.0.3",
     "wpackagist-plugin/quick-pagepost-redirect-plugin": "5.1.8",
     "wpackagist-plugin/simple-301-redirects": "1.07",
     "wpackagist-plugin/updraftplus": "1.12.30",
     "wpackagist-plugin/wordfence": "6.2.9",
-    "wpackagist-plugin/xml-sitemap-feed": "4.7.4",
+    "wpackagist-plugin/xml-sitemap-feed": "^4.7.5",
     "wpackagist-plugin/amazon-web-services": "1.0.1"
 
   },
