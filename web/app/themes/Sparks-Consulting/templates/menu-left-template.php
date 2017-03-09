@@ -26,7 +26,7 @@ get_header();?>
 			<ul class="tabs vertical" data-tabs id="<?php echo $pageID; ?>">
 			<?php while ( have_rows('content_tabs') ) : the_row(); ?>
 			<?php $tabCount++; ?>
-				<li class="tabs-title <?php if($tabCount == 0) { ?>is-active<?php } ?>" id="link-<?php echo $tabCount; ?>"><a href="#panel-<?php echo$tabCount; ?>"><?php the_sub_field('menu_title'); ?><i class="fa fa-chevron-right"></i></a></li>
+				<li class="tabs-title <?php if($tabCount == 1) { ?>is-active<?php } ?>" id="link-<?php echo $tabCount; ?>"><a href="#panel-<?php echo$tabCount; ?>"><?php the_sub_field('menu_title'); ?><i class="fa fa-chevron-right"></i></a></li>
 			<?php endwhile; ?>
 			</ul>
 		</div>
@@ -37,7 +37,7 @@ get_header();?>
 	        <div class="nano-content">
 	        <?php while ( have_rows('content_tabs') ) : the_row(); ?>
 	        	<?php $tabCount++; ?>
-                        <div class="tabs-panel <?php if($tabCount == 0) { ?>is-active<?php } ?>" id="panel-<?php echo$tabCount; ?>">
+                        <div class="tabs-panel <?php if($tabCount == 1) { ?>is-active<?php } ?>" id="panel-<?php echo$tabCount; ?>">
 	        		<?php the_sub_field('tab_content'); ?>
 	        	</div>
 	        <?php endwhile; ?>
