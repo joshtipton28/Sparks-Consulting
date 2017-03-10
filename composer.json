@@ -48,10 +48,9 @@
     "wpackagist-plugin/quick-pagepost-redirect-plugin": "5.1.8",
     "wpackagist-plugin/simple-301-redirects": "1.07",
     "wpackagist-plugin/updraftplus": "1.12.30",
-    "wpackagist-plugin/wordfence": "6.2.9",
     "wpackagist-plugin/xml-sitemap-feed": "^4.7.5",
-    "wpackagist-plugin/amazon-web-services": "1.0.1"
-
+    "wpackagist-plugin/amazon-web-services": "1.0.1",
+    "wpackagist-plugin/wordfence": "^6.3.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.5.1"
