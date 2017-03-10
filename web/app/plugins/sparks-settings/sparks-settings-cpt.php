@@ -15,7 +15,7 @@ function sparks_settings_cpts_camp_blogs() {
 		"labels" => $labels,
 		"description" => "",
 		"public" => true,
-		"publicly_queryable" => false,
+//		"publicly_queryable" => false,
 		"show_ui" => true,
 		"show_in_rest" => false,
 		"rest_base" => "",
