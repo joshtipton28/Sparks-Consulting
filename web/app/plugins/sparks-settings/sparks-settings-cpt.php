@@ -78,7 +78,7 @@ function sparks_settings_cpts_journal_article() {
 		"labels" => $labels,
 		"description" => "",
 		"public" => true,
-		"publicly_queryable" => false,
+//		"publicly_queryable" => false,
 		"show_ui" => true,
 		"show_in_rest" => false,
 		"rest_base" => "",

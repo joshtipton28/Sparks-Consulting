@@ -8,6 +8,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
 
+
 # Don't rewrite rails app paths
 RewriteRule ^/?rowing-camp-search - [L]
 RewriteRule ^/?rowingdb - [L]
