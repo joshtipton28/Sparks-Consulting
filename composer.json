@@ -50,8 +50,6 @@
     "wpackagist-plugin/updraftplus": "1.12.30",
     "wpackagist-plugin/xml-sitemap-feed": "^4.7.5",
     "wpackagist-plugin/amazon-web-services": "1.0.1",
-    "wpackagist-plugin/wordfence": "^6.3.3",
-    "wpackagist-plugin/wps-hide-login": "^1.1.7",
     "wpackagist-plugin/wp-mail-smtp": "^0.10.0"
   },
   "require-dev": {
