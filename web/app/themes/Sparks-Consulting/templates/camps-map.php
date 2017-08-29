@@ -23,7 +23,7 @@ get_header(); ?>
 			<div class="map-wrap row">
 
 				<div class="camp-map large-12 columns">
-					<img src="<?php echo get_stylesheet_directory_uri();?>/assets/images/map-of-rowing-camps.png" alt="Map of Rowing Camp Locations and Dates">
+					<img src="/app/themes/Sparks-Consulting/assets/images/map-of-rowing-camps.png" alt="Map of Rowing Camp Locations and Dates">
 
 					<?php if( have_rows('rowing_camp_locations') ): ?>
 

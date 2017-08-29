@@ -22,7 +22,7 @@
 					<nav id="site-navigation" class="main-navigation top-bar" role="navigation">
 						<div class="top-bar-left">
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-								<img class="logo" src="<?php echo get_stylesheet_directory_uri();?>/assets/images/sparks_logo.png" alt="Sparks Logo">
+								<img class="logo" src="/app/themes/Sparks-Consulting/assets/images/sparks_logo.png" alt="Sparks Logo">
 							</a>
 						</div>
 						<div class="top-bar-right">
