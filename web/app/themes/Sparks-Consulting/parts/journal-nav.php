@@ -15,7 +15,7 @@
 					<div class="title-bar" data-responsive-toggle="site-navigation">
 						<button class="menu-icon" type="button" data-toggle="offCanvas"></button>
 						<div class="title-bar-title">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Sparks <span>Journal</span></a>
+							<a href="https://sparksconsult.com/sports/rowing/" rel="home">Sparks <span>Journal</span></a>
 						</div>
 					</div>
 

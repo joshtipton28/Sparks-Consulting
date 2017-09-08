@@ -15,13 +15,13 @@
 					<div class="title-bar" data-responsive-toggle="site-navigation">
 						<button class="menu-icon" type="button" data-toggle="offCanvas"></button>
 						<div class="title-bar-title">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Sparks <span>Consulting</span></a>
+							<a href="https://sparksconsult.com/sports/rowing/" rel="home">Sparks <span>Consulting</span></a>
 						</div>
 					</div>
 
 					<nav id="site-navigation" class="main-navigation top-bar" role="navigation">
 						<div class="top-bar-left">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+							<a href="https://sparksconsult.com/sports/rowing/" rel="home">
 								<img class="logo" src="/app/themes/Sparks-Consulting/assets/images/sparks_logo.png" alt="Sparks Logo">
 							</a>
 						</div>
